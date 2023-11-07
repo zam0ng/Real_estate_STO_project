@@ -1,34 +1,29 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 interface depositAttribute {
-  real_estates_name: string;
-  dividend_basedate: Date;
-  dividend_paymentdate: Date;
-  dividend_user_email: string;
-  dividend_amount: number;
+  user_email: string;
+  status: string;
+  price: number;
+  balance: number;
 }
 
 class Deposit_drawal extends Model<depositAttribute> {
   static initModel(sequelize: Sequelize): typeof Deposit_drawal {
     Deposit_drawal.init(
       {
-        real_estates_name: {
+        user_email: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        dividend_basedate: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-        dividend_paymentdate: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-        dividend_user_email: {
+        status: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        dividend_amount: {
+        price: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        balance: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },

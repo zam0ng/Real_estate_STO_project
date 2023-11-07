@@ -27,7 +27,7 @@ interface SubscriptionsAttribute {
   purpose: string;
   mainpurpose: string;
   area: number;
-  allare: number;
+  allarea: number;
   buildarea: number;
   floorarea: number;
   completion: Date;
@@ -100,7 +100,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        allare: {
+        allarea: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },

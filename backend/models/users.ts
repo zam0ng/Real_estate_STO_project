@@ -7,6 +7,7 @@ interface UserAttributes {
   user_pw: string;
   wallet: string;
   balance: number;
+  blacklist: boolean;
 }
 
 class Users extends Model<UserAttributes> {
@@ -14,6 +15,7 @@ class Users extends Model<UserAttributes> {
   declare user_pw: string;
   declare wallet: string;
   declare balance: number;
+  declare blacklist: boolean;
 }
 
 function userInitModel(sequelize: Sequelize) {
@@ -34,6 +36,10 @@ function userInitModel(sequelize: Sequelize) {
       balance: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+      },
+      blacklist: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
       },
     },
     {
