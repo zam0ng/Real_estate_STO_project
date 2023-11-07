@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "target": "ES6",    
-    "outDir": "./dist",                              
-    "module": "commonjs",                               
-    "esModuleInterop": true,                            
-    "forceConsistentCasingInFileNames": true,            
-    "strict": true,                                      
+    "target": "ES6",
+    "outDir": "./dist",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true                                
+    "experimentalDecorators": true
   },
   "include": ["**/app.ts"],
   "exclude": ["node_modules"]

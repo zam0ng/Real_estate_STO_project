@@ -5,7 +5,8 @@ import { DB } from "../models";
 export enum status_enum {
   panding = "panding",
   start = "start",
-  end = "end",
+  success = "success",
+  failure = "failure",
 }
 
 interface SubscriptionsAttribute {
@@ -81,7 +82,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
         },
         subscription_status: {
           type: DataTypes.ENUM,
-          values: ["pading", "start", "end"],
+          values: ["pading", "start", "success", "failure"],
           allowNull: false,
         },
         floors: {
@@ -113,11 +114,11 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           allowNull: false,
         },
         completion: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.DATE,
           allowNull: false,
         },
         stock_type: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         publisher: {
@@ -139,13 +140,13 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
 
   static associate(db: DB) {
     db.Subscriptions.hasMany(db.Subscriptions_own, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Real_estates, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Subscription_application, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
   }
 }

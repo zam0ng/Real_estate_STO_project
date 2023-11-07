@@ -3,8 +3,8 @@ import { DB } from "../models";
 
 interface real_estates_ownAttribute {
   user_email: string;
-  real_estates_id: number;
-  real_estates_name: string;
+  real_estate_id: number;
+  real_estate_name: string;
   price: number;
   amount: number;
   possible_quantity: number;
@@ -19,11 +19,11 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        real_estates_id: {
+        real_estate_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        real_estates_name: {
+        real_estate_name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
