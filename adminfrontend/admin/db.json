@@ -1,0 +1,44 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "votes": [
+    {
+      "id": 1,
+      "title": "투표1",
+      "description": "투표1",
+      "author": "dj"
+    },
+    {
+      "description": "123",
+      "id": 2
+    },
+    {
+      "description": "123132",
+      "id": 3
+    },
+    {
+      "description": "123",
+      "id": 4
+    },
+    {
+      "title": "123123",
+      "description": "123123",
+      "id": 5
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

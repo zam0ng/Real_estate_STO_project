@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .topActive{
+    background-color: rgb(255 255 255);
+  }
+}
+
+@layer components{
+  .topNotActive{
+    border-bottom: none;
+    background-color: rgb(203 213 225);
+    opacity: 0.5
+  }
+}
+
+@layer components{
+  .buy-sell-active{
+
+  }
+}
