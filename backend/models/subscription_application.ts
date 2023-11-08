@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface subscription_appAttribute {
-  subsription_id: number;
+  subscription_id: number;
   subscription_user_email: string;
   subscription_my_amount: number;
 }
@@ -11,7 +11,7 @@ class Subscription_application extends Model<subscription_appAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscription_application {
     Subscription_application.init(
       {
-        subsription_id: {
+        subscription_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -37,7 +37,7 @@ class Subscription_application extends Model<subscription_appAttribute> {
   }
   static associate(db: DB) {
     db.Subscriptions.belongsTo(db.Subscription_application, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
   }
 }

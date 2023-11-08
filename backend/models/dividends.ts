@@ -1,7 +1,7 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 interface dividendAttribute {
-  real_estates_name: string;
+  real_estate_name: string;
   dividend_price: number;
   dividend_basedate: Date;
   dividend_paymentdate: Date;
@@ -11,7 +11,7 @@ class Dividends extends Model<dividendAttribute> {
   static initModel(sequelize: Sequelize): typeof Dividends {
     Dividends.init(
       {
-        real_estates_name: {
+        real_estate_name: {
           type: DataTypes.STRING,
           allowNull: false,
         },

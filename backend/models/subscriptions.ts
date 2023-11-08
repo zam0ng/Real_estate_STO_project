@@ -5,7 +5,8 @@ import { DB } from "../models";
 export enum status_enum {
   panding = "panding",
   start = "start",
-  end = "end",
+  success = "success",
+  failure = "failure",
 }
 
 interface SubscriptionsAttribute {
@@ -25,11 +26,11 @@ interface SubscriptionsAttribute {
   subscription_status: string;
   floors: string;
   purpose: string;
-  mainpurpose: string;
+  main_purpose: string;
   area: number;
-  allarea: number;
-  buildarea: number;
-  floorarea: number;
+  all_area: number;
+  build_area: number;
+  floor_area: number;
   completion: Date;
   stock_type: string;
   publisher: string;
@@ -81,7 +82,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
         },
         subscription_status: {
           type: DataTypes.ENUM,
-          values: ["pading", "start", "end"],
+          values: ["pading", "start", "success", "failure"],
           allowNull: false,
         },
         floors: {
@@ -92,7 +93,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        mainpurpose: {
+        main_purpose: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -100,24 +101,24 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        allarea: {
+        all_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        buildarea: {
+        build_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        floorarea: {
+        floor_area: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
         completion: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.DATE,
           allowNull: false,
         },
         stock_type: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         publisher: {
@@ -139,13 +140,13 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
 
   static associate(db: DB) {
     db.Subscriptions.hasMany(db.Subscriptions_own, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Real_estates, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Subscription_application, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
   }
 }
