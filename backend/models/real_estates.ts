@@ -4,9 +4,9 @@ import { DB } from "../models";
 interface real_estatesAttribute {
   subscription_id: number;
   real_estate_name: string;
-  currentPrice: number;
-  startPrice: number;
-  value: BigInt;
+  current_price: number;
+  start_price: number;
+  value: number;
 }
 
 class Real_estates extends Model<real_estatesAttribute> {
@@ -21,16 +21,16 @@ class Real_estates extends Model<real_estatesAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        currentPrice: {
-          type: DataTypes.INTEGER,
+        current_price: {
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
-        startPrice: {
-          type: DataTypes.INTEGER,
+        start_price: {
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
         value: {
-          type: DataTypes.BIGINT,
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
       },
