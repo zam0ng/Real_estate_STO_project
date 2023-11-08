@@ -9,11 +9,18 @@ const Order: React.FC = () => {
 
                 </div>
                 <div className='buy-sell-input w-2/5 h-full flex flex-col text-sm'>
-                    <div className='buy-input w-full h-[40%]'>
-                        <input className='w-3/5 border border-slate-300 rounded-md text-right pr-1 mr-1' type='text' placeholder='0' />원
-                    </div>
-                    <div className='sell-input w-full h-[40%]'>
-                        <input />
+                    <div className='buy-input w-full h-[40%] border-b border-dashed flex flex-col'>
+                        <p>구매</p>
+                        <div className='flex flex-row'>
+                            <input className='w-3/5 border border-slate-300 rounded-md text-right pr-1 mr-1' type='text' placeholder='0' />원
+                        </div>
+                        <div className='flex flex-row'>
+                            <input className='w-3/5 border border-slate-300 rounded-md text-right pr-1 mr-1' type='text' placeholder='0' />개
+                        </div>
+                        <div>
+                            총 <span>10000</span>원
+                        </div>
+                        <button>구매</button>
                     </div>
                 </div>
             </div>
