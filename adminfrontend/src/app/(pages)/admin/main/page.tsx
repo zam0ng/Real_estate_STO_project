@@ -24,17 +24,17 @@ import {
 } from "@/app/_features/admin/main";
 
 export default async function AdminMain() {
-  const voteListData: VoteProps[] = await getVoteList();
-  console.log("voteListData", voteListData);
+  // const voteListData: VoteProps[] = await getVoteList();
+  // console.log("voteListData", voteListData);
 
   const subscriptionData: SubscriptionData[] = await getSubscriptionsList();
   console.log("subscriptionData", subscriptionData); // ⭐⭐서버 컴포넌트니까, 터미널에 찍힘
 
-  const blacklistData: BlackListData[] = await getBlackList();
-  console.log("blacklistData", blacklistData); // ⭐⭐서버 컴포넌트니까, 터미널에 찍힘
+  // const blacklistData: BlackListData[] = await getBlackList();
+  // console.log("blacklistData", blacklistData); // ⭐⭐서버 컴포넌트니까, 터미널에 찍힘
 
-  const noticesListData: NoticesListData[] = await getNoticesList();
-  console.log("noticesListData", noticesListData);
+  // const noticesListData: NoticesListData[] = await getNoticesList();
+  // console.log("noticesListData", noticesListData);
 
 
   return (
@@ -42,14 +42,14 @@ export default async function AdminMain() {
       <h1> 어드민 페이지 </h1>
 
       {/* 게시글 등록 */}
-      <CreateNoticeBtn />
+      {/* <CreateNoticeBtn /> */}
       {/* 공시(공지) 게시글 등록 */}
-      <RenderNotices noticesListData={noticesListData} />
+      {/* <RenderNotices noticesListData={noticesListData} /> */}
 
       {/* 블랙 리스트 등록 */}
-      <CreateBlackListBtn />
+      {/* <CreateBlackListBtn /> */}
       {/* 블랙리스트 관리 */}
-      <RenderBlackList blacklistData={blacklistData} />
+      {/* <RenderBlackList blacklistData={blacklistData} /> */}
 
       {/* 매물 등록 */}
       <CreateEstateBtn />
@@ -57,9 +57,9 @@ export default async function AdminMain() {
       <RenderSubscriptions subscriptionData={subscriptionData} />
 
       {/* 투표 등록 */}
-      <CreateVoteBtn />
+      {/* <CreateVoteBtn /> */}
       {/* 투표 등록한거 보여주기 */}
-      <RenderVotes voteListData={voteListData} />
+      {/* <RenderVotes voteListData={voteListData} /> */}
     </>
   );
 }

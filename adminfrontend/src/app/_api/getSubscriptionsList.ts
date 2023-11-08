@@ -1,6 +1,6 @@
 export const getSubscriptionsList = async () => {
 
-    const res = await fetch(`http://localhost:9999/real_estates_submit`, {
+    const res = await fetch(`http://localhost:8080/real_estates_submit`, {
     cache: "no-store",
     })
 

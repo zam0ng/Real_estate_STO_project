@@ -48,8 +48,11 @@ const handleCreateEstate = async (e : FormEvent<HTMLFormElement>) => {
 
     
     /// 테스트 용
-    fetch(process.env.NEXT_PUBLIC_API_URL + `real_estates_submit`, options)
-    // [실제 back 통신용] fetch(process.env.NEXT_PUBLIC_API_URL + `admin/real_estates_submit`, options)
+    // fetch(process.env.NEXT_PUBLIC_API_URL + `real_estates_submit`, options)
+    // [실제 back 통신용] 
+    // http://localhost:8080/admin/subscriptions_submit
+
+    fetch(process.env.NEXT_PUBLIC_API_URL + `admin/real_estates_submit`, options)
     .then((res) => res.json()) 
     .then((result) => {
         console.log("처리한 데이터가 잘 들어왔는지 확인", result);

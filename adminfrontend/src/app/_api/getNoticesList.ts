@@ -1,6 +1,6 @@
 export const getNoticesList = async () => {
 
-    const res = await fetch(`http://localhost:9999/notices`, {
+    const res = await fetch(`http://localhost:8080/notices`, {
     cache: "no-store",
     })
 

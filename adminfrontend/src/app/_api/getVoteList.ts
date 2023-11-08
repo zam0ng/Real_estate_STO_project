@@ -3,7 +3,7 @@
 
 export const getVoteList = async () => {
 
-    const res : Response = await fetch(`http://localhost:9999/votes`, {
+    const res : Response = await fetch(`http://localhost:8080/votes`, {
     cache: "no-store",
     })
     console.log("res" , res)

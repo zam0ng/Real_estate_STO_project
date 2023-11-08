@@ -1,6 +1,6 @@
 export const getBlackList = async () => {
 
-    const res = await fetch(`http://localhost:9999/blackList`, {
+    const res = await fetch(`http://localhost:8080/blackList`, {
     cache: "no-store",
     })
 
