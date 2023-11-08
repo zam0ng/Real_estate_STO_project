@@ -36,6 +36,7 @@ export default async function AdminMain() {
   const noticesListData: NoticesListData[] = await getNoticesList();
   console.log("noticesListData", noticesListData);
 
+
   return (
     <>
       <h1> 어드민 페이지 </h1>
