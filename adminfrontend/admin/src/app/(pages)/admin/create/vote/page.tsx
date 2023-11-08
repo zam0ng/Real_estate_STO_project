@@ -17,10 +17,9 @@
         e.preventDefault();
         const form = e.target as HTMLFormElement;
 
-        // ❓❓❓❓❓❓❓❓❓❓❓❓❓❓ e 만 쓰면 되는게 아니라 뭔가 더 해야 해 ❓❓❓❓❓❓❓❓❓❓❓ 
         // form 태그에서 필요한 정보 가져오기
         const title = form.title.value; // 투표 안건 제목
-        // // [해석] e.target. = 이벤트가 일어난 타겟 태그 = form 태그
+
         const description = form.description.value; // 투표 안건 설명 
         /* ✅ 추가 필요한 정보 
             - 기간, 작성자, 등등

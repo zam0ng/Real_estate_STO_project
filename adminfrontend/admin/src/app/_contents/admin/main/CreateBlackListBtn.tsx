@@ -1,14 +1,13 @@
 "use client";
 
-/* 예시 
 import { useRouter } from "next/navigation";
 
-export const button = () => {
+export const CreateBlackListBtn = () => {
   const router = useRouter();
 
-  // 매물 등록 페이지로 이동
-  const handle_any_Btn = () => {
-    console.log("게시글 등록 버튼 클릭");
+  // 블랙 리스트 등록 페이지로 이동
+  const handleBlackListBtn = () => {
+    console.log("블랙리스트 등록 버튼 클릭");
 
     // 서버에서 최신 id fetching 받아오기
     fetch(process.env.NEXT_PUBLIC_API_URL + "admin" , {cache : "no-store"})
@@ -18,7 +17,7 @@ export const button = () => {
         router.refresh();
 
         // 해당 페이지로 리디렉션
-        router.push(`/admin/create/_any_`);
+        router.push(`/admin/create/blacklist`);
         
       });
   };
@@ -26,10 +25,8 @@ export const button = () => {
   return (
     <>
       <p>
-        <button onClick={handle_any_Btn}> 게시글 등록 </button>
+        <button onClick={handleBlackListBtn}> 블랙 리스트 유저 등록 </button>
       </p>
     </>
   );
 };
-
-*/
