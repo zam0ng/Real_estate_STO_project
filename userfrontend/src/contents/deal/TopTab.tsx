@@ -9,7 +9,7 @@ interface TabProps {
 
 const TopTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) => {
     return (
-        <div className={`w-1/2 h-full flex justify-center items-center bg-slate-300 ${activeTab === id ? "active" : ""}`} onClick={()=>setActiveTab(id)}>
+        <div className={`w-1/2 h-full flex justify-center items-center ${activeTab === id ? "topActive" : "topNotActive"}`} onClick={()=>setActiveTab(id)}>
             {title}
         </div>
     )

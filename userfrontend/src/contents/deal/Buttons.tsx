@@ -1,5 +1,5 @@
 import React from 'react';
-import BottomTabs from './BottomTabs';
+import BottomTabs from './BuySellTabs';
 
 const Buttons: React.FC = () => {
     const tabs = [
@@ -8,7 +8,7 @@ const Buttons: React.FC = () => {
     ]
 
     return (
-        <div className='w-full h-[10%] border-t rounded-t-xl border-black flex justify-center items-center'>
+        <div className='w-full h-10 border-t rounded-t-xl border-black flex justify-center items-center'>
             <BottomTabs tabs={tabs} />
         </div>
     )

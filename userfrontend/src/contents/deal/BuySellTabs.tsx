@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import BottomTab from './BottomTab';
+import BuySellTab from './BuySellTab';
 
 interface TabsProps {
     tabs: {
@@ -14,14 +14,14 @@ const BottomTabs: React.FC<TabsProps> = ({tabs}) => {
 
     return (
         <div className='tabmenu w-screen h-full'>
-            <div className='tab-titles flex flex-row justify-center items-center w-full h-10'>
+            <div className='buy-sell-titles flex flex-row justify-center items-center w-full h-10'>
                 {tabs.map((tab)=>(
-                    <BottomTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    <BuySellTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 ))}
             </div>
-            <div className='tab-contents flex justify-center items-center w-full h-5/6'>
+            <div className='buy-sell-contents flex justify-center items-center w-full h-10'>
                 {tabs.map(
-                    (tab) => activeTab === tab.id && <div key={tab.id}>{tab.content}</div>
+                    (tab) => activeTab === tab.id && tab.content
                 )}
             </div>
         </div>

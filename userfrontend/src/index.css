@@ -3,10 +3,21 @@
 @tailwind utilities;
 
 @layer components{
-  .active{
-    border-bottom: 1px solid black;
-  },
-  .notActive{
-    background-color: lightgray;
+  .topActive{
+    background-color: rgb(255 255 255);
+  }
+}
+
+@layer components{
+  .topNotActive{
+    border-bottom: none;
+    background-color: rgb(203 213 225);
+    opacity: 0.5
+  }
+}
+
+@layer components{
+  .buy-sell-active{
+
   }
 }

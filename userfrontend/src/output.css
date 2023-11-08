@@ -525,13 +525,14 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
-.active{
-  border-bottom: 1px solid black;
+.topActive{
+  background-color: rgb(255 255 255);
 }
 
-,
-  .notActive{
-  background-color: lightgray;
+.topNotActive{
+  border-bottom: none;
+  background-color: rgb(203 213 225);
+  opacity: 0.5
 }
 
 .ml-2 {
@@ -540,6 +541,10 @@ video {
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
 }
 
 .box-border {
@@ -566,20 +571,32 @@ video {
   height: 83.333333%;
 }
 
-.h-\[10\%\] {
-  height: 10%;
-}
-
-.h-\[90\%\] {
-  height: 90%;
-}
-
 .h-full {
   height: 100%;
 }
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[10\%\] {
+  height: 10%;
+}
+
+.h-\[5\%\] {
+  height: 5%;
+}
+
+.h-\[7\%\] {
+  height: 7%;
+}
+
+.h-\[93\%\] {
+  height: 93%;
+}
+
+.h-\[40\%\] {
+  height: 40%;
 }
 
 .w-1\/2 {
@@ -594,6 +611,14 @@ video {
   width: 100vw;
 }
 
+.w-2\/5 {
+  width: 40%;
+}
+
+.w-3\/5 {
+  width: 60%;
+}
+
 .flex-row {
   flex-direction: row;
 }
@@ -606,6 +631,10 @@ video {
   place-items: center;
 }
 
+.items-end {
+  align-items: flex-end;
+}
+
 .items-center {
   align-items: center;
 }
@@ -614,8 +643,16 @@ video {
   justify-content: center;
 }
 
-.overflow-scroll {
-  overflow: scroll;
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.rounded-sm {
+  border-radius: 0.125rem;
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
 }
 
 .rounded-t-xl {
@@ -623,8 +660,24 @@ video {
   border-top-right-radius: 0.75rem;
 }
 
+.border {
+  border-width: 1px;
+}
+
+.border-b {
+  border-bottom-width: 1px;
+}
+
+.border-r {
+  border-right-width: 1px;
+}
+
 .border-t {
   border-top-width: 1px;
+}
+
+.border-dashed {
+  border-style: dashed;
 }
 
 .border-black {
@@ -632,16 +685,33 @@ video {
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
-.bg-slate-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(203 213 225 / var(--tw-bg-opacity));
+.border-slate-300 {
+  --tw-border-opacity: 1;
+  border-color: rgb(203 213 225 / var(--tw-border-opacity));
 }
 
-.text-home {
-  font-size: 62.5%;
+.border-b-black {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
-.text-yellow-600 {
+.pr-1 {
+  padding-right: 0.25rem;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-red-500 {
   --tw-text-opacity: 1;
-  color: rgb(202 138 4 / var(--tw-text-opacity));
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
