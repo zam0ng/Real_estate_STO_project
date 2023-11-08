@@ -1,6 +1,5 @@
 import express, { Express, Request, Response, Router } from "express";
 import {
-  realEstateSubmit,
   realEstatesList,
   subscriptionPanding,
   usersList,
@@ -14,7 +13,12 @@ import {
   // blackList,
   // noticesList,
   // realEstateTradeList,
-} from "../../controllers/admin/adminController";
+  
+  // 재영 어드민 부분
+  realEstateSubmit, 
+  noticeSubmit, 
+  dividendSubmit
+} from "../../controllers/admin";
 
 const router: Router = express.Router();
 
@@ -51,4 +55,8 @@ router.get("/trade_month_list", tradeMonthList);
 // // 매물 통계 정보
 // router.get("/real_estates_trade_list", realEstateTradeList);
 
+// 재영 어드민 부분
+router.post('/subscription_submit',realEstateSubmit);
+router.post('/notice_submit',noticeSubmit);
+router.post('/dividend_submit',dividendSubmit);
 export default router;
