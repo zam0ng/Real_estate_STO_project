@@ -525,6 +525,40 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.container {
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
+  }
+}
+
 .topActive{
   background-color: rgb(255 255 255);
 }
@@ -535,16 +569,38 @@ video {
   opacity: 0.5
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.bottom-0 {
+  bottom: 0px;
+}
+
+.mx-0 {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .ml-2 {
   margin-left: 0.5rem;
 }
 
-.mr-2 {
-  margin-right: 0.5rem;
-}
-
 .mr-1 {
   margin-right: 0.25rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
 }
 
 .box-border {
@@ -567,24 +623,16 @@ video {
   height: 2.5rem;
 }
 
+.h-12 {
+  height: 3rem;
+}
+
 .h-5\/6 {
   height: 83.333333%;
 }
 
-.h-full {
-  height: 100%;
-}
-
-.h-screen {
-  height: 100vh;
-}
-
-.h-\[10\%\] {
-  height: 10%;
-}
-
-.h-\[5\%\] {
-  height: 5%;
+.h-\[40\%\] {
+  height: 40%;
 }
 
 .h-\[7\%\] {
@@ -595,20 +643,20 @@ video {
   height: 93%;
 }
 
-.h-\[40\%\] {
-  height: 40%;
+.h-full {
+  height: 100%;
+}
+
+.h-screen {
+  height: 100vh;
 }
 
 .w-1\/2 {
   width: 50%;
 }
 
-.w-full {
-  width: 100%;
-}
-
-.w-screen {
-  width: 100vw;
+.w-1\/5 {
+  width: 20%;
 }
 
 .w-2\/5 {
@@ -619,12 +667,24 @@ video {
   width: 60%;
 }
 
+.w-full {
+  width: 100%;
+}
+
+.w-screen {
+  width: 100vw;
+}
+
 .flex-row {
   flex-direction: row;
 }
 
 .flex-col {
   flex-direction: column;
+}
+
+.flex-nowrap {
+  flex-wrap: nowrap;
 }
 
 .place-items-center {
@@ -647,8 +707,8 @@ video {
   overflow: hidden;
 }
 
-.rounded-sm {
-  border-radius: 0.125rem;
+.overflow-y-auto {
+  overflow-y: auto;
 }
 
 .rounded-md {
@@ -662,6 +722,10 @@ video {
 
 .border {
   border-width: 1px;
+}
+
+.border-8 {
+  border-width: 8px;
 }
 
 .border-b {
@@ -695,12 +759,29 @@ video {
   border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .pr-1 {
   padding-right: 0.25rem;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .text-right {
   text-align: right;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-end {
+  text-align: end;
 }
 
 .text-sm {
@@ -709,6 +790,10 @@ video {
 
 .text-xl {
   font-size: 1.25rem;
+}
+
+.text-xxs {
+  font-size: 0.75rem;
 }
 
 .text-red-500 {

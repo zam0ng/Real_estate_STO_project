@@ -12,7 +12,8 @@ module.exports = {
       sm: "0.875rem",
       base: "1rem",
       lg: "1.125rem",
-      xl: "1.25rem"
+      xl: "1.25rem",
+      xxs: "0.75rem"
     }
   },
   plugins: [],
