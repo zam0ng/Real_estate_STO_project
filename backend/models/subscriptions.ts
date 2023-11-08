@@ -26,11 +26,11 @@ interface SubscriptionsAttribute {
   subscription_status: string;
   floors: string;
   purpose: string;
-  mainpurpose: string;
+  main_purpose: string;
   area: number;
-  allarea: number;
-  buildarea: number;
-  floorarea: number;
+  all_area: number;
+  build_area: number;
+  floor_area: number;
   completion: Date;
   stock_type: string;
   publisher: string;
@@ -93,7 +93,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        mainpurpose: {
+        main_purpose: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -101,15 +101,15 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        allarea: {
+        all_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        buildarea: {
+        build_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        floorarea: {
+        floor_area: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
