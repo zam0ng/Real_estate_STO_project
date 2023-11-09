@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 @layer components{
-  .topActive{
+  .historyActive{
     background-color: rgb(255 255 255);
   }
 }
 
 @layer components{
-  .topNotActive{
+  .historyNotActive{
     border-bottom: none;
     background-color: rgb(203 213 225);
     opacity: 0.5
