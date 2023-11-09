@@ -5,15 +5,15 @@ module.exports = {
   ],
   theme: {
     extend: {
-      
+      fontSize: {
+        home: "62.5%",
+        xs: "0.70rem",
+        sm: "0.875rem",
+        base: "1rem",
+        lg: "1.125rem",
+        xl: "1.25rem"
+      }
     },
-    fontSize: {
-      home: "62.5%",
-      sm: "0.875rem",
-      base: "1rem",
-      lg: "1.125rem",
-      xl: "1.25rem"
-    }
   },
   plugins: [],
 }

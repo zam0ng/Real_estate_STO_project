@@ -9,17 +9,17 @@ interface TabsProps {
     }[];
 }
 
-const BottomTabs: React.FC<TabsProps> = ({tabs}) => {
+const BuySellTabStructure: React.FC<TabsProps> = ({tabs}) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
 
     return (
-        <div className='tabmenu w-screen h-full'>
-            <div className='buy-sell-titles flex flex-row justify-center items-center w-full h-10'>
+        <div className='tabmenu w-2/5 h-full'>
+            <div className='buy-sell-tabs flex flex-row justify-center items-center w-full h-7'>
                 {tabs.map((tab)=>(
                     <BuySellTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 ))}
             </div>
-            <div className='buy-sell-contents flex justify-center items-center w-full h-10'>
+            <div className='buy-sell-contents flex justify-center items-center w-full h-full'>
                 {tabs.map(
                     (tab) => activeTab === tab.id && tab.content
                 )}
@@ -28,4 +28,4 @@ const BottomTabs: React.FC<TabsProps> = ({tabs}) => {
     )
 }
 
-export default BottomTabs;
+export default BuySellTabStructure;

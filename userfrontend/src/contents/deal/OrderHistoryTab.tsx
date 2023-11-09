@@ -7,7 +7,7 @@ interface TabProps {
     setActiveTab: (tabId: string)=>void;
 }
 
-const TopTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) => {
+const OrderHistoryTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) => {
     return (
         <div className={`w-1/2 h-full flex justify-center items-center ${activeTab === id ? "topActive" : "topNotActive"}`} onClick={()=>setActiveTab(id)}>
             {title}
@@ -15,4 +15,4 @@ const TopTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) => {
     )
 }
 
-export default TopTab;
+export default OrderHistoryTab;

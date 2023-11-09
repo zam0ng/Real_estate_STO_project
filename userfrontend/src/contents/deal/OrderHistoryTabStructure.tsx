@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TopTab from './TopTab';
+import OrderHistoryTab from './OrderHistoryTab';
 
 interface TabsProps {
     tabs: {
@@ -9,14 +9,14 @@ interface TabsProps {
     }[];
 }
 
-const TopTabs: React.FC<TabsProps> = ({tabs}) => {
+const OrderHistoryTabStructure: React.FC<TabsProps> = ({tabs}) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
 
     return (
         <div className='tabmenu w-full h-full'>
             <div className='tab-titles flex flex-row justify-center items-center w-full h-[7%]'>
                 {tabs.map((tab)=>(
-                    <TopTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    <OrderHistoryTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 ))}
             </div>
             <div className='tab-contents flex justify-center items-center w-full h-[93%]'>
@@ -28,4 +28,4 @@ const TopTabs: React.FC<TabsProps> = ({tabs}) => {
     )
 }
 
-export default TopTabs;
+export default OrderHistoryTabStructure;
