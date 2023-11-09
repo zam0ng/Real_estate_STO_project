@@ -3,10 +3,10 @@ import { DB } from "../models";
 
 // typescirpt는 enum에 관한 지식이 없답니다
 export enum status_enum {
-  panding = "panding",
-  start = "start",
-  success = "success",
-  failure = "failure",
+  panding = "pending", // 청약 시작 전
+  start = "start", // 청약 시작
+  success = "success", // 청약 성공
+  failure = "failure", // 청약 실패
 }
 
 interface SubscriptionsAttribute {
@@ -82,7 +82,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
         },
         subscription_status: {
           type: DataTypes.ENUM,
-          values: ["pading", "start", "success", "failure"],
+          values: ["pending", "start", "success", "failure"],
           allowNull: false,
         },
         floors: {
@@ -110,7 +110,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           allowNull: false,
         },
         floor_area: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
         completion: {

@@ -57,7 +57,7 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
   }
   static associate(db: DB) {
     db.Real_estates_own.belongsTo(db.Real_estates, {
-      foreignKey: "real_estates_id",
+      foreignKey: "real_estate_id",
       targetKey: "id",
     });
   }
