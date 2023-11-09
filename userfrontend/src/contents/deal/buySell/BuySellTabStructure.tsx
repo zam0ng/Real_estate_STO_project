@@ -13,13 +13,13 @@ const BuySellTabStructure: React.FC<TabsProps> = ({tabs}) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
 
     return (
-        <div className='buy-sell-tab-menu w-2/5 h-full'>
-            <div className='buy-sell-tabs flex flex-row justify-center items-center w-full h-[6%]'>
+        <div className='buy-sell-tab-menu w-full h-[30%]'>
+            <div className='buy-sell-tabs flex flex-row justify-center items-center w-full h-[15%]'>
                 {tabs.map((tab)=>(
                     <BuySellTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 ))}
             </div>
-            <div className='buy-sell-contents flex flex-col justify-center items-center w-full h-[94%]'>
+            <div className='buy-sell-contents flex flex-col justify-center items-center w-full h-[85%]'>
                 {tabs.map(
                     (tab) => activeTab === tab.id && tab.content
                 )}
