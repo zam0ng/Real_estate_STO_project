@@ -12,6 +12,9 @@ module.exports = {
         base: "1rem",
         lg: "1.125rem",
         xl: "1.25rem"
+      },
+      screens: {
+        xs: "250px"
       }
     },
   },
