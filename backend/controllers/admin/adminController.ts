@@ -41,6 +41,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
     const day_earlier = new Date();
     const week_ago = new Date();
 
+    week_ago.setDate(day_earlier.getDate() - 7);
+
     const weeklyDate = await db.Trades.findAll({
       attributes: [
         "real_estate_name",
@@ -52,16 +54,19 @@ export const realEstatesList = async (req: Request, res: Response) => {
       where: {
         createdAt: {
           [Op.lt]: day_earlier,
-          [Op.gt]: day_earlier.setDate(week_ago.getDate() - 7),
+          [Op.gt]: week_ago,
         },
       },
       group: "real_estate_name",
       raw: true,
     });
 
-    result.forEach((sub: Subscription) => {
+    const resultUnknown = result as unknown as Subscription[];
+
+    // 이제 subscriptionsWithAmounts를 사용하여 forEach를 실행합니다.
+    resultUnknown.forEach((sub) => {
       const matchWeeklyData = weeklyDate.find(
-        (wd: WeeklyData) => wd.real_estate_name === sub.subscription_name
+        (wd) => wd.real_estate_name === sub.subscription_name
       );
       if (matchWeeklyData) {
         sub.total_amount = matchWeeklyData.total_amount;
