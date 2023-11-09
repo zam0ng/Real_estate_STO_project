@@ -13,9 +13,9 @@ interface SubscriptionsAttribute {
   subscription_img: string;
   subscription_name: string;
   subscription_address: string;
-  subscription_totalprice: number;
+  subscription_totalprice: bigint;
   subscription_totalsupply: number;
-  subscription_description: Text;
+  subscription_description: string;
   subscription_start_date: Date;
   subscription_end_date: Date;
   subscription_result_date: Date;
