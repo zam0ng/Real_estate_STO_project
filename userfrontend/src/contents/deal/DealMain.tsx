@@ -28,7 +28,6 @@ const BuySellInfo: React.FC = () => {
             </div>
         </div>
     )
-
 }
 
 export default BuySellInfo;
