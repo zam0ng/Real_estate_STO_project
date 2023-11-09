@@ -3,7 +3,10 @@ import { Op } from "sequelize";
 import { db } from "../../models";
 
 export const realEstateSubmit = async (req: Request, res: Response) => {
-  console.log(req.body);
+  console.log("req.body" ,req.body);
+  console.log("req.body.options" ,req.body.options);
+  console.log(" form data " , req.body.formData);
+  
 };
 
 // 매물 전체 정보

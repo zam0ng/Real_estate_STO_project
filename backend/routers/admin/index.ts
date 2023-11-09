@@ -18,7 +18,7 @@ import {
 
 const router: Router = express.Router();
 
-router.post("/real_estate_submit", realEstateSubmit);
+router.post("/subscription_submit", realEstateSubmit);
 
 /////////////////////////////////////////////////////
 // 매물 전체 정보
