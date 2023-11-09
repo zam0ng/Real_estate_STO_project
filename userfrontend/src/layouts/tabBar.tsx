@@ -24,10 +24,10 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
 function TabBar() {
     return(    
         <div>
-            <div className="hidden mx-0 flex flex-nowrap fixed bottom-0 w-full h-12 xs:flex">
+            <div className="flex flex-nowrap fixed bottom-0 w-full h-12 xs:flex bg-white pt-1">
                 <TabButtons imgName="home" btnName="홈" urlName='home'/>
                 <TabButtons imgName="buy" btnName="청약" urlName='subscription'/>
-                <TabButtons imgName="cart" btnName="마켓" urlName='market'/>
+                <TabButtons imgName="cart" btnName="마켓" urlName='deal'/>
                 <TabButtons imgName="user" btnName="My" urlName='mypage'/>
                 <TabButtons imgName="more" btnName="더보기" urlName='more'/>
             </div>

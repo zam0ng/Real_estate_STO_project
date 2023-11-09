@@ -10,19 +10,17 @@ import Mypage from "./pages/mypage";
 
 function App() {
   return (
-    // <div className="App mx-auto h-screen overflow-y-auto  relative">
-
+      
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate replace to ="/home" />} />
           <Route path="/home" element={<Home/>} />
           <Route path="/subscription" element={<Subscription/>} />
-          <Route path="/market" element={<Deal/>} />
+          <Route path="/deal" element={<Deal/>} />
           <Route path="/mypage" element={<Mypage/>} />
         </Routes>
         <TabBar/>
       </BrowserRouter>
-    // </div>
   );
 }
 

@@ -2,6 +2,6 @@
 
 export default function Subscription () {
     return(
-        <>청약 화면</>
+        <div className="flex flex-col items-center" >청약 화면</div>
     )
 }
