@@ -13,15 +13,15 @@ const HistoryTabStructure: React.FC<TabsProps> = ({tabs}) => {
     const [activeTab, setActiveTab] = useState(tabs[0].id);
 
     return (
-        <div className='tabmenu w-full h-[70%]'>
-            <div className='tab-titles flex flex-row justify-center items-center w-full h-[7%] text-sm'>
+        <div className='history-tab-menu w-full h-full'>
+            <div className='history-tab-titles flex flex-row justify-center items-center w-full h-[7%] text-sm'>
                 {tabs.map((tab)=>(
                     <HistoryTab key={tab.id} id={tab.id} title={tab.title} activeTab={activeTab} setActiveTab={setActiveTab}/>
                 ))}
             </div>
-            <div className='tab-contents flex justify-center items-center w-full h-[93%]'>
+            <div className='history-tab-contents flex flex-col items-center w-full h-[93%] overflow-y-scroll'>
                 {tabs.map(
-                    (tab) => activeTab === tab.id && <div className='w-full h-full flex justify-center items-center' key={tab.id}>{tab.content}</div>
+                    (tab) => activeTab === tab.id && tab.content
                 )}
             </div>
         </div>

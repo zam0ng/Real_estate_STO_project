@@ -34,3 +34,15 @@
     color: rgb(0 0 0);
   }
 }
+
+@layer components{
+  .redText{
+    color: rgb(248 113 113);
+  }
+}
+
+@layer components{
+  .blueText{
+    color: rgb(96 165 250);
+  }
+}
