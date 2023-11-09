@@ -14,6 +14,9 @@ module.exports = {
       lg: "1.125rem",
       xl: "1.25rem",
       xxs: "0.75rem"
+    },
+    screens : {
+      xs : '250px'
     }
   },
   plugins: [],
