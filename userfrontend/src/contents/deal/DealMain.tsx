@@ -1,6 +1,4 @@
 import React from 'react';
-import BuyTabInfo from './buySell/BuyTabInfo';
-import SellTabInfo from './buySell/SellTabInfo';
 import OrderInfo from './priceChart/OrderInfo';
 import BuySellTabInfo from './buySell/BuySellTabInfo';
 import HistoryTabInfo from './history/HistoryTabInfo';

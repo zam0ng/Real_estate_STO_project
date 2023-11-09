@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PriceBox = () => {
+const PriceBox: React.FC = () => {
     const pricelist = {
         "buy_list": [
             {price: 3750, amount: 200},
@@ -32,11 +32,14 @@ const PriceBox = () => {
                 return (
                     <div className='w-full h-9 flex flex-row bg-blue-200' key={index}>
                         {/* 수량 그래프 */}
-                        <div className='w-1/3 h-full flex justify-end items-center text-xs'>
+                        <div className='w-2/5 h-full flex justify-end items-center text-xs'>
                             {item.amount}
                         </div>
-                        <div className='w-2/3 h-full flex justify-start pl-4 items-center'>
+                        <div className='w-1/5 h-full flex justify-center items-center'>
                             {item.price}
+                        </div>
+                        <div className='w-2/5 h-full'>
+
                         </div>
                     </div>
                 )
@@ -44,10 +47,13 @@ const PriceBox = () => {
             {pricelist.buy_list.map((item,index)=>{
                 return (
                     <div className='w-full h-9 flex flex-row bg-red-200' key={index}>
-                        <div className='w-2/3 h-full flex justify-end pr-5 items-center'>
+                        <div className='w-2/5 h-full'>
+
+                        </div>
+                        <div className='w-1/5 h-full flex justify-center items-center'>
                             {item.price}
                         </div>
-                        <div className='w-1/3 h-full flex items-center text-xs'>
+                        <div className='w-2/5 h-full flex items-center text-xs'>
                             {item.amount}
                         </div>
                     </div>
