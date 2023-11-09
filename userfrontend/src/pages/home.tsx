@@ -1,7 +1,7 @@
-
+import ProgressBar from "../components/progressBar"
 
 export default function Home () {
     return(
-        <>홈 화면</>
+        <ProgressBar percent={50} />
     )
 }

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "./node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ERC20subscription is ERC20, Ownable {
 
@@ -19,7 +19,7 @@ contract ERC20subscription is ERC20, Ownable {
         require(block.timestamp >= _lockTime , "not for sale yet");
         _;
     }
-
+    // owner주소, 이름, symbol , 총공급량, 구매자주소[],분배량[],락업시간,documenturi
     constructor(
         address _owner,
          string memory _name,
@@ -37,7 +37,7 @@ contract ERC20subscription is ERC20, Ownable {
 
         for(uint256 i = 0; i<subscribers.length; i++){
             require(amounts[i] + _totalMinted <= _totalSupply );
-            _mint(subscribers[i],amounts[i]);
+            _mint(subscribers[i],amounts[i]); 
             _totalMinted += amounts[i];
         }
 
@@ -89,5 +89,4 @@ contract ERC20subscription is ERC20, Ownable {
 // 계약서 첨부 (완료)
 // admin 물량 자동락업 1년 (완료)
 
-`
-// input 예시
+

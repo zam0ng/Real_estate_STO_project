@@ -10,7 +10,7 @@ import Mypage from "./pages/mypage";
 
 function App() {
   return (
-    <div className="App mx-auto h-screen overflow-y-auto  relative">
+    // <div className="App mx-auto h-screen overflow-y-auto  relative">
 
       <BrowserRouter>
         <Routes>
@@ -22,7 +22,7 @@ function App() {
         </Routes>
         <TabBar/>
       </BrowserRouter>
-    </div>
+    // </div>
   );
 }
 
