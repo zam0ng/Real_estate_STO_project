@@ -17,6 +17,7 @@ class Trades extends Model<tradesAttributes> implements tradesAttributes {
   seller_order_email!: string;
   trade_price!: number;
   trade_amount!: number;
+  total_amount!: number;
   createdAt!: Date;
 
   static initModel(sequelize: Sequelize): typeof Trades {

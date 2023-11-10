@@ -22,7 +22,7 @@ app.use(
 );
 
 sequelize
-  .sync({ force: false})
+  .sync({ force: false })
   .then(() => {
     console.log("database connect");
   })

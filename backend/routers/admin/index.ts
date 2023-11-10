@@ -1,7 +1,7 @@
 import express, { Express, Request, Response, Router } from "express";
 import {
   realEstatesList,
-  subscriptionPanding,
+  subscriptionPending,
   usersList,
   recentTradeList,
   tradeDayList,
@@ -28,7 +28,7 @@ router.post("/real_estate_submit", realEstateSubmit);
 // 매물 전체 정보
 router.get("/real_estates_list", realEstatesList);
 // 현재 진행 중인 공모 정보
-router.get("/subscription_panding", subscriptionPanding);
+router.get("/subscription_panding", subscriptionPending);
 // 총 이용자 수
 router.get("/users_list", usersList);
 // 최근 거래 내역
