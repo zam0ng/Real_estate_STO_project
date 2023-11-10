@@ -9,7 +9,7 @@ interface TabProps {
 
 const HistoryTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) => {
     return (
-        <div className={`w-1/2 h-full flex justify-center items-center ${activeTab === id ? "historyActive" : "historyNotActive"}`} onClick={()=>setActiveTab(id)}>
+        <div className={`w-1/2 h-full text-xs flex justify-center items-center ${activeTab === id ? "historyActive" : "historyNotActive"}`} onClick={()=>setActiveTab(id)}>
             {title}
         </div>
     )

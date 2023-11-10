@@ -16,7 +16,7 @@ const BuySellTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) =
     };
 
     return (
-        <div className={`w-1/2 h-full flex justify-center items-center text-sm 
+        <div className={`w-1/2 h-full flex justify-center items-center text-xs 
         ${currentTab === id ? (id === "buyTab" ? "buyActive" : "sellActive") : "nowNotActive"}`} 
         onClick={()=>{
             setActiveTab(id);
