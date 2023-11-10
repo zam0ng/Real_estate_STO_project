@@ -3,10 +3,10 @@ import BuySellTab from './BuySellTab';
 
 interface TabsProps {
     tabs: {
-        id: string;
-        title: string;
+        id: string,
+        title: string,
         content: React.ReactNode
-    }[];
+    }[]
 }
 
 const BuySellTabStructure: React.FC<TabsProps> = ({tabs}) => {

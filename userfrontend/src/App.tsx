@@ -19,7 +19,6 @@ function App() {
           <Route path="/deal" element={<Deal/>} />
           <Route path="/mypage" element={<Mypage/>} />
         </Routes>
-        <TabBar/>
       </BrowserRouter>
   );
 }

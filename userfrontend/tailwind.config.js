@@ -7,6 +7,8 @@ module.exports = {
     extend: {
       fontSize: {
         home: "62.5%",
+        xxxs: "0.5rem",
+        xxs: "0.6rem",
         xs: "0.70rem",
         sm: "0.875rem",
         base: "1rem",
@@ -15,6 +17,9 @@ module.exports = {
       },
       screens: {
         xs: "250px"
+      },
+      height: {
+        over: "120%"
       }
     },
   },

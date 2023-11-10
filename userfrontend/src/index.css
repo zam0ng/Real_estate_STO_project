@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer components{
+  .nowNotActive{
+    color: rgb(0 0 0);
+    background-color: rgb(203 213 225);
+    opacity: 0.5;
+  }
+}
+
+@layer components{
   .historyActive{
     background-color: rgb(255 255 255);
   }
