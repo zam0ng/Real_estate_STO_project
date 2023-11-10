@@ -198,9 +198,9 @@ export const tradeDayList = async (req: Request, res: Response) => {
     };
 
     const today = new Date();
-    const tenDaysAgo = new Date(today);
+    const ten_days_ago = new Date(today);
 
-    tenDaysAgo.setDate(tenDaysAgo.getDate() - 10);
+    ten_days_ago.setDate(ten_days_ago.getDate() - 10);
 
     const result = (await db.Trades.findAll({
       attributes: [
@@ -217,7 +217,7 @@ export const tradeDayList = async (req: Request, res: Response) => {
       ],
       where: {
         createdAt: {
-          [Op.between]: [tenDaysAgo, today],
+          [Op.between]: [ten_days_ago, today],
         },
       },
       raw: true,
@@ -225,12 +225,12 @@ export const tradeDayList = async (req: Request, res: Response) => {
 
     interface RealEstateData {
       [key: string]: {
-        tenDays: string[];
-        tenDaysAmount: number[];
+        ten_days: string[];
+        ten_days_amount: number[];
       };
     }
 
-    let tenDays: string[] = [];
+    let ten_days: string[] = [];
     let all_result: RealEstateData[] = [];
 
     for (let i = 0; i < 10; i++) {
@@ -240,32 +240,32 @@ export const tradeDayList = async (req: Request, res: Response) => {
       let day = days.getDate();
       const formattedDay = day < 10 ? `0${day}` : `${day}`;
       const formattedMonth = month < 10 ? `0${month}` : `${month}`;
-      tenDays[i] = `${year}-${formattedMonth}-${formattedDay}`;
+      ten_days[i] = `${year}-${formattedMonth}-${formattedDay}`;
     }
 
-    const realEstateNames = result.map((item) => item.real_estate_name);
-    const newRealEstateNames = [...new Set(realEstateNames)];
+    const real_estate_names = result.map((item) => item.real_estate_name);
+    const new_real_estate_names = [...new Set(real_estate_names)];
 
-    newRealEstateNames.forEach((real) => {
-      const findRealEstateNames = result.filter(
+    new_real_estate_names.forEach((real) => {
+      const find_real_estate_names = result.filter(
         (item) => item.real_estate_name == real
       );
 
-      let tenDaysAmount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      let ten_days_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-      const inserttenDaysAmount = findRealEstateNames.map((item) => {
-        const getIndexOf = tenDays.indexOf(item.trade_date);
+      const insert_ten_days_amount = find_real_estate_names.map((item) => {
+        const getIndexOf = ten_days.indexOf(item.trade_date);
         if (getIndexOf < 0) return;
-        else tenDaysAmount[getIndexOf] = parseInt(item.trade_amount);
+        else ten_days_amount[getIndexOf] = parseInt(item.trade_amount);
       });
 
-      let realEstateObject: RealEstateData = {
+      let real_estate_object: RealEstateData = {
         [real]: {
-          tenDays: tenDays,
-          tenDaysAmount: tenDaysAmount,
+          ten_days: ten_days,
+          ten_days_amount: ten_days_amount,
         },
       };
-      all_result.push(realEstateObject);
+      all_result.push(real_estate_object);
     });
 
     if (result?.length) res.status(200).json(all_result);
