@@ -5,6 +5,7 @@ interface UserAttributes {
   user_pw: string;
   wallet: string;
   balance: number;
+  using_balance: number;
   blacklist: boolean;
 }
 
@@ -27,6 +28,10 @@ class Users extends Model<UserAttributes> {
         balance: {
           type: DataTypes.INTEGER,
           allowNull: false,
+        },
+        using_balance : {
+          type: DataTypes.INTEGER,
+          defaultValue : 0
         },
         blacklist: {
           type: DataTypes.BOOLEAN,

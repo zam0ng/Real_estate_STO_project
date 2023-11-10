@@ -4,17 +4,17 @@ import { DB } from "../models/";
 
 interface tradesAttributes {
   real_estate_name: string;
-  buyer_order_id: number;
-  seller_order_id: number;
+  buyer_order_email: string;
+  seller_order_email: string;
   trade_price: number;
   trade_amount: number;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 class Trades extends Model<tradesAttributes> implements tradesAttributes {
   real_estate_name!: string;
-  buyer_order_id!: number;
-  seller_order_id!: number;
+  buyer_order_email!: string;
+  seller_order_email!: string;
   trade_price!: number;
   trade_amount!: number;
   createdAt!: Date;
@@ -26,12 +26,12 @@ class Trades extends Model<tradesAttributes> implements tradesAttributes {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        buyer_order_id: {
-          type: DataTypes.INTEGER,
+        buyer_order_email: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
-        seller_order_id: {
-          type: DataTypes.INTEGER,
+        seller_order_email: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
         trade_price: {
@@ -59,15 +59,15 @@ class Trades extends Model<tradesAttributes> implements tradesAttributes {
 
     return Trades;
   }
-  static associate(db: DB) {
-    Trades.belongsTo(db.Orders, {
-      foreignKey: "buyer_order_id",
-      targetKey: "id",
-    });
-    Trades.belongsTo(db.Orders, {
-      foreignKey: "seller_order_id",
-      targetKey: "id",
-    });
-  }
+  // static associate(db: DB) {
+  //   Trades.belongsTo(db.Orders, {
+  //     foreignKey: "buyer_order_id",
+  //     targetKey: "id",
+  //   });
+  //   Trades.belongsTo(db.Orders, {
+  //     foreignKey: "seller_order_id",
+  //     targetKey: "id",
+  //   });
+  // }
 }
 export default Trades;

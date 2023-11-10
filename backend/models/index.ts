@@ -21,6 +21,7 @@ export const sequelize = new Sequelize(
   {
     host: config.dev.host!,
     dialect: "postgres",
+    logging : false,
   }
 );
 
@@ -81,8 +82,8 @@ Real_estates_own.associate(db);
 Subscriptions_own.associate(db);
 Subscription_application.associate(db);
 
-Orders.associate(db);
-Trades.associate(db);
+// Orders.associate(db);
+// Trades.associate(db);
 Subscriptions.associate(db);
 Real_estates.associate(db);
 Real_estates_own.associate(db);
