@@ -21,7 +21,7 @@ export const sequelize = new Sequelize(
   {
     host: config.dev.host!,
     dialect: "postgres",
-    logging : false,
+    logging: false,
   }
 );
 

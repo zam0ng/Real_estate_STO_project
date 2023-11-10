@@ -1,6 +1,7 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 
 interface UserAttributes {
+  user_profile_img: string;
   user_eamil: string;
   user_pw: string;
   wallet: string;
@@ -13,6 +14,9 @@ class Users extends Model<UserAttributes> {
   static initModel(sequelize: Sequelize): typeof Users {
     Users.init(
       {
+        user_profile_img: {
+          type: DataTypes.STRING,
+        },
         user_eamil: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -29,9 +33,9 @@ class Users extends Model<UserAttributes> {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        using_balance : {
+        using_balance: {
           type: DataTypes.INTEGER,
-          defaultValue : 0
+          defaultValue: 0,
         },
         blacklist: {
           type: DataTypes.BOOLEAN,
