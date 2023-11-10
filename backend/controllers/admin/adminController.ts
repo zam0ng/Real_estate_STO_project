@@ -63,7 +63,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
 
     const resultUnknown = result as unknown as Subscription[];
 
-    // 이제 subscriptionsWithAmounts를 사용하여 forEach를 실행합니다.
     resultUnknown.forEach((sub) => {
       const matchWeeklyData = weeklyDate.find(
         (wd) => wd.real_estate_name === sub.subscription_name
