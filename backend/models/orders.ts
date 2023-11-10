@@ -42,7 +42,7 @@ class Orders extends Model<OrdersAttributes> implements OrdersAttributes {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        // 미체결 : 0, 체결 : 1
+        // 미체결 : 0, 체결 : 1 , 취소 : 2
         order_status: {
           type: DataTypes.STRING,
           allowNull: false,
