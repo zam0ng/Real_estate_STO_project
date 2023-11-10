@@ -1,23 +1,80 @@
 import express, { Express, Request, Response, Router } from "express";
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 import { db } from "../../models";
 
 export const realEstateSubmit = async (req: Request, res: Response) => {
   console.log(req.body);
 };
-
 // 매물 전체 정보
 export const realEstatesList = async (req: Request, res: Response) => {
   try {
-    const result = await db.Real_estates.findAll();
+    type Subscription = {
+      subscription_img: string;
+      subscription_name: string;
+      subscription_description: string;
+      current_price: number;
+      total_amount?: number;
+    };
+
+    type WeeklyData = {
+      real_estate_name: string;
+      total_amount: number;
+    };
+
+    const result = await db.Subscriptions.findAll({
+      attributes: [
+        "subscription_img",
+        "subscription_name",
+        "subscription_description",
+        [db.sequelize.col("Real_estates.current_price"), "current_price"],
+      ],
+      include: [
+        {
+          model: db.Real_estates,
+          attributes: [],
+        },
+      ],
+      where: { subscription_status: "success" },
+      raw: true,
+    });
+
+    const day_earlier = new Date();
+    const week_ago = new Date();
+
+    week_ago.setDate(day_earlier.getDate() - 7);
+
     const weeklyDate = await db.Trades.findAll({
+      attributes: [
+        "real_estate_name",
+        [
+          db.sequelize.fn("sum", db.sequelize.col("trade_amount")),
+          "total_amount",
+        ],
+      ],
       where: {
         createdAt: {
-          [Op.lt]: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
-          [Op.gt]: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
+          [Op.lt]: day_earlier,
+          [Op.gt]: week_ago,
         },
       },
+      group: "real_estate_name",
+      raw: true,
     });
+
+    const resultUnknown = result as unknown as Subscription[];
+
+    resultUnknown.forEach((sub) => {
+      const matchWeeklyData = weeklyDate.find(
+        (wd) => wd.real_estate_name === sub.subscription_name
+      );
+      if (matchWeeklyData) {
+        sub.total_amount = matchWeeklyData.total_amount;
+      }
+    });
+
+    console.log("result : ", result);
+
+    console.log("weeklyDate : ", weeklyDate);
 
     if (result) res.status(200).json(result);
     else res.status(404).send("empty");
@@ -27,10 +84,10 @@ export const realEstatesList = async (req: Request, res: Response) => {
 };
 
 // 현재 진행 중인 공모 정보
-export const subscriptionPanding = async (req: Request, res: Response) => {
+export const subscriptionPending = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
-      where: { subscription_status: "pading" },
+      where: { subscription_status: "pending" },
     });
 
     if (result) res.status(200).json(result);

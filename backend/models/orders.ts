@@ -40,7 +40,7 @@ class Orders extends Model<OrdersAttributes> implements OrdersAttributes {
           allowNull: false,
         },
         order_price: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           allowNull: false,
         },
         order_amount: {
@@ -64,16 +64,6 @@ class Orders extends Model<OrdersAttributes> implements OrdersAttributes {
     );
 
     return Orders;
-  }
-  static associate(db: { Trades: typeof Trades }) {
-    Orders.hasMany(db.Trades, {
-      foreignKey: "buyer_order_id",
-      sourceKey: "id",
-    });
-    Orders.hasMany(db.Trades, {
-      foreignKey: "seller_order_id",
-      sourceKey: "id",
-    });
   }
 }
 export default Orders;
