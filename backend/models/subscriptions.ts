@@ -10,6 +10,7 @@ export enum status_enum {
 }
 
 interface SubscriptionsAttribute {
+  id?: number;
   subscription_img: string;
   subscription_name: string;
   subscription_address: string;
@@ -40,6 +41,11 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         subscription_img: {
           type: DataTypes.STRING,
           allowNull: false,

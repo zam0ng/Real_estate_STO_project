@@ -7,6 +7,19 @@ import Subscriptions from "../../models/subscriptions";
 
 // 정현이형 어드민 부분
 
+type TradeDate = {
+  real_estate_name: string;
+  trade_amount: string;
+  trade_date: string;
+};
+
+interface RealEstateAmount {
+  [key: string]: {
+    ten_date: string[];
+    ten_amount: number[];
+  };
+}
+
 function getDayInfo(a: string) {
   const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
@@ -24,6 +37,85 @@ function getDayInfo(a: string) {
     const month = today.setMonth(today.getMonth() - 10);
     return month;
   }
+}
+
+function setRealEstateAmount(result: TradeDate[], info: string) {
+  const today = new Date();
+
+  let ten_date: string[] = [];
+  let all_result: RealEstateAmount[] = [];
+
+  if (info === "day") {
+    for (let i = 0; i < 10; i++) {
+      const days = new Date(today.setDate(today.getDate() - 1));
+
+      let year = days.getFullYear();
+      let month = days.getMonth() + 1;
+      let day = days.getDate();
+      const create_day = day < 10 ? `0${day}` : `${day}`;
+      const create_month = month < 10 ? `0${month}` : `${month}`;
+      ten_date[i] = `${year}-${create_month}-${create_day}`;
+    }
+  } else if (info === "week") {
+    let find_week = today.getDay();
+    let find_monday;
+
+    if (find_week === 1) find_monday = 0;
+    else if (find_week === 0) find_monday = -6;
+    else find_monday = 1 - find_week;
+
+    today.setDate(today.getDate() + find_monday);
+    for (let i = 0; i < 10; i++) {
+      // if (i === 0) today.setDate(today.getDate());
+      // else today.setDate(today.getDate() - 7);
+      today.setDate(today.getDate() - 7);
+      let year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      let day = today.getDate();
+      const create_day = day < 10 ? `0${day}` : `${day}`;
+      const create_month = month < 10 ? `0${month}` : `${month}`;
+      ten_date[i] = `${year}-${create_month}-${create_day}`;
+    }
+  } else {
+    const today = new Date();
+
+    today.setMonth(today.getMonth() + 1);
+
+    for (let i = 0; i < 10; i++) {
+      today.setMonth(today.getMonth() - 1);
+      let year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      const create_month = month < 10 ? `0${month}` : `${month}`;
+      ten_date[i] = `${year}-${create_month}`;
+    }
+  }
+
+  const real_estate_names = result.map((item) => item.real_estate_name);
+  const new_real_estate_names = [...new Set(real_estate_names)];
+
+  new_real_estate_names.forEach((real) => {
+    const find_real_estate_names = result.filter(
+      (item) => item.real_estate_name == real
+    );
+
+    let ten_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    const insert_ten_days_amount = find_real_estate_names.map((item) => {
+      const getIndexOf = ten_date.indexOf(item.trade_date);
+      if (getIndexOf < 0) return;
+      else ten_amount[getIndexOf] = parseInt(item.trade_amount);
+    });
+
+    let real_estate_object: RealEstateAmount = {
+      [real]: {
+        ten_date: ten_date,
+        ten_amount: ten_amount,
+      },
+    };
+    all_result.push(real_estate_object);
+  });
+
+  return all_result;
 }
 
 // 매물 전체 정보
@@ -86,8 +178,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       else sub.total_amount = 0;
     });
 
-    if (result?.length) res.status(200).json(result);
-    else res.status(404).send("empty");
+    if (result?.length) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -122,8 +214,8 @@ export const usersList = async (req: Request, res: Response) => {
   try {
     const result = await db.Users.findAll();
 
-    if (result?.length) res.status(200).json(result.length);
-    else res.status(404).send("empty");
+    if (result?.length) return res.status(200).json(result.length);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -165,8 +257,8 @@ export const recentTradeList = async (req: Request, res: Response) => {
       if (findimg) rs.subscription_img = findimg.subscription_img;
     });
 
-    if (result?.length) res.status(200).json(result);
-    else res.status(404).send("empty");
+    if (result?.length) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -181,8 +273,8 @@ export const blackList = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    if (result?.length) res.status(200).json(result);
-    else res.status(404).send("empty");
+    if (result?.length) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -191,12 +283,6 @@ export const blackList = async (req: Request, res: Response) => {
 // 매물별 거래량 차트 (일)
 export const tradeDayList = async (req: Request, res: Response) => {
   try {
-    type Trade = {
-      real_estate_name: string;
-      trade_amount: string;
-      trade_date: string;
-    };
-
     const today = new Date();
     const ten_days_ago = new Date(today);
 
@@ -221,55 +307,12 @@ export const tradeDayList = async (req: Request, res: Response) => {
         },
       },
       raw: true,
-    })) as [] as Trade[];
+    })) as [] as TradeDate[];
 
-    interface RealEstateData {
-      [key: string]: {
-        ten_days: string[];
-        ten_days_amount: number[];
-      };
-    }
+    const all_result = await setRealEstateAmount(result, "day");
 
-    let ten_days: string[] = [];
-    let all_result: RealEstateData[] = [];
-
-    for (let i = 0; i < 10; i++) {
-      const days = new Date(today.setDate(today.getDate() - 1));
-      let year = days.getFullYear();
-      let month = days.getMonth() + 1;
-      let day = days.getDate();
-      const formattedDay = day < 10 ? `0${day}` : `${day}`;
-      const formattedMonth = month < 10 ? `0${month}` : `${month}`;
-      ten_days[i] = `${year}-${formattedMonth}-${formattedDay}`;
-    }
-
-    const real_estate_names = result.map((item) => item.real_estate_name);
-    const new_real_estate_names = [...new Set(real_estate_names)];
-
-    new_real_estate_names.forEach((real) => {
-      const find_real_estate_names = result.filter(
-        (item) => item.real_estate_name == real
-      );
-
-      let ten_days_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-      const insert_ten_days_amount = find_real_estate_names.map((item) => {
-        const getIndexOf = ten_days.indexOf(item.trade_date);
-        if (getIndexOf < 0) return;
-        else ten_days_amount[getIndexOf] = parseInt(item.trade_amount);
-      });
-
-      let real_estate_object: RealEstateData = {
-        [real]: {
-          ten_days: ten_days,
-          ten_days_amount: ten_days_amount,
-        },
-      };
-      all_result.push(real_estate_object);
-    });
-
-    if (result?.length) res.status(200).json(all_result);
-    else res.status(404).send("empty");
+    if (result?.length) return res.status(200).json(all_result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -277,9 +320,16 @@ export const tradeDayList = async (req: Request, res: Response) => {
 // 매물별 거래량 차트 (주)
 export const tradeWeekList = async (req: Request, res: Response) => {
   try {
+    interface RealEstateAmount {
+      [key: string]: {
+        ten_weeks: string[];
+        ten_weeks_amount: number[];
+      };
+    }
+
     const tenWeeksAgo = getDayInfo("week");
 
-    const result = await db.Trades.findAll({
+    const result = (await db.Trades.findAll({
       attributes: [
         "real_estate_name",
         [
@@ -292,7 +342,7 @@ export const tradeWeekList = async (req: Request, res: Response) => {
             ),
             "YYYY-MM-DD"
           ),
-          "trade_week",
+          "trade_date",
         ],
         [
           db.sequelize.fn("sum", db.sequelize.col("trade_amount")),
@@ -307,17 +357,19 @@ export const tradeWeekList = async (req: Request, res: Response) => {
           "YYYY-MM-DD"
         ),
       ],
-      order: [[db.sequelize.col("trade_week"), "DESC"]],
+      order: [[db.sequelize.col("trade_date"), "DESC"]],
       where: {
         createdAt: {
           [Op.gte]: tenWeeksAgo,
         },
       },
       raw: true,
-    });
+    })) as [] as TradeDate[];
 
-    if (result) res.status(200).json(result);
-    else res.status(404).send("empty");
+    const all_result = await setRealEstateAmount(result, "week");
+
+    if (result) return res.status(200).json(all_result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }
@@ -327,7 +379,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
   try {
     const tenMonthsAgo = getDayInfo("month");
 
-    const result = await db.Trades.findAll({
+    const result = (await db.Trades.findAll({
       attributes: [
         "real_estate_name",
         [
@@ -362,10 +414,12 @@ export const tradeMonthList = async (req: Request, res: Response) => {
         },
       },
       raw: true,
-    });
+    })) as [] as TradeDate[];
 
-    if (result?.length) res.status(200).json(result);
-    else res.status(404).send("empty");
+    const all_result = await setRealEstateAmount(result, "month");
+
+    if (result?.length) return res.status(200).json(all_result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }

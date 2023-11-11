@@ -2,7 +2,7 @@ import { Sequelize, Model, DataTypes } from "sequelize";
 
 interface UserAttributes {
   user_profile_img: string;
-  user_eamil: string;
+  user_email: string;
   user_pw: string;
   wallet: string;
   balance: number;
@@ -17,7 +17,7 @@ class Users extends Model<UserAttributes> {
         user_profile_img: {
           type: DataTypes.STRING,
         },
-        user_eamil: {
+        user_email: {
           type: DataTypes.STRING,
           allowNull: false,
         },
