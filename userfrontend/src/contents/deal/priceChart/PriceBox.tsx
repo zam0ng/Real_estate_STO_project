@@ -12,6 +12,11 @@ const PriceBox: React.FC = () => {
             {price: 3750, amount: 200},
             {price: 3750, amount: 200},
             {price: 3750, amount: 200},
+            {price: 3750, amount: 200},
+            {price: 3750, amount: 200},
+            {price: 3750, amount: 200},
+            {price: 3750, amount: 200},
+            {price: 3750, amount: 200},
             {price: 3800, amount: 200},
             {price: 3850, amount: 200},
             {price: 3900, amount: 200},
@@ -20,6 +25,11 @@ const PriceBox: React.FC = () => {
         ],
         "sell_list": [
             {price: 4050, amount: 200},
+            {price: 4100, amount: 200},
+            {price: 4100, amount: 200},
+            {price: 4100, amount: 200},
+            {price: 4100, amount: 200},
+            {price: 4100, amount: 200},
             {price: 4100, amount: 200},
             {price: 4100, amount: 200},
             {price: 4100, amount: 200},
@@ -59,7 +69,7 @@ const PriceBox: React.FC = () => {
             ref={priceChartRef}>
                 {pricelist.sell_list.map((item,index)=>{
                     return (
-                        <div className='w-full h-8 flex flex-row bg-blue-200 border-t border-b border-white' key={index}>
+                        <div className='w-full h-8 lg:text-base flex flex-row bg-blue-200 border-t border-b border-white' key={index}>
                             {/* 수량 그래프 */}
                             <div className='w-2/5 h-full flex justify-end items-center text-xs pr-5'>
                                 {item.amount}
