@@ -54,6 +54,8 @@ contract ERC20subscription is ERC20, Ownable {
     }
 
     function transfer(address to , uint256 amount) public override lockTimeCheck returns (bool) {
+        uint256 newTotalBalance = balanceOf(to) + amount;
+        require(newTotalBalance < (20 * totalSupply()) / 100, "Ownership capped at 20% to ensure decentralization");
         return super.transfer(to,amount);
     }
 
@@ -67,6 +69,8 @@ contract ERC20subscription is ERC20, Ownable {
         } else {
         require(block.timestamp >= _lockTime, "Tokens are locked");
         }
+        uint256 newTotalBalance = balanceOf(to) + amount;
+        require(newTotalBalance < (20 * totalSupply()) / 100, "Ownership capped at 20% to ensure decentralization");
         return super.transferFrom(from, to, amount);
     }
   
@@ -88,5 +92,5 @@ contract ERC20subscription is ERC20, Ownable {
 // 락업 (완료)
 // 계약서 첨부 (완료)
 // admin 물량 자동락업 1년 (완료)
-
+// 단일 계좌 20% 이상 보유 제한
 
