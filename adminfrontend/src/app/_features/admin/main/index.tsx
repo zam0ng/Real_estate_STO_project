@@ -63,3 +63,9 @@
             description : string;
 
         }
+
+
+// 테이블 제목 
+    export interface TableTitleProps {
+        title : string
+    } 

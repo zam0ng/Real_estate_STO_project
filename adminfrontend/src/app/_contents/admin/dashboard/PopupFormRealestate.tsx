@@ -11,7 +11,7 @@ import { FormEvent, useState } from "react";
 */
 
 
-export default function AdminCreateRealEstate() {
+export default function PopupFormRealestate() {
   const router = useRouter();
 
   const [uploadFile, setUploadFile] = useState<File | null>(null);

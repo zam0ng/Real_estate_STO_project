@@ -5,6 +5,10 @@ import {
   getNoticesList,
 } from "@/app/_api";
 
+
+import PopupFormRealestate from "@/app/_contents/admin/dashboard/PopupFormRealestate";
+
+
 import {
   CreateVoteBtn,
   CreateEstateBtn,
@@ -36,13 +40,19 @@ export default async function AdminMain() {
   // const noticesListData: NoticesListData[] = await getNoticesList();
   // console.log("noticesListData", noticesListData);
 
+  const handleEstateCreaetBtn = () => {
+
+  }
+
 
   return (
     <>
-      <h1> 어드민 페이지 </h1>
+      <h1> 어드민 대시보드   </h1>
 
       {/* 게시글 등록 */}
       {/* <CreateNoticeBtn /> */}
+
+
       {/* 공시(공지) 게시글 등록 */}
       {/* <RenderNotices noticesListData={noticesListData} /> */}
 
@@ -53,8 +63,12 @@ export default async function AdminMain() {
 
       {/* 매물 등록 */}
       <CreateEstateBtn />
+
       {/* 매물 등록한 것 보여주기 */}
       {/* <RenderSubscriptions subscriptionData={subscriptionData} /> */}
+
+
+      
 
       {/* 투표 등록 */}
       {/* <CreateVoteBtn /> */}
