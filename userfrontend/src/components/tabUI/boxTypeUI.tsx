@@ -1,8 +1,21 @@
+import React from "react"
 
-export default function LineTypeUI (){
+const data = [
+    {
+        tabName : "1번",
+        content : <div>1번컨텐츠</div>
+    },{
+        tabName : "2번",
+        content : <div>2번컨텐츠</div>
+    }
+]
+
+export default function BoxTypeUI (){
     return(
-        <div className="border-2 border-black">
-
+        <div className="grid-cols-3">
+            <div>d</div>
+            <div>dd</div>
+            <div>ddd</div>
         </div>
     )
 }

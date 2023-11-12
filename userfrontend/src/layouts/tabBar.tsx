@@ -15,8 +15,8 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
     }
     return (
         <div className="w-1/5 text-center text-xxs flex-col" onClick={()=>handleTabBtns(urlName)}>
-            <img className='block m-auto h-6' alt={btnName} src={process.env.PUBLIC_URL + `/images/tabBar/${imgName}.png`} />
-            <div className="text-center text-xxs">{btnName}</div>
+            <img className='block m-auto h-6 pt-1 ' alt={btnName} src={process.env.PUBLIC_URL + `/images/tabBar/${imgName}.png`} />
+            <div className="text-center text-xs ">{btnName}</div>
         </div>
     );
 }
@@ -24,7 +24,7 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
 function TabBar() {
     return(    
         <div>
-            <div className="flex flex-nowrap fixed bottom-0 w-full h-12 xs:flex bg-white pt-1">
+            <div className="flex flex-nowrap fixed bottom-0 w-full h-12 xs:flex bg-white pt-1 z-10 shadow-inner">
                 <TabButtons imgName="home" btnName="홈" urlName='home'/>
                 <TabButtons imgName="buy" btnName="청약" urlName='subscription'/>
                 <TabButtons imgName="cart" btnName="마켓" urlName='deal'/>
