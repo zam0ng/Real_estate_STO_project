@@ -1,12 +1,11 @@
-
-
+import Link from "next/link"
 
 
 const Menubar = () => {
   return (
     <>
-                  {/* 왼쪽 menu bar | 메뉴바 */}
-                  <div className="absolute h-auto bg-neutral-200 left-4 top-4 w-80 rounded-3xl">
+            {/* 왼쪽 menu bar | 메뉴바 */}
+            <div className="absolute h-auto bg-neutral-200 left-4 top-4 w-80 rounded-3xl">
                 
                 {/* wrapper */}
                 <div className="flex flex-col items-center ">
@@ -39,41 +38,42 @@ const Menubar = () => {
                     <div className="flex" >
                       {/* ✅ 아이콘 들어가야 함 */}
                       <div className="w-8 h-8 bg-stone-300 rounded-2xl" > </div>
-                        <p className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
+                        <Link href={"/admin/dashboard"} className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
                           대시보드
-                        </p>
+                        </Link>
                       </div>
                       
                     <div className="flex mt-14" >
                       {/* ✅ 아이콘 들어가야 함 */}
                       <div className="w-8 h-8 bg-stone-300 rounded-2xl" > </div>
-                        <p className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
+                        <Link href={"/admin/users"} className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
                           사용자
-                        </p>
+                        </Link>
+
                     </div>
                       
                     <div className="flex mt-14" >
                       {/* ✅ 아이콘 들어가야 함 */}
                       <div className="w-8 h-8 bg-stone-300 rounded-2xl" > </div>
-                        <p className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
+                        <Link href={"/admin/transactions"} className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
                           거래이력
-                        </p>
+                        </Link>
                     </div>
       
                     <div className="flex mt-14" >
                       {/* ✅ 아이콘 들어가야 함 */}
                       <div className="w-8 h-8 bg-stone-300 rounded-2xl" > </div>
-                        <p className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
+                        <Link href={"/admin/real_estates"} className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
                           매물관리
-                        </p>
+                        </Link>
                     </div>
       
                     <div className="flex mt-14" >
                       {/* ✅ 아이콘 들어가야 함 */}
                       <div className="w-8 h-8 bg-stone-300 rounded-2xl" > </div>
-                        <p className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
+                        <Link href={"/admin/notices"} className="ml-5 text-xl font-bold tracking-tight text-adminLayout_menubar_name">
                           게시글
-                        </p>
+                        </Link> 
                     </div>
       
                     <div className="flex mt-48 mb-4" >
@@ -87,7 +87,8 @@ const Menubar = () => {
                   </div>
                   
                 </div>
-              </div>
+                
+            </div>
     </>
   ) 
 }

@@ -67,7 +67,7 @@ export default function AdminCreateRealEstate() {
       console.log("item : value" , item, value)
     });
 
-    // ✅ 파일 전송 완료 확인 하고 -> forEach 확인하고 -> 지울 것 
+    // ✅ 백엔드 테스트 하고  -> forEach 확인하고 -> 지울 것 
     // formData.append("address", form.address.value);
     // formData.append("totalprice", form.totalprice.value);
     // formData.append("description", form.description.value);

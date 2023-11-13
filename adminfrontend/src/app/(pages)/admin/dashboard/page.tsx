@@ -5,9 +5,9 @@ import {
   getNoticesList,
 } from "@/app/_api";
 
+import ModalFormRealestate from "@/app/_contents/admin/dashboard/ModalFormRealestate";
 
-import PopupFormRealestate from "@/app/_contents/admin/dashboard/PopupFormRealestate";
-
+import { SearchParamsProps } from "@/app/_features/admin/dashboard";
 
 import {
   CreateVoteBtn,
@@ -20,6 +20,7 @@ import {
   RenderNotices,
 } from "@/app/_contents/admin/main";
 
+
 import {
   VoteProps,
   SubscriptionData,
@@ -27,7 +28,10 @@ import {
   NoticesListData,
 } from "@/app/_features/admin/main";
 
-export default async function AdminMain() {
+
+
+
+export default async function AdminMain({searchParams} : SearchParamsProps ) {
   // const voteListData: VoteProps[] = await getVoteList();
   // console.log("voteListData", voteListData);
 
@@ -40,9 +44,9 @@ export default async function AdminMain() {
   // const noticesListData: NoticesListData[] = await getNoticesList();
   // console.log("noticesListData", noticesListData);
 
-  const handleEstateCreaetBtn = () => {
 
-  }
+  const isEstateModalOpen = searchParams?.estateModal;
+
 
 
   return (
@@ -61,14 +65,17 @@ export default async function AdminMain() {
       {/* 블랙리스트 관리 */}
       {/* <RenderBlackList blacklistData={blacklistData} /> */}
 
+      
       {/* 매물 등록 */}
-      <CreateEstateBtn />
+      <CreateEstateBtn  />
+
+      {/* 매물 등록 팝업 */}
+      {isEstateModalOpen && <ModalFormRealestate />}
+
 
       {/* 매물 등록한 것 보여주기 */}
       {/* <RenderSubscriptions subscriptionData={subscriptionData} /> */}
 
-
-      
 
       {/* 투표 등록 */}
       {/* <CreateVoteBtn /> */}

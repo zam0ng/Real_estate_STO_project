@@ -10,6 +10,16 @@ module.exports = {
   ],
   theme: {
     extend: {
+
+      width : {
+        'admin_modal' : '43.5rem' ,
+      },
+
+      height : {
+        "line" : "0.09375rem",
+
+      },
+
       gridTemplateColumns : {
         'layout': '22rem, auto',
         'table': 'repeat(9, minmax(5rem, auto))',
@@ -21,7 +31,8 @@ module.exports = {
 
 
       fontSize : {
-        "1.75rem" : "1.75rem"
+        "1.75rem" : "1.75rem", 
+
       },
       spacing : {
         adminLayout_menubar_container : '27rem'
@@ -33,6 +44,8 @@ module.exports = {
         'admin_content_bg' : '#f4f4f6',
         'adminLayout_menubar_welcome' : '#77767B',
         'adminLayout_menubar_name' : '#252526',
+        'admin_modal_bg' : '#3D3D3D',
+        'admin_modal_line' : '#D9D9D9',
         'state_pending_back' : '#FFF0E2',
         'state_pending_text' : '#E7AB74',
         'action_btn_border' : '#EDEDED',

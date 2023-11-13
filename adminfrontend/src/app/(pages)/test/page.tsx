@@ -1,17 +1,24 @@
 export default function Test() {
   return (
     <>
-      <div className="grid h-screen overflow-hidden bg-yellow-200 grid-cols-layout " >
-
-        <div className="col-span-2 h-36 bg-stone-300" > header </div>
+      <div className="flex justify-center w-screen h-screen overflow-hidden bg-admin_modal_bg">
         
-        <div className="bg-green-300 min-h-[89vh] w-96"> 메뉴바 가이드 라인</div>
-        <div className="bg-sky-100"> table container </div>
-        
-        {/* <div className="col-span-2 bg-blue-200 " > footer </div> */}
+        <div className=" flex justify-center my-8 bg-white min-h-[80vh] rounded-2xl w-admin_modal ">
 
+          {/* wrapper */}
+          <div className="w-screen my-8 mx-7">
+
+            <h1 className="text-2xl font-bold text-adminLayout_menubar_name" > About your page </h1>
+
+            <div className="mt-8 h-line bg-admin_modal_line" ></div>
+
+            {/* 이게 쫙 옆으로 넓어지게 하고 싶은데 👇👇  */}
+            <div className="h-32 " >  </div>
+
+          </div>
+
+        </div>
       </div>
-
     </>
-  );  
+  );
 }

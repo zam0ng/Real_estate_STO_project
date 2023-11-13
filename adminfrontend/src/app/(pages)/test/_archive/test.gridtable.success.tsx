@@ -1,4 +1,4 @@
-import Layout from "@/app/_layout/layout";
+import Layout from "@/app/_layout/Layout";
 
 export default function Real_estates() {
   return (
@@ -25,10 +25,12 @@ export default function Real_estates() {
               <br></br>
               <br></br>
 
-              <div className="grid grid-cols-6 gap-2 mx-44 bg-sky-300 "> 
-              {/* <div className="grid w-2/4 gap-2 justify-items-center mx-44 bg-sky-300"> */}
+              <div className="grid grid-cols-6 gap-2 mx-44 bg-sky-300 ">
+                {/* <div className="grid w-2/4 gap-2 justify-items-center mx-44 bg-sky-300"> */}
                 {/* 첫 번째 행 */}
-                <div className="col-span-1 justify-self-start"><p>구분</p></div>
+                <div className="col-span-1 justify-self-start">
+                  <p>구분</p>
+                </div>
                 <div className="col-span-1">청약 상태</div>
                 <div className="col-span-1">청약 기간</div>
                 <div className="col-span-1">참여율</div>
@@ -37,25 +39,45 @@ export default function Real_estates() {
 
                 {/* 두 번째 행 */}
                 <div className="col-span-1 justify-self-start">구분</div>
-                <div className="col-span-1">청약 상태 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, laudantium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum dolores amet, quaerat numquam maxime eveniet praesentium ipsam facilis quo voluptas nihil eius exercitationem quam voluptatum minus magni! Sed, officiis quos? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius excepturi aperiam cupiditate nam ullam. Nemo, voluptates commodi? Provident consectetur non quam vero minima earum, eligendi temporibus, nihil alias blanditiis vitae.</div>
+                <div className="col-span-1">
+                  청약 상태 Lorem ipsum, dolor sit amet consectetur adipisicing
+                  elit. Voluptates, laudantium? Lorem ipsum dolor sit amet
+                  consectetur adipisicing elit. Harum dolores amet, quaerat
+                  numquam maxime eveniet praesentium ipsam facilis quo voluptas
+                  nihil eius exercitationem quam voluptatum minus magni! Sed,
+                  officiis quos? Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit. Eius excepturi aperiam cupiditate nam ullam.
+                  Nemo, voluptates commodi? Provident consectetur non quam vero
+                  minima earum, eligendi temporibus, nihil alias blanditiis
+                  vitae.
+                </div>
                 <div className="col-span-1">청약 기간</div>
                 <div className="col-span-1 overflow-hidden text-overflow-ellipsis">
                   1000%%%%%%%%%%%%%%%
                 </div>
                 <div className="col-span-1">D-day</div>
                 <div className="col-span-1 justify-self-end">버튼</div>
-                
+
                 {/* 세 번째 행 */}
                 <div className="col-span-1 justify-self-start">구분</div>
-                <div className="col-span-1">청약 상태 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptates, laudantium? Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum dolores amet, quaerat numquam maxime eveniet praesentium ipsam facilis quo voluptas nihil eius exercitationem quam voluptatum minus magni! Sed, officiis quos? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius excepturi aperiam cupiditate nam ullam. Nemo, voluptates commodi? Provident consectetur non quam vero minima earum, eligendi temporibus, nihil alias blanditiis vitae.</div>
+                <div className="col-span-1">
+                  청약 상태 Lorem ipsum, dolor sit amet consectetur adipisicing
+                  elit. Voluptates, laudantium? Lorem ipsum dolor sit amet
+                  consectetur adipisicing elit. Harum dolores amet, quaerat
+                  numquam maxime eveniet praesentium ipsam facilis quo voluptas
+                  nihil eius exercitationem quam voluptatum minus magni! Sed,
+                  officiis quos? Lorem ipsum dolor sit amet, consectetur
+                  adipisicing elit. Eius excepturi aperiam cupiditate nam ullam.
+                  Nemo, voluptates commodi? Provident consectetur non quam vero
+                  minima earum, eligendi temporibus, nihil alias blanditiis
+                  vitae.
+                </div>
                 <div className="col-span-1">청약 기간</div>
                 <div className="col-span-1 overflow-hidden text-overflow-ellipsis">
                   1000%%%%%%%%%%%%%%%
                 </div>
                 <div className="col-span-1">D-day</div>
                 <div className="col-span-1 justify-self-end">버튼</div>
-                
-                
               </div>
 
               <br></br>
