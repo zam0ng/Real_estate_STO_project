@@ -22,13 +22,13 @@ contract ERC20subscription is ERC20, Ownable {
     // owner주소, 이름, symbol , 총공급량, 구매자주소[],분배량[],락업시간,documenturi
     constructor(
         address _owner,
-         string memory _name,
-          string memory _symbol,
-          uint256 __totalSupply ,
-          address[] memory subscribers ,
-          uint256[] memory amounts,
-          uint256 __lockTime,
-          string memory __documentURI
+        string memory _name,
+        string memory _symbol,
+        uint256 __totalSupply ,
+        address[] memory subscribers ,
+        uint256[] memory amounts,
+        uint256 __lockTime,
+        string memory __documentURI
     )  ERC20(_name,_symbol) Ownable(_owner){
         require(subscribers.length == amounts.length, "subscribers and their amounts do not match");
         _totalSupply = __totalSupply;

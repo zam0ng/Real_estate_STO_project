@@ -46,3 +46,7 @@
     color: rgb(96 165 250);
   }
 }
+
+.indicator{
+  transition : left .4s;
+}
