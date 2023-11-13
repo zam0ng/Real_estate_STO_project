@@ -3,7 +3,7 @@ import { DB } from "../models";
 
 interface subscriptions_ownAttribute {
   user_email: string;
-  subscriptions_id: number;
+  subscription_id: number;
   amount: number;
 }
 
@@ -15,7 +15,7 @@ class Subscriptions_own extends Model<subscriptions_ownAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        subscriptions_id: {
+        subscription_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -37,7 +37,7 @@ class Subscriptions_own extends Model<subscriptions_ownAttribute> {
   }
   static associate(db: DB) {
     db.Subscriptions_own.belongsTo(db.Subscriptions, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
       targetKey: "id",
     });
   }

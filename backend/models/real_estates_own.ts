@@ -3,12 +3,11 @@ import { DB } from "../models";
 
 interface real_estates_ownAttribute {
   user_email: string;
-  real_estates_id: number;
-  real_estates_name: string;
+  real_estate_id: number;
+  real_estate_name: string;
   price: number;
   amount: number;
   possible_quantity: number;
-  token_name: string;
 }
 
 class Real_estates_own extends Model<real_estates_ownAttribute> {
@@ -19,11 +18,11 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        real_estates_id: {
+        real_estate_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        real_estates_name: {
+        real_estate_name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -39,10 +38,7 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        token_name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
+        
       },
       {
         sequelize,
@@ -57,7 +53,7 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
   }
   static associate(db: DB) {
     db.Real_estates_own.belongsTo(db.Real_estates, {
-      foreignKey: "real_estates_id",
+      foreignKey: "real_estate_id",
       targetKey: "id",
     });
   }
