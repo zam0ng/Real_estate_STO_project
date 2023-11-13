@@ -5,6 +5,7 @@ interface noticeAttribute {
   notice_title: string;
   notice_content: Text;
   notice_writer: string;
+  real_estate_name : string;
 }
 
 class Notices extends Model<noticeAttribute> {
@@ -27,6 +28,10 @@ class Notices extends Model<noticeAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        real_estate_name:{
+          type: DataTypes.STRING,
+          allowNull : false,
+        }
       },
       {
         sequelize,
