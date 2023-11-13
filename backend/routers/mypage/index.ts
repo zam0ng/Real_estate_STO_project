@@ -1,9 +1,10 @@
 import { Router } from "express";
 import {
-  deposit,
-  drawal,
-  depositList,
-  drawalList,
+  depositBalance,
+  withDrawal,
+  userInfo,
+  totalDeposit,
+  totalDrawal,
   transactionList,
   sumProfitLost,
   totalPurchase,
@@ -16,13 +17,15 @@ import {
 
 const router = Router();
 
-router.post("/deposit", deposit);
-router.post("/drawal", drawal);
+router.post("/deposit_balance", depositBalance);
+router.post("/withdrawal", withDrawal);
 
+// 유저 정보 보여주기
+router.get("/user_info", userInfo);
 // 입금액 보여주기
-router.get("/deposit", depositList);
+router.get("/total_deposit", totalDeposit);
 // 출금액 보여주기
-router.get("/drawal", drawalList);
+router.get("/total_drawal", totalDrawal);
 // 입출금 내역 보여주기
 router.get("/transaction_list", transactionList);
 // 총 손익 보여주기

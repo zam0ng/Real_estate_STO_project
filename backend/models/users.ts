@@ -11,6 +11,9 @@ interface UserAttributes {
 }
 
 class Users extends Model<UserAttributes> {
+  declare user_email: string;
+  declare balance: number;
+  declare using_balance: number;
   static initModel(sequelize: Sequelize): typeof Users {
     Users.init(
       {

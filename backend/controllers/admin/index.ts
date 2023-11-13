@@ -6,7 +6,6 @@ import Dividends from "../../models/dividends";
 import Subscriptions from "../../models/subscriptions";
 
 // 정현이형 어드민 부분
-
 type TradeDate = {
   real_estate_name: string;
   trade_amount: string;
@@ -20,11 +19,11 @@ interface RealEstateAmount {
   };
 }
 
-function getDayInfo(a: string) {
+function getDayInfo(info: string) {
   const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
-  if (a === "week") {
+  if (info === "week") {
     const days = Math.floor(
       (today.getTime() - yearStart) / (24 * 60 * 60 * 1000) + 1
     );
@@ -33,7 +32,7 @@ function getDayInfo(a: string) {
 
     return weekNum;
   }
-  if (a === "month") {
+  if (info === "month") {
     const month = today.setMonth(today.getMonth() - 10);
     return month;
   }
@@ -320,13 +319,6 @@ export const tradeDayList = async (req: Request, res: Response) => {
 // 매물별 거래량 차트 (주)
 export const tradeWeekList = async (req: Request, res: Response) => {
   try {
-    interface RealEstateAmount {
-      [key: string]: {
-        ten_weeks: string[];
-        ten_weeks_amount: number[];
-      };
-    }
-
     const tenWeeksAgo = getDayInfo("week");
 
     const result = (await db.Trades.findAll({
