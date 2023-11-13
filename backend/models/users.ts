@@ -1,7 +1,10 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 
 interface UserAttributes {
+<<<<<<< HEAD
   user_profile_img: string;
+=======
+>>>>>>> jy
   user_email: string;
   user_pw: string;
   wallet: string;
@@ -17,9 +20,12 @@ class Users extends Model<UserAttributes> {
   static initModel(sequelize: Sequelize): typeof Users {
     Users.init(
       {
+<<<<<<< HEAD
         user_profile_img: {
           type: DataTypes.STRING,
         },
+=======
+>>>>>>> jy
         user_email: {
           type: DataTypes.STRING,
           allowNull: false,

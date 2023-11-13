@@ -2,11 +2,14 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface real_estatesAttribute {
+  id? : number;
   subscription_id: number;
   real_estate_name: string;
   current_price: number;
   start_price: number;
   value: number;
+  token_name: string;
+
 }
 
 class Real_estates extends Model<real_estatesAttribute> {
@@ -31,6 +34,10 @@ class Real_estates extends Model<real_estatesAttribute> {
         },
         value: {
           type: DataTypes.FLOAT,
+          allowNull: false,
+        },
+        token_name: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
       },

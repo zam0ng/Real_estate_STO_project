@@ -9,6 +9,7 @@ interface tradesAttributes {
   trade_price: number;
   trade_amount: number;
   createdAt?: Date;
+  order_type ? : string;
 }
 
 class Trades extends Model<tradesAttributes> implements tradesAttributes {
@@ -19,6 +20,8 @@ class Trades extends Model<tradesAttributes> implements tradesAttributes {
   trade_amount!: number;
   total_amount!: number;
   createdAt!: Date;
+  order_type!: string;
+
 
   static initModel(sequelize: Sequelize): typeof Trades {
     Trades.init(
