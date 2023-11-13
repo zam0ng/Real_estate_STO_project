@@ -1,6 +1,11 @@
 import React from 'react';
 
-const PropertyPriceChange: React.FC = () => {
+interface PriceChangeProps {
+  priceChange: number;
+  priceChangeRate: number;
+}
+
+const PropertyPriceChange: React.FC<PriceChangeProps> = ({priceChange,priceChangeRate}) => {
   return (
     <div>PropertyPriceChange</div>
   )

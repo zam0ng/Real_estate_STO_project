@@ -1,6 +1,10 @@
 import React from 'react';
 
-const PropertyName: React.FC = () => {
+interface NameProps {
+  name: string;
+}
+
+const PropertyName: React.FC<NameProps> = ({name}) => {
   return (
     <div>PropertyName</div>
   )

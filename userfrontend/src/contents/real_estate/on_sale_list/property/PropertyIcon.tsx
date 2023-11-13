@@ -1,6 +1,10 @@
 import React from 'react';
 
-const PropertyIcon: React.FC = () => {
+interface ImageProps {
+  img : string;
+}
+
+const PropertyIcon: React.FC<ImageProps> = ({img}) => {
   return (
     <div>PropertyIcon</div>
   )

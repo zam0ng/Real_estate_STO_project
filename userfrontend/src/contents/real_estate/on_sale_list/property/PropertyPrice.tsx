@@ -1,6 +1,10 @@
 import React from 'react';
 
-const PropertyPrice: React.FC = () => {
+interface PriceProps {
+  price: number;
+}
+
+const PropertyPrice: React.FC<PriceProps> = ({price}) => {
   return (
     <div>PropertyPrice</div>
   )
