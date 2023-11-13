@@ -8,13 +8,14 @@ interface PriceChangeProps {
 const PropertyPriceChange: React.FC<PriceChangeProps> = ({priceChange,priceChangeRate}) => {
   let textColor;
   let plusMinus;
+  let twoDecimalChangeRate = (Math.round(priceChangeRate * 100) / 100).toFixed(2);
   if(priceChange > 0){
     plusMinus = "+";
     textColor = "text-red-500";
 
     return (
       <div className={`w-full h-1/4 flex justify-end items-center pr-3 text-xs-sm ${textColor}`}>
-        {`${plusMinus}${priceChange} (${plusMinus}${priceChangeRate})`}
+        {`${plusMinus}${priceChange} (${plusMinus}${twoDecimalChangeRate})`}
       </div>
     )
   }else if(priceChange < 0){
@@ -22,13 +23,13 @@ const PropertyPriceChange: React.FC<PriceChangeProps> = ({priceChange,priceChang
 
     return (
       <div className={`w-full h-1/4 flex justify-end items-center pr-3 text-xs-sm ${textColor}`}>
-        {`${priceChange} (${priceChangeRate})`}
+        {`${priceChange} (${twoDecimalChangeRate})`}
       </div>
     )
   }else{
     return (
       <div className='w-full h-1/4 flex justify-end items-center pr-3 text-xs-sm'>
-        {`${priceChange} (${priceChangeRate})`}
+        {`${priceChange} (${twoDecimalChangeRate})`}
       </div>
     )
   }

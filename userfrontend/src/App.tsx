@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter,Routes,Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 
 import Deal from "./pages/Deal";
@@ -8,8 +9,11 @@ import Subscription from "./pages/subscription";
 import Mypage from "./pages/mypage";
 import Market from "./pages/Market";
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate replace to ="/home" />} />
@@ -20,6 +24,7 @@ function App() {
           <Route path="/market" element={<Market/>} />
         </Routes>
       </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
