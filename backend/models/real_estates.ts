@@ -2,35 +2,35 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface real_estatesAttribute {
-  subscriptions_id: number;
-  real_estates_name: string;
-  currentPrice: number;
-  startPrice: number;
-  value: BigInt;
+  subscription_id: number;
+  real_estate_name: string;
+  current_price: number;
+  start_price: number;
+  value: number;
 }
 
 class Real_estates extends Model<real_estatesAttribute> {
   static initModel(sequelize: Sequelize): typeof Real_estates {
     Real_estates.init(
       {
-        subscriptions_id: {
+        subscription_id: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        real_estates_name: {
+        real_estate_name: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        currentPrice: {
-          type: DataTypes.INTEGER,
+        current_price: {
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
-        startPrice: {
-          type: DataTypes.INTEGER,
+        start_price: {
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
         value: {
-          type: DataTypes.BIGINT,
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
       },
@@ -47,10 +47,10 @@ class Real_estates extends Model<real_estatesAttribute> {
   }
   static associate(db: DB) {
     db.Real_estates.belongsTo(db.Subscriptions, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Real_estates.hasMany(db.Real_estates_own, {
-      foreignKey: "real_estates_id",
+      foreignKey: "real_estate_id",
     });
   }
 }

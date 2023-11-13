@@ -1,0 +1,156 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "notices": [
+    {
+      "id": 1,
+      "title": "투표 제목",
+      "description": "안건설명"
+    },
+    {
+      "title": "공시공지",
+      "description": "공시설명",
+      "id": 2
+    },
+    {
+      "title": "게시글 1",
+      "description": "공지사항 🙌🙌🙌🙌🙌",
+      "id": 3
+    }
+  ],
+  "blacklist": [
+    {
+      "id": 1,
+      "isInBlackList": "json-server",
+      "description": "typicode"
+    },
+    {
+      "title": "gogo",
+      "description": "gogo",
+      "id": 2
+    },
+    {
+      "title": "유저 ✅✅",
+      "description": "유저 ✅✅",
+      "id": 3
+    }
+  ],
+  "real_estates_submit": [
+    {
+      "id": 1,
+      "use_district": "real_estates_submit",
+      "mainpurpose": "test",
+      "floors": "123",
+      "plottage": "123",
+      "total_ground_area": "123"
+    },
+    {
+      "mainpurpose": "123",
+      "use_district": "123",
+      "floors": "123",
+      "plottage": "123",
+      "total_ground_area": "123",
+      "id": 2
+    },
+    {
+      "mainpurpose": "매물 ",
+      "use_district": "매물 ",
+      "floors": "매매물",
+      "plottage": "매물",
+      "total_ground_area": "123123",
+      "id": 3
+    },
+    {
+      "mainpurpose": "매물 ",
+      "use_district": "매물 ",
+      "floors": "매물 ",
+      "plottage": "오캐이",
+      "total_ground_area": "좋아",
+      "id": 4
+    },
+    {
+      "mainpurpose": "good",
+      "use_district": "good",
+      "floors": "good",
+      "plottage": "good",
+      "total_ground_area": "good",
+      "id": 5
+    },
+    {
+      "mainpurpose": "매물 📌📌",
+      "use_district": "매물 📌📌",
+      "floors": "매물 📌📌",
+      "plottage": "매물 📌📌",
+      "total_ground_area": "매물 📌📌",
+      "id": 6
+    },
+    {
+      "mainpurpose": "🚀🚀🚀🚀🚀 ",
+      "use_district": "🚀🚀🚀🚀🚀",
+      "floors": "🚀🚀🚀🚀🚀",
+      "plottage": "🚀🚀🚀🚀🚀",
+      "total_ground_area": "🚀🚀🚀🚀🚀",
+      "id": 7
+    }
+  ],
+  "votes": [
+    {
+      "id": 1,
+      "title": "투표1",
+      "description": "투표1",
+      "author": "dj"
+    },
+    {
+      "description": "123",
+      "id": 2
+    },
+    {
+      "description": "123132",
+      "id": 3
+    },
+    {
+      "description": "123",
+      "id": 4
+    },
+    {
+      "title": "123123",
+      "description": "123123",
+      "id": 5
+    },
+    {
+      "title": "123",
+      "description": "123",
+      "id": 6
+    },
+    {
+      "title": "hi",
+      "description": "hi",
+      "id": 7
+    },
+    {
+      "title": "투표 등록 🌴🌴",
+      "description": "투표 등록 🌴🌴",
+      "id": 8
+    },
+    {
+      "title": "123123",
+      "description": "👏👏👏👏👏 ",
+      "id": 9
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

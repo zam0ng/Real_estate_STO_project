@@ -3,18 +3,20 @@ import { DB } from "../models";
 
 // typescirpt는 enum에 관한 지식이 없답니다
 export enum status_enum {
-  panding = "panding",
-  start = "start",
-  end = "end",
+  panding = "pending", // 청약 시작 전
+  start = "start", // 청약 시작
+  success = "success", // 청약 성공
+  failure = "failure", // 청약 실패
 }
 
 interface SubscriptionsAttribute {
+  id?: number;
   subscription_img: string;
   subscription_name: string;
   subscription_address: string;
-  subscription_totalprice: number;
+  subscription_totalprice: bigint;
   subscription_totalsupply: number;
-  subscription_description: Text;
+  subscription_description: string;
   subscription_start_date: Date;
   subscription_end_date: Date;
   subscription_result_date: Date;
@@ -25,11 +27,11 @@ interface SubscriptionsAttribute {
   subscription_status: string;
   floors: string;
   purpose: string;
-  mainpurpose: string;
+  main_purpose: string;
   area: number;
-  allarea: number;
-  buildarea: number;
-  floorarea: number;
+  all_area: number;
+  build_area: number;
+  floor_area: number;
   completion: Date;
   stock_type: string;
   publisher: string;
@@ -39,6 +41,11 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         subscription_img: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -81,7 +88,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
         },
         subscription_status: {
           type: DataTypes.ENUM,
-          values: ["pading", "start", "end"],
+          values: ["pending", "start", "success", "failure"],
           allowNull: false,
         },
         floors: {
@@ -92,7 +99,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        mainpurpose: {
+        main_purpose: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -100,24 +107,24 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        allarea: {
+        all_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        buildarea: {
+        build_area: {
           type: DataTypes.FLOAT,
           allowNull: false,
         },
-        floorarea: {
-          type: DataTypes.INTEGER,
+        floor_area: {
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
         completion: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.DATE,
           allowNull: false,
         },
         stock_type: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         publisher: {
@@ -139,13 +146,13 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
 
   static associate(db: DB) {
     db.Subscriptions.hasMany(db.Subscriptions_own, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Real_estates, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
     db.Subscriptions.hasMany(db.Subscription_application, {
-      foreignKey: "subscriptions_id",
+      foreignKey: "subscription_id",
     });
   }
 }
