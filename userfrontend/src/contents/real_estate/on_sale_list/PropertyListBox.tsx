@@ -49,7 +49,6 @@ const PropertyListBox: React.FC = () => {
       subscription_description: "property description"
     },
   ];
-
   return (
     <div className='w-[80%] h-auto mt-10 flex flex-col'>
       <div className='w-[80%] h-20 flex flex-col justify-center items-start mb-5'>
