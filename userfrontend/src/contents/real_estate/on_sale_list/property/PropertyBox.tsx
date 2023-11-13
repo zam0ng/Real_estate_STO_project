@@ -20,14 +20,22 @@ const PropertyBox: React.FC<PropertyProps> = ({start_price,current_price,fluctua
   return (
     <div className='w-full h-32 border border-gray-400 rounded-lg mb-5 flex flex-row'>
       <div className='w-1/2 h-full'>
-        <PropertyName name={subscription_name} />
-        <PropertyDescription description={subscription_description} />
-        <PropertyIcon img={subscription_img} />
+        <div className='w-full h-1/2'>
+          <PropertyName name={subscription_name} />
+          <PropertyDescription description={subscription_description} />
+        </div>
+        <div className='w-full h-1/2'>
+          <PropertyIcon img={subscription_img} />
+        </div>
       </div>
       <div className='w-1/2 h-full'>
-        <PropertyRating rating={rating} />
-        <PropertyPriceChange priceChange={current_price - start_price} priceChangeRate={fluctuation_rate} />
-        <PropertyPrice price={current_price} />
+        <div className='w-full h-1/2'>
+          <PropertyRating rating={rating} />
+        </div>
+        <div className='w-full h-1/2'>
+          <PropertyPriceChange priceChange={current_price - start_price} priceChangeRate={fluctuation_rate} />
+          <PropertyPrice price={current_price} />
+        </div>
       </div>
     </div>
   )

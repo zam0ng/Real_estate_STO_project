@@ -5,10 +5,19 @@ const PropertyListBox: React.FC = () => {
   const propertyList = [
     {
       start_price : 5000,
-      current_price : 4900,
-      fluctuation_rate : -0.10,
+      current_price : 5050,
+      fluctuation_rate : 0.10,
       rating: 15.0816,
       subscription_img : "",
+      subscription_name: "문래 공차",
+      subscription_description: "property description"
+    },
+    {
+      start_price : 5000,
+      current_price : 4900,
+      fluctuation_rate : -0.10,
+      rating: 9.0816,
+      subscription_img : "",
       subscription_name: "property name",
       subscription_description: "property description"
     },
@@ -25,7 +34,16 @@ const PropertyListBox: React.FC = () => {
       start_price : 5000,
       current_price : 4900,
       fluctuation_rate : -0.10,
-      rating: 4.0816,
+      rating: -9.0816,
+      subscription_img : "",
+      subscription_name: "property name",
+      subscription_description: "property description"
+    },
+    {
+      start_price : 5000,
+      current_price : 4900,
+      fluctuation_rate : -0.10,
+      rating: -11.0816,
       subscription_img : "",
       subscription_name: "property name",
       subscription_description: "property description"
