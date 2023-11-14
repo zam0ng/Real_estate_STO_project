@@ -5,10 +5,8 @@ import {
   userInfo,
   totalDeposit,
   totalDrawal,
-  transactionList,
+  // transactionList,
   sumProfitLost,
-  totalPurchase,
-  avgPurchase,
   assetInformation,
   dividendList,
   voteList,
@@ -27,13 +25,9 @@ router.get("/total_deposit", totalDeposit);
 // 출금액 보여주기
 router.get("/total_drawal", totalDrawal);
 // 입출금 내역 보여주기
-router.get("/transaction_list", transactionList);
+// router.get("/transaction_list", transactionList);
 // 총 손익 보여주기
 router.get("/sum_profit_lost", sumProfitLost);
-// 총 매입 보여주기
-router.get("/total_purchase", totalPurchase);
-// 총 평가 보여주기
-router.get("/avg_purchase", avgPurchase);
 // 종목별 자산 정보
 router.get("/asset_information", assetInformation);
 // 배당금
