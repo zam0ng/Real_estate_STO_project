@@ -22,13 +22,13 @@ contract ERC20subscription is ERC20, Ownable {
     // owner주소, 이름, symbol , 총공급량, 구매자주소[],분배량[],락업시간,documenturi
     constructor(
         address _owner,
-         string memory _name,
-          string memory _symbol,
-          uint256 __totalSupply ,
-          address[] memory subscribers ,
-          uint256[] memory amounts,
-          uint256 __lockTime,
-          string memory __documentURI
+        string memory _name,
+        string memory _symbol,
+        uint256 __totalSupply ,
+        address[] memory subscribers ,
+        uint256[] memory amounts,
+        uint256 __lockTime,
+        string memory __documentURI
     )  ERC20(_name,_symbol) Ownable(_owner){
         require(subscribers.length == amounts.length, "subscribers and their amounts do not match");
         _totalSupply = __totalSupply;
@@ -54,6 +54,8 @@ contract ERC20subscription is ERC20, Ownable {
     }
 
     function transfer(address to , uint256 amount) public override lockTimeCheck returns (bool) {
+        uint256 newTotalBalance = balanceOf(to) + amount;
+        require(newTotalBalance < (20 * totalSupply()) / 100, "Ownership capped at 20% to ensure decentralization");
         return super.transfer(to,amount);
     }
 
@@ -67,6 +69,8 @@ contract ERC20subscription is ERC20, Ownable {
         } else {
         require(block.timestamp >= _lockTime, "Tokens are locked");
         }
+        uint256 newTotalBalance = balanceOf(to) + amount;
+        require(newTotalBalance < (20 * totalSupply()) / 100, "Ownership capped at 20% to ensure decentralization");
         return super.transferFrom(from, to, amount);
     }
   
@@ -88,5 +92,5 @@ contract ERC20subscription is ERC20, Ownable {
 // 락업 (완료)
 // 계약서 첨부 (완료)
 // admin 물량 자동락업 1년 (완료)
-
+// 단일 계좌 20% 이상 보유 제한
 
