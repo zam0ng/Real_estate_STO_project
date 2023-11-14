@@ -13,12 +13,14 @@ interface PropertyProps {
     rating : number,
     subscription_img : string,
     subscription_name : string,
-    subscription_description : string
+    subscription_description : string,
+    navigator: (arg: string) => void;
 }
 
-const PropertyBox: React.FC<PropertyProps> = ({start_price,current_price,fluctuation_rate,rating,subscription_img,subscription_name,subscription_description}) => {
+const PropertyBox: React.FC<PropertyProps> = ({start_price,current_price,fluctuation_rate,rating,subscription_img,subscription_name,subscription_description,navigator}) => {
   return (
-    <div className='w-full h-32 border border-gray-400 rounded-lg mb-5 flex flex-row'>
+    <div className='w-full h-32 border border-gray-400 rounded-lg mb-5 flex flex-row'
+    onClick={()=>navigator(subscription_name)}>
       <div className='w-1/2 h-full'>
         <div className='w-full h-1/2'>
           <PropertyName name={subscription_name} />
