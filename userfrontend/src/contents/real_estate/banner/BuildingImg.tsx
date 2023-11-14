@@ -2,11 +2,12 @@ import React from 'react';
 
 interface ImageProps {
   img: string;
-  totalPrice : bigint;
+  totalPrice : number;
 }
 
 const BuildingImg: React.FC<ImageProps> = ({img,totalPrice}) => {
   const totalPriceCut = Number(totalPrice) / 10000;
+  console.log(totalPrice);
   
   let priceKr;
   if(totalPriceCut <= 1){
@@ -16,7 +17,11 @@ const BuildingImg: React.FC<ImageProps> = ({img,totalPrice}) => {
   }else if(totalPriceCut >= 10000){
     let uk = Math.floor(totalPriceCut / 10000);
     let man = totalPriceCut % 10000;
-    priceKr = `총 ${uk}억 ${man}만원 모집`;
+    if(man === 0){
+      priceKr = `총 ${uk}억원 모집`;
+    }else{
+      priceKr = `총 ${uk}억 ${man}만원 모집`;
+    }
   };
   
   return (
@@ -25,7 +30,7 @@ const BuildingImg: React.FC<ImageProps> = ({img,totalPrice}) => {
       text-white text-xs-sm flex justify-center items-center'>
         {priceKr}
       </div>
-      <img className='w-full h-full rounded-lg' src={process.env.PUBLIC_URL + `/images/building/building-example.jpeg`} alt='building image' />
+      <img className='w-full h-full rounded-lg' src={img} alt='building image' />
     </div>
   )
 }

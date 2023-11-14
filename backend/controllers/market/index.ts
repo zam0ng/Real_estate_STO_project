@@ -31,7 +31,7 @@ export const marketSubscription = async (req :Request, res : Response) =>{
         }
         else{
             const result = await Subscriptions.findAll({
-                where : {subscription_status : "pading"},
+                where : {subscription_status : "pending"},
                 limit : 1,
                 order : [['createdAt','DESC']],
                 attributes : [
