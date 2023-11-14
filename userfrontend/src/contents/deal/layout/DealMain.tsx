@@ -1,7 +1,7 @@
 import React from 'react';
-import OrderInfo from './priceChart/OrderInfo';
-import BuySellTabInfo from './buySell/BuySellTabInfo';
-import HistoryTabInfo from './history/HistoryTabInfo';
+import OrderInfo from '../priceChart/OrderInfo';
+import BuySellTabInfo from '../buySell/BuySellTabInfo';
+import HistoryTabInfo from '../history/HistoryTabInfo';
 
 const DealMain: React.FC = () => {
 

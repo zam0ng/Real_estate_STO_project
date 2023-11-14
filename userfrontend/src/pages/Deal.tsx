@@ -1,6 +1,6 @@
 import React from 'react';
-import DealHeader from '../contents/deal/DealHeader';
-import DealMain from '../contents/deal/DealMain';
+import DealHeader from '../contents/deal/layout/DealHeader';
+import DealMain from '../contents/deal/layout/DealMain';
 
 const Deal: React.FC = () => {
   return (
