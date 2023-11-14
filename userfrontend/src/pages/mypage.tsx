@@ -1,4 +1,4 @@
-import Login from "./login"
+import TabBar from "../layouts/tabBar"
 
 export default function Mypage () {
     // 1. 저장된 쿠키가 있는지 확인한다
@@ -7,7 +7,7 @@ export default function Mypage () {
     return(
         <>
             <>마이페이지 화면</>
-            <Login />
+            <TabBar />
         </>
     )
 }

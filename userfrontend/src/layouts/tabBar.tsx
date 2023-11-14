@@ -11,7 +11,7 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
     const Navigate = useNavigate();
 
     function handleTabBtns(urlName : string){
-        Navigate(urlName);
+        Navigate(`/${urlName}`);
     }
     return (
         <div className="w-1/5 text-center text-xxs flex-col" onClick={()=>handleTabBtns(urlName)}>
