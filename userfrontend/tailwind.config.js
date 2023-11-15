@@ -20,7 +20,9 @@ module.exports = {
         xs: "250px"
       },
       height: {
-        over: "120%"
+        over: "120%",
+        "112": "28rem",
+        "128": "32rem"
       }
     },
   },

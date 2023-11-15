@@ -1,8 +1,13 @@
-import React from 'react'
+import React from 'react';
+import DividendDate from './DividendDate';
+import DividendAmount from './DividendAmount';
 
 const MonthlyDividend: React.FC = () => {
   return (
-    <div>MonthlyDividend</div>
+    <div className='w-[80%] h-44 border border-black rounded-lg'>
+      <DividendDate />
+      <DividendAmount />
+    </div>
   )
 }
 

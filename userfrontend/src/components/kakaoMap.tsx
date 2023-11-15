@@ -1,13 +1,19 @@
-import { useEffect } from "react"
-import React from "react"
+import { useEffect } from "react";
+import React from "react";
 
 declare global {
     interface Window {
       kakao: any;
     }
-  }
+}
 
-export default function KakaoMap ({addressKor} : {addressKor : string}) {
+interface MapProps {
+    addressKor: string;
+    width: string;
+    height: string;
+}
+
+const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
 
 
     useEffect(()=>{
@@ -49,8 +55,10 @@ export default function KakaoMap ({addressKor} : {addressKor : string}) {
 
 
     return(
-        <div id="map" className="w-4/5 h-60 border-2 border-black rounded-md">
+        <div id="map" className={`${width} ${height} border-2 border-black rounded-md`}>
             
         </div>
     )
 }
+
+export default KakaoMap;

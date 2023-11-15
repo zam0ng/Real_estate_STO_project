@@ -8,7 +8,7 @@ export default function Home () {
     return(
         <div className="flex flex-col items-center  ">
             <Slider />
-            <KakaoMap addressKor="경기도 시흥시 복지로 15" />
+            <KakaoMap addressKor="경기도 시흥시 복지로 15" width="w-4/5" height="h-60" />
             <ProgressBar percent={30}/>
             <LineTypeTabComponent />
             <BoxTypeTabComponent />

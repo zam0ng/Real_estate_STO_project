@@ -9,7 +9,6 @@ export default function Slider (){
         {url : `${process.env.PUBLIC_URL}/images/sliderdummy/dummy1.jpg`},
         {url : `${process.env.PUBLIC_URL}/images/sliderdummy/dummy2.jpg`},
         {url : `${process.env.PUBLIC_URL}/images/sliderdummy/dummy3.jpg`},
-
     ]
 
     const [currentIndex,setCurrentIndex] = useState<number>(0)
@@ -28,7 +27,7 @@ export default function Slider (){
 
 
     return(
-        <div className="w-5/6 h-96 m-auto py-2 px-4 relative group ">
+        <div className="w-[97%] h-96 m-auto py-2 px-4 relative group ">
             <div style={{backgroundImage : `url(${slides[currentIndex].url})`}} className="w-full h-80 rounded-2xl bg-center bg-cover duration-500"> 
             </div>
             <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-small rounded-full p-2 bg-black/10 text-white cursor-pointer'>

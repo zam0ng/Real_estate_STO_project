@@ -7,7 +7,7 @@ import PropertyDealHistory from './PropertyDealHistory';
 
 const PropertyInfo: React.FC = () => {
     return (
-        <div className='w-full h-64 border border-black rounded-tl-xl rounded-tr-xl flex flex-col items-center
+        <div className='w-full h-64 rounded-tl-xl rounded-tr-xl flex flex-col items-center
         justify-around'>
             <div className='w-full h-auto'>
                 <div className='w-full h-7 flex flex-row items-center mt-5'>

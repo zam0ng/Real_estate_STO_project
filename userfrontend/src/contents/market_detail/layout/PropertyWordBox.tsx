@@ -15,15 +15,15 @@ const PropertyWordBox: React.FC = () => {
   return (
     <div className='w-full h-auto rounded-tl-xl rounded-tr-xl flex flex-col items-center'>
       <PropertyInfo />
-      <div className='w-[80%] border-2 border-slate-200 rounded-full'></div>
+      <div className='w-full border-2 border-slate-200 rounded-full'></div>
       <PropertyDetail />
-      <div className='w-[80%] border-2 border-slate-200 rounded-full'></div>
+      <div className='w-full border-2 border-slate-200 rounded-full'></div>
       <PropertyLocation />
-      <div className='w-[80%] border-2 border-slate-200 rounded-full'></div>
+      <div className='w-full border-2 border-slate-200 rounded-full'></div>
       <PropertyDividend />
-      <div className='w-[80%] border-2 border-slate-200 rounded-full'></div>
+      <div className='w-full border-2 border-slate-200 rounded-full'></div>
       <OwnerBenefit />
-      <div className='w-[80%] border-2 border-slate-200 rounded-full'></div>
+      <div className='w-full border-2 border-slate-200 rounded-full'></div>
       <PropertyDocuments />
       <ToDealPage />
     </div>
