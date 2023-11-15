@@ -28,7 +28,7 @@ export default function LineTypeTabComponent (){
 
         return (
             <div 
-                className={` z-10 p-1 text-sm font-bold`} 
+                className={` z-10  text-lg font-semibold`} 
                 data-index={index} 
                 onClick={() => setTabNum(index)} 
                 key={index}
@@ -47,7 +47,7 @@ export default function LineTypeTabComponent (){
     }
 
     return(
-        <div className="w-screen m-auto">
+        <div className="w-full m-auto mt-11">
             <div className=" relative  text-center border-b-2 h-7 mb-9 "
             style={{ display: 'grid', gridTemplateColumns: `repeat(${data.length}, minmax(0, 1fr))` }}
             >
