@@ -10,8 +10,10 @@ import { FormEvent, useState } from "react";
   - sample 코드 : https://www.figma.com/file/1MKhuVFyKgkxbo7SzZ4cNy/next.js-%EA%B3%B5%EB%B6%80?type=whiteboard&node-id=16-2287&t=hr4e0bZDfnz7hZZ8-4
 */
 
+import Link from "next/link";
 
-export default function AdminCreateRealEstate() {
+
+export default function ModalFormRealestate () {
   const router = useRouter();
 
   const [uploadFile, setUploadFile] = useState<File | null>(null);
@@ -25,6 +27,7 @@ export default function AdminCreateRealEstate() {
       setUploadFile(input.files[0]);
     }
   };
+  
 
   const handleCreateEstate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +70,7 @@ export default function AdminCreateRealEstate() {
       console.log("item : value" , item, value)
     });
 
-    // ✅ 백엔드 테스트 하고  -> forEach 확인하고 -> 지울 것 
+    // ✅ 파일 전송 완료 확인 하고 -> forEach 확인하고 -> 지울 것 
     // formData.append("address", form.address.value);
     // formData.append("totalprice", form.totalprice.value);
     // formData.append("description", form.description.value);
@@ -106,10 +109,7 @@ export default function AdminCreateRealEstate() {
 
   return (
     <>
-      <br></br>
-
-      <h1> 매물 등록 페이지 👇👇👇 </h1>
-
+    
       <h3> 건물 정보 </h3>
       {/* ✅ ERD 랑 여기에 input 태그의 속성으로 적게 되는 name 의 값과 동일해야 함  */}
 
@@ -254,6 +254,10 @@ export default function AdminCreateRealEstate() {
           <input type="submit" value="건물 정보 등록" />
         </p>
       </form>
+
+
+        <Link href={"/admin/dashboard"} > ❎ </Link>
+
     </>
   );
 }
