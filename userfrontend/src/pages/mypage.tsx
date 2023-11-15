@@ -14,11 +14,18 @@ export default function Mypage () {
               window.location.reload();
             }
           }, false);
-
+    if(cookiedata){
+        return(
+            <>
+                {/* {cookiedata ? <div>{JSON.stringify(data, null, 2)}</div> : <div>Loading...</div>} */}
+                {cookiedata}
+                <TabBar />
+            </>
+        )
+    }
     return(
         <>
-            {/* {cookiedata ? <div>{JSON.stringify(data, null, 2)}</div> : <div>Loading...</div>} */}
-            {cookiedata}
+            <>마이페이지 작동합니다</>
             <TabBar />
         </>
     )
