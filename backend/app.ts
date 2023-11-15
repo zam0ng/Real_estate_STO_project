@@ -8,8 +8,7 @@ import { sequelize } from "./models";
 import adminRouter from "./routers/admin";
 import marketRouter from "./routers/market";
 import orderRouter from "./routers/order";
-import subscriptionRouter from "./routers/subscription";
-import mypageRouter from "./routers/mypage";
+import mainRouter from "./routers/main";
 
 const app: Express = express();
 
@@ -33,10 +32,9 @@ sequelize
   });
 
 app.use("/admin", adminRouter);
-app.use("/market", marketRouter);
-app.use("/order", orderRouter);
-app.use("/subscription", subscriptionRouter);
-app.use("/mypage", mypageRouter);
+app.use("/market",marketRouter);
+app.use("/order",orderRouter);
+app.use("/main",mainRouter);
 
 app.listen(8080, () => {
   console.log("server on");

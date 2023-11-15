@@ -531,15 +531,24 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   console.log(req.body);
-  const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
+  const {real_estate_name , dividend_price , basedate , paymentdate} = req.body;
+  const month = paymentdate.slice(5,7);
   try {
-    const result = await Dividends.create({
-      real_estate_name: real_estate_name,
-      dividend_price: dividend_price,
-      dividend_basedate: basedate,
-      dividend_paymentdate: paymentdate,
-    });
-    res.sendStatus(201);
+      const result  = await Dividends.create({
+          real_estate_name : real_estate_name,
+          dividend_price : dividend_price,
+          dividend_basedate : basedate,
+          dividend_paymentdate : paymentdate,
+      })
+
+      await Notices.create({
+        category : "공시",
+        notice_title : `${month}월 배당금 지급 안내`,
+        notice_content : `안녕하세요. 카사입니다. \n 아래와 같이 ${real_estate_name} ${month} 월 배당금 지급 관련하여 안내해 드립니다. \n 1. 건물명 : ${real_estate_name} \n 2. 예상 배당금 : ${dividend_price}원 \n 3. 배당기준일 : ${basedate} \n 4. 지급예정일 : ${paymentdate} \n 5. 배당종류 : 현금배당`,
+        notice_writer : "admin",
+        real_estate_name : real_estate_name,
+      })
+      res.sendStatus(201);
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
