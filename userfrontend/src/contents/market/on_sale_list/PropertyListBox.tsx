@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropertyBox from './property/PropertyBox';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
-interface PropertyInfo {
+export interface PropertyInfo {
   start_price: number;
   current_price: number;
   fluctuation_rate: number;
@@ -24,12 +24,18 @@ const queryPropertyList = async (): Promise<PropertyInfo[]> =>{
 const PropertyListBox: React.FC = () => {
   const navigation = useNavigate();
 
-  const goToDetail = (propertyName: string)=>{
-    navigation(`/market/${propertyName}`);
-  };
-
   const {data,error,isLoading,isError} = useQuery<PropertyInfo[],Error>("tradeListData",queryPropertyList);
   console.log("property list data : ", data);
+
+  const goToDetail = (propertyName: string)=>{
+    let selectedProperty;
+    data?.map((item,index)=>{
+      if(propertyName === item["Subscription.subscription_name"]){
+        selectedProperty = data[index];
+      };
+    });
+    navigation(`/market/${propertyName}`,{ state : {propertyData : selectedProperty}});
+  };
 
   if(isError){
     return <div>Error : {error.message}</div>

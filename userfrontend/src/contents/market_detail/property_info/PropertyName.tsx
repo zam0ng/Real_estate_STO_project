@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react';
+import { MarketDetailContext } from '../../../pages/MarketDetail';
 
 const PropertyName: React.FC = () => {
+  const data = useContext(MarketDetailContext);
+
   return (
-    <div>PropertyName</div>
+    <div className='w-full h-auto text-2xl ml-5'>
+      {data?.['Subscription.subscription_name']}
+    </div>
   )
 }
 
