@@ -1,9 +1,21 @@
-import React from 'react';
+import React, { createContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import SeparateHistory from '../contents/market_history/SeparateHistory';
+
+export const MarketHistoryContext = createContext<string>("");
 
 const MarketHistory: React.FC = () => {
-  return (
-    <div>MarketHistory</div>
-  )
+    const currentPage = useLocation();
+    const {propertyName} = currentPage.state;
+    console.log(propertyName);
+
+    return (
+        <MarketHistoryContext.Provider value={propertyName}> 
+            <div className='w-screen h-screen border border-black'>
+                <SeparateHistory />
+            </div>
+        </MarketHistoryContext.Provider>
+    )
 }
 
 export default MarketHistory;

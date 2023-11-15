@@ -5,9 +5,10 @@ import { MarketDetailContext } from '../../../pages/MarketDetail';
 const PropertyDealHistory: React.FC = () => {
     const navigation = useNavigate();
     const data = useContext(MarketDetailContext);
+    const propertyName = data?.['Subscription.subscription_name'];
 
     const goToHistory = ()=>{
-        navigation(`/market/history/${data?.['Subscription.subscription_name']}`);
+        navigation(`/market/history/${propertyName}`,{ state : {propertyName : propertyName}});
     };
   
     return (
