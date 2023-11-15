@@ -9,6 +9,7 @@ import Subscription from "./pages/subscription";
 import Mypage from "./pages/mypage";
 import Market from "./pages/Market";
 import MarketDetail from "./pages/MarketDetail";
+import MarketHistory from "./pages/MarketHistory";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/mypage" element={<Mypage/>} />
           <Route path="/market" element={<Market/>} />
           <Route path="/market/:name" element={<MarketDetail />} />
+          <Route path="/market/history/:name" element={<MarketHistory />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

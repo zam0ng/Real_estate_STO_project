@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropertyDescription from './PropertyDescription';
 import PropertyName from './PropertyName';
 import WhyDifferentInfo from './WhyDifferentInfo';
