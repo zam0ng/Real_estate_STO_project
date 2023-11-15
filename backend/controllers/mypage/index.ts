@@ -11,13 +11,11 @@ export const depositBalance = async (req: Request, res: Response) => {
     const user = await db.Users.findOne({
       where: { user_email: get_deposit_info.user_email },
       raw: true,
-      transaction,
     });
 
-    if (!user) {
-      await transaction.rollback();
-      return res.status(404).send("없는 유저 입니다.");
-    }
+    if (!user) return res.status(404).send("없는 유저 입니다.");
+
+    if (user?.blacklist) return res.status(404).send("관리자에게 문의 하세요.");
 
     await db.Deposit_drawal.create(
       {
@@ -54,13 +52,11 @@ export const withDrawal = async (req: Request, res: Response) => {
     const user = await db.Users.findOne({
       where: { user_email: get_drawal_info.user_email },
       raw: true,
-      transaction,
     });
 
-    if (!user) {
-      await transaction.rollback();
-      return res.status(404).send("없는 유저 입니다.");
-    }
+    if (!user) return res.status(404).send("없는 유저 입니다.");
+
+    if (user?.blacklist) return res.status(404).send("관리자에게 문의 하세요.");
 
     if (user.using_balance < get_drawal_info.price) {
       await transaction.rollback();
@@ -293,37 +289,37 @@ export const dividendList = async (req: Request, res: Response) => {
   try {
     const userEamil = req.query.user_email as string;
     const query = `
-    select 
-      c.real_estate_name, 
-      c.user_email, 
-      c.dividend_price, 
-      c.amount,
-      c.anticipation_dividend,
-      c.dividend_status,
-      c.dividend_basedate,
-      c.dividend_paymentdate,
-      d.total_anticipation_dividend
-    from (
       select 
-      a.real_estate_name, 
-      b.user_email, 
-      a.dividend_price, 
-      b.amount,
-      (a.dividend_price * b.amount) as anticipation_dividend,
-      a.dividend_status,
-      DATE(a.dividend_basedate) as dividend_basedate, 
-      DATE(a.dividend_paymentdate) as dividend_paymentdate
-    from dividends a 
-      inner join real_estates_own_history b ON a.id = b.dividend_id
-    where b.user_email = '${userEamil}'
-    ) as c
-    join (
-    select 
-      SUM(a.dividend_price * b.amount) as total_anticipation_dividend
-    from dividends a 
-      inner join real_estates_own_history b ON a.id = b.dividend_id
-    where b.user_email = '${userEamil}' and a.dividend_status = '지급완료'
-    ) as d on true;`;
+        c.real_estate_name, 
+        c.user_email, 
+        c.dividend_price, 
+        c.amount,
+        c.anticipation_dividend,
+        c.dividend_status,
+        c.dividend_basedate,
+        c.dividend_paymentdate,
+        d.total_anticipation_dividend
+      from (
+        select 
+        a.real_estate_name, 
+        b.user_email, 
+        a.dividend_price, 
+        b.amount,
+        (a.dividend_price * b.amount) as anticipation_dividend,
+        a.dividend_status,
+        DATE(a.dividend_basedate) as dividend_basedate, 
+        DATE(a.dividend_paymentdate) as dividend_paymentdate
+      from dividends a 
+        inner join real_estates_own_history b ON a.id = b.dividend_id
+      where b.user_email = '${userEamil}'
+      ) as c
+      join (
+      select 
+        SUM(a.dividend_price * b.amount) as total_anticipation_dividend
+      from dividends a 
+        inner join real_estates_own_history b ON a.id = b.dividend_id
+      where b.user_email = '${userEamil}' and a.dividend_status = '지급완료'
+      ) as d on true;`;
 
     const result = await db.sequelize.query(query, {
       replacements: { userEmail: userEamil },
@@ -338,18 +334,54 @@ export const dividendList = async (req: Request, res: Response) => {
 };
 
 // 내 투표 목록
-export const voteList = async (req: Request, res: Response) => {
-  try {
-    //
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const voteList = async (req: Request, res: Response) => {
+//   try {
+//     type Votes = {
+//       id: number;
+//       real_estate_name: string;
+//       real_estate_img: string;
+//       vote_title: string;
+//       vote_start_date: Date;
+//       vote_end_date: Date;
+//       vote_amount: number;
+//       subscription_totalsupply: number;
+//     };
+
+//     const real_estate_img = await db.Subscriptions.findAll({
+//       attributes: ["subscription_img", "subscription_name"],
+//       where: { subscription_status: "success" },
+//       raw: true,
+//     });
+
+//     console.log("real_estate_img : ", real_estate_img);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 // 내 청약 목록
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
-    //
+    const userEamil = req.query.user_email as string;
+
+    const query = `
+      select a.subscription_name,
+        a.subscription_img_1,
+        DATE(b."createdAt") as application_date , 
+        DATE(a.subscription_end_date) as subscription_end_date, 
+        b.subscription_my_amount, 
+        a.subscription_offering_price,
+        (a.subscription_offering_price * b.subscription_my_amount) as refund_price
+      from subscriptions a join subscription_application b 
+          on a.id = b.subscription_id
+      where b.subscription_user_email = 'a@naver.com'`;
+
+    const result = await db.sequelize.query(query, {
+      replacements: { userEmail: userEamil },
+      type: QueryTypes.SELECT,
+    });
+
+    if (result) return res.status(200).json(result);
   } catch (error) {
     console.error(error);
   }

@@ -14,6 +14,7 @@ class Users extends Model<UserAttributes> {
   declare user_email: string;
   declare balance: number;
   declare using_balance: number;
+  declare blacklist: boolean;
   static initModel(sequelize: Sequelize): typeof Users {
     Users.init(
       {

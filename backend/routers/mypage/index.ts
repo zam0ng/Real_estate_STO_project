@@ -9,7 +9,7 @@ import {
   sumProfitLost,
   assetInformation,
   dividendList,
-  voteList,
+  // voteList,
   subscriptionList,
 } from "../../controllers/mypage";
 
@@ -33,7 +33,7 @@ router.get("/asset_information", assetInformation);
 // 배당금
 router.get("/dividend_list", dividendList);
 // 내 투표 목록
-router.get("/vote_list", voteList);
+// router.get("/vote_list", voteList);
 // 내 청약 목록
 router.get("/subscription_list", subscriptionList);
 
