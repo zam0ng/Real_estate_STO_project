@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Op } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 
 // 입금하기
@@ -186,7 +186,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
 // 총 손익 보여주기
 export const sumProfitLost = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.body.user_email as string;
+    const userEmail = req.query.user_email as string;
 
     type ProfitLoss = {
       total_profit_loss: number;
@@ -291,7 +291,47 @@ export const assetInformation = async (req: Request, res: Response) => {
 // 배당금
 export const dividendList = async (req: Request, res: Response) => {
   try {
-    //
+    const userEamil = req.query.user_email as string;
+    const query = `
+    select 
+      c.real_estate_name, 
+      c.user_email, 
+      c.dividend_price, 
+      c.amount,
+      c.anticipation_dividend,
+      c.dividend_status,
+      c.dividend_basedate,
+      c.dividend_paymentdate,
+      d.total_anticipation_dividend
+    from (
+      select 
+      a.real_estate_name, 
+      b.user_email, 
+      a.dividend_price, 
+      b.amount,
+      (a.dividend_price * b.amount) as anticipation_dividend,
+      a.dividend_status,
+      DATE(a.dividend_basedate) as dividend_basedate, 
+      DATE(a.dividend_paymentdate) as dividend_paymentdate
+    from dividends a 
+      inner join real_estates_own_history b ON a.id = b.dividend_id
+    where b.user_email = '${userEamil}'
+    ) as c
+    join (
+    select 
+      SUM(a.dividend_price * b.amount) as total_anticipation_dividend
+    from dividends a 
+      inner join real_estates_own_history b ON a.id = b.dividend_id
+    where b.user_email = '${userEamil}' and a.dividend_status = '지급완료'
+    ) as d on true;`;
+
+    const result = await db.sequelize.query(query, {
+      replacements: { userEmail: userEamil },
+      type: QueryTypes.SELECT,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }

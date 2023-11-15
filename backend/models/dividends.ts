@@ -6,10 +6,16 @@ interface dividendAttribute {
   dividend_price: number;
   dividend_basedate: Date;
   dividend_paymentdate: Date;
-  stauts: string;
+  dividend_status?: string;
 }
 
 class Dividends extends Model<dividendAttribute> {
+  declare real_estate_name: string;
+  declare dividend_price: number;
+  declare dividend_basedate: Date;
+  declare dividend_paymentdate: Date;
+  declare dividend_status: string;
+
   static initModel(sequelize: Sequelize): typeof Dividends {
     Dividends.init(
       {
@@ -29,7 +35,7 @@ class Dividends extends Model<dividendAttribute> {
           type: DataTypes.DATE,
           allowNull: false,
         },
-        stauts: {
+        dividend_status: {
           type: DataTypes.STRING,
           defaultValue: "예정",
         },

@@ -31,7 +31,7 @@ class Real_estates_own_history extends Model<historyAttribute> {
       },
       {
         sequelize,
-        modelName: "real_estates_own_history",
+        modelName: "Real_estates_own_history",
         tableName: "real_estates_own_history",
         timestamps: true,
         charset: "utf8",
