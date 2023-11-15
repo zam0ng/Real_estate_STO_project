@@ -48,7 +48,6 @@ export default async function AdminMain({searchParams} : SearchParamsProps ) {
   const isEstateModalOpen = searchParams?.estateModal;
 
 
-
   return (
     <>
       <h1> 어드민 대시보드   </h1>
@@ -70,6 +69,7 @@ export default async function AdminMain({searchParams} : SearchParamsProps ) {
       <CreateEstateBtn  />
 
       {/* 매물 등록 팝업 */}
+      {/* {isEstateModalOpen && <ModalFormRealestate />} */}
       {isEstateModalOpen && <ModalFormRealestate />}
 
 

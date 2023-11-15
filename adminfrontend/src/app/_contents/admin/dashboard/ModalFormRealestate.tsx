@@ -11,7 +11,7 @@ import { FormEvent, useState } from "react";
 */
 
 import Link from "next/link";
-
+import FormEstate from "./FormEstate";
 
 export default function ModalFormRealestate () {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function ModalFormRealestate () {
 
   const handleCreateEstate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);   // form 내부의 모든 데이터를 가져옴 
     const form = e.target as HTMLFormElement;
 
     if (uploadFile) {
@@ -39,36 +39,37 @@ export default function ModalFormRealestate () {
       console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
     }
 
-    const keyList = [
-      "address",
-      "totalprice",
-      "description",
-      "start_date",
-      "end_date",
-      "result_date",
-      "building_date",
-      "trading_start_date",
-      "order_amount",
-      "offering_price",
-      "status",
-      "floors",
-      "purpose",
-      "area",
-      "all_area",
-      "build_area",
-      "floor_area",
-      "completion",
-      "stock_type",
-      "stock_type",
-      "publisher",
-    ];
+      // const keyList = [
+      //   "name",
+      //   "address",
+      //   "totalprice",
+      //   "description",
+      //   "start_date",
+      //   "end_date",
+      //   "result_date",
+      //   "building_date",
+      //   "trading_start_date",
+      //   "order_amount",
+      //   "offering_price",
+      //   "status",
+      //   "floors",
+      //   "purpose",
+      //   "area",
+      //   "all_area",
+      //   "build_area",
+      //   "floor_area",
+      //   "completion",
+      //   "stock_type",
+      //   "stock_type",
+      //   "publisher",
+      // ];
 
-    keyList.forEach((item) => {
-      const value = form[item].value; // ex) form.address.value 인데, 배열에서 꺼내기 때문에 form[item].value
+      // keyList.forEach((item) => {
+      //   const value = form[item].value; // ex) form.address.value 인데, 배열에서 꺼내기 때문에 form[item].value
 
-      formData.append(`${item}`, value);
-      console.log("item : value" , item, value)
-    });
+      //   formData.append(`${item}`, value);
+      //   console.log("item : value" , item, value)
+      // });
 
     // ✅ 파일 전송 완료 확인 하고 -> forEach 확인하고 -> 지울 것 
     // formData.append("address", form.address.value);
@@ -94,6 +95,17 @@ export default function ModalFormRealestate () {
     // formData.append("stock_type", form.stock_type.value);
     // formData.append("publisher", form.publisher.value);
 
+
+    console.log("전송되는 formData" , formData)
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(key, value);
+    // }
+    
+    // const formDataObj = {};
+    // formData.forEach((value, key) => (formDataObj[key] = value));
+    // console.log("전송되는 formData🚀🚀 " , formDataObj);
+
+
     await fetch(process.env.NEXT_PUBLIC_API_URL + "admin/subscription_submit", {
       method: "POST",
       body: formData,
@@ -110,7 +122,7 @@ export default function ModalFormRealestate () {
   return (
     <>
     
-      <h3> 건물 정보 </h3>
+      {/* <h3> 건물 정보 </h3> */}
       {/* ✅ ERD 랑 여기에 input 태그의 속성으로 적게 되는 name 의 값과 동일해야 함  */}
 
       <form encType="multipart/form-data" onSubmit={handleCreateEstate}>
@@ -124,7 +136,10 @@ export default function ModalFormRealestate () {
           />
         </p>
 
-        {/* <p>
+      {/* <FormEstate /> */}
+
+
+        <p>
           <label> name </label>
           <input type="text" name="name" placeholder="ex) 문래공차" />
         </p>
@@ -248,7 +263,6 @@ export default function ModalFormRealestate () {
             placeholder="ex) 한국투자부동산신탁"
           />
         </p>
-        */}
 
         <p>
           <input type="submit" value="건물 정보 등록" />
@@ -256,7 +270,6 @@ export default function ModalFormRealestate () {
       </form>
 
 
-        <Link href={"/admin/dashboard"} > ❎ </Link>
 
     </>
   );

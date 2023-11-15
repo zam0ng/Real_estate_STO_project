@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/* width */
+::-webkit-scrollbar {
+  border-radius: 8px; /* 둥근 모서리의 크기 조정 */
+  width: 10px;
+}
+
+/* 스크롤바 트랙(경로)에 대한 스타일 */
+::-webkit-scrollbar-track {
+  border-radius: 8px; /* 둥근 모서리의 크기 조정 */
+  background: #fcfcfc;
+}
+
+/* 스크롤바 핸들(스크롤 막대)에 대한 스타일 */
+::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 8px;
+}
+
+/* 스크롤바 호버 */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+/* .admin_modal_bg: {
+  backgroundColor: rgba(61, 61, 61, 0.5),
+  backdropFilter: "blur(10px)", 
+}, */
