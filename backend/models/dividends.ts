@@ -5,9 +5,11 @@ interface dividendAttribute {
   dividend_price: number;
   dividend_basedate: Date;
   dividend_paymentdate: Date;
+  createdAt?: Date;
 }
 
 class Dividends extends Model<dividendAttribute> {
+  declare date : Date;
   static initModel(sequelize: Sequelize): typeof Dividends {
     Dividends.init(
       {
