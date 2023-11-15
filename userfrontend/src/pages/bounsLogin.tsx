@@ -28,6 +28,20 @@ export default function BounsLogin () {
         return(
             <>
                 {/* {cookiedata ? <div>{JSON.stringify(data, null, 2)}</div> : <div>Loading...</div>} */}
+            {cookiedata ? <div className="overflow-x-hidden relative">
+                <div className="animate-marquee whitespace-nowrap">
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                  <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+                </div>
+             </div> : <div></div>}
                 {cookiedata}
                 <TabBar />
             </>
