@@ -315,7 +315,8 @@ export const dayQuote = async(req : Request , res : Response) =>{
             createdAt :{
                 [Op.gte]: startDate,
                 [Op.lte]: endDate
-              }
+            },
+            real_estate_name : name,
         },
         attributes :[
             'trade_price',
