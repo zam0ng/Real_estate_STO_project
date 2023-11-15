@@ -9,16 +9,10 @@ export default function Home () {
     return(
         <>
             <div className="flex flex-col items-center h-auto">
-                {/* <Slider /> */}
+                <Slider />
                 <BoxTypeTabComponent />
-
-                {/* <KakaoMap addressKor="경기도 시흥시 복지로 15" /> */}
-                {/* <ProgressBar percent={30}/> */}
-                <LineTypeTabComponent />
-                <LineTypeTabComponent />
-                <LineTypeTabComponent />
-                <LineTypeTabComponent />
-                <LineTypeTabComponent />
+                <KakaoMap addressKor="경기도 시흥시 복지로 15" />
+                <ProgressBar percent={30}/>
                 <LineTypeTabComponent />
             </div>
             <TabBar />

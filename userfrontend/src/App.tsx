@@ -8,6 +8,7 @@ import Subscription from "./pages/subscription";
 import Mypage from "./pages/mypage";
 import Market from "./pages/Market";
 import Login from "./pages/login";
+import BounsLogin from "./pages/bounsLogin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/mypage" element={<Mypage/>} />
           <Route path="/market" element={<Market/>} />
           <Route path="/" element={<Login/>} />
+          <Route path="/bounslogin" element={<BounsLogin/>} />
         </Routes>
       </BrowserRouter>
   );

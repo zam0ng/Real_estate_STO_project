@@ -62,15 +62,20 @@ export default function useCookie(urlProps : string){
         return(
           <>
           {/* <div className="border border-black top-36 left-4 bg-gray-900 text-white animate-marquee h-5">Sapse 서비스를 이용하기 위해서는 Bouns Wallet이 필요합니다 </div> */}
-          <div className="overflow-x-hidden relative">
+          {/* <div className="overflow-x-hidden relative">
             <div className="animate-marquee whitespace-nowrap">
               <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
               <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
               <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
               <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
+              <span className=" bg-gray-700 text-white "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</span>
             </div>
-
-          </div>
+          </div> */}
           <iframe
           className="h-screen w-full scrollbar-hide "
           src= {bounsURI} 

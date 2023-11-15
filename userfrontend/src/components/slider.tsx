@@ -10,6 +10,7 @@ export default function Slider (){
         {url : `${process.env.PUBLIC_URL}/images/sliderdummy/dummy2.jpg`},
         {url : `${process.env.PUBLIC_URL}/images/sliderdummy/dummy3.jpg`},
 
+
     ]
 
     const [currentIndex,setCurrentIndex] = useState<number>(0)
