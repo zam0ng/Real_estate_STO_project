@@ -3,13 +3,14 @@ import { DB } from "../models";
 
 // typescirpt는 enum에 관한 지식이 없답니다
 export enum status_enum {
-  panding = "pending", // 청약 시작 전
+  pending = "pending", // 청약 시작 전
   start = "start", // 청약 시작
   success = "success", // 청약 성공
   failure = "failure", // 청약 실패
 }
 
 interface SubscriptionsAttribute {
+  id?: number;
   subscription_img: string;
   subscription_name: string;
   subscription_address: string;
@@ -40,6 +41,11 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         subscription_img: {
           type: DataTypes.STRING,
           allowNull: false,
