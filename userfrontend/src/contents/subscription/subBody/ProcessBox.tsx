@@ -1,4 +1,5 @@
-import axios from 'axios';
+// import axios from 'axios';
+import axios from '../../../components/url';
 import { useQuery } from '@tanstack/react-query';
 
 
@@ -7,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function ProcessBox(){
 
     const fetchData = async ()=>{
-        const { data } = await axios.get(`${process.env.REACT_APP_DOMAIN}/subscription/all_list`);
+        const { data } = await axios.get(`/subscription/all_list`);
         return data;
     }
 
