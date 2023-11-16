@@ -8,6 +8,10 @@ interface depositAttribute {
 }
 
 class Deposit_drawal extends Model<depositAttribute> {
+  declare user_email: string;
+  declare status: string;
+  declare price: number;
+  declare balance: number;
   static initModel(sequelize: Sequelize): typeof Deposit_drawal {
     Deposit_drawal.init(
       {

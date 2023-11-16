@@ -13,6 +13,7 @@ import Dividends from "./dividends";
 import Dividend_details from "./dividend_details";
 import Notices from "./notices";
 import Votes from "./votes";
+import PropertyOwnHistory from "./property_own_history";
 
 export const sequelize = new Sequelize(
   config.dev.database!,
@@ -21,7 +22,7 @@ export const sequelize = new Sequelize(
   {
     host: config.dev.host!,
     dialect: "postgres",
-    logging : false,
+    logging: false,
   }
 );
 
@@ -40,6 +41,7 @@ export interface DB {
   Dividend_details: typeof Dividend_details;
   Notices: typeof Notices;
   Votes: typeof Votes;
+  PropertyOwnHistory: typeof PropertyOwnHistory;
 }
 
 export const db: DB = {
@@ -57,6 +59,7 @@ export const db: DB = {
   Dividend_details,
   Notices,
   Votes,
+  PropertyOwnHistory,
 };
 
 db.sequelize = sequelize;
@@ -75,6 +78,7 @@ Dividend_details.initModel(sequelize);
 Notices.initModel(sequelize);
 Real_estates_own.initModel(sequelize);
 Votes.initModel(sequelize);
+PropertyOwnHistory.initModel(sequelize);
 
 Subscriptions.associate(db);
 Real_estates.associate(db);
@@ -84,6 +88,9 @@ Subscription_application.associate(db);
 
 // Orders.associate(db);
 // Trades.associate(db);
+Dividends.associate(db);
+Dividend_details.associate(db);
+PropertyOwnHistory.associate(db);
 Subscriptions.associate(db);
 Real_estates.associate(db);
 Real_estates_own.associate(db);
