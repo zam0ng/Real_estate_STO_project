@@ -1,4 +1,4 @@
-import TabBar from "../layouts/tabBar"
+import TabBar from "../layouts/TabBar"
 import useCookie from "../hooks/useCookie"
 import jwt from "jsonwebtoken";
 import { useNavigate, useLocation } from "react-router-dom";

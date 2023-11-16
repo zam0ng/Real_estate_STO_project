@@ -3,12 +3,12 @@ import { BrowserRouter,Routes,Route, Navigate } from "react-router-dom";
 
 
 import Deal from "./pages/Deal";
-import Home from "./pages/home";
-import Subscription from "./pages/subscription";
-import Mypage from "./pages/mypage";
+import Home from "./pages/Home";
+import Subscription from "./pages/Subscription";
+import Mypage from "./pages/Mypage";
 import Market from "./pages/Market";
-import Login from "./pages/login";
-import BounsLogin from "./pages/bounsLogin";
+import Login from "./pages/Login";
+import BounsLogin from "./pages/BounsLogin";
 
 function App() {
   return (
