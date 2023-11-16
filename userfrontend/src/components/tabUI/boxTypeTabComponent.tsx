@@ -1,26 +1,32 @@
 import React from "react"
 import { useState } from "react"
 
-const data = [
-    {
-        tabName : "1번",
-        content : <div>1번컨텐츠</div>
-    },{
-        tabName : "2번",
-        content : <div>2번컨텐츠</div>
-    },{
-        tabName : "3번",
-        content : <div>3번컨텐츠</div>
-    }
-]
+type dataType ={
+    tabName : string,
+    content : React.ReactNode | (()=>React.ReactNode);
+}
 
-export default function BoxTypeTabComponent (){
+type BoxTypeComponentProps = {
+    data : dataType[];
+}
+
+
+
+export default function BoxTypeTabComponent ({data} : BoxTypeComponentProps){
 
     const [tabNum,setTabNum] = useState(0);
 
     const tabWidth = `calc((100% / ${data.length}))`;
 
     const leftPosition = `calc(${tabNum} * (100% / ${data.length}))`;
+
+    const renderContent = ()=>{
+        const currentContent = data[tabNum].content;
+        if(typeof currentContent === 'function'){
+            return currentContent();
+        }
+        return currentContent;
+    }
 
 
     let title = data.map((item, index) => {
@@ -57,7 +63,7 @@ export default function BoxTypeTabComponent (){
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border border-black w-4/5 h-64 rounded-xl shadow-lg">{data[tabNum].content}</div>
+            <div className="mt-3 border border-black w-4/5 h-64 rounded-xl shadow-lg">{renderContent()}</div>
         </>
     )
 }

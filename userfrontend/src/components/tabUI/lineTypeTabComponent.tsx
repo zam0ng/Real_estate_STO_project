@@ -1,20 +1,21 @@
 import React from "react"
 import { useState } from "react"
 
-const data = [
-    {
-        tabName : "4번",
-        content : <div>4번컨텐츠</div>
-    },{
-        tabName : "5번",
-        content : <div>5번컨텐츠</div>
-    },{
-        tabName : "6번",
-        content : <div>6번컨텐츠</div>
-    }
-]
+// 렌더용 컴포넌트
+// fetch 용 컴포넌트
+// fetch 컴포넌트를 여기에 넣어줘서 실행시킨다
 
-export default function LineTypeTabComponent (){
+
+type dataType = {
+        tabName : string,
+        content : React.ReactNode | (()=>React.ReactNode);
+}
+
+type LineTypeTabComponentProps = {
+    data: dataType[];
+}
+
+export default function LineTypeTabComponent ({data} : LineTypeTabComponentProps){
 
     const [tabNum,setTabNum] = useState(0);
 
@@ -22,9 +23,16 @@ export default function LineTypeTabComponent (){
 
     const leftPosition = `calc(${tabNum} * (100% / ${data.length}))`;
 
+    const renderContent = ()=>{
+        const currentContent = data[tabNum].content;
+        if(typeof currentContent === 'function'){
+            return currentContent();
+        }
+        return currentContent;
+    }
+
 
     let title = data.map((item, index) => {
-        // 현재 탭이 선택된 탭인지 확인하고, 적절한 텍스트 색상 클래스를 적용
 
         return (
             <div 
@@ -56,7 +64,11 @@ export default function LineTypeTabComponent (){
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border border-black w-9/12 m-auto h-64 rounded-xl shadow-lg">{data[tabNum].content}</div>
+            <div className="mt-3 border border-black  m-auto  rounded-xl shadow-lg">{renderContent()}</div>
         </div>
     )
 }
+
+
+
+
