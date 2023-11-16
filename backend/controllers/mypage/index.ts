@@ -204,7 +204,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
         [
           db.sequelize.fn(
             "SUM",
-            db.sequelize.literal(`(price - current_price * amount)`)
+            db.sequelize.literal(`(price * amount - current_price * amount)`)
           ),
           "total_profit_loss",
         ],
@@ -253,14 +253,17 @@ export const assetInformation = async (req: Request, res: Response) => {
     const result = await db.Real_estates_own.findAll({
       attributes: [
         "real_estate_name",
-        "price",
+        [db.sequelize.literal(`(price * amount)`), "price"],
         "amount",
-        [db.sequelize.literal(`(price - current_price)`), "valuation"],
+        [
+          db.sequelize.literal(`(price * amount - current_price * amount)`),
+          "valuation",
+        ],
         [db.sequelize.literal(`(current_price * amount)`), "present_price"],
         "possible_quantity",
         [
           db.sequelize.literal(
-            `ROUND((((price - current_price * amount) / (current_price * amount)) * 100)::numeric, 2)`
+            `ROUND((((price * amount - current_price * amount) / (current_price * amount)) * 100)::numeric, 2)`
           ),
           "rate_of_return",
         ],
@@ -374,7 +377,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
         (a.subscription_offering_price * b.subscription_my_amount) as refund_price
       from subscriptions a join subscription_application b 
           on a.id = b.subscription_id
-      where b.subscription_user_email = 'a@naver.com'`;
+      where b.subscription_user_email = '${userEamil}'`;
 
     const result = await db.sequelize.query(query, {
       replacements: { userEmail: userEamil },
