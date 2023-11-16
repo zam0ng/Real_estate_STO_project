@@ -12,6 +12,7 @@ import MarketDetail from "./pages/MarketDetail";
 import MarketHistory from "./pages/MarketHistory";
 import WhyDifferentPrices from "./pages/WhyDifferentPrices";
 import TotalDividend from "./pages/TotalDividend";
+import MarketDetailPropertyInfo from "./pages/MarketDetailPropertyInfo";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,10 @@ function App() {
           <Route path="/market/history/:name" element={<MarketHistory />} />
           <Route path="/market/detail/why-different-prices" element={<WhyDifferentPrices />} />
           <Route path="/market/detail/total-dividend" element={<TotalDividend />} />
+          <Route path="/market/detail/property-info" element={<MarketDetailPropertyInfo />} />
+          <Route path="/market/detail/publish-info" element={<MarketDetailPropertyInfo />} />
+          <Route path="/market/detail/board" element={<MarketDetailPropertyInfo />} />
+          <Route path="/market/detail/public-docs" element={<MarketDetailPropertyInfo />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
