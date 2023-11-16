@@ -12,7 +12,10 @@ import MarketDetail from "./pages/MarketDetail";
 import MarketHistory from "./pages/MarketHistory";
 import WhyDifferentPrices from "./pages/WhyDifferentPrices";
 import TotalDividend from "./pages/TotalDividend";
-import MarketDetailPropertyInfo from "./pages/MarketDetailPropertyInfo";
+import PropertyAdditionalInfo from "./pages/PropertyAdditionalInfo";
+import Board from "./pages/Board";
+import BoardDetailNotice from "./pages/BoardDetailNotice";
+import BoardDetailDividend from "./pages/BoardDetailDividend";
 
 const queryClient = new QueryClient();
 
@@ -31,10 +34,11 @@ function App() {
           <Route path="/market/history/:name" element={<MarketHistory />} />
           <Route path="/market/detail/why-different-prices" element={<WhyDifferentPrices />} />
           <Route path="/market/detail/total-dividend" element={<TotalDividend />} />
-          <Route path="/market/detail/property-info" element={<MarketDetailPropertyInfo />} />
-          <Route path="/market/detail/publish-info" element={<MarketDetailPropertyInfo />} />
-          <Route path="/market/detail/board" element={<MarketDetailPropertyInfo />} />
-          <Route path="/market/detail/public-docs" element={<MarketDetailPropertyInfo />} />
+          <Route path="/market/detail/property-info/:name" element={<PropertyAdditionalInfo />} />
+          <Route path="/market/detail/publish-info/:name" element={<PropertyAdditionalInfo />} />
+          <Route path="/market/detail/board/:name" element={<Board />} />
+          <Route path="/market/detail/board-detail/notice/:title" element={<BoardDetailNotice />} />
+          <Route path="/market/detail/board-detail/dividend/:title" element={<BoardDetailDividend />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
