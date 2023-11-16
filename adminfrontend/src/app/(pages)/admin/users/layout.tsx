@@ -14,7 +14,7 @@ export default function DashboardLayout({
         </div>
 
         {/* 메뉴바 가이드 라인 */}
-        <div className="bg-green-300 min-h-[89vh] w-96">
+        <div className="bg-green-300 min-h-[50vh] w-96">
           {/* 왼쪽 menu bar | 메뉴바 */}
           <Menubar />
         </div>

@@ -11,7 +11,7 @@ import { FormEvent, useState } from "react";
 */
 
 import Link from "next/link";
-import FormEstate from "./FormEstate";
+import FormEstate from "../FormEstate";
 
 export default function ModalFormRealestate () {
   const router = useRouter();
@@ -30,14 +30,17 @@ export default function ModalFormRealestate () {
   
 
   const handleCreateEstate = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);   // form 내부의 모든 데이터를 가져옴 
-    const form = e.target as HTMLFormElement;
+    e.preventDefault();   
+    const formData = new FormData(e.currentTarget);   // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴  
 
-    if (uploadFile) {
-      formData.append("img", uploadFile);
-      console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
-    }
+    /*
+      ✅ 이제 아래 부분 삭제할 것 임. 삭제하기 전 keep
+    /*
+
+    // if (uploadFile) {
+    //   formData.append("img", uploadFile);
+    //   console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
+    // }
 
       // const keyList = [
       //   "name",
@@ -135,6 +138,7 @@ export default function ModalFormRealestate () {
             onChange={handleUploadFile}
           />
         </p>
+
 
       {/* <FormEstate /> */}
 

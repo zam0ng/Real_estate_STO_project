@@ -6,3 +6,11 @@
     };
 
 
+// inputForm 에서 데이터를 받는 type
+    export interface InputFormItemProps {
+        _title : string;
+        _type : string;
+        _name : string;
+        _placeholder : string;
+        _step? : string 
+    }

@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     extend: {
       letterSpacing: {
-        '0.015rem' : '-0.015rem'
+        "0.015rem": "-0.015rem",
       },
 
       width: {
@@ -25,9 +25,10 @@ module.exports = {
         "5.6rem": "5.6rem",
         "37.9rem": "37.9rem",
         backdrop_calc: "calc(100% - 4rem)",
-        "4.5rem" : "4.5rem",
-        "5.375rem" : "5.375rem",
-        "116rem" : "116rem"
+        "4.5rem": "4.5rem",
+        "5.375rem": "5.375rem",
+        "116rem": "116rem",
+        "80rem": "80rem,",
       },
 
       padding: {
@@ -42,9 +43,12 @@ module.exports = {
         "53.5rem": "53.5rem",
         "71.5rem": "71.5rem",
         "75rem": "75rem",
-        "4.5rem" : "4.5rem",
-        "5.375rem" : "5.375rem",
-        "60rem" : "60rem",
+        "4.5rem": "4.5rem",
+        "5.375rem": "5.375rem",
+        "60rem": "60rem",
+        "55.62rem": "55.62rem",
+        "50rem": "50rem",
+        "45.625rem" : "45.625rem"
       },
 
       gridTemplateColumns: {
@@ -54,7 +58,7 @@ module.exports = {
       gridTemplateRows: {},
 
       fontSize: {
-        "1.75rem": "1.75rem",
+        "1.65rem": "1.65rem",
       },
       spacing: {
         adminLayout_menubar_container: "27rem",
@@ -85,11 +89,11 @@ module.exports = {
       boxShadow: {
         backdrop_test_bg: "0 10px 15px rgba(0, 0, 0, 0.2)",
         backdrop_test_contentBG: "0 10px 15px rgba(0, 0, 0, 0.1)",
-        card : "0px 2px 2px 0px rgba(0, 0, 0, 0.05);"
+        card: "0px 2px 2px 0px rgba(0, 0, 0, 0.05);",
       },
 
       colors: {
-        borderLine : "#E7E7E7",
+        borderLine: "#E7E7E7",
         admin_content_bg: "#f4f4f6",
         adminLayout_menubar_welcome: "#77767B",
         adminLayout_menubar_name: "#252526",
@@ -106,7 +110,7 @@ module.exports = {
         admin_modal_create: "#A69CF2",
         admin_modal_cancelText: "#171D40",
         admin_modal_createText: "#F5F7FF",
-        
+
         dashboard_card_board: "#E8E8E8",
         dashboard_card_bg: "#FAFAFA",
         dashboard_card_text: "#7D7C7F",
@@ -114,8 +118,6 @@ module.exports = {
         dashboard_card_transaction_date: "#666",
         dashboard_card_transaction_view: "#717171",
         dashboard_btn_estate: "#EF4464",
-        
-        
 
         // backdrop_test : '#ffffff7d',
         backdrop_test: "#252526",

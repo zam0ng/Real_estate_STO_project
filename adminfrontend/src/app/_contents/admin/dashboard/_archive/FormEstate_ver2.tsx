@@ -6,7 +6,6 @@ import BtnCreate from "@/app/_components/_ui/BtnCreate";
 import MessageBoxInfo from "@/app/_components/_ui/MessageBoxInfo";
 
 import Link from "next/link";
-// import FormEstate from "./FormEstate";
 
 import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
@@ -82,7 +81,7 @@ export default function FormEstate() {
   };
 
   return (
-    <>
+    <div className="absolute top-0 left-0 flex items-center justify-center w-full h-full ">
       {/* 여기에 이제 입힐 것  */}
 
       <form encType="multipart/form-data" onSubmit={handleCreateEstate}>
@@ -102,49 +101,58 @@ export default function FormEstate() {
       </form>
 
       {/* 여기부터 디자인 👇👇👇 */}
-      {/* [🔥기존코드]  <div className="absolute top-0 left-0 flex justify-center w-screen h-screen overflow-hidden backdrop-blur-3xl bg-admin_modal_bg"> */}
-      <div className="absolute top-0 left-0 flex justify-center w-screen h-screen overflow-hidden backdrop-blur-3xl">
-        [🔥기존코드]{" "}
-        <div className="relative  flex justify-center my-8 bg-admin_modal_mainBG rounded-lg  w-admin_modal h-71.5rem overflow-y-auto  overflow-x-hidden modal-custom-scrollbar">
-          {/* <div className="relative flex justify-center my-8  rounded-lg  w-admin_modal h-71.5rem overflow-y-auto backdrop-blur-md border-2 overflow-x-hidden modal-custom-scrollbar"> */}
-          {/* wrapper */}
-          <div className="my-8 w-40rem mx-7 h-37.9rem ">
-            {/* 제목 : About your page */}
-            <h1 className="text-3xl font-bold tracking-tighter text-center w-40rem text-adminLayout_menubar_name">
-              About your page
-            </h1>
 
-            {/* 임시 취소 */}
-            <Link className="absolute right-1 top-2" href={"/admin/dashboard"}>
-              {" "}
-              ❎{" "}
-            </Link>
+      {/* 사이즈 잡기 */}
+      <div className="w-full h-full rounded-lg ">
+        {/* <div className="h-full rounded-lg w-150rem h-75rem "> */}
 
-            {/* 구분선 */}
-            <div className="mt-8 h-line bg-admin_modal_line"></div>
+        {/* 불투명 레이어 */}
+        <div className="flex justify-center w-full h-full overflow-hidden rounded-lg bg-blend-overlay backdrop-blur-backdrop_test bg-backdrop_test/[.3] shadow-backdrop_test_bg">
+          <div className="relative  flex justify-center my-8 bg-admin_modal_mainBG rounded-lg  w-admin_modal h-71.5rem overflow-y-auto  overflow-x-hidden modal-custom-scrollbar">
+            {/* <div className="relative flex justify-center my-8  rounded-lg  w-admin_modal h-71.5rem overflow-y-auto backdrop-blur-md border-2 overflow-x-hidden modal-custom-scrollbar"> */}
 
-            {/* info 안내 문구 */}
-            <MessageBoxInfo />
+            {/* wrapper */}
+            <div className="my-8 w-40rem mx-7 h-37.9rem ">
+              {/* 제목 : About your page */}
+              <h1 className="text-3xl font-bold tracking-tighter text-center w-40rem text-adminLayout_menubar_name">
+                About your page
+              </h1>
 
-            <FormItem />
-            <FormItem />
-            <FormItem />
-            <FormItem />
-            <FormItem />
-            <FormItem />
-            <FormItem />
+              {/* 임시 취소 */}
+              <Link
+                className="absolute right-1 top-2"
+                href={"/admin/dashboard"}
+              >
+                {" "}
+                ❎{" "}
+              </Link>
 
-            {/* 작성완료 및 취소 버튼 */}
-            <div className="flex items-center justify-end h-28 ">
-              <BtnCancel />
+              {/* 구분선 */}
+              <div className="mt-8 h-line bg-admin_modal_line"></div>
 
-              <BtnCreate />
+              {/* info 안내 문구 */}
+              <MessageBoxInfo />
+
+              <FormItem />
+              <FormItem />
+              <FormItem />
+              <FormItem />
+              <FormItem />
+              <FormItem />
+              <FormItem />
+
+              {/* 작성완료 및 취소 버튼 */}
+              <div className="flex items-center justify-end h-28 ">
+                <BtnCancel />
+
+                <BtnCreate />
+              </div>
+
+              <div></div>
             </div>
-
-            <div></div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
