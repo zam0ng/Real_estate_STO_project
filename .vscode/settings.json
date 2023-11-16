@@ -1,2 +1,6 @@
 {
+<<<<<<< HEAD
+=======
+    "solidity.compileUsingRemoteVersion": "v0.8.20+commit.a1b79de6"
+>>>>>>> 658b4bd8bbb8ed3dbd63b1fce3afc4355ae18ae2
 }

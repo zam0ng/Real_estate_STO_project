@@ -1,10 +1,12 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 
 interface noticeAttribute {
+  id? : number;
   category: string;
   notice_title: string;
-  notice_content: Text;
+  notice_content: string;
   notice_writer: string;
+  real_estate_name : string;
 }
 
 class Notices extends Model<noticeAttribute> {
@@ -20,13 +22,17 @@ class Notices extends Model<noticeAttribute> {
           allowNull: false,
         },
         notice_content: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING,
           allowNull: false,
         },
         notice_writer: {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        real_estate_name:{
+          type: DataTypes.STRING,
+          allowNull : false,
+        }
       },
       {
         sequelize,

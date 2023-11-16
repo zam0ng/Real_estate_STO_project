@@ -1,0 +1,63 @@
+import React from "react"
+import { useState } from "react"
+
+const data = [
+    {
+        tabName : "1번",
+        content : <div>1번컨텐츠</div>
+    },{
+        tabName : "2번",
+        content : <div>2번컨텐츠</div>
+    },{
+        tabName : "3번",
+        content : <div>3번컨텐츠</div>
+    }
+]
+
+export default function BoxTypeTabComponent (){
+
+    const [tabNum,setTabNum] = useState(0);
+
+    const tabWidth = `calc((100% / ${data.length}))`;
+
+    const leftPosition = `calc(${tabNum} * (100% / ${data.length}))`;
+
+
+    let title = data.map((item, index) => {
+        // 현재 탭이 선택된 탭인지 확인하고, 적절한 텍스트 색상 클래스를 적용
+        const textColorClass = index === tabNum ? "text-white" : "text-black";
+
+        return (
+            <div 
+                className={`shadow-900/20 z-10 p-1 text-sm font-bold ${textColorClass}`} 
+                data-index={index} 
+                onClick={() => setTabNum(index)} 
+                key={index}
+            >
+                {item.tabName}
+            </div>
+        );
+    });
+
+    function handleTabNumer(e : React.MouseEvent<HTMLElement>){
+        const indexNum = e.currentTarget.dataset.index
+        if(indexNum != undefined){
+            let newIndexNum=parseInt(indexNum,10)
+            setTabNum(newIndexNum)
+        }
+    }
+
+    return(
+        <>
+            <div className=" relative w-4/5 text-center bg-gray-200 shadow-2xl shadow-900/20 rounded-md h-7 mt-3  "
+            style={{ display: 'grid', gridTemplateColumns: `repeat(${data.length}, minmax(0, 1fr))` }}
+            >
+                <div className="absolute  bg-blue-500 shadow-md rounded-md h-7 indicator"
+                style={{ width: tabWidth, left: leftPosition }}
+                ></div>
+                {title}
+            </div>
+            <div className="mt-3 border border-black w-4/5 h-64 rounded-xl shadow-lg">{data[tabNum].content}</div>
+        </>
+    )
+}

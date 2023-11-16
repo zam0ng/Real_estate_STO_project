@@ -3,19 +3,20 @@ import { DB } from "../models";
 
 // typescirpt는 enum에 관한 지식이 없답니다
 export enum status_enum {
-  panding = "panding",
-  start = "start",
-  success = "success",
-  failure = "failure",
+  pending = "pending", // 청약 시작 전
+  start = "start", // 청약 시작
+  success = "success", // 청약 성공
+  failure = "failure", // 청약 실패
 }
 
 interface SubscriptionsAttribute {
+  id?: number;
   subscription_img: string;
   subscription_name: string;
   subscription_address: string;
-  subscription_totalprice: number;
+  subscription_totalprice: bigint;
   subscription_totalsupply: number;
-  subscription_description: Text;
+  subscription_description: string;
   subscription_start_date: Date;
   subscription_end_date: Date;
   subscription_result_date: Date;
@@ -40,6 +41,11 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {
+        id: {
+          type: DataTypes.INTEGER,
+          primaryKey: true,
+          autoIncrement: true,
+        },
         subscription_img: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -82,7 +88,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
         },
         subscription_status: {
           type: DataTypes.ENUM,
-          values: ["pading", "start", "success", "failure"],
+          values: ["pending", "start", "success", "failure"],
           allowNull: false,
         },
         floors: {
@@ -110,7 +116,7 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           allowNull: false,
         },
         floor_area: {
-          type: DataTypes.INTEGER,
+          type: DataTypes.FLOAT,
           allowNull: false,
         },
         completion: {
