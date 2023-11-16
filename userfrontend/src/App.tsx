@@ -10,6 +10,8 @@ import Mypage from "./pages/mypage";
 import Market from "./pages/Market";
 import MarketDetail from "./pages/MarketDetail";
 import MarketHistory from "./pages/MarketHistory";
+import WhyDifferentPrices from "./pages/WhyDifferentPrices";
+import TotalDividend from "./pages/TotalDividend";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/market" element={<Market/>} />
           <Route path="/market/:name" element={<MarketDetail />} />
           <Route path="/market/history/:name" element={<MarketHistory />} />
+          <Route path="/market/detail/why-different-prices" element={<WhyDifferentPrices />} />
+          <Route path="/market/detail/total-dividend" element={<TotalDividend />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

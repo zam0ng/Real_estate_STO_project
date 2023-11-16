@@ -287,6 +287,7 @@ export const detailBoardInfo = async(req : Request , res : Response) =>{
 }
 
 export const dayQuote = async(req : Request , res : Response) =>{
+    try {
     const {name} = req.params;
     console.log(name); 
 
@@ -315,7 +316,8 @@ export const dayQuote = async(req : Request , res : Response) =>{
             createdAt :{
                 [Op.gte]: startDate,
                 [Op.lte]: endDate
-              }
+            },
+            real_estate_name : name
         },
         attributes :[
             'trade_price',
@@ -331,7 +333,7 @@ export const dayQuote = async(req : Request , res : Response) =>{
     // console.log(result);
     res.json(result);
 
-    try {
+    
         
     } catch (error) {
         console.log(error);

@@ -10,7 +10,7 @@ const TodayDailyTabInfo: React.FC = () => {
     ];
 
     return (
-        <div className='w-full h-[70%] flex justify-center items-center'>
+        <div className='w-full h-[90%] flex justify-center items-center'>
             <TodayDailyTabStructure tabs={TodayDailyHistoryTabs} />
         </div>
     )

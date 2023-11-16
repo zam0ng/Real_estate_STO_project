@@ -1,21 +1,60 @@
 import React, { useContext, useEffect } from 'react';
 import { MarketHistoryContext } from '../../../pages/MarketHistory';
+import { useQuery } from 'react-query';
+import TableHeader from './TableHeader';
+import TodayHistoryTableInfo from './TodayHistoryTableInfo';
+
+export interface TodayHistoryRequest {
+  createdAt: string;
+  trade_price: number;
+  rises_falls: number;
+  trade_amount: number;
+}
 
 const TodayHistoryTable: React.FC = () => {
   const selectedPropertyName = useContext(MarketHistoryContext);
+  console.log(selectedPropertyName);
 
-  const fetchTodayHistory = async ()=>{
+  const fetchTodayHistory = async (): Promise<TodayHistoryRequest[]> => {
     const response = await fetch(`http://127.0.0.1:8080/market/detail/dayQuote/${selectedPropertyName}`);
-    console.log(response);
+    // console.log(response);
+    if(!response.ok){
+      throw new Error("Could not fetch data from /market/detail/dayQuote");
+    };
+    return response.json();
   };
 
+  const {data,error,isLoading,isError} = useQuery<TodayHistoryRequest[],Error>(
+    ["todayHistoryQuery",selectedPropertyName],
+    fetchTodayHistory);
+
   useEffect(()=>{
-    
-  },[])
+    console.log(data);
+  },[]);
+
+  if(isLoading){
+    return (
+      <div>Loading...</div>
+    )
+  };
+
+  if(isError){
+    return (
+      <div>Error : {error.message}</div>
+    )
+  };
 
   return (
-    <div>
-
+    <div className='w-[90%] h-full'>
+      <div className='w-full h-[10%]'>
+        <TableHeader header1='체결시각' header2='가격' header3='등락율' header4='수량' />
+      </div>
+      <div className='w-full h-[90%] flex flex-col'>
+        {data && data.map((item,index)=>(
+          <TodayHistoryTableInfo key={index} createdAt={item.createdAt} rises_falls={item.rises_falls}
+          trade_amount={item.trade_amount} trade_price={item.trade_price} />
+        ))}
+      </div>
     </div>
   )
 }

@@ -7,7 +7,9 @@ const SeparateHistory: React.FC= () => {
 
     return (
         <div className='w-full h-full'>
-            <div className='w-full h-[10%] border-b border-black'>{selectedPropertyName}</div>
+            <div className='w-full h-[10%] flex justify-center items-center'>
+                {selectedPropertyName}
+            </div>
             <div className='w-full h-[90%]'>
                 <TodayDailyTabInfo />
             </div>

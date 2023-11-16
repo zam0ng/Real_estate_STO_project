@@ -45,7 +45,8 @@ const MarketDetail: React.FC = () => {
   const {data,error,isLoading,isError} = useQuery<MarketDetailRequest,Error>(
     ["marketDetailData",propertyName],
     queryMarketDetail,
-    {enabled: !!propertyName});
+    {enabled: !!propertyName}
+  );
 
   if(isLoading){
     return (
@@ -61,7 +62,7 @@ const MarketDetail: React.FC = () => {
 
   return (
     <MarketDetailContext.Provider value={data}>
-      <div className='w-screen h-screen'>
+      <div className='w-screen h-screen overflow-x-hidden'>
         <PropertyImg />
         <PropertyWordBox />
       </div>

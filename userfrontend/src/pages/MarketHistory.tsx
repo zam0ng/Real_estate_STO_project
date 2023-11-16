@@ -11,7 +11,7 @@ const MarketHistory: React.FC = () => {
 
     return (
         <MarketHistoryContext.Provider value={propertyName}> 
-            <div className='w-screen h-screen border border-black'>
+            <div className='w-screen h-screen'>
                 <SeparateHistory />
             </div>
         </MarketHistoryContext.Provider>
