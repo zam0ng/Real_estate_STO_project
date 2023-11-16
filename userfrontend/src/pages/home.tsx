@@ -9,7 +9,6 @@ export default function Home () {
     return(
         <>
             <div>홈 화면</div>
-            <div> 17일 금요일 작업예정</div>
             <TabBar />
         </>
         
