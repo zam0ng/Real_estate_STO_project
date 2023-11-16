@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { db } from "../../models";
 
+// 청약 리스트 보여주기
 export const allList = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
       attributes: [
-        "subscription_img",
+        "subscription_img_1",
         "subscription_name",
         "subscription_address",
 
@@ -25,8 +26,14 @@ export const allList = async (req: Request, res: Response) => {
           ),
           "subscription_end_date",
         ],
+        "subscription_description",
         "subscription_status",
+        [db.sequelize.col("start_price"), "start_price"],
       ],
+      include: {
+        model: db.Real_estates,
+        attributes: [],
+      },
       raw: true,
     });
 
@@ -37,6 +44,7 @@ export const allList = async (req: Request, res: Response) => {
   }
 };
 
+// 청약 상세페이지 내용 보내주기
 export const subsciptionDetail = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -123,9 +131,12 @@ export const subsciptionDetail = async (req: Request, res: Response) => {
   }
 };
 
+// 청약 등록
 export const subscriptionApplication = async (req: Request, res: Response) => {
+  const transaction = await db.sequelize.transaction();
+
   try {
-    type GetUserBalance = {
+    type GetUserInfo = {
       user_email: string;
       wallet: string;
       balance: number;
@@ -135,7 +146,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     const { id, user_email, amount } = req.body;
     const application_amount = 5000 * amount;
 
-    const getUserBalance = (await db.Users.findOne({
+    const getUserInfo = (await db.Users.findOne({
       attributes: [
         "user_email",
         "wallet",
@@ -145,27 +156,43 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       ],
       where: { user_email: user_email },
       raw: true,
-    })) as Object as GetUserBalance;
+    })) as Object as GetUserInfo;
 
-    if (getUserBalance.using_balance < application_amount)
+    if (getUserInfo.using_balance < application_amount)
       return res.send("금액이 모자랍니다.");
 
-    const userBalanceUpdate = await db.Users.update(
+    const user_balance_update = await db.Users.update(
       {
-        using_balance: getUserBalance.using_balance - application_amount,
+        using_balance: getUserInfo.using_balance - application_amount,
       },
-      { where: { user_email: user_email } }
+      { where: { user_email: user_email }, transaction }
     );
 
-    const result = await db.Subscription_application.create({
-      subscription_id: id,
-      subscription_user_email: user_email,
-      subscription_my_amount: amount,
-    });
+    const insert_subscription_application =
+      await db.Subscription_application.create(
+        {
+          subscription_id: id,
+          subscription_user_email: user_email,
+          subscription_my_amount: amount,
+        },
+        { transaction }
+      );
 
-    if (result) return res.status(200).send("청약 성공");
+    const update_subscription_order_amount = await db.Subscriptions.update(
+      {
+        subscription_order_amount: db.sequelize.literal(
+          `subscription_order_amount + ${amount}`
+        ),
+      },
+      { where: { id: id }, transaction }
+    );
+
+    await transaction.commit();
+    if (update_subscription_order_amount)
+      return res.status(200).send("청약 성공");
     else return res.send("청약 실패");
   } catch (error) {
+    await transaction.rollback();
     console.error(error);
   }
 };
