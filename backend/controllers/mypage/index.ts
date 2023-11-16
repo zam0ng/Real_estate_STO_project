@@ -382,6 +382,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
     });
 
     if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }

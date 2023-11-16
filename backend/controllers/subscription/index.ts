@@ -6,7 +6,7 @@ export const allList = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
       attributes: [
-        "subscription_img",
+        "subscription_img_1",
         "subscription_name",
         "subscription_address",
 
@@ -26,8 +26,14 @@ export const allList = async (req: Request, res: Response) => {
           ),
           "subscription_end_date",
         ],
+        "subscription_description",
         "subscription_status",
+        [db.sequelize.col("start_price"), "start_price"],
       ],
+      include: {
+        model: db.Real_estates,
+        attributes: [],
+      },
       raw: true,
     });
 
