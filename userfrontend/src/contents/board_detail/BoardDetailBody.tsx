@@ -1,8 +1,14 @@
 import React from 'react';
 
-const BoardDetailBody: React.FC = () => {
+export interface BoardDetailContentProps {
+  notice_content: string|undefined;
+}
+
+const BoardDetailBody: React.FC<BoardDetailContentProps> = ({notice_content}) => {
   return (
-    <div>BoardDetailBody</div>
+    <div className='w-full h-auto mt-5 pl-5 pr-5'>
+      {notice_content}
+    </div>
   )
 }
 

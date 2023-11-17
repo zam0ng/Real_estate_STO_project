@@ -20,18 +20,12 @@ const BoardItem: React.FC<boardDetailProps> = ({category,createdAt,id,notice_tit
             {state: {
                 id: id,
                 real_estate_name: real_estate_name,
-                notice_title: notice_title,
-                createdAt: createdAt,
-                category: category
             }});
         }else{
-            navigation(`/market/detail/baord-detail/dividend/${notice_title}`,
+            navigation(`/market/detail/board-detail/dividend/${notice_title}`,
             {state: {
                 id: id,
                 real_estate_name: real_estate_name,
-                notice_title: notice_title,
-                createdAt: createdAt,
-                category: category
             }});
         };
     };

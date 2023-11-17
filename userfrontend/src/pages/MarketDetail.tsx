@@ -4,6 +4,7 @@ import PropertyWordBox from '../contents/market_detail/layout/PropertyWordBox';
 import { useLocation } from 'react-router-dom';
 import { PropertyInfo } from '../contents/market/on_sale_list/PropertyListBox';
 import { useQuery } from 'react-query';
+import { serverurl } from '../components/serverurl';
 
 interface MarketDetailRequest {
   current_price: number;
@@ -35,7 +36,7 @@ const MarketDetail: React.FC = () => {
       throw new Error("no property name");
     };
 
-    const response = await fetch(`http://127.0.0.1:8080/market/detail/${propertyName}`);
+    const response = await fetch(`${serverurl}/market/detail/${propertyName}`);
     if(!response.ok){
       throw new Error("Could not fetch data from /market/detail");
     };
@@ -47,6 +48,7 @@ const MarketDetail: React.FC = () => {
     queryMarketDetail,
     {enabled: !!propertyName}
   );
+  console.log(data);
 
   if(isLoading){
     return (
