@@ -3,7 +3,7 @@ import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 
 
-export const postEstateData = async (e: FormEvent<HTMLFormElement>) => {
+export const postEstateData = async (e: FormEvent<HTMLFormElement>, ) => {
     const router = useRouter();
 
     e.preventDefault();   

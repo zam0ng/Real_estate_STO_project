@@ -1,4 +1,5 @@
 
+import Link from "next/link"
 import TableItem from "./TableItem"
 
 const TableContent = () => {
@@ -10,18 +11,21 @@ return (
                 {/* 구분선 */}
                     <div className="w-full col-span-9 border-t-4 border-collapse border-neutral-100 ">  </div>
                 {/* 구분 요소 나열 */}
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">구분 </div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">청약 상태</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">매물명</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">설명</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">진행 상태</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">청약률</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">목표 공모</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">완료 공모</div>
                     <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">청약 기간</div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">참여율</div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">D-day</div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">lorem</div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">loremlorem</div>
-                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">loremloremloremlorem</div>
+                    <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text ">청약 발표일</div>
                     <div className="flex items-center justify-center h-12 col-span-1 font-semibold text-table_crieria_text "></div>
 
             {/* item */}
-                <TableItem />
+                    <TableItem />
+                {/* <Link href={} >  
+                </Link> */}
+                
                 <TableItem />
                 <TableItem />
 

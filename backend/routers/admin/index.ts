@@ -25,11 +25,8 @@ import { Upload } from '../../middleware/imgUpload';
 
 const router: Router = express.Router();
 
-<<<<<<< HEAD
-router.post("/subscription_submit", realEstateSubmit);
+// router.post("/subscription_submit", realEstateSubmit);
 
-=======
->>>>>>> 658b4bd8bbb8ed3dbd63b1fce3afc4355ae18ae2
 /////////////////////////////////////////////////////
 // 매물 전체 정보
 router.get("/real_estates_list", realEstatesList);

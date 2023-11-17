@@ -1,4 +1,4 @@
-import Layout from "@/app/_layout/layout";
+import Layout from "@/app/_layout/Layout";
 
 export default function Real_estates() {
   return (

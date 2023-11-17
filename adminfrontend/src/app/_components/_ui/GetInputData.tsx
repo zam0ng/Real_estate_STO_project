@@ -4,16 +4,16 @@ import { FormEvent, useState } from "react";
 
 const GetInputData = () => {
 
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  // const [uploadFile, setUploadFile] = useState<File | null>(null);
 
-  const saveUploadFile = (e: FormEvent<HTMLInputElement>) => {
-    const input = e.target as HTMLInputElement;
+  // const saveUploadFile = (e: FormEvent<HTMLInputElement>) => {
+  //   const input = e.target as HTMLInputElement;
 
-    if (input.files) {
-      console.log("파일 저장 @GetInputData 컴포넌트", input.files[0]);
-      setUploadFile(input.files[0]);
-    }
-  };
+  //   if (input.files) {
+  //     console.log("파일 저장 @GetInputData 컴포넌트", input.files[0]);
+  //     setUploadFile(input.files[0]);
+  //   }
+  // };
 
 
   return (
@@ -37,7 +37,8 @@ const GetInputData = () => {
                 
                 {/* input */}
                 <div className="flex items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
-                  <input type="file" name="img" placeholder= "ex) img" onChange={saveUploadFile} multiple />
+                  {/* <input type="file" name="upload" placeholder= "ex) img" onChange={saveUploadFile} multiple /> */}
+                  <input type="file" name="upload" placeholder= "ex) img"  multiple />
                 </div>
 
                 {/* 건물 정보 */}

@@ -32,9 +32,9 @@ sequelize
   });
 
 app.use("/admin", adminRouter);
-app.use("/market",marketRouter);
-app.use("/order",orderRouter);
-app.use("/main",mainRouter);
+app.use("/market", marketRouter);
+app.use("/order", orderRouter);
+app.use("/main", mainRouter);
 
 app.listen(8080, () => {
   console.log("server on");
