@@ -9,11 +9,11 @@ export default function Subscription () {
 
 
     return(
-        <>
+        <div className="mb-16">
             <SubHeader/>
             <SubBody />
             <SubEnded />
             <TabBar/>
-        </>
+        </div>
     )
 }

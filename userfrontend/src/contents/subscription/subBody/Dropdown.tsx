@@ -43,7 +43,7 @@ export default function Dropdown({props} : DropdownProps){
     }
 
        const content = props.map((building : SubAllList,index : number)=>
-        <div className="bg-slate-200 shadow-2xl mt-3 rounded-lg h-16 text-center pt-1 flex  px-5 " key={index}>
+        <div className="bg-slate-200 shadow-2xl mt-3 rounded-lg h-16 text-center pt-1 flex  px-5 justify-between" key={index}>
             <div className=" mr-2 w-14 h-14 rounded-2xl bg-[url('http://newsteacher.chosun.com/site/data/img_dir/2023/04/03/2023040302645_0.jpg')] bg-cover"> </div>
             <div className=" h-14 w-40 flex flex-col text-left pt-2">
                 <span className="">{building.subscription_name}</span>

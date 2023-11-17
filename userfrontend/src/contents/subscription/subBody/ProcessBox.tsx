@@ -41,7 +41,7 @@ export default function ProcessBox(){
                 </div>
                 {start.length !== 0 ? <Dropdown props ={start}/> : <div className="bg-slate-100 shadow-2xl mt-2 rounded-lg h-16 text-center pt-5">진행중인 청약이 없어요</div>}
             </div>
-            <div className="w-5/6 m-auto  h-28 mt-5">
+            <div className="w-5/6 m-auto  h-auto mt-5">
                 <div className="text-xl font-bold shadow-2xl">
                     <span>예정된 청약</span>
                     <span className=' ml-3 '>{pending.length == 0 ? 0 : pending.length}</span>

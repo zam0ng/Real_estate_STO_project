@@ -54,8 +54,8 @@ export default function BoxTypeTabComponent ({data} : BoxTypeComponentProps){
     }
 
     return(
-        <>
-            <div className=" relative w-4/5 text-center bg-gray-200 shadow-2xl shadow-900/20 rounded-md h-7 mt-3  "
+        <div className=" ">
+            <div className=" relative w-4/5 text-center bg-gray-200 shadow-2xl shadow-900/20 rounded-md h-7 mt-3 m-auto  "
             style={{ display: 'grid', gridTemplateColumns: `repeat(${data.length}, minmax(0, 1fr))` }}
             >
                 <div className="absolute  bg-blue-500 shadow-md rounded-md h-7 indicator"
@@ -63,7 +63,7 @@ export default function BoxTypeTabComponent ({data} : BoxTypeComponentProps){
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border border-black w-4/5 h-64 rounded-xl shadow-lg">{renderContent()}</div>
-        </>
+            <div className="mt-3 border= w-4/5  rounded-xl shadow-lg m-auto min-h-[30%]">{renderContent()}</div>
+        </div>
     )
 }
