@@ -2,6 +2,7 @@ import TabBar from "../layouts/TabBar"
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent"
 import SubHeader from "../contents/subscription/subHeader"
 import SubBody from "../contents/subscription/subBody"
+import SubEnded from "../contents/subscription/subEnded"
 
 
 export default function Subscription () {
@@ -11,6 +12,7 @@ export default function Subscription () {
         <>
             <SubHeader/>
             <SubBody />
+            <SubEnded />
             <TabBar/>
         </>
     )
