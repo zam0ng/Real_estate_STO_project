@@ -2,7 +2,7 @@ import React from 'react';
 import PropertyBox from './property/PropertyBox';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-
+import { serverUrl } from '../../../components/serverurl';
 export interface PropertyInfo {
   start_price: number;
   current_price: number;
@@ -14,7 +14,7 @@ export interface PropertyInfo {
 };
 
 const queryPropertyList = async (): Promise<PropertyInfo[]> =>{
-  const response = await fetch("http://127.0.0.1:8080/market/tradelist");
+  const response = await fetch(`${serverUrl}/market/tradelist`);
   if(!response.ok){
     throw new Error("Could not fetch data from /market/tradelist");
   };

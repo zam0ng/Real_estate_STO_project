@@ -2,7 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
-
+import path from "path";
 import { sequelize } from "./models";
 
 import adminRouter from "./routers/admin";
@@ -23,13 +23,15 @@ app.use(
 );
 
 sequelize
-  .sync({ force: false })
-  .then(() => {
-    console.log("database connect");
-  })
-  .catch((err) => {
-    console.log("err", err);
-  });
+.sync({ force: false })
+.then(() => {
+  console.log("database connect");
+})
+.catch((err) => {
+  console.log("err", err);
+});
+
+app.use("estate_img", express.static(path.join(__dirname,"imgs", "estate")));
 
 app.use("/admin", adminRouter);
 app.use("/market",marketRouter);
