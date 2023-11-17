@@ -14,7 +14,7 @@ export const marketSubscription = async (req :Request, res : Response) =>{
     const year = new Date().getFullYear();
     const month = (new Date().getMonth() + 1).toString().padStart(2,'0');
     const day = (new Date().getDate()).toString().padStart(2,'0');
-    const startDate = `${year}-${month}-${day}`;
+    const currentDate = `${year}-${month}-${day}`;    
 
     try {
         const result = await Subscriptions.findAll({
@@ -30,7 +30,7 @@ export const marketSubscription = async (req :Request, res : Response) =>{
 
                 [
                     sequelize.literal(
-                        `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${startDate}'::timestamp))`
+                        `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${currentDate}'::timestamp))`
                     ),
                     'subscription_restdate',
                 ],
@@ -55,7 +55,7 @@ export const marketSubscription = async (req :Request, res : Response) =>{
 
                     [
                         sequelize.literal(
-                            `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${startDate}'::timestamp))`
+                            `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${currentDate}'::timestamp))`
                         ),
                         'subscription_restdate',
                     ],

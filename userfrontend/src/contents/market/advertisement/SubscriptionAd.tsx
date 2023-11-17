@@ -1,12 +1,34 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { useQuery } from 'react-query';
+import { serverurl } from '../../../components/serverurl';
+
+interface AdvertisementInfoRequest {
+  subscription_img: string;
+  subscription_description: string;
+  subscription_name: string;
+  subscription_restdate: number;
+}
 
 const SubscriptionAd: React.FC = () => {
+  const fetchAdData = async (): Promise<AdvertisementInfoRequest[]> => {
+    const {data} = await axios.get(`${serverurl}/main/banner`);
+    return data;
+  };
+
+  const {data,error,isLoading,isError} = useQuery<AdvertisementInfoRequest[]>(
+    ["fetchAdData"], fetchAdData
+  );
+
+  console.log(data);
+
   return (
-    <div className='w-[80%] h-32 rounded-lg flex flex-col justify-center bg-sky-700'>
-      <div className='w-full h-1/2 flex justify-center items-center text-white'>10월 25일 공모 시작!</div>
+    <div className='w-[80%] h-20 rounded-lg flex flex-col justify-center bg-sky-700 mt-5'>
+      <div className='w-full h-1/2 flex justify-center items-center text-white'>
+        {data && data[0].subscription_name}
+      </div>
       <div className='w-full h-1/2 flex justify-center items-center text-xs text-white'>
-        {/* property name */}
-        소유 10호 수원 행궁 뉴스 뮤지엄
+        {"시작 예정일"}
       </div>
     </div>
   )
