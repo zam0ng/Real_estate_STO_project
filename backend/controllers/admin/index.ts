@@ -417,6 +417,71 @@ export const tradeMonthList = async (req: Request, res: Response) => {
   }
 };
 
+// 매물 관리 페이지 (매물 관련 전체 데이터 넘겨주기)
+export const realEstateManagement = async (req: Request, res: Response) => {
+  try {
+    const result = await db.Subscriptions.findAll({
+      attributes: [
+        "id",
+        "subscription_img_1",
+        "subscription_name",
+        "subscription_description",
+        "subscription_status",
+        [
+          db.sequelize.literal(
+            "((subscription_order_amount / subscription_totalsupply) * 100) - 100"
+          ),
+          "achievement_rate",
+        ],
+        "subscription_totalprice",
+        [
+          db.sequelize.literal(
+            `'subscription_offering_price * subscription_order_amount'`
+          ),
+          "contest_totalprice",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_start_date"),
+            "YYYY-MM-DD"
+          ),
+          " subscription_start_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_end_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_end_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_result_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_result_date",
+        ],
+      ],
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const realEstateDetail = async (req: Request, res: Response) => {
+  try {
+    //
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 재영 어드민 부분
 export const realEstateSubmit = async (req: Request, res: Response) => {
   // console.log("test",req.body);

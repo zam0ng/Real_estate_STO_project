@@ -6,6 +6,7 @@ export const allList = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
       attributes: [
+        "id",
         "subscription_img_1",
         "subscription_name",
         "subscription_address",
