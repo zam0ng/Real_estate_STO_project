@@ -9,6 +9,7 @@ import Mypage from "./pages/Mypage";
 import Market from "./pages/Market";
 import Login from "./pages/Login";
 import BounsLogin from "./pages/BounsLogin";
+import SubscriptionDetail from "./pages/SubscriptionDetail";
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/market" element={<Market/>} />
           <Route path="/" element={<Login/>} />
           <Route path="/bounslogin" element={<BounsLogin/>} />
+          <Route path="/subscription/detail/:buildingId" element={<SubscriptionDetail />}/>
         </Routes>
           </QueryClientProvider>
       </BrowserRouter>
