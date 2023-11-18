@@ -40,29 +40,15 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 
 // web3 테스트
-// const rpcEndpoint = "http://localhost:8545";
-// const rpcEndpoint = "https://rpc2.sepolia.org";
-// const rpcEndpoint
 const rpcEndpoint = "https://network.bouncecode.net";
 
 const web3 = new Web3(rpcEndpoint);
-
-interface TransactionLog {
-  address: string;
-  data: string;
-  topics: string[];
-}
-
-interface Transaction {
-  hash: string;
-  logs: TransactionLog[];
-}
 
 async function logLatestBlockEvents() {
   try {
     const latestBlock: any = await web3.eth.getBlock("latest", true);
 
-    if (Array.isArray(latestBlock.transactions)) {
+    if (latestBlock.transactions) {
       console.log(`Checking latest block.transactions`);
       console.log(latestBlock.transactions);
 
@@ -71,19 +57,10 @@ async function logLatestBlockEvents() {
         const value = await web3.utils.fromWei(tx.value, "ether");
         console.log("receipt");
         console.log(receipt);
+        console.log("blockNumber : ", tx.blockNumber);
+        console.log("from : ", tx.from);
+        console.log("to : ", tx.to);
         console.log("value : ", value);
-
-        // for (const log of receipt.logs) {
-        //   // 'log.topics'가 undefined가 아닌 경우에만 체크
-        //   if (
-        //     log.topics &&
-        //     log.topics[0] ===
-        //       web3.utils.sha3("Transfer(address,address,uint256)")
-        //   ) {
-        //     console.log("tx : ", tx);
-        //     console.log(`Transfer event found in transaction ${tx.hash}`);
-        //   }
-        // }
       }
     }
   } catch (error) {
@@ -95,23 +72,3 @@ setInterval(logLatestBlockEvents, 5000);
 app.listen(8080, () => {
   console.log("server on");
 });
-
-// async function logLatestBlockEvents() {
-//   try {
-//       const latestBlock = await web3.eth.getBlock('latest', true);
-
-//       if ('transactions' in latestBlock && Array.isArray(latestBlock.transactions)) {
-//           console.log(`Checking latest block: ${latestBlock.number}`);
-
-//           latestBlock.transactions.forEach((tx: any) => {
-//               if (tx.logs) {
-//                   tx.logs.forEach((log: any) => {
-//                       console.log(log);
-//                   });
-//               }
-//           });
-//       }
-//   } catch (error) {
-//       console.error('Error fetching latest block events:', error);
-//   }
-// }
