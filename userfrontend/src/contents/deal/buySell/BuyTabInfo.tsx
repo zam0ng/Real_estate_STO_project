@@ -4,9 +4,15 @@ import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
 import { useMutation } from 'react-query';
 
-export interface BuyPost {
+interface BuyPost {
     price: number;
     amount: number;
+}
+
+const buyPost = async (propertyName: string,buyData:BuyPost): Promise<string> => {
+    const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,buyData);
+    // console.log(data);
+    return data;
 }
 
 const BuyTabInfo: React.FC = () => {
@@ -33,6 +39,7 @@ const BuyTabInfo: React.FC = () => {
         };
     };
 
+    // 초기화 버튼 전용
     const clearInputs = (event: React.MouseEvent<HTMLButtonElement>)=>{
         if(priceInputRef.current && priceInputRef.current?.value !== ""){
             priceInputRef.current.value = "";
@@ -44,15 +51,34 @@ const BuyTabInfo: React.FC = () => {
         setBuyAmount("");
     };
 
-    const buySellPost = async (propertyName: string,buySellData:BuyPost): Promise<boolean> => {
-        const {data} = await axios.post(`${serverurl}/order/buy/${propertyName}`,buySellData);
-        return data;
+    // 매수 완료 혹은 매수 주문 완료 전용
+    const clearInputs2 = ()=>{
+        if(priceInputRef.current && priceInputRef.current?.value !== ""){
+            priceInputRef.current.value = "";
+        };
+        if(amountInputRef.current && amountInputRef.current?.value !== ""){
+            amountInputRef.current.value = "";
+        };
+        setBuyPrice("");
+        setBuyAmount("");
     };
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>)=>{
-        event.preventDefault();
-        const newData = {price: buyPrice, amount: buyAmount};
-        buySellPost(currentPage.state.propertyName,newData);
+    const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
+        ({propertyName,buyData})=>buyPost(propertyName,buyData),
+        {
+            onSuccess: (data) => {
+                console.log(data);
+                clearInputs2();
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    );
+    // event: React.FormEvent<HTMLFormElement>
+
+    const handleSubmit = (propertyName: string, buyData: BuyPost)=>{
+        mutation.mutate({propertyName,buyData});
     };
 
     useEffect(()=>{
@@ -60,7 +86,11 @@ const BuyTabInfo: React.FC = () => {
     },[buyPrice]);
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            const newData = {price:buyPrice,amount:buyAmount};
+            handleSubmit(currentPage.state.propertyName,newData);
+        }}>
             <div className='buy-sell-input w-full h-full flex flex-col text-sm'>
                 <div className='buy-input w-full h-full border-b border-dashed flex flex-col justify-center items-center'>
                     <div className='w-[70%] flex flex-row justify-end items-center mt-2 mb-1'>

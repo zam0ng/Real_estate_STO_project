@@ -20,51 +20,6 @@ const PriceBox: React.FC = () => {
     const currentPage = useLocation();
     // console.log(currentPage);
 
-    const pricelist = {
-        "buy_list": [
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3750, amount: 200},
-            {price: 3800, amount: 200},
-            {price: 3850, amount: 200},
-            {price: 3900, amount: 200},
-            {price: 3950, amount: 200},
-            {price: 4000, amount: 200},
-        ],
-        "sell_list": [
-            {price: 4050, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-            {price: 4100, amount: 200},
-        ]
-    };
-
     const fetchOrderList = async (): Promise<BuySellDataRequest>=>{
         const {data} = await axios.get(`${serverurl}/order/main/${currentPage.state.propertyName}`);
         return data;
