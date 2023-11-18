@@ -1,6 +1,18 @@
-import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import React, { useState, useRef, useEffect } from 'react';
+import { serverurl } from '../../../components/serverurl';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from 'react-query';
+
+export interface BuyPost {
+    price: number;
+    amount: number;
+}
 
 const BuyTabInfo: React.FC = () => {
+    const currentPage = useLocation();
+    // console.log(currentPage.state);
+
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
 
@@ -32,8 +44,23 @@ const BuyTabInfo: React.FC = () => {
         setBuyAmount("");
     };
 
+    const buySellPost = async (propertyName: string,buySellData:BuyPost): Promise<boolean> => {
+        const {data} = await axios.post(`${serverurl}/order/buy/${propertyName}`,buySellData);
+        return data;
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>)=>{
+        event.preventDefault();
+        const newData = {price: buyPrice, amount: buyAmount};
+        buySellPost(currentPage.state.propertyName,newData);
+    };
+
+    useEffect(()=>{
+        console.log(buyPrice);
+    },[buyPrice]);
+
     return (
-        <>
+        <form onSubmit={handleSubmit}>
             <div className='buy-sell-input w-full h-full flex flex-col text-sm'>
                 <div className='buy-input w-full h-full border-b border-dashed flex flex-col justify-center items-center'>
                     <div className='w-[70%] flex flex-row justify-end items-center mt-2 mb-1'>
@@ -51,11 +78,11 @@ const BuyTabInfo: React.FC = () => {
                     </div>
                     <div className='w-[70%] h-5 flex justify-between text-xs'>
                         <button className='bg-slate-400 text-white w-[40%] h-5' onClick={clearInputs}>초기화</button>
-                        <button className='bg-red-500 text-white w-[55%] h-5'>매수</button>
+                        <button type='submit' className='bg-red-500 text-white w-[55%] h-5'>매수</button>
                     </div>
                 </div>
             </div>
-        </>
+        </form>
     )
 }
 

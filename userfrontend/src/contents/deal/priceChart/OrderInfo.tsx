@@ -1,5 +1,5 @@
 import React from 'react';
-import PriceBox from './PriceBox';
+import PriceBox from './PriceChart';
 
 const OrderInfo: React.FC = () => {
 
