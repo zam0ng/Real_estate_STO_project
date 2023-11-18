@@ -3,7 +3,7 @@ import { MarketHistoryContext } from '../../../pages/MarketHistory';
 import { useQuery } from 'react-query';
 import TableHeader from './TableHeader';
 import TodayHistoryTableInfo from './TodayHistoryTableInfo';
-import { serverUrl } from '../../../components/serverurl';
+import { serverurl } from '../../../components/serverurl';
 export interface TodayHistoryRequest {
   createdAt: string;
   trade_price: number;
@@ -16,7 +16,7 @@ const TodayHistoryTable: React.FC = () => {
   console.log(selectedPropertyName);
 
   const fetchTodayHistory = async (): Promise<TodayHistoryRequest[]> => {
-    const response = await fetch(`${serverUrl}/market/detail/dayQuote/${selectedPropertyName}`);
+    const response = await fetch(`${serverurl}/market/detail/dayQuote/${selectedPropertyName}`);
     // console.log(response);
     if(!response.ok){
       throw new Error("Could not fetch data from /market/detail/dayQuote");

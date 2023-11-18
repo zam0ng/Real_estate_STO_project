@@ -3,7 +3,7 @@ import BuildingImg from './BuildingImg';
 import BuildingInfo from './BuildingInfo';
 import BuyBtn from './BuyBtn';
 import { useQuery } from 'react-query';
-import { serverUrl } from '../../../components/serverurl';
+import { serverurl } from '../../../components/serverurl';
 interface SubscriptionInfo {
   subscription_img: string;
   subscription_totalprice: number;
@@ -15,7 +15,7 @@ interface SubscriptionInfo {
 
 // 이 부분 확인하기
 const querySubscriptionInfo = async (): Promise<SubscriptionInfo[]> => {
-  const response = await fetch(`${serverUrl}/market/subscription`);
+  const response = await fetch(`${serverurl}/market/subscription`);
   if(!response.ok){
     throw new Error("Could not fetch data of subscription info");
   };

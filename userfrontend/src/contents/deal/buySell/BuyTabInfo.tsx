@@ -10,6 +10,8 @@ interface BuyPost {
 }
 
 const buyPost = async (propertyName: string,buyData:BuyPost): Promise<string> => {
+    // 여기에 소켓 send.
+    console.log(buyData); // {price: 1000, amount: 5}
     const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,buyData);
     // console.log(data);
     return data;
