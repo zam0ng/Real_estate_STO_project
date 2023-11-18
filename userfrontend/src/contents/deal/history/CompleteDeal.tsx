@@ -1,6 +1,19 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { serverurl } from '../../../components/serverurl';
+import { useLocation } from 'react-router-dom';
+import { useQuery } from 'react-query';
+
+interface CompleteDealRequest {
+    order_type: string;
+    createdAt: string;
+    price: number;
+    amount: number;
+}
 
 const CompleteDeal: React.FC = () => {
+    const currentPage = useLocation();
+
     const completeList = [
         {
             order_type: "판매",
@@ -28,17 +41,31 @@ const CompleteDeal: React.FC = () => {
         }
     ];
 
-    const fromRecent = completeList.sort((a,b)=>{
+    const fetchCompleteDeal = async (): Promise<CompleteDealRequest[]> => {
+        const {data} = await axios.get(`${serverurl}/order/conclusion/${currentPage.state.propertyName}`);
+        return data;
+    };
+
+    const {data,error,isLoading,isError} = useQuery<CompleteDealRequest[]>(
+        ["fetchCompleteDeal",currentPage.state.propertyName],
+        fetchCompleteDeal
+    );
+
+    useEffect(()=>{
+        console.log(data);
+    },[data])
+
+    const fromRecent = data && data.sort((a,b)=>{
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
 
         return dateB.getTime() - dateA.getTime();
     });
-    console.log(fromRecent);
+    // console.log(fromRecent);
 
     return (
         <>
-            {fromRecent.map((item,index)=>{
+            {fromRecent && fromRecent.map((item,index)=>{
                 return(
                     <div className='w-full h-[30%] flex flex-col items-center text-sm mt-2 mb-2' key={index}>
                         <div className={`w-[80%] h-1/5 text-xs md:text-lg flex justify-start items-center ${item.order_type === "판매" ? "blueText" : "redText"}`}>{item.order_type}</div>
