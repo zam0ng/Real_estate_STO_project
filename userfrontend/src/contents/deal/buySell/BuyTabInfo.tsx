@@ -1,6 +1,24 @@
-import React, { useState, useRef } from 'react';
+import axios from 'axios';
+import React, { useState, useRef, useEffect } from 'react';
+import { serverurl } from '../../../components/serverurl';
+import { useLocation } from 'react-router-dom';
+import { useMutation } from 'react-query';
+
+interface BuyPost {
+    price: number;
+    amount: number;
+}
+
+const buyPost = async (propertyName: string,buyData:BuyPost): Promise<string> => {
+    const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,buyData);
+    // console.log(data);
+    return data;
+}
 
 const BuyTabInfo: React.FC = () => {
+    const currentPage = useLocation();
+    // console.log(currentPage.state);
+
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
 
@@ -21,6 +39,7 @@ const BuyTabInfo: React.FC = () => {
         };
     };
 
+    // 초기화 버튼 전용
     const clearInputs = (event: React.MouseEvent<HTMLButtonElement>)=>{
         if(priceInputRef.current && priceInputRef.current?.value !== ""){
             priceInputRef.current.value = "";
@@ -32,8 +51,46 @@ const BuyTabInfo: React.FC = () => {
         setBuyAmount("");
     };
 
+    // 매수 완료 혹은 매수 주문 완료 전용
+    const clearInputs2 = ()=>{
+        if(priceInputRef.current && priceInputRef.current?.value !== ""){
+            priceInputRef.current.value = "";
+        };
+        if(amountInputRef.current && amountInputRef.current?.value !== ""){
+            amountInputRef.current.value = "";
+        };
+        setBuyPrice("");
+        setBuyAmount("");
+    };
+
+    const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
+        ({propertyName,buyData})=>buyPost(propertyName,buyData),
+        {
+            onSuccess: (data) => {
+                console.log(data);
+                clearInputs2();
+            },
+            onError: (error) => {
+                console.log(error);
+            }
+        }
+    );
+    // event: React.FormEvent<HTMLFormElement>
+
+    const handleSubmit = (propertyName: string, buyData: BuyPost)=>{
+        mutation.mutate({propertyName,buyData});
+    };
+
+    useEffect(()=>{
+        console.log(buyPrice);
+    },[buyPrice]);
+
     return (
-        <>
+        <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            const newData = {price:buyPrice,amount:buyAmount};
+            handleSubmit(currentPage.state.propertyName,newData);
+        }}>
             <div className='buy-sell-input w-full h-full flex flex-col text-sm'>
                 <div className='buy-input w-full h-full border-b border-dashed flex flex-col justify-center items-center'>
                     <div className='w-[70%] flex flex-row justify-end items-center mt-2 mb-1'>
@@ -51,11 +108,11 @@ const BuyTabInfo: React.FC = () => {
                     </div>
                     <div className='w-[70%] h-5 flex justify-between text-xs'>
                         <button className='bg-slate-400 text-white w-[40%] h-5' onClick={clearInputs}>초기화</button>
-                        <button className='bg-red-500 text-white w-[55%] h-5'>매수</button>
+                        <button type='submit' className='bg-red-500 text-white w-[55%] h-5'>매수</button>
                     </div>
                 </div>
             </div>
-        </>
+        </form>
     )
 }
 

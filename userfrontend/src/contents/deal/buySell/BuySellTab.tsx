@@ -28,13 +28,3 @@ const BuySellTab: React.FC<TabProps> = ({ id, title, activeTab, setActiveTab}) =
 }
 
 export default BuySellTab;
-
-// return (
-//     currentTab === "buyTab" ? 
-//     <div className={`w-1/2 h-full flex justify-center items-center text-sm `}>
-//         {title}
-//     </div> : 
-//     <div>
-
-//     </div>
-// )
