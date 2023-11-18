@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { serverurl } from '../../../components/serverurl';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 
 interface IncompleteDealRequest {
     id: number;
@@ -11,6 +11,20 @@ interface IncompleteDealRequest {
     order_price: number;
     possible_amount: number;
 }
+
+interface CancelArguments {
+    id: number;
+}
+
+const fetchIncompleteDeal = async (propertyName: string): Promise<IncompleteDealRequest[]> => {
+    const {data} = await axios.get(`${serverurl}/order/not_conclusion/${propertyName}`);
+    return data;
+};
+
+const cancelIncompleteDeal = async (propertyName:string,id: number):Promise<string> => {
+    const {data} = await axios.get(`${serverurl}/order/cancel/${propertyName}/${id}`);
+    return data;
+};
 
 const IncompleteDeal: React.FC = () => {
     const currentPage = useLocation();
@@ -45,20 +59,31 @@ const IncompleteDeal: React.FC = () => {
         }
     ];
 
-    const fetchIncompleteDeal = async (): Promise<IncompleteDealRequest[]> => {
-        const {data} = await axios.get(`${serverurl}/order/not_conclusion/${currentPage.state.propertyName}`);
-        return data;
-    };
-
-    const {data,error,isLoading,isError} = useQuery<IncompleteDealRequest[]>(
-        ["fetchIncompleteDeal",currentPage.state.propertyName],
-        fetchIncompleteDeal
+    const {data: incompleteDeals,isLoading,isError,error} = useQuery(
+        ["incompleteDeals",currentPage.state.propertyName],
+        () => fetchIncompleteDeal(currentPage.state.propertyName)
     );
 
+    const cancelMutation = useMutation(
+        (args: CancelArguments) => cancelIncompleteDeal(currentPage.state.propertyName,args.id),
+        {
+            onSuccess: (data)=>{
+                console.log(data);
+            },
+            onError: (error)=>{
+                console.log(error);
+            }
+        }
+    );
+
+    const handleCancel = (id: number) => {
+        cancelMutation.mutate({id});
+    };
+
     useEffect(()=>{
-        console.log(data);
-        if(data){
-            data.map((item,index)=>{
+        console.log(incompleteDeals);
+        if(incompleteDeals){
+            incompleteDeals.map((item,index)=>{
                 if(item.order_type === "buy"){
                     setOrderType("구매");
                 }else{
@@ -68,9 +93,9 @@ const IncompleteDeal: React.FC = () => {
                 setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
             })
         }
-    },[data])
+    },[incompleteDeals])
 
-    const fromRecent = data && data.sort((a,b)=>{
+    const fromRecent = incompleteDeals && incompleteDeals.sort((a,b)=>{
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
 
@@ -85,7 +110,7 @@ const IncompleteDeal: React.FC = () => {
                     <div className='w-full h-[30%] flex flex-col items-center text-sm mt-2 mb-2' key={index}>
                         <div className={`w-[80%] h-1/5 text-xs md:text-lg flex justify-between ${orderType === "판매" ? "blueText" : "redText"}`}>
                             <div className='flex justify-center items-center'>{orderType}</div>
-                            <button className='w-[30%] h-full bg-slate-400 text-xs text-white rounded-md flex justify-center items-center'>취소</button>
+                            <button onClick={()=>handleCancel(item.id)} className='w-[30%] h-full bg-slate-400 text-xs text-white rounded-md flex justify-center items-center'>취소</button>
                         </div>
                         <div className='w-[80%] h-1/5 text-xxs md:text-sm text-slate-400 flex items-center '>{orderDate}</div>
                         <div className='w-[80%] h-1/5 text-xs md:text-sm flex flex-row justify-between'>
