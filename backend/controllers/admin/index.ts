@@ -117,6 +117,13 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
   return all_result;
 }
 
+// function formatDate(date: Date): string {
+//   const year = date.getFullYear();
+//   const month = String(date.getMonth() + 1).padStart(2, "0");
+//   const day = String(date.getDate()).padStart(2, "0");
+//   return `${year}-${month}-${day}`;
+// }
+
 // 매물 전체 정보
 export const realEstatesList = async (req: Request, res: Response) => {
   try {
@@ -436,7 +443,7 @@ export const realEstateManagement = async (req: Request, res: Response) => {
         "subscription_totalprice",
         [
           db.sequelize.literal(
-            `'subscription_offering_price * subscription_order_amount'`
+            "subscription_offering_price * subscription_order_amount"
           ),
           "contest_totalprice",
         ],
@@ -446,7 +453,7 @@ export const realEstateManagement = async (req: Request, res: Response) => {
             db.sequelize.col("subscription_start_date"),
             "YYYY-MM-DD"
           ),
-          " subscription_start_date",
+          "subscription_start_date",
         ],
         [
           db.sequelize.fn(
@@ -465,6 +472,7 @@ export const realEstateManagement = async (req: Request, res: Response) => {
           "subscription_result_date",
         ],
       ],
+      raw: true,
     });
 
     if (result) return res.status(200).json(result);
@@ -474,9 +482,19 @@ export const realEstateManagement = async (req: Request, res: Response) => {
   }
 };
 
+// 매물 관리 상세 페이지
 export const realEstateDetail = async (req: Request, res: Response) => {
   try {
-    //
+    console.log(req);
+    const real_estate_id = req.params.id as string;
+
+    const result = await db.Subscriptions.findOne({
+      where: { id: real_estate_id },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }

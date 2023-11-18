@@ -42,8 +42,7 @@ app.use("/mypage", mypageRouter);
 // web3 테스트
 // const rpcEndpoint = "http://localhost:8545";
 // const rpcEndpoint = "https://rpc2.sepolia.org";
-// const rpcEndpoint =
-//   "https://mainnet.infura.io/v3/8021103393d04f9fa007600348d4d23b";
+// const rpcEndpoint
 const rpcEndpoint = "https://network.bouncecode.net";
 
 const web3 = new Web3(rpcEndpoint);
