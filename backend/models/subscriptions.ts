@@ -42,6 +42,12 @@ interface SubscriptionsAttribute {
 }
 
 class Subscriptions extends Model<SubscriptionsAttribute> {
+  declare subscription_start_date: Date;
+  declare subscription_end_date: Date;
+  declare subscription_result_date: Date;
+  declare subscription_building_date: Date;
+  declare subscription_trading_start_date: Date;
+  declare completion: Date;
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {

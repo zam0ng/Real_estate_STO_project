@@ -14,6 +14,8 @@ import Dividend_details from "./dividend_details";
 import Notices from "./notices";
 import Votes from "./votes";
 import Real_estates_own_history from "./real_estates_own_history";
+import Tx_block from "./tx_block";
+import Tx_receipt from "./tx_receipt";
 
 export const sequelize = new Sequelize(
   config.dev.database!,
@@ -42,6 +44,8 @@ export interface DB {
   Notices: typeof Notices;
   Votes: typeof Votes;
   Real_estates_own_history: typeof Real_estates_own_history;
+  Tx_block: typeof Tx_block;
+  Tx_receipt: typeof Tx_receipt;
 }
 
 export const db: DB = {
@@ -60,6 +64,8 @@ export const db: DB = {
   Notices,
   Votes,
   Real_estates_own_history,
+  Tx_block,
+  Tx_receipt,
 };
 
 db.sequelize = sequelize;
@@ -79,6 +85,8 @@ Notices.initModel(sequelize);
 Real_estates_own.initModel(sequelize);
 Votes.initModel(sequelize);
 Real_estates_own_history.initModel(sequelize);
+Tx_block.initModel(sequelize);
+Tx_receipt.initModel(sequelize);
 
 Subscriptions.associate(db);
 Real_estates.associate(db);
@@ -96,3 +104,5 @@ Real_estates.associate(db);
 Real_estates_own.associate(db);
 Subscriptions_own.associate(db);
 Subscription_application.associate(db);
+Tx_block.associate(db);
+Tx_receipt.associate(db);
