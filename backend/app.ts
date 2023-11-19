@@ -50,6 +50,7 @@ async function logLatestBlockEvents() {
 
     if (latestBlock.transactions) {
       console.log(`Checking latest block.transactions`);
+      console.log(latestBlock);
       console.log(latestBlock.transactions);
 
       for (const tx of latestBlock.transactions) {
