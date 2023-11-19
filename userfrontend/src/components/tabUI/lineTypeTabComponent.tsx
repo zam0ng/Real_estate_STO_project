@@ -36,7 +36,7 @@ export default function LineTypeTabComponent ({data} : LineTypeTabComponentProps
 
         return (
             <div 
-                className={` z-10  text-lg font-semibold`} 
+                className={` z-10  text-sm font-semibold`} 
                 data-index={index} 
                 onClick={() => setTabNum(index)} 
                 key={index}
@@ -64,7 +64,7 @@ export default function LineTypeTabComponent ({data} : LineTypeTabComponentProps
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border border-black  m-auto  rounded-xl shadow-lg">{renderContent()}</div>
+            <div className="mt-3   m-auto min-h-[30%] ">{renderContent()}</div>
         </div>
     )
 }

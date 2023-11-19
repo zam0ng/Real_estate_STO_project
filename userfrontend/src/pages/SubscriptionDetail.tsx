@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query"
 import { SubDetail } from "../features/SubDetail";
 import axios from '../components/url';
 import Slider from "../components/Slider";
+import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
+import SubStatus from "../contents/subscription/subDetail/SubStatus";
+
 
 export default function SubscriptionDetail(){
 
@@ -25,11 +28,22 @@ export default function SubscriptionDetail(){
 
     console.log(data);
 
+    let test1 = [{
+        tabName : "투자 포인트",
+        content : <>투자 포인트 화면입니다</>
+    },{
+        tabName : "모집 현황",
+        content : <SubStatus />
+    },{
+        tabName : "상세 정보",
+        content : <>상세 정보 화면입니다</>
+    }]
+
     return(
         <>
             <Slider />
             <>청약 {buildingId}번 매물 상세페이지입니다</>
-            <>{JSON.stringify(data)}</>
+            <LineTypeTabComponent data={test1} />
         </>
     )
 }
