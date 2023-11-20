@@ -30,7 +30,7 @@ const BuildingImg: React.FC<ImageProps> = ({img,totalPrice}) => {
       text-white text-xs-sm flex justify-center items-center'>
         {priceKr}
       </div>
-      <img className='w-full h-full rounded-lg' src={img} alt='building image' />
+      <img className='w-full h-full rounded-lg' src={process.env.PUBLIC_URL+img} alt='building image' />
     </div>
   )
 }
