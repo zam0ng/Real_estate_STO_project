@@ -23,7 +23,6 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
 
 function TabBar() {
     return(    
-        <div>
             <div className="flex flex-nowrap fixed bottom-0 w-full h-12 xs:flex bg-white pt-1 z-10 shadow-inner ">
                 <TabButtons imgName="home" btnName="홈" urlName='home'/>
                 <TabButtons imgName="buy" btnName="청약" urlName='subscription'/>
@@ -31,7 +30,6 @@ function TabBar() {
                 <TabButtons imgName="user" btnName="My" urlName='mypage'/>
                 <TabButtons imgName="more" btnName="더보기" urlName='more'/>
             </div>
-        </div>
     )
 }
 
