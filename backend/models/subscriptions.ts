@@ -42,6 +42,11 @@ interface SubscriptionsAttribute {
 }
 
 class Subscriptions extends Model<SubscriptionsAttribute> {
+  declare subscription_img_1: string;
+  declare subscription_img_2: string;
+  declare subscription_img_3: string;
+  declare subscription_img_4: string;
+  declare subscription_img_5: string;
   declare subscription_start_date: Date;
   declare subscription_end_date: Date;
   declare subscription_result_date: Date;
