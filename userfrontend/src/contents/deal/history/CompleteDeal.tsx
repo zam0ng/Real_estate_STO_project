@@ -17,8 +17,7 @@ const CompleteDeal: React.FC = () => {
     const currentPage = useLocation();
 
     const [orderType,setOrderType] = useState<string>("");
-    const [orderDate,setOrderDate] = useState<string>("");
-    const [koreanTime,setKoreanTime] = useState<Date[]>([]);
+    const [koreanTime,setKoreanTime] = useState<string[]>([]);
 
     const fetchCompleteDeal = async (): Promise<CompleteDealRequest[]> => {
         const {data} = await axios.get(`${serverurl}/order/conclusion/${currentPage.state.propertyName}`);
@@ -39,12 +38,11 @@ const CompleteDeal: React.FC = () => {
                 }else{
                     setOrderType("판매");
                 };
-                console.log(item.createdAt);
-                // koreanTime.push(item.)
-                setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
-                
+                let orderDate = item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16);
+                koreanTime.push(orderDate);
             })
-        }
+        };
+        // console.log(koreanTime);
     },[data]);
 
     const fromRecent = data && data.sort((a,b)=>{
@@ -63,7 +61,7 @@ const CompleteDeal: React.FC = () => {
                         <div className={`w-[80%] h-1/5 text-xs md:text-lg flex justify-start items-center ${orderType === "판매" ? "blueText" : "redText"}`}>
                             {orderType}
                         </div>
-                        <div className='w-[80%] h-1/5 text-xxs md:text-sm text-slate-400 flex items-center '>{orderDate}</div>
+                        <div className='w-[80%] h-1/5 text-xxs md:text-sm text-slate-400 flex items-center '>{koreanTime[index]}</div>
                         <div className='w-[80%] h-1/5 text-xs md:text-sm flex flex-row justify-between'>
                             <p>가격</p>
                             <div>{item.trade_price} 원</div>

@@ -24,9 +24,9 @@ export default function Mypage () {
         )
     }
     return(
-        <>
+        <div className="w-screen h-screen border border-black pb-16 overflow-y-scroll">
             <>마이페이지 작동합니다</>
             <TabBar />
-        </>
+        </div>
     )
 }

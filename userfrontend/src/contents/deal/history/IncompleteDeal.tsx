@@ -32,7 +32,7 @@ const IncompleteDeal: React.FC = () => {
     const queryClient = useQueryClient();
 
     const [orderType,setOrderType] = useState<string>("");
-    const [orderDate,setOrderDate] = useState<string>("");
+    const [koreanTime,setKoreanTime] = useState<string[]>([]);
 
     const {data: incompleteDeals,isLoading,isError,error} = useQuery(
         {queryKey:["incompleteDeals",currentPage.state.propertyName],
@@ -66,10 +66,11 @@ const IncompleteDeal: React.FC = () => {
                     setOrderType("판매");
                 };
 
-                setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
+                let orderDate = item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16);
+                koreanTime.push(orderDate);
             })
-        }
-    },[incompleteDeals])
+        };
+    },[incompleteDeals]);
 
     const fromRecent = incompleteDeals && incompleteDeals.sort((a,b)=>{
         const dateA = new Date(a.createdAt);
@@ -88,7 +89,7 @@ const IncompleteDeal: React.FC = () => {
                             <div className='flex justify-center items-center'>{orderType}</div>
                             <button onClick={()=>handleCancel(item.id)} className='w-[30%] h-full bg-slate-400 text-xs text-white rounded-md flex justify-center items-center'>취소</button>
                         </div>
-                        <div className='w-[80%] h-1/5 text-xxs md:text-sm text-slate-400 flex items-center '>{orderDate}</div>
+                        <div className='w-[80%] h-1/5 text-xxs md:text-sm text-slate-400 flex items-center '>{koreanTime[index]}</div>
                         <div className='w-[80%] h-1/5 text-xs md:text-sm flex flex-row justify-between'>
                             <p>가격</p>
                             <div>{item.order_price} 원</div>

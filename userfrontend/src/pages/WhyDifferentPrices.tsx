@@ -4,9 +4,9 @@ const WhyDifferentPrices: React.FC = () => {
   return (
     <div className='w-screen h-screen'>
         <div className='w-full h-80 flex justify-center items-center mt-12'>
-            <div className='relative w-[90%] h-80 border border-black bg-blue-600'>
-                <div className='absolute top-16 left-20 w-32 h-44 -rotate-12 rounded-xl border border-black bg-slate-400'></div>
-                <div className='absolute top-20 left-32 w-32 h-44 rotate-[20deg] rounded-xl border border-black bg-slate-200'></div>
+            <div className='relative w-full h-80 border border-black bg-blue-600'>
+                <div className='absolute top-16 left-24 w-32 h-44 -rotate-12 rounded-xl border border-black bg-slate-400'></div>
+                <div className='absolute top-20 left-36 w-32 h-44 rotate-[20deg] rounded-xl border border-black bg-slate-200'></div>
             </div>
         </div>
         <div className='w-full h-32 flex flex-col text-justify pl-5 pr-5'>
