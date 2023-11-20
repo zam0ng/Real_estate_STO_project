@@ -10,6 +10,7 @@ import adminRouter from "./routers/admin";
 import marketRouter from "./routers/market";
 import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
+import subscriptionRouter from "./routers/subscription";
 
 const app: Express = express();
 
@@ -33,9 +34,10 @@ sequelize
   });
 
 app.use("/admin", adminRouter);
-app.use("/market",marketRouter);
-app.use("/order",orderRouter);
-app.use("/main",mainRouter);
+app.use("/market", marketRouter);
+app.use("/order", orderRouter);
+app.use("/main", mainRouter);
+app.use("/subscription", subscriptionRouter);
 
 // web3 테스트
 const rpcEndpoint = "https://network.bouncecode.net";
@@ -48,6 +50,7 @@ async function logLatestBlockEvents() {
 
     if (latestBlock.transactions) {
       console.log(`Checking latest block.transactions`);
+      console.log(latestBlock);
       console.log(latestBlock.transactions);
 
       for (const tx of latestBlock.transactions) {

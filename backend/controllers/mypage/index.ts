@@ -169,7 +169,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
 //   try {
 //     const userEmail = req.body.user_email as string;
 //     const getSubscriptionImg = await db.Subscriptions.findAll({
-//       attributes: ["subscription_name", "subscription_img"],
+//       attributes: ["subscription_name", "subscription_img_1"],
 //     });
 
 //     const getDepositWithdrawal = await db.Deposit_drawal.findAll({});
@@ -351,7 +351,7 @@ export const dividendList = async (req: Request, res: Response) => {
 //     };
 
 //     const real_estate_img = await db.Subscriptions.findAll({
-//       attributes: ["subscription_img", "subscription_name"],
+//       attributes: ["subscription_img_1", "subscription_name"],
 //       where: { subscription_status: "success" },
 //       raw: true,
 //     });

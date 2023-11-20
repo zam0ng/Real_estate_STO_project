@@ -3,7 +3,7 @@ import { DB } from "../models";
 
 interface txBlockAttribute {
   id: number;
-  blocknumber: number;
+  block_num: number;
 }
 
 class Tx_block extends Model<txBlockAttribute> {
@@ -17,7 +17,7 @@ class Tx_block extends Model<txBlockAttribute> {
           autoIncrement: true,
           primaryKey: true,
         },
-        blocknumber: {
+        block_num: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
