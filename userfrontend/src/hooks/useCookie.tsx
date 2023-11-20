@@ -9,13 +9,38 @@ export default function useCookie(urlProps: string) {
   const [LoginCheck, setLoginCheck] = useState(false);
   const [bounsURI, setBounsURI] = useState("");
   const [iframeVisible, setIframeVisible] = useState(false);
+  const [projectId, setProjectId] = useState(
+    "6e9c40d1-1236-42c4-8a13-586e7df92327"
+  );
 
   const cookies = new Cookies();
 
   useEffect(() => {
     const isCookie = cookies.get("accessToken");
     if (isCookie) {
-      setLoginCheck(true);
+      try {
+        axios.get("http://localhost:8080/mypage/my_balance", {
+          params: {
+            token: isCookie,
+          },
+        });
+        // axios
+        //   .post(`https://bouns.io/api/jwt-verify`, {
+        //     token: isCookie,
+        //     projectId: projectId,
+        //   })
+        //   .then((res) => {
+        //     const { data, status } = res;
+        //     const userEmail = data.email;
+        //     console.log(res);
+        //     console.log("userEmail : ", userEmail);
+
+        //     if (status == 200) setLoginCheck(true);
+        //   })
+        //   .catch(console.error);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
       let parsedUrl = new URL(window.location.href);
       const accessToken = parsedUrl.searchParams.get("access_token");
@@ -37,7 +62,7 @@ export default function useCookie(urlProps: string) {
         setIframeVisible(false);
         window.parent.postMessage("navigateToURL", "*");
       } else {
-        const projectId = "6e9c40d1-1236-42c4-8a13-586e7df92327";
+        // const projectId = "6e9c40d1-1236-42c4-8a13-586e7df92327";
         const redirectUri =
           window.location.protocol +
           "//" +

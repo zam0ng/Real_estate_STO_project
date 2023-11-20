@@ -2,6 +2,10 @@ import { Request, Response } from "express";
 import { Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 
+interface AddRequest extends Request {
+  userEmail?: string;
+}
+
 // 입금하기
 export const depositBalance = async (req: Request, res: Response) => {
   const transaction = await db.sequelize.transaction();
@@ -96,7 +100,8 @@ export const withDrawal = async (req: Request, res: Response) => {
 // 유저 정보 보내주기
 export const userInfo = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.query.user_email as string;
+    const _req = req as AddRequest;
+    const { userEmail } = _req;
 
     const result = await db.Users.findOne({
       attributes: [
@@ -109,6 +114,27 @@ export const userInfo = async (req: Request, res: Response) => {
       where: { user_email: userEmail },
       raw: true,
     });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("Not found");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 내 잔액 보여주기
+export const myBalance = async (req: Request, res: Response) => {
+  try {
+    const _req = req as AddRequest;
+    const { userEmail } = _req;
+
+    const result = await db.Users.findOne({
+      attributes: ["balance"],
+      where: { user_email: userEmail },
+      raw: true,
+    });
+
+    console.log(result);
 
     if (result) return res.status(200).json(result);
     else return res.status(404).send("Not found");
