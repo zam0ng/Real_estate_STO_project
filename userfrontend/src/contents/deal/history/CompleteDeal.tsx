@@ -39,7 +39,7 @@ const CompleteDeal: React.FC = () => {
                 }else{
                     setOrderType("판매");
                 };
-                
+                console.log(item.createdAt);
                 // koreanTime.push(item.)
                 setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
                 

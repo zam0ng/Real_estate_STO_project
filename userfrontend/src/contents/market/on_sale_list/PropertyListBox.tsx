@@ -25,7 +25,10 @@ const queryPropertyList = async (): Promise<PropertyInfo[]> =>{
 const PropertyListBox: React.FC = () => {
   const navigation = useNavigate();
 
-  const {data,error,isLoading,isError} = useQuery<PropertyInfo[],Error>({queryKey:["tradeListData"],queryFn: queryPropertyList});
+  const {data,error,isLoading,isError} = useQuery<PropertyInfo[],Error>(
+    {queryKey:["tradeListData"],
+    queryFn: queryPropertyList
+  });
   console.log("property list data : ", data);
 
   const goToDetail = (propertyName: string)=>{

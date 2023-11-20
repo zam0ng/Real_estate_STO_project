@@ -2,7 +2,7 @@ import React from 'react';
 import SubscriptionAd from '../contents/market/advertisement/SubscriptionAd';
 import Banner from '../contents/market/banner/Banner';
 import PropertyListBox from '../contents/market/on_sale_list/PropertyListBox';
-import TabBar from '../layouts/tabBar';
+import TabBar from '../layouts/TabBar';
 
 const Market: React.FC = () => {
   return (
