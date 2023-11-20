@@ -13,6 +13,9 @@ interface MapProps {
     height: string;
 }
 
+
+
+
 const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
 
 
