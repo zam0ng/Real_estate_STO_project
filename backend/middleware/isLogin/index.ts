@@ -7,6 +7,8 @@ export const isLogin = async (
   next: NextFunction
 ) => {
   try {
+    console.log("isLogin");
+    console.log(req);
   } catch (error) {
     console.error(error);
   }
