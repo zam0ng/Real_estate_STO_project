@@ -18,6 +18,7 @@ const CompleteDeal: React.FC = () => {
 
     const [orderType,setOrderType] = useState<string>("");
     const [orderDate,setOrderDate] = useState<string>("");
+    const [koreanTime,setKoreanTime] = useState<Date[]>([]);
 
     const fetchCompleteDeal = async (): Promise<CompleteDealRequest[]> => {
         const {data} = await axios.get(`${serverurl}/order/conclusion/${currentPage.state.propertyName}`);
@@ -38,8 +39,10 @@ const CompleteDeal: React.FC = () => {
                 }else{
                     setOrderType("판매");
                 };
-
+                
+                // koreanTime.push(item.)
                 setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
+                console.log(orderDate);
             })
         }
     },[data]);

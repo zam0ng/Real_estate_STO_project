@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 
 interface BuyPost {
     price: number;
@@ -18,6 +18,7 @@ const buyPost = async (propertyName: string,buyData:BuyPost): Promise<string> =>
 const BuyTabInfo: React.FC = () => {
     const currentPage = useLocation();
     // console.log(currentPage.state);
+    const queryClient = useQueryClient();
 
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
@@ -69,6 +70,7 @@ const BuyTabInfo: React.FC = () => {
             onSuccess: (data) => {
                 console.log(data);
                 clearInputs2();
+                queryClient.refetchQueries("incompleteDeals")
             },
             onError: (error) => {
                 console.log(error);

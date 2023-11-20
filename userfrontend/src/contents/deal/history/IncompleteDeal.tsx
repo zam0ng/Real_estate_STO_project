@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { serverurl } from '../../../components/serverurl';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 interface IncompleteDealRequest {
     id: number;
@@ -29,35 +29,10 @@ const cancelIncompleteDeal = async (propertyName:string,id: number):Promise<stri
 const IncompleteDeal: React.FC = () => {
     const currentPage = useLocation();
 
+    const queryClient = useQueryClient();
+
     const [orderType,setOrderType] = useState<string>("");
     const [orderDate,setOrderDate] = useState<string>("");
-
-    const completeList = [
-        {
-            order_type: "판매",
-            createdAt: "2023-11-01 09:00",
-            price: 4000,
-            amount: 5
-        },
-        {
-            order_type: "구매",
-            createdAt: "2023-11-01 10:00",
-            price: 4000,
-            amount: 5
-        },
-        {
-            order_type: "구매",
-            createdAt: "2023-11-01 11:00",
-            price: 4000,
-            amount: 5
-        },
-        {
-            order_type: "판매",
-            createdAt: "2023-11-01 12:00",
-            price: 4000,
-            amount: 5
-        }
-    ];
 
     const {data: incompleteDeals,isLoading,isError,error} = useQuery(
         ["incompleteDeals",currentPage.state.propertyName],
@@ -69,6 +44,7 @@ const IncompleteDeal: React.FC = () => {
         {
             onSuccess: (data)=>{
                 console.log(data);
+                queryClient.refetchQueries("incompleteDeals");
             },
             onError: (error)=>{
                 console.log(error);
