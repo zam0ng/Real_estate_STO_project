@@ -1,5 +1,5 @@
 import React from 'react'
-import Slider from '../../../components/slider';
+import Slider from '../../../components/Slider';
 
 const PropertyImg: React.FC = () => {
   // 마이누 스와이퍼?

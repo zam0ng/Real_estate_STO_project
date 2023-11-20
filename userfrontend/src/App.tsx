@@ -3,9 +3,9 @@ import { BrowserRouter,Routes,Route, Navigate } from "react-router-dom";
 import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
 
 import Deal from "./pages/Deal";
-import Home from "./pages/home";
-import Subscription from "./pages/subscription";
-import Mypage from "./pages/mypage";
+import Home from "./pages/Home";
+import Subscription from "./pages/Subscription";
+import Mypage from "./pages/Mypage";
 import Market from "./pages/Market";
 import MarketDetail from "./pages/MarketDetail";
 import MarketHistory from "./pages/MarketHistory";
@@ -15,8 +15,8 @@ import PropertyAdditionalInfo from "./pages/PropertyAdditionalInfo";
 import Board from "./pages/Board";
 import BoardDetailNotice from "./pages/BoardDetailNotice";
 
-import Login from "./pages/login";
-import BounsLogin from "./pages/bounsLogin";
+import Login from "./pages/Login";
+import BounsLogin from "./pages/BounsLogin";
 import SubscriptionDetail from "./pages/SubscriptionDetail";
 
 function App() {

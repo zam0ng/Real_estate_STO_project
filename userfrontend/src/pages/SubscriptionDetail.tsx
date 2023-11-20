@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query"
 import { SubDetail } from "../features/SubDetail";
 import axios from '../components/url';
-import Slider from "../components/slider";
+import Slider from "../components/Slider";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";

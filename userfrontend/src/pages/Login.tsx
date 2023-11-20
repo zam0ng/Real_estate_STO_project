@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import web3 from "web3";
 import axios from "axios";
 import useCookie from "../hooks/useCookie";
-import Mypage from "./mypage";
+import Mypage from "./Mypage";
 import { Navigate, useNavigate } from "react-router-dom";
 
 
