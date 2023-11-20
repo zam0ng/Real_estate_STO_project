@@ -6,6 +6,7 @@ import axios from '../components/url';
 import Slider from "../components/Slider";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import SubStatus from "../contents/subscription/subDetail/SubStatus";
+import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
 
 
 export default function SubscriptionDetail(){
@@ -44,6 +45,7 @@ export default function SubscriptionDetail(){
             <Slider />
             <>청약 {buildingId}번 매물 상세페이지입니다</>
             <LineTypeTabComponent data={test1} />
+            <SubscriptionBtn props={buildingId}/>
         </>
     )
 }
