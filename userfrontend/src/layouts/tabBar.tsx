@@ -13,6 +13,7 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
     function handleTabBtns(urlName : string){
         Navigate(`/${urlName}`);
     }
+    
     return (
         <div className="w-1/5 text-center text-xxs flex-col" onClick={()=>handleTabBtns(urlName)}>
             <img className='block m-auto h-6 pt-1 ' alt={btnName} src={process.env.PUBLIC_URL + `/images/tabBar/${imgName}.png`} />
