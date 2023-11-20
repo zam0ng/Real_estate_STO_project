@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface BuyPost {
     price: number;
@@ -65,12 +65,12 @@ const BuyTabInfo: React.FC = () => {
     };
 
     const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
-        ({propertyName,buyData})=>buyPost(propertyName,buyData),
         {
+            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData),
             onSuccess: (data) => {
                 console.log(data);
                 clearInputs2();
-                queryClient.refetchQueries("incompleteDeals")
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]})
             },
             onError: (error) => {
                 console.log(error);

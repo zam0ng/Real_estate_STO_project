@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { serverurl } from '../../../components/serverurl';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface IncompleteDealRequest {
     id: number;
@@ -35,16 +35,16 @@ const IncompleteDeal: React.FC = () => {
     const [orderDate,setOrderDate] = useState<string>("");
 
     const {data: incompleteDeals,isLoading,isError,error} = useQuery(
-        ["incompleteDeals",currentPage.state.propertyName],
-        () => fetchIncompleteDeal(currentPage.state.propertyName)
+        {queryKey:["incompleteDeals",currentPage.state.propertyName],
+        queryFn:() => fetchIncompleteDeal(currentPage.state.propertyName)}
     );
 
     const cancelMutation = useMutation(
-        (args: CancelArguments) => cancelIncompleteDeal(currentPage.state.propertyName,args.id),
         {
+            mutationFn:(args: CancelArguments) => cancelIncompleteDeal(currentPage.state.propertyName,args.id),
             onSuccess: (data)=>{
                 console.log(data);
-                queryClient.refetchQueries("incompleteDeals");
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]});
             },
             onError: (error)=>{
                 console.log(error);

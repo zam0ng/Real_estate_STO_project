@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { serverurl } from '../../../components/serverurl';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 
 interface SellPost {
@@ -65,12 +65,12 @@ const SellTabInfo: React.FC = () => {
     };
 
     const mutation = useMutation<string,Error,{propertyName: string; sellData:SellPost}>(
-        ({propertyName,sellData})=>sellPost(propertyName,sellData),
         {
+            mutationFn:({propertyName,sellData})=>sellPost(propertyName,sellData),
             onSuccess: (data)=>{
                 console.log(data);
                 clearInputs2();
-                queryClient.refetchQueries("incompleteDeals");
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]});
             },
             onError: (error)=>{
                 console.log(error);
