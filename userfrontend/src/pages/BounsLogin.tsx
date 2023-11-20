@@ -1,4 +1,4 @@
-import TabBar from "../layouts/tabBar"
+import TabBar from "../layouts/TabBar"
 import useCookie from "../hooks/useCookie"
 import jwt from "jsonwebtoken";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -21,7 +21,7 @@ export default function BounsLogin () {
           }, false);
 
           if (!cookiedata) {
-            Navigate('/home'); // 홈 페이지 경로로 변경
+            Navigate(data)
             return null; // 리디렉션 후에는 추가적인 렌더링을 방지하기 위해 null을 반환
         }
     if(cookiedata){

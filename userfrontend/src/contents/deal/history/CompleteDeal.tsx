@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 
 interface CompleteDealRequest {
     buyer_order_email: string;
@@ -26,8 +26,8 @@ const CompleteDeal: React.FC = () => {
     };
 
     const {data,error,isLoading,isError} = useQuery<CompleteDealRequest[]>(
-        ["fetchCompleteDeal",currentPage.state.propertyName],
-        fetchCompleteDeal
+        {queryKey:["fetchCompleteDeal",currentPage.state.propertyName],
+        queryFn:fetchCompleteDeal}
     );
 
     useEffect(()=>{
@@ -39,10 +39,10 @@ const CompleteDeal: React.FC = () => {
                 }else{
                     setOrderType("판매");
                 };
-                
+                console.log(item.createdAt);
                 // koreanTime.push(item.)
                 setOrderDate(item.createdAt.slice(0,10)+ " " + item.createdAt.slice(11,16));
-                console.log(orderDate);
+                
             })
         }
     },[data]);

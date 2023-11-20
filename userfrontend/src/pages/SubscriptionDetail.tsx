@@ -45,7 +45,7 @@ export default function SubscriptionDetail(){
             <Slider width="w-[80%]" />
             <>청약 {buildingId}번 매물 상세페이지입니다</>
             <LineTypeTabComponent data={test1} />
-            <SubscriptionBtn props={buildingId}/>
+            <SubscriptionBtn props={`${buildingId}`}/>
         </>
     )
 }
