@@ -51,7 +51,11 @@ export const subsciptionDetail = async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await db.Subscriptions.findAll({
       attributes: [
-        "subscription_img",
+        "subscription_img_1",
+        "subscription_img_2",
+        "subscription_img_3",
+        "subscription_img_4",
+        "subscription_img_5",
         "subscription_name",
         "subscription_address",
         "subscription_totalprice",

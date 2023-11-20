@@ -8,7 +8,6 @@ interface real_estates_ownAttribute {
   price: number;
   amount: number;
   possible_quantity: number;
-  token_name: string;
 }
 
 class Real_estates_own extends Model<real_estates_ownAttribute> {
@@ -39,10 +38,7 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        token_name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
+        
       },
       {
         sequelize,

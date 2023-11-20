@@ -4,10 +4,18 @@ import Real_estates from "../../models/real_estates";
 import { sequelize } from "../../models";
 import Dividends from "../../models/dividends";
 import { db } from "../../models";
+import Notices from "../../models/notices";
+import Trades from "../../models/trades";
+import { Op , QueryTypes } from "sequelize";
 
 export const marketSubscription = async (req :Request, res : Response) =>{
     console.log("marketSubscription / get 요청 들어옴?");
-    
+
+    const year = new Date().getFullYear();
+    const month = (new Date().getMonth() + 1).toString().padStart(2,'0');
+    const day = (new Date().getDate()).toString().padStart(2,'0');
+    const currentDate = `${year}-${month}-${day}`;    
+
     try {
         const result = await Subscriptions.findAll({
             where : {subscription_status : "start"},
@@ -20,9 +28,12 @@ export const marketSubscription = async (req :Request, res : Response) =>{
                 "subscription_name",
                 "subscription_order_amount",
 
-                // [sequelize.literal('subscription_end_date'-'subscription_start_date'), 'duration']
-                [sequelize.literal(`DATE_PART('day', (subscription_end_date - subscription_start_date))`),'subscription_restdate']
-        
+                [
+                    sequelize.literal(
+                        `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${currentDate}'::timestamp))`
+                    ),
+                    'subscription_restdate',
+                ],
         ]
         });
         
@@ -30,20 +41,24 @@ export const marketSubscription = async (req :Request, res : Response) =>{
             res.json(result);
         }
         else{
+
             const result = await Subscriptions.findAll({
-                where : {subscription_status : "pading"},
+                where : {subscription_status : "pending"},
                 limit : 1,
                 order : [['createdAt','DESC']],
                 attributes : [
-                        "subscription_img",
-                        "subscription_totalprice",
-                        "subscription_description",
-                        "subscription_name",
-                        "subscription_order_amount",
-    
-                        // [sequelize.literal('subscription_end_date'-'subscription_start_date'), 'duration']
-                        [sequelize.literal(`DATE_PART('day', (subscription_end_date - subscription_start_date))`),'subscription_restdate']
-                
+                    "subscription_img",
+                    "subscription_totalprice",
+                    "subscription_description",
+                    "subscription_name",
+                    "subscription_order_amount",
+
+                    [
+                        sequelize.literal(
+                            `DATE_PART('day', (DATE_TRUNC('day', subscription_end_date) - '${currentDate}'::timestamp))`
+                        ),
+                        'subscription_restdate',
+                    ],
                 ]
             })
 
@@ -132,4 +147,244 @@ export const marketDetail = async (req : Request , res : Response) =>{
     } catch (error) {
         console.log(error);
     }
+}
+
+export const detailDividend = async(req : Request, res : Response)=>{
+    try {
+        const {name} = req.params;
+        console.log(name);
+        const result = await Dividends.findAll({
+            where : {
+                real_estate_name : name,
+            },
+
+            attributes :[
+                'dividend_basedate',
+                'dividend_paymentdate',
+                'dividend_price',
+            ],
+
+            order: [
+                ['createdAt','DESC'],
+            ],
+            raw : true,
+        })
+
+        // console.log(result);
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// 건물정보
+export const budlingInfo = async(req: Request, res : Response) =>{
+    const {name} = req.params;
+    try {
+        const result = await Subscriptions.findOne({
+            where : {
+                subscription_name : name,
+            },
+            attributes : [
+                'floors',
+                'purpose',
+                'main_purpose',
+                'area',
+                'all_area',
+                'build_area',
+                'floor_area',
+                'completion',
+            ],
+            raw : true,
+        })
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// 발행정보
+export const publishInfo = async(req : Request , res : Response) =>{
+    
+    const {name} = req.params;
+    console.log(name);
+    try {
+        const result = await Subscriptions.findOne({
+            where : {
+                subscription_name : name,
+            },
+
+            attributes : [
+                'subscription_name',
+                'subscription_address',
+                'stock_type',
+                'publisher',
+                'subscription_totalsupply',
+                'subscription_offering_price',
+                'subscription_totalprice',
+                'subscription_start_date',
+                'subscription_end_date',
+            ],
+            raw : true,
+        })
+
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+//공시, 공지사항
+export const boardInfo = async(req : Request , res : Response) =>{
+
+    const {name} = req.params;
+    
+    try {
+        const result = await Notices.findAll({
+            where : {
+                real_estate_name : name,
+            },
+            attributes :[
+                'id',
+                'category',
+                'notice_title',
+                'createdAt',
+                'real_estate_name'
+            ],
+            raw : true,
+        })
+
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+export const detailBoardInfo = async(req : Request , res : Response) =>{
+    const {id} = req.params;
+    console.log(id);
+    try {
+        const result = await Notices.findOne({
+            where:{
+                id : id,
+            },
+            attributes : [
+                'category',
+                'notice_title',
+                'notice_content',
+                'createdAt',
+            ],
+            raw : true,
+        })
+        console.log(result);
+        res.json(result);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const dayQuote = async(req : Request , res : Response) =>{
+    try {
+    const {name} = req.params;
+    console.log(name); 
+
+    // 등락가 를 위해 시작가 가져오기
+    const startPrice : {start_price : number} | null = await Real_estates.findOne({
+        where : {
+            real_estate_name : name,
+        },
+        attributes : [
+            'start_price'
+        ],
+        raw : true,
+    }) as {start_price : number} | null;
+
+    console.log(startPrice);
+  
+
+    const nowDate = new Date();
+    // 오전 9시 장시작
+    const startDate = new Date(Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth(), nowDate.getUTCDate(), 0, 0, 0));
+    // 오후 6시 장마감
+    const endDate = new Date(Date.UTC(nowDate.getUTCFullYear(), nowDate.getUTCMonth(), nowDate.getUTCDate(), 9, 0, 0));
+
+    const result = await Trades.findAll({
+        where :{
+            createdAt :{
+                [Op.gte]: startDate,
+                [Op.lte]: endDate
+            },
+            real_estate_name : name
+        },
+        attributes :[
+            'trade_price',
+            'trade_amount',
+            [sequelize.literal(`trade_price-${startPrice?.start_price}`),'rises_falls'],
+            'createdAt',
+        ],
+        order :[
+            ['createdAt','DESC'],
+        ],
+        raw : true,
+    })
+    // console.log(result);
+    res.json(result);
+
+    
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const daliyQuote = async(req :Request , res : Response) =>{
+
+    const { name} = req.params;
+    console.log(name);
+
+    try {
+        const query = `
+                SELECT 
+            latest_trades.real_estate_name,
+            latest_trades.trade_price,
+            latest_trades.next_trade_price,
+            latest_trades.date,
+            daily_totals.total_price,
+            (latest_trades.trade_price - latest_trades.next_trade_price) as fluctuation_price
+        FROM (
+            SELECT 
+                real_estate_name,
+                trade_price,
+                COALESCE(LEAD(trade_price) OVER (ORDER BY DATE("createdAt") DESC, "createdAt" DESC), 5000) as next_trade_price,
+                DATE("createdAt") as date
+            FROM (
+                SELECT DISTINCT ON (real_estate_name, DATE("createdAt"))
+                    real_estate_name,
+                    trade_price,
+                    "createdAt"
+                FROM trades
+                WHERE real_estate_name = '${name}'
+                ORDER BY real_estate_name, DATE("createdAt"), "createdAt" DESC
+            ) as filtered_trades
+        ) as latest_trades
+        JOIN (
+            SELECT 
+                DATE("createdAt") as date,
+                SUM(trade_price * trade_amount) as total_price
+            FROM trades
+            WHERE real_estate_name = '${name}'
+            GROUP BY DATE("createdAt")
+        ) as daily_totals ON latest_trades.date = daily_totals.date
+        ORDER BY latest_trades.date DESC;
+        `;
+
+        const result = await sequelize.query(query, {});
+        console.log(result);
+        res.json(result[0]);
+    } catch (error) {
+        console.log(error);
+    }
+
 }

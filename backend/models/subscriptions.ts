@@ -3,7 +3,7 @@ import { DB } from "../models";
 
 // typescirpt는 enum에 관한 지식이 없답니다
 export enum status_enum {
-  panding = "pending", // 청약 시작 전
+  pending = "pending", // 청약 시작 전
   start = "start", // 청약 시작
   success = "success", // 청약 성공
   failure = "failure", // 청약 실패
