@@ -11,6 +11,7 @@ import marketRouter from "./routers/market";
 import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
 import subscriptionRouter from "./routers/subscription";
+import mypageRouter from "./routers/mypage";
 
 const app: Express = express();
 
@@ -38,6 +39,7 @@ app.use("/market", marketRouter);
 app.use("/order", orderRouter);
 app.use("/main", mainRouter);
 app.use("/subscription", subscriptionRouter);
+app.use("/mypage", mypageRouter);
 
 // web3 테스트
 const rpcEndpoint = "https://network.bouncecode.net";
