@@ -606,10 +606,10 @@ export const realEstateSubmit = async (req: Request, res: Response) => {
   try {
     const result = await Subscriptions.create({
       subscription_img_1: img,
-      subscription_img_1_2: img,
-      subscription_img_1_3: img,
-      subscription_img_1_4: img,
-      subscription_img_1_5: img,
+      subscription_img_2: img,
+      subscription_img_3: img,
+      subscription_img_4: img,
+      subscription_img_5: img,
       subscription_name: name,
       subscription_address: address,
       subscription_totalprice: totalprice,
