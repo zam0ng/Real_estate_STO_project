@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import KakaoMap from '../../../components/kakaoMap';
+import KakaoMap from '../../../components/KakaoMap';
 import { MarketDetailContext } from '../../../pages/MarketDetail';
 import PropertyAddress from './PropertyAddress';
 

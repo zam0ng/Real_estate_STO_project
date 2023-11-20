@@ -23,9 +23,21 @@ module.exports = {
         over: "120%",
         "112": "28rem",
         "128": "32rem"
-      }
+      },
+      animation: {
+        marquee: 'marquee 10s linear infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '25%': { transform: 'translateX(-25%)' },
+          '50%': { transform: 'translateX(-50%)' },
+          '75%': { transform: 'translateX(-75%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        }
+      },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 }
 

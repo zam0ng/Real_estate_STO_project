@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react';
 import { MarketHistoryContext } from '../../../pages/MarketHistory';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import TableHeader from './TableHeader';
 import DailyHistoryTableInfo from './DailyHistoryTableInfo';
+import { serverurl } from '../../../components/serverurl';
 
 interface DailyHistoryRequest {
   real_estate_name: string;
@@ -18,7 +19,7 @@ const DailyHistoryTable: React.FC = () => {
   console.log(selectedPropertyName);
 
   const fetchDailyHistory = async (): Promise<DailyHistoryRequest[]> => {
-    const response = await fetch(`http://127.0.0.1:8080/market/detail/daliyQuote/${selectedPropertyName}`);
+    const response = await fetch(`${serverurl}/market/detail/daliyQuote/${selectedPropertyName}`);
     // console.log(response);
     if(!response.ok){
       throw new Error("Could not fetch data from /market/detail/dayQuote");
@@ -27,8 +28,9 @@ const DailyHistoryTable: React.FC = () => {
   };
 
   const {data,error,isLoading,isError} = useQuery<DailyHistoryRequest[],Error>(
-    ["dailyHistoryQuery",selectedPropertyName],
-    fetchDailyHistory);
+    {queryKey:["dailyHistoryQuery",selectedPropertyName],
+    queryFn:fetchDailyHistory}
+  );
 
   useEffect(()=>{
     console.log(data);

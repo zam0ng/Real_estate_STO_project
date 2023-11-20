@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter,Routes,Route, Navigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-
+import {QueryClient , QueryClientProvider} from "@tanstack/react-query";
 
 import Deal from "./pages/Deal";
 import Home from "./pages/home";
@@ -16,14 +15,19 @@ import PropertyAdditionalInfo from "./pages/PropertyAdditionalInfo";
 import Board from "./pages/Board";
 import BoardDetailNotice from "./pages/BoardDetailNotice";
 
-const queryClient = new QueryClient();
+import Login from "./pages/login";
+import BounsLogin from "./pages/bounsLogin";
+import SubscriptionDetail from "./pages/SubscriptionDetail";
 
 function App() {
+
+  let queryClient = new QueryClient();
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route path="/" element={<Navigate replace to ="/home" />} />
+          {/* <Route path="/" element={<Navigate replace to ="/home" />} /> */}
           <Route path="/home" element={<Home/>} />
           <Route path="/subscription" element={<Subscription/>} />
           <Route path="/deal/:name" element={<Deal/>} />
@@ -38,9 +42,12 @@ function App() {
           <Route path="/market/detail/board/:name" element={<Board />} />
           <Route path="/market/detail/board-detail/notice/:title" element={<BoardDetailNotice />} />
           <Route path="/market/detail/board-detail/dividend/:title" element={<BoardDetailNotice />} />
+          <Route path="/" element={<Login/>} />
+          <Route path="/bounslogin" element={<BounsLogin/>} />
+          <Route path="/subscription/detail/:buildingId" element={<SubscriptionDetail />}/>
         </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 

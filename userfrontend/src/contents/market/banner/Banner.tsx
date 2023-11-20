@@ -2,7 +2,8 @@ import React from 'react';
 import BuildingImg from './BuildingImg';
 import BuildingInfo from './BuildingInfo';
 import BuyBtn from './BuyBtn';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
+import { serverurl } from '../../../components/serverurl';
 
 interface SubscriptionInfo {
   subscription_img: string;
@@ -15,7 +16,7 @@ interface SubscriptionInfo {
 
 // 이 부분 확인하기
 const querySubscriptionInfo = async (): Promise<SubscriptionInfo[]> => {
-  const response = await fetch("http://127.0.0.1:8080/market/subscription");
+  const response = await fetch(`${serverurl}/market/subscription`);
   if(!response.ok){
     throw new Error("Could not fetch data of subscription info");
   };
@@ -23,7 +24,7 @@ const querySubscriptionInfo = async (): Promise<SubscriptionInfo[]> => {
 };
 
 const Banner: React.FC = () => {
-  const {data,error,isLoading,isError} = useQuery<SubscriptionInfo[],Error>("subscriptionData",querySubscriptionInfo);
+  const {data,error,isLoading,isError} = useQuery<SubscriptionInfo[],Error>({queryKey:["subscriptionData"],queryFn:querySubscriptionInfo});
   console.log("subscription info : ",data);
   const dataRep = data && data[0];
   const completionRate = data && data[0].subscription_order_amount * 5000 / data[0].subscription_totalprice;

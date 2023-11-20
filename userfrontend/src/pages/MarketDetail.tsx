@@ -3,7 +3,7 @@ import PropertyImg from '../contents/market_detail/layout/PropertyImg';
 import PropertyWordBox from '../contents/market_detail/layout/PropertyWordBox';
 import { useLocation } from 'react-router-dom';
 import { PropertyInfo } from '../contents/market/on_sale_list/PropertyListBox';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { serverurl } from '../components/serverurl';
 
 interface MarketDetailRequest {
@@ -44,9 +44,9 @@ const MarketDetail: React.FC = () => {
   };
 
   const {data,error,isLoading,isError} = useQuery<MarketDetailRequest,Error>(
-    ["marketDetailData",propertyName],
-    queryMarketDetail,
-    {enabled: !!propertyName}
+    {queryKey:["marketDetailData",propertyName],
+    queryFn: queryMarketDetail,
+    enabled: !!propertyName}
   );
   console.log(data);
 

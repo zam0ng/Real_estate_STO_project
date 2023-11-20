@@ -1,7 +1,8 @@
 import React from 'react';
 import PropertyBox from './property/PropertyBox';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import { serverurl } from '../../../components/serverurl';
 
 export interface PropertyInfo {
   start_price: number;
@@ -14,7 +15,7 @@ export interface PropertyInfo {
 };
 
 const queryPropertyList = async (): Promise<PropertyInfo[]> =>{
-  const response = await fetch("http://127.0.0.1:8080/market/tradelist");
+  const response = await fetch(`${serverurl}/market/tradelist`);
   if(!response.ok){
     throw new Error("Could not fetch data from /market/tradelist");
   };
@@ -24,7 +25,7 @@ const queryPropertyList = async (): Promise<PropertyInfo[]> =>{
 const PropertyListBox: React.FC = () => {
   const navigation = useNavigate();
 
-  const {data,error,isLoading,isError} = useQuery<PropertyInfo[],Error>("tradeListData",queryPropertyList);
+  const {data,error,isLoading,isError} = useQuery<PropertyInfo[],Error>({queryKey:["tradeListData"],queryFn: queryPropertyList});
   console.log("property list data : ", data);
 
   const goToDetail = (propertyName: string)=>{

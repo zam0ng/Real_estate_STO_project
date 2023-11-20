@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { serverurl } from '../../../components/serverurl';
 
 interface AdvertisementInfoRequest {
@@ -17,7 +17,7 @@ const SubscriptionAd: React.FC = () => {
   };
 
   const {data,error,isLoading,isError} = useQuery<AdvertisementInfoRequest[]>(
-    ["fetchAdData"], fetchAdData
+    {queryKey:["fetchAdData"],queryFn: fetchAdData}
   );
 
   console.log(data);

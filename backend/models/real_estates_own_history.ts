@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import { DB } from "../models";
+import { DB } from ".";
 
 interface historyAttribute {
   dividend_id: number;
@@ -8,9 +8,9 @@ interface historyAttribute {
   amount: number;
 }
 
-class PropertyOwnHistory extends Model<historyAttribute> {
-  static initModel(sequelize: Sequelize): typeof PropertyOwnHistory {
-    PropertyOwnHistory.init(
+class Real_estates_own_history extends Model<historyAttribute> {
+  static initModel(sequelize: Sequelize): typeof Real_estates_own_history {
+    Real_estates_own_history.init(
       {
         dividend_id: {
           type: DataTypes.INTEGER,
@@ -31,20 +31,20 @@ class PropertyOwnHistory extends Model<historyAttribute> {
       },
       {
         sequelize,
-        modelName: "Property_own_history",
-        tableName: "property_own_history",
+        modelName: "Real_estates_own_history",
+        tableName: "real_estates_own_history",
         timestamps: true,
         charset: "utf8",
         collate: "utf8_general_ci",
       }
     );
-    return PropertyOwnHistory;
+    return Real_estates_own_history;
   }
   static associate(db: DB) {
-    db.Dividends.belongsTo(db.PropertyOwnHistory, {
+    db.Real_estates_own_history.belongsTo(db.Dividends, {
       foreignKey: "dividend_id",
     });
   }
 }
 
-export default PropertyOwnHistory;
+export default Real_estates_own_history;
