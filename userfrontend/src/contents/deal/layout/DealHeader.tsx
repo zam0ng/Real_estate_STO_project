@@ -1,12 +1,16 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import BackBtn from '../../../components/BackBtn';
 
 const DealHeader: React.FC = () => {
   const currentPage = useLocation();
 
   return (
     <div className='flex flex-col justify-center place-items-center w-full h-1/6 border-b border-b-black'>
-        <div className='w-full h-1/2 flex justify-center items-end text-xl'>
+        <div className='relative w-full h-1/2 flex justify-center items-end text-xl'>
+          <div className='absolute top-0 left-0'>
+            <BackBtn />
+          </div>
             {currentPage.state.propertyName}
         </div>
         <div className='flex flex-row justify-center items-center w-full h-1/2 text-red-500 text-sm'>

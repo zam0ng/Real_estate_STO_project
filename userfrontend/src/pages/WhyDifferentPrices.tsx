@@ -1,8 +1,10 @@
 import React from 'react';
+import BackBtn from '../components/BackBtn';
 
 const WhyDifferentPrices: React.FC = () => {
   return (
     <div className='w-screen h-screen'>
+        <BackBtn />
         <div className='w-full h-80 flex justify-center items-center mt-12'>
             <div className='relative w-full h-80 border border-black bg-blue-600'>
                 <div className='absolute top-16 left-24 w-32 h-44 -rotate-12 rounded-xl border border-black bg-slate-400'></div>
