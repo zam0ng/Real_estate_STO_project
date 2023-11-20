@@ -28,7 +28,7 @@ const MyInfo: React.FC = () => {
   const fetchUserInfo = async (): Promise<UserInfoRequest> => {
     const {data} = await axios.get(`${serverurl}/mypage/user_info`,{
       params: {
-        user_email: email
+        token: isCookie
       }
     });
     return data;
