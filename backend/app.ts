@@ -10,7 +10,46 @@ import marketRouter from "./routers/market";
 import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
 
+import http from 'http';
+
 const app: Express = express();
+const server = http.createServer(app); 
+
+const io = require('socket.io')(server, {
+  cors: {
+    origin: "http://localhost:3000", // 클라이언트의 주소
+    methods: ["GET", "POST"]
+  }
+});
+
+io.on('connection',(socket:any)=>{
+  console.log("클라이언트가 연결됨",socket.id);
+  
+  socket.on('open', (data : any) => {
+      console.log('유저가 특정 페이지에 접근했습니다.', data);
+
+      io.emit('good','good2');
+  });
+
+  socket.on('purchase_completed',()=>{
+    console.log("매수 요청 소켓")
+    io.emit('usequery_refetch');
+  });
+
+  socket.on('sale_completed',()=>{
+    console.log("매도 요청 소켓")
+    io.emit('usequery_refetch');
+  })
+
+  socket.on('cancel_completed',()=>{
+    console.log("취소 요청 소켓");
+    io.emit('usequery_refetch');
+  })
+
+  socket.on('disconnect',()=>{
+    console.log("클라이언트 연결해제됨");
+  })
+})
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -38,6 +77,11 @@ app.use("/market",marketRouter);
 app.use("/order",orderRouter);
 app.use("/main",mainRouter);
 
-app.listen(8080, () => {
+// app.listen(8080, () => {
+//   console.log("server on");
+// });
+server.listen(8080, () => {
   console.log("server on");
 });
+
+export  {server};

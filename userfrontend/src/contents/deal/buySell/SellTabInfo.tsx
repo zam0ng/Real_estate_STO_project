@@ -15,7 +15,11 @@ const sellPost = async (propertyName: string,sellData:SellPost): Promise<string>
     return data;
 }
 
-const SellTabInfo: React.FC = () => {
+interface socketProps {
+    isSocket: any;
+}
+
+const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
 
     const [sellPrice,setSellPrice] = useState<any>(0);
@@ -68,6 +72,7 @@ const SellTabInfo: React.FC = () => {
             onSuccess: (data)=>{
                 console.log(data);
                 clearInputs2();
+                isSocket.emit('sale_completed')
             },
             onError: (error)=>{
                 console.log(error);

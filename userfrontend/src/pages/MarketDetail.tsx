@@ -47,7 +47,7 @@ const MarketDetail: React.FC = () => {
     queryMarketDetail,
     {enabled: !!propertyName}
   );
-  console.log(data);
+  // console.log(data);
 
   if(isLoading){
     return (

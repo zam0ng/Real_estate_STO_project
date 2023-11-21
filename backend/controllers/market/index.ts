@@ -109,7 +109,7 @@ export const marketTradelist = async(req : Request, res: Response)=>{
 export const marketDetail = async (req : Request , res : Response) =>{
     console.log("marketDetail get요청 들어옴?");
     const {name} = req.params;
-    console.log(name);
+    // console.log(name);
     try {
 
         const result = await Real_estates.findAll({

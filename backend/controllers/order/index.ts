@@ -1,4 +1,4 @@
-import e, {Request , Response} from "express";
+import express, {Request , Response, Express} from "express";
 import Orders from "../../models/orders";
 import Real_estates_own from "../../models/real_estates_own"; 
 import Real_estates from "../../models/real_estates";
@@ -558,7 +558,7 @@ export const orderBuy = async(req : Request , res : Response)=>{
         
 
         // ! 의 의미는 이 변수는 항상 값을 가질 것으로 null 또는 undefined 를 걱정하지 말라는 뜻.
-        if (balance!.balance > price * amount ){
+        if (balance!.balance >= price * amount ){
 
             // 매물의 현재가 가져오기
             const currentPrice : {current_price : number} | null = await Real_estates.findOne({
@@ -1035,9 +1035,9 @@ export const orderBuy = async(req : Request , res : Response)=>{
 
 // 오더 메인 호가 
 export const orderMain = async(req : Request, res : Response)=>{
-
+    console.log("orderMain 드러옴?");
     const {name} = req.params;
-    console.log(name);
+    // console.log(name);
     try {
         const sellList = await Orders.findAll({
             where :{
