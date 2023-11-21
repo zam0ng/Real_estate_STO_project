@@ -52,37 +52,37 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 
 // web3 테스트
-// const rpcEndpoint = "https://network.bouncecode.net";
+const rpcEndpoint = "https://network.bouncecode.net";
 
-// const web3 = new Web3(rpcEndpoint);
+const web3 = new Web3(rpcEndpoint);
 
-// async function logLatestBlockEvents() {
-//   try {
-//     const latestBlock: any = await web3.eth.getBlock("latest", true);
+async function logLatestBlockEvents() {
+  try {
+    const latestBlock: any = await web3.eth.getBlock("latest", true);
 
-//     if (latestBlock.transactions) {
-//       console.log(`Checking latest block.transactions`);
-//       console.log(latestBlock);
-//       console.log(latestBlock.transactions);
+    if (latestBlock.transactions) {
+      console.log(`Checking latest block.transactions`);
+      console.log(latestBlock);
+      console.log(latestBlock.transactions);
 
-//       for (const tx of latestBlock.transactions) {
-//         const receipt = await web3.eth.getTransactionReceipt(tx.hash || tx);
-//         const value = await web3.utils.fromWei(tx.value, "ether");
-//         console.log("receipt");
-//         console.log(receipt);
-//         console.log("blockNumber : ", tx.blockNumber);
-//         console.log("from : ", tx.from);
-//         console.log("to : ", tx.to);
-//         console.log("value : ", value);
-//         console.log("logs : ", tx.logs);
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Error fetching latest block events:", error);
-//   }
-// }
+      for (const tx of latestBlock.transactions) {
+        const receipt = await web3.eth.getTransactionReceipt(tx.hash || tx);
+        const value = await web3.utils.fromWei(tx.value, "ether");
+        console.log("receipt");
+        console.log(receipt);
+        console.log("blockNumber : ", tx.blockNumber);
+        console.log("from : ", tx.from);
+        console.log("to : ", tx.to);
+        console.log("value : ", value);
+        console.log("logs : ", tx.logs);
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching latest block events:", error);
+  }
+}
 
-// setInterval(logLatestBlockEvents, 5000);
+setInterval(logLatestBlockEvents, 5000);
 app.listen(8080, () => {
   console.log("server on");
 });
