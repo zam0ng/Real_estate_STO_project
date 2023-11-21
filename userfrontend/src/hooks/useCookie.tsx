@@ -20,14 +20,20 @@ export default function useCookie(urlProps: string) {
     if (isCookie) {
       try {
         axios
-          .get("http://localhost:8080/subscription/get_balance", {
-            params: {
-              token: isCookie,
-            },
+          .post("http://localhost:8080/order/sell/문래 공차", {
+            token: isCookie,
           })
           .then((res) => {
             console.log(res);
           });
+
+        // axios
+        //   .post("http://localhost:8080/subscription/get_balance", {
+        //     token: isCookie,
+        //   })
+        //   .then((res) => {
+        //     console.log(res);
+        //   });
 
         // axios
         //   .post(`https://bouns.io/api/jwt-verify`, {

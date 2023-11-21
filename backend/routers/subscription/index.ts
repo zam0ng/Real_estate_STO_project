@@ -13,7 +13,7 @@ router.get("/all_list", allList);
 
 router.get("/detail/:id", subsciptionDetail);
 
-router.get("/get_balance", isLogin, getBalance);
+router.post("/get_balance", isLogin, getBalance);
 
 router.post("/subscription_application/:id", isLogin, subscriptionApplication);
 
