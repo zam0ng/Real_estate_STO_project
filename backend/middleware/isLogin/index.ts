@@ -59,8 +59,11 @@ export const isLogin = async (
     req.body.userEmail = verify.data.email;
     req.body.wallet = wallet;
 
-    if (verify) next();
-    else return res.status(404).send("다시 로그인 하세요.");
+    console.log(req.route.path);
+    if (req.route.path === "/get_balance") next();
+    if (verify) {
+      return verify.data.email;
+    } else return res.status(404).send("다시 로그인 하세요.");
   } catch (error) {
     console.error(error);
   }

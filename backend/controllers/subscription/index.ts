@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { db } from "../../models";
 
-// interface AddRequest extends Request {
-//   userEmail?: string;
-//   wallet?: string;
-// }
+interface AddRequest extends Request {
+  userEmail?: string;
+  wallet?: string;
+}
 
 // 청약 리스트 보여주기
 export const allList = async (req: Request, res: Response) => {
@@ -153,8 +153,9 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       using_balance: number;
       blacklist: boolean;
     };
-    // const { userEmail } = req as AddRequest;
-    const { id, user_email, amount } = req.body;
+    const { userEmail } = req as AddRequest;
+    // const { id, user_email, amount } = req.body;
+    const { id, amount } = req.body;
     const application_amount = 5000 * amount;
 
     const getUserInfo = (await db.Users.findOne({
@@ -165,7 +166,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
         "using_balance",
         "blacklist",
       ],
-      where: { user_email: user_email },
+      where: { user_email: userEmail },
       raw: true,
     })) as Object as GetUserInfo;
 
@@ -176,14 +177,14 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       {
         using_balance: getUserInfo.using_balance - application_amount,
       },
-      { where: { user_email: user_email }, transaction }
+      { where: { user_email: userEmail }, transaction }
     );
 
     const insert_subscription_application =
       await db.Subscription_application.create(
         {
           subscription_id: id,
-          subscription_user_email: user_email,
+          subscription_user_email: userEmail as string,
           subscription_my_amount: amount,
         },
         { transaction }
@@ -211,12 +212,12 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
 // 내 잔액 가져오기
 export const getBalance = async (req: Request, res: Response) => {
   try {
-    // const { userEmail } = req.body as AddRequest;
-    const user_email = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
+    // const user_email = req.query.user_email as string;
 
     const result = await db.Users.findOne({
       attributes: ["using_balance"],
-      where: { user_email: user_email },
+      where: { user_email: userEmail },
       raw: true,
     });
 
