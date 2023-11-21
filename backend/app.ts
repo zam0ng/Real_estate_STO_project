@@ -125,7 +125,7 @@ app.use("/mypage", mypageRouter);
 // }
 
 // setInterval(logLatestBlockEvents, 5000);
-app.listen(8080, () => {
+server.listen(8080, () => {
   console.log("server on");
 });
 
