@@ -27,11 +27,10 @@ export default function SubscriptionDetail(){
 
     if(error) return <>접속이 원활하지 않습니다 ..</>
 
-    console.log(data);
 
     let test1 = [{
         tabName : "투자 포인트",
-        content : <>투자 포인트 화면입니다</>
+        content : <>투자 포인트 화면입니다</> 
     },{
         tabName : "모집 현황",
         content : <SubStatus />
@@ -42,10 +41,10 @@ export default function SubscriptionDetail(){
 
     return(
         <>
-            <Slider width="w-[80%]" />
+            <Slider width="w-[90%]" />
             <>청약 {buildingId}번 매물 상세페이지입니다</>
             <LineTypeTabComponent data={test1} />
-            <SubscriptionBtn props={`${buildingId}`}/>
+            <SubscriptionBtn props={`${buildingId}`} />
         </>
     )
 }

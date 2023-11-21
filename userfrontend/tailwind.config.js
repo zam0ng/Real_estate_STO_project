@@ -35,6 +35,14 @@ module.exports = {
           '75%': { transform: 'translateX(-75%)' },
           '100%': { transform: 'translateX(-100%)' },
         }
+      },keyframes: {
+        slideUp: {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+      },
+      animation: {
+        'slide-up': 'slideUp 0.4s ease-out',
       },
     },
   },
