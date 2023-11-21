@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query"
 import axios from '../../../components/url';
 import  jwt  from "jsonwebtoken";
 import { FaPlus,FaMinus } from "react-icons/fa6";
+import OrderConfirm from "./Orderconfirm";
 
 
 type subdetailtype = {
@@ -105,9 +106,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
     return(
         <>
-        {orderConfirm ? <div className="animate-slide-up h-screen w-screen bg-blue-300 fixed top-0 z-20">
-            <IoIosArrowBack  className="mt-4 ml-4 w-6 h-6" onClick={()=>setOrderConfirm(false)}/>
-        </div> : null}
+        {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} />: null}
         
         {isCookie ? 
          <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-inner bg-slate-50 bg-gradient-to-brounded-3xl animate-slide-up ">

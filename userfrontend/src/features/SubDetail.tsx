@@ -1,5 +1,9 @@
 export type SubDetail = {
   subscription_img_1: string;
+  subscription_img_2: string;
+  subscription_img_3: string;
+  subscription_img_4: string;
+  subscription_img_5: string;
   subscription_name: string;
   subscription_address: string;
   subscription_totalprice: number;
