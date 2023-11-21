@@ -28,8 +28,11 @@ const cancelIncompleteDeal = async (propertyName:string,id: number,accToken: str
     { token : accToken });
     return data;
 };
+interface socketProps {
+    isSocket: any;
+}
 
-const IncompleteDeal: React.FC = () => {
+const IncompleteDeal: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
 
     const queryClient = useQueryClient();
@@ -52,6 +55,7 @@ const IncompleteDeal: React.FC = () => {
             onSuccess: (data)=>{
                 console.log(data);
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
+                isSocket.emit('cancel_completed');
             },
             onError: (error)=>{
                 console.log(error);

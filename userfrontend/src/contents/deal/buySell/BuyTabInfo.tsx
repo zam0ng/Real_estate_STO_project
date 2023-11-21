@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect ,useContext } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -10,7 +10,14 @@ interface BuyPost {
     amount: number;
 }
 
+interface socketProps {
+    isSocket: any;
+}
+
 const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promise<string> => {
+    
+    // 여기에 소켓 send.
+    console.log(buyData); // {price: 1000, amount: 5} 
     const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,{
         ...buyData,
         token: token
@@ -19,7 +26,11 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promi
     return data;
 }
 
-const BuyTabInfo: React.FC = () => {
+const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
+
+    // const {socket} = useContext(GlobalContext);
+    console.log(isSocket);
+
     const currentPage = useLocation();
     // console.log(currentPage.state);
     const queryClient = useQueryClient();
@@ -80,6 +91,7 @@ const BuyTabInfo: React.FC = () => {
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
+                isSocket.emit("purchase_completed")
             },
             onError: (error) => {
                 console.log(error);

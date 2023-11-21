@@ -7,6 +7,7 @@ import SellPriceBox from './SellPriceBox';
 import BuyPriceBox from './BuyPriceBox';
 import { Cookies } from 'react-cookie';
 
+
 interface BuySellList {
     order_price: number;
     total_order_amount: string;
@@ -16,10 +17,13 @@ interface BuySellDataRequest {
     buy_list: BuySellList[];
     sell_list: BuySellList[];
 }
+interface socketProps {
+    isSocket: any;
+}
 
-const PriceBox: React.FC = () => {
+const PriceBox: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
-    // console.log(currentPage);
+    console.log(currentPage);
 
     const cookies = new Cookies();
 
@@ -30,7 +34,7 @@ const PriceBox: React.FC = () => {
         return data;
     };
 
-    const {data,error,isLoading,isError} = useQuery(
+    const {data,error,isLoading,isError,refetch} = useQuery(
         {queryKey:["fetchOrderList",currentPage.state.propertyName],
         queryFn:fetchOrderList}
     );
@@ -55,6 +59,13 @@ const PriceBox: React.FC = () => {
             initalScroll = wantedScroll;
         }
     },[]);
+
+    useEffect(()=>{
+        isSocket?.on('usequery_refetch',()=>{
+            refetch();
+        })
+    },[isSocket,refetch])
+
 
     return (
         <>
