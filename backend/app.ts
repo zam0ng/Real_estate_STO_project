@@ -22,7 +22,7 @@ const server = http.createServer(app);
 
 const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:3000", // 클라이언트의 주소
+    origin: "*", // 클라이언트의 주소
     methods: ["GET", "POST"]
   }
 });

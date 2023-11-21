@@ -2,6 +2,8 @@ import React, {useEffect,useState,createContext} from 'react';
 import DealHeader from '../contents/deal/layout/DealHeader';
 import DealMain from '../contents/deal/layout/DealMain';
 import {io, Socket} from 'socket.io-client';
+import { useLocation } from 'react-router-dom';
+import { serverurl } from '../components/serverurl';
 
 const Deal: React.FC = () => {
   
@@ -9,13 +11,9 @@ const Deal: React.FC = () => {
 
   useEffect(() => {
     //소켓 연결 io.connect() 랑 동일
-    const socket = io('http://localhost:8080');
+    const socket = io(`${serverurl}`);
     setSocket(socket)
-
-    socket.on('good', (data : any) => {
-      console.log('123.', data);
-      // 원하는 작업 수행
-    });
+   
     return () => {
       console.log('disconnect');
 

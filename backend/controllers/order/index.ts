@@ -190,10 +190,8 @@ export const orderSell = async (req: Request, res: Response) => {
                 // 판매자의 real_estates_own 테이블에서 possible_quantitiy, amount 체결량만큼 빼기,
                 await Real_estates_own.update(
                   {
-                    possible_quantity: sequelize.literal(
-                      `possible_quantity-${el.possible_amount + restamount}`
-                      ),
-                      amount : sequelize.literal(`amount-${el.possible_amount + restamount}`,)
+                    possible_quantity: sequelize.literal(`possible_quantity-${el.possible_amount + restamount}`),
+                    amount : sequelize.literal(`amount-${el.possible_amount + restamount}`),
                   },
                   {
                     where: {
@@ -262,13 +260,14 @@ export const orderSell = async (req: Request, res: Response) => {
                       price : sequelize.literal(`((price * amount)+(${el.order_price * (el.possible_amount + restamount)})) / (amount + ${(el.possible_amount + restamount)})`), // 🔥
                       amount : sequelize.literal(`amount+${ el.possible_amount + restamount}`),
                       possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount + restamount}`),
-                    },
+                  },
                     {
                       where: {
                         user_email: el.user_email,
                         real_estate_name: name,
                       },
                     }
+              
                   );
                 }
 
@@ -377,7 +376,7 @@ export const orderSell = async (req: Request, res: Response) => {
                       price : sequelize.literal(`((price * amount) + (${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
                       amount : sequelize.literal(`amount+${ el.possible_amount}`),
                       possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
-                    },
+                  },
                     {
                       where: {
                         user_email: el.user_email,
@@ -425,10 +424,9 @@ export const orderSell = async (req: Request, res: Response) => {
                 // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
                 await Real_estates_own.update(
                   {
-                    possible_quantity: sequelize.literal(
-                      `possible_quantity-${el.possible_amount}`),
-                      amount : sequelize.literal(`amount-${el.possible_amount}`)
-                  },
+                    possible_quantity : sequelize.literal(`possible_quantity-${el.possible_amount}`),
+                    amount : sequelize.literal(`amount-${el.possible_amount}`)
+                },
                   {
                     where: {
                       user_email: user_email,
@@ -753,17 +751,14 @@ export const orderBuy = async (req: Request, res: Response) => {
                 possible_amount: 0,
               });
 
-              // 해당 id 컬럼에서 possible_amount -amount를 해주고,
-              // 물량이 남아있으니 미체결 0 으로 두기
+                            // 해당 id 컬럼에서 possible_amount -amount를 해주고,
+                            // 물량이 남아있으니 미체결 0 으로 두기
 
-              await Orders.update(
-                {
-                  possible_amount: sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
-                },
-                {
-                  where: { id: el.id },
-                }
-              );
+                            await Orders.update({
+                                possible_amount : sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
+                            },{
+                                where : { id : el.id },
+                            })
 
               // 체결 테이블 생성
               await Trades.create({
@@ -931,7 +926,7 @@ export const orderBuy = async (req: Request, res: Response) => {
                 await Real_estates_own.create({
                   user_email: user_email,
                   real_estate_id: real_estate_id!.id,
-                  real_estate_name : name, 
+                  real_estate_name: name,
                   price : ((el.possible_amount) * el.order_price) / el.possible_amount , // 🔥
                   amount: el.possible_amount,
                   possible_quantity: el.possible_amount,
@@ -939,12 +934,13 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
               // 있으면 update
               else {
-                await Real_estates_own.update({
-                  // price : sequelize.literal(`price+${(el.possible_amount) * el.order_price}`),
-                  price : sequelize.literal(`((price * amount)+(${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
+                await Real_estates_own.update(
+                  {
+                    // price : sequelize.literal(`price+${(el.possible_amount) * el.order_price}`),
+                    price : sequelize.literal(`((price * amount)+(${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
 
-                  amount : sequelize.literal(`amount+${ el.possible_amount}`),
-                  possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
+                    amount : sequelize.literal(`amount+${ el.possible_amount}`),
+                    possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
                 },
                   {
                     where: {
@@ -1251,6 +1247,7 @@ export const orderConclusion = async (req: Request, res: Response) => {
           { buyer_order_email: user_email },
           { seller_order_email: user_email },
         ],
+        real_estate_name : name,
       },
 
       attributes: [

@@ -23,7 +23,7 @@ interface socketProps {
 
 const PriceBox: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
-    // console.log(currentPage);
+    console.log(currentPage);
 
     const cookies = new Cookies();
 
