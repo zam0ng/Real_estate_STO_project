@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { MarketHistoryContext } from '../../../pages/MarketHistory';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import TableHeader from './TableHeader';
 import DailyHistoryTableInfo from './DailyHistoryTableInfo';
 import { serverurl } from '../../../components/serverurl';
@@ -28,8 +28,9 @@ const DailyHistoryTable: React.FC = () => {
   };
 
   const {data,error,isLoading,isError} = useQuery<DailyHistoryRequest[],Error>(
-    ["dailyHistoryQuery",selectedPropertyName],
-    fetchDailyHistory);
+    {queryKey:["dailyHistoryQuery",selectedPropertyName],
+    queryFn:fetchDailyHistory}
+  );
 
   useEffect(()=>{
     console.log(data);

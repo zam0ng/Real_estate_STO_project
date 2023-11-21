@@ -1,6 +1,6 @@
 import React from 'react';
 import DividendTableHeader from './DividendTableHeader';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import DividendPayInfo from './DividendPayInfo';
 import { serverurl } from '../../components/serverurl';
@@ -25,8 +25,8 @@ const DividendTable: React.FC = () => {
     };
 
     const {data,error,isLoading,isError} = useQuery<TotalDividendRequest[],Error>(
-        ["totalDividendQuery",propertyName],
-        totalDividendFetch
+        {queryKey:["totalDividendQuery",propertyName],
+        queryFn:totalDividendFetch}
     );
 
     console.log(data);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect ,useContext } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface BuyPost {
     price: number;
@@ -29,6 +29,7 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     const currentPage = useLocation();
     // console.log(currentPage.state);
+    const queryClient = useQueryClient();
 
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
@@ -75,11 +76,12 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
     };
 
     const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
-        ({propertyName,buyData})=>buyPost(propertyName,buyData),
         {
+            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData),
             onSuccess: (data) => {
                 console.log(data);
                 clearInputs2();
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]})
                 isSocket.emit("purchase_completed")
             },
             onError: (error) => {

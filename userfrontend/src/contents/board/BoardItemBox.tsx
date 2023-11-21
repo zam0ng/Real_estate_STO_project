@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import BoardItem from './BoardItem';
 import axios from "axios";
@@ -23,8 +23,8 @@ const BoardItemBox: React.FC = () => {
     };
 
     const {data,error,isLoading,isError} = useQuery<boardRequest[]>(
-        ["boardFetch",propertyName],
-        boardFetch
+        {queryKey:["boardFetch",propertyName],
+        queryFn:boardFetch}
     );
 
     useEffect(()=>{

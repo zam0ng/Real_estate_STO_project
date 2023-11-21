@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import SellPriceBox from './SellPriceBox';
 import BuyPriceBox from './BuyPriceBox';
 
@@ -30,7 +30,8 @@ const PriceBox: React.FC<socketProps> = ({isSocket}) => {
     };
 
     const {data,error,isLoading,isError,refetch} = useQuery(
-        ["fetchOrderList",currentPage.state.propertyName],fetchOrderList
+        {queryKey:["fetchOrderList",currentPage.state.propertyName],
+        queryFn:fetchOrderList}
     );
 
     const sortedSellList = data?.sell_list.sort((a,b)=>b.order_price - a.order_price);

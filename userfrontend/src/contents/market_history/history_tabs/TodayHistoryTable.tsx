@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { MarketHistoryContext } from '../../../pages/MarketHistory';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import TableHeader from './TableHeader';
 import TodayHistoryTableInfo from './TodayHistoryTableInfo';
 import { serverurl } from '../../../components/serverurl';
+
 export interface TodayHistoryRequest {
   createdAt: string;
   trade_price: number;
@@ -25,8 +26,9 @@ const TodayHistoryTable: React.FC = () => {
   };
 
   const {data,error,isLoading,isError} = useQuery<TodayHistoryRequest[],Error>(
-    ["todayHistoryQuery",selectedPropertyName],
-    fetchTodayHistory);
+    {queryKey:["todayHistoryQuery",selectedPropertyName],
+    queryFn:fetchTodayHistory}
+  );
 
   useEffect(()=>{
     console.log(data);

@@ -36,7 +36,7 @@ class Subscription_application extends Model<subscription_appAttribute> {
     return Subscription_application;
   }
   static associate(db: DB) {
-    db.Subscriptions.belongsTo(db.Subscription_application, {
+    db.Subscription_application.belongsTo(db.Subscriptions, {
       foreignKey: "subscription_id",
     });
   }

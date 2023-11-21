@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { serverurl } from '../../../components/serverurl';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 
 interface SellPost {
@@ -21,6 +21,8 @@ interface socketProps {
 
 const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
+
+    const queryClient = useQueryClient();
 
     const [sellPrice,setSellPrice] = useState<any>(0);
     const [sellAmount,setSellAmount] = useState<any>(0);
@@ -67,11 +69,12 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     };
 
     const mutation = useMutation<string,Error,{propertyName: string; sellData:SellPost}>(
-        ({propertyName,sellData})=>sellPost(propertyName,sellData),
         {
+            mutationFn:({propertyName,sellData})=>sellPost(propertyName,sellData),
             onSuccess: (data)=>{
                 console.log(data);
                 clearInputs2();
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]});
                 isSocket.emit('sale_completed')
             },
             onError: (error)=>{

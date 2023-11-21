@@ -8,6 +8,8 @@ import {
   tradeDayList,
   tradeWeekList,
   tradeMonthList,
+  realEstateManagement,
+  realEstateDetail,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -42,6 +44,10 @@ router.get("/trade_day_list", tradeDayList);
 router.get("/trade_week_list", tradeWeekList);
 // 매물별 거래량 차트 (월)
 router.get("/trade_month_list", tradeMonthList);
+// 매물 관리 페이지
+router.get("/management/real_estates_list", realEstateManagement);
+// 매물 관리 페이지 상세
+router.get("/management/real_estates_detail/:id", realEstateDetail);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////
