@@ -3,7 +3,6 @@ import DividendTableHeader from './DividendTableHeader';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import DividendPayInfo from './DividendPayInfo';
-import axios from 'axios';
 import { serverurl } from '../../components/serverurl';
 
 export interface TotalDividendRequest {
@@ -18,8 +17,11 @@ const DividendTable: React.FC = () => {
     const propertyName = currentPage.state.propertyName;
 
     const totalDividendFetch = async (): Promise<TotalDividendRequest[]> => {
-        const {data} = await axios.get(`${serverurl}/market/detail/dividend/${propertyName}`);
-        return data;
+        const response = await fetch(`${serverurl}/market/detail/dividend/${propertyName}`);
+        if(!response.ok){
+            throw new Error("could not fetch data from /market/detail/dividend");
+        };
+        return response.json();
     };
 
     const {data,error,isLoading,isError} = useQuery<TotalDividendRequest[],Error>(
