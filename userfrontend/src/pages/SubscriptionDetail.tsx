@@ -41,7 +41,7 @@ export default function SubscriptionDetail(){
 
     return(
         <>
-            <Slider width="w-[100%]" />
+            <Slider width="w-[screen]" />
             <LineTypeTabComponent data={test1} />
             <SubscriptionBtn props={`${buildingId}`} />
         </>

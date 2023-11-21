@@ -21,6 +21,14 @@ export default function SubscriptionBtn({props} : subdetailtype){
     const [userBalance,setUserBalance] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [orderConfirm,setOrderConfirm] = useState(false);
+    const [scrollPosition, setScrollPosition] = useState(0);
+
+    useEffect(()=>{
+        const handleScroll = ()=>{
+            setScrollPosition(window.scrollY);
+        };
+        
+    },[])
 
     const fetchData = async ()=>{
         const { data } = await axios.get(`/subscription/detail/${buildingId}`);
@@ -109,12 +117,11 @@ export default function SubscriptionBtn({props} : subdetailtype){
         {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} />: null}
         
         {isCookie ? 
-         <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-inner bg-slate-50 bg-gradient-to-brounded-3xl animate-slide-up ">
+         <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl">
             <IoIosArrowBack  className="mt-4 ml-4 w-6 h-6" onClick={()=>setIsCookie(false)}/>
-            <div className="text-center">{dataSubDetail[0].subscription_name} </div>
-            <div className="text-left">내잔액 :{userBalance}</div>
-            <div className="text-left">1조각당 청약가 : {dataSubDetail[0].subscription_offering_price} 원</div>
-            <div className="text-left">청약가능 수량 : {dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount}주</div>
+            <div className="w-5/6 m-auto text-left ">공모가 : {dataSubDetail[0].subscription_offering_price} 원</div>
+            <div className="w-5/6 m-auto text-left">내잔액 :{userBalance}</div>
+            <div className="w-5/6 m-auto text-left">청약가능 수량 : {dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount}주</div>
             <div className="border border-black w-5/6 h-7 m-auto text-right">
                 <input type="number" min={1} max={dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount}
                     value={quantity} className="w-7 h-6 bg-slate-200 mr-2"
