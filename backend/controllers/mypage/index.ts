@@ -4,6 +4,7 @@ import { db } from "../../models";
 
 interface AddRequest extends Request {
   userEmail?: string;
+  wallet?: string;
 }
 
 // 입금하기
@@ -100,8 +101,7 @@ export const withDrawal = async (req: Request, res: Response) => {
 // 유저 정보 보내주기
 export const userInfo = async (req: Request, res: Response) => {
   try {
-    const _req = req as AddRequest;
-    const { userEmail } = _req;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Users.findOne({
       attributes: [
