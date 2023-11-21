@@ -23,8 +23,6 @@ router.post("/withdrawal", isLogin, withDrawal);
 
 // 유저 정보 보여주기
 router.get("/user_info", isLogin, userInfo);
-// 내 잔액 보여주기
-router.get("/my_balance", isLogin, myBalance);
 // 입금액 보여주기
 router.get("/total_deposit", isLogin, totalDeposit);
 // 출금액 보여주기

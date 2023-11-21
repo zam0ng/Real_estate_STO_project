@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import { db } from "../../models";
 
+// interface AddRequest extends Request {
+//   userEmail?: string;
+//   wallet?: string;
+// }
+
 // 청약 리스트 보여주기
 export const allList = async (req: Request, res: Response) => {
   try {
@@ -148,6 +153,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       using_balance: number;
       blacklist: boolean;
     };
+    // const { userEmail } = req as AddRequest;
     const { id, user_email, amount } = req.body;
     const application_amount = 5000 * amount;
 
@@ -198,6 +204,27 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     else return res.send("청약 실패");
   } catch (error) {
     await transaction.rollback();
+    console.error(error);
+  }
+};
+
+// 내 잔액 가져오기
+export const getBalance = async (req: Request, res: Response) => {
+  try {
+    // const { userEmail } = req.body as AddRequest;
+    const user_email = req.query.user_email as string;
+
+    const result = await db.Users.findOne({
+      attributes: ["using_balance"],
+      where: { user_email: user_email },
+      raw: true,
+    });
+
+    const using_balance = result?.using_balance;
+
+    if (result) return res.status(200).json(using_balance);
+    else return res.status(404).send("not found");
+  } catch (error) {
     console.error(error);
   }
 };

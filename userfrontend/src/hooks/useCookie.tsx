@@ -19,11 +19,16 @@ export default function useCookie(urlProps: string) {
     const isCookie = cookies.get("accessToken");
     if (isCookie) {
       try {
-        axios.get("http://localhost:8080/mypage/my_balance", {
-          params: {
-            token: isCookie,
-          },
-        });
+        axios
+          .get("http://localhost:8080/subscription/get_balance", {
+            params: {
+              token: isCookie,
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          });
+
         // axios
         //   .post(`https://bouns.io/api/jwt-verify`, {
         //     token: isCookie,
