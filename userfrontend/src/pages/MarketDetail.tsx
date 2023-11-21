@@ -25,9 +25,7 @@ interface PropertyDataProps {
   propertyData: PropertyInfo | undefined;
 }
 
-export const MarketDetailContext = createContext<
-  MarketDetailRequest | undefined
->(undefined);
+export const MarketDetailContext = createContext<MarketDetailRequest | undefined>(undefined);
 
 const MarketDetail: React.FC = () => {
   const currentPage = useLocation();

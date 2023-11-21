@@ -4,16 +4,18 @@ import { db } from "../../models";
 
 interface AddRequest extends Request {
   userEmail?: string;
+  wallet?: string;
 }
 
 // 입금하기
 export const depositBalance = async (req: Request, res: Response) => {
   const transaction = await db.sequelize.transaction();
   try {
+    const { userEmail } = req.body as AddRequest;
     const get_deposit_info = req.body;
 
     const user = await db.Users.findOne({
-      where: { user_email: get_deposit_info.user_email },
+      where: { user_email: userEmail },
       raw: true,
     });
 
@@ -51,10 +53,12 @@ export const depositBalance = async (req: Request, res: Response) => {
 export const withDrawal = async (req: Request, res: Response) => {
   const transaction = await db.sequelize.transaction();
   try {
+    const { userEmail } = req.body as AddRequest;
+
     const get_drawal_info = req.body;
 
     const user = await db.Users.findOne({
-      where: { user_email: get_drawal_info.user_email },
+      where: { user_email: userEmail },
       raw: true,
     });
 
@@ -100,8 +104,7 @@ export const withDrawal = async (req: Request, res: Response) => {
 // 유저 정보 보내주기
 export const userInfo = async (req: Request, res: Response) => {
   try {
-    const _req = req as AddRequest;
-    const { userEmail } = _req;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Users.findOne({
       attributes: [
@@ -125,8 +128,7 @@ export const userInfo = async (req: Request, res: Response) => {
 // 내 잔액 보여주기
 export const myBalance = async (req: Request, res: Response) => {
   try {
-    const _req = req as AddRequest;
-    const { userEmail } = _req;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Users.findOne({
       attributes: ["balance"],
@@ -146,7 +148,7 @@ export const myBalance = async (req: Request, res: Response) => {
 // 입금액 보여주기
 export const totalDeposit = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Deposit_drawal.findAll({
       attributes: [
@@ -169,7 +171,7 @@ export const totalDeposit = async (req: Request, res: Response) => {
 // 출금액 보여주기
 export const totalDrawal = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Deposit_drawal.findAll({
       attributes: [
@@ -208,7 +210,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
 // 총 손익 보여주기
 export const sumProfitLost = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
 
     type ProfitLoss = {
       total_profit_loss: number;
@@ -274,7 +276,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 // 종목별 자산 정보
 export const assetInformation = async (req: Request, res: Response) => {
   try {
-    const userEmail = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
 
     const result = await db.Real_estates_own.findAll({
       attributes: [
@@ -316,7 +318,8 @@ export const assetInformation = async (req: Request, res: Response) => {
 // 배당금
 export const dividendList = async (req: Request, res: Response) => {
   try {
-    const userEamil = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
+
     const query = `
       select 
         c.real_estate_name, 
@@ -340,18 +343,18 @@ export const dividendList = async (req: Request, res: Response) => {
         DATE(a.dividend_paymentdate) as dividend_paymentdate
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${userEamil}'
+      where b.user_email = '${userEmail}'
       ) as c
       join (
       select 
         SUM(a.dividend_price * b.amount) as total_anticipation_dividend
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${userEamil}' and a.dividend_status = '지급완료'
+      where b.user_email = '${userEmail}' and a.dividend_status = '지급완료'
       ) as d on true;`;
 
     const result = await db.sequelize.query(query, {
-      replacements: { userEmail: userEamil },
+      replacements: { userEmail: userEmail },
       type: QueryTypes.SELECT,
     });
 
@@ -391,7 +394,7 @@ export const dividendList = async (req: Request, res: Response) => {
 // 내 청약 목록
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
-    const userEamil = req.query.user_email as string;
+    const { userEmail } = req.body as AddRequest;
 
     const query = `
       select a.subscription_name,
@@ -403,10 +406,10 @@ export const subscriptionList = async (req: Request, res: Response) => {
         (a.subscription_offering_price * b.subscription_my_amount) as refund_price
       from subscriptions a join subscription_application b 
           on a.id = b.subscription_id
-      where b.subscription_user_email = '${userEamil}'`;
+      where b.subscription_user_email = '${userEmail}'`;
 
     const result = await db.sequelize.query(query, {
-      replacements: { userEmail: userEamil },
+      replacements: { userEmail: userEmail },
       type: QueryTypes.SELECT,
     });
 
