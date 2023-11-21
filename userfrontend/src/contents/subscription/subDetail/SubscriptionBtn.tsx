@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useCookies } from "react-cookie";
 import {useEffect, useState } from 'react'
-import { IoIosArrowBack } from "react-icons/io";
 import { useQueries, useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query"
@@ -9,7 +8,7 @@ import axios from '../../../components/url';
 import  jwt  from "jsonwebtoken";
 import { FaPlus,FaMinus } from "react-icons/fa6";
 import OrderConfirm from "./Orderconfirm";
-
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 type subdetailtype = {
     props : string | undefined
@@ -23,12 +22,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
     const [orderConfirm,setOrderConfirm] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
 
-    useEffect(()=>{
-        const handleScroll = ()=>{
-            setScrollPosition(window.scrollY);
-        };
-        
-    },[])
+
 
     const fetchData = async ()=>{
         const { data } = await axios.get(`/subscription/detail/${buildingId}`);
@@ -68,7 +62,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
         const {
             isLoading: isLoadingUserId,
             error: errorUserId,
-            data: dataUserId = { data : 0}
+            data: dataUserId= { data : 0}
         } = useQuery({
             queryKey: ['UserID', buildingId],
             queryFn: fetchId
@@ -111,41 +105,66 @@ export default function SubscriptionBtn({props} : subdetailtype){
         setIsCookie(false);
     }
 
+    useEffect(() => {
+        // "청약하기" 버튼을 클릭하면 스크롤을 맨 위로 올리고 새로운 <div>를 나타나게 함
+        if (isCookie) {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, [isCookie]);
+
 
     return(
         <>
         {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} />: null}
         
-        {isCookie ? 
-         <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl">
-            <IoIosArrowBack  className="mt-4 ml-4 w-6 h-6" onClick={()=>setIsCookie(false)}/>
-            <div className="w-5/6 m-auto text-left ">공모가 : {dataSubDetail[0].subscription_offering_price} 원</div>
-            <div className="w-5/6 m-auto text-left">내잔액 :{userBalance}</div>
-            <div className="w-5/6 m-auto text-left">청약가능 수량 : {dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount}주</div>
-            <div className="border border-black w-5/6 h-7 m-auto text-right">
-                <input type="number" min={1} max={dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount}
-                    value={quantity} className="w-7 h-6 bg-slate-200 mr-2"
-                ></input>주
+        {isCookie 
+        ? 
+         <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl ">
+            <RiArrowDropDownLine  className="mt-4 ml-4 w-6 h-6 m-auto" onClick={()=>setIsCookie(false)}/>
+            <div className="text-right  h-6 mb-5 pr-8 text-sm">
+                <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
+                잔고 : {dataUserId.data}
+                </span>
             </div>
-            <div className="border border-black text-right h-14 w-5/6 m-auto">
-                <button className="h-full mr-2" onClick={()=>handleQuantity(-1)} >
-                <FaMinus className="text-white h-7 w-7 bg-blue-500 rounded-lg " />
-                </button>
-
-                <button onClick={()=>handleQuantity(+1)}>
-                <FaPlus className="text-white h-7 w-7 bg-blue-500 rounded-lg"/>
-                </button>
+            <div className=" text-right h-14 w-5/6 m-auto flex justify-between mb-5">
+                <div>
+                    <input className=" w-8 mt-3 font-extrabold text-center" value={1}></input><span className="text-xs">주</span>
+                </div>
+                <div className="w-28  ">
+                    <div className="inline-block border border-gray-200 w-12 h-12 text-center text-gray-400 hover:text-blue-400 ">
+                        <button className="h-full " onClick={()=>handleQuantity(-1)} >
+                        <FaMinus className=" " />
+                        </button>
+                    </div>
+                    <div className="inline-block border border-gray-200 w-12 h-12 text-center text-gray-400 hover:text-blue-400">
+                        <button className="h-full " onClick={()=>handleQuantity(+1)}>
+                        <FaPlus className=""/>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div className="w-5/6 m-auto h-9  font-extrabold flex justify-between">
+                <div>공모가</div>
+                <div>5,000 원</div>
+            </div>
+            <div className="w-5/6 m-auto h-9 font-extrabold flex justify-between">
+                <div>구매수량</div>
+                <div className="w-10">{dataUserId.data}</div>
+            </div>
+            <div className="w-5/6 m-auto h-9 border-t-2 border-black font-extrabold flex justify-between pt-3">
+                <div className="text-blue-500">총 청약 금액</div>
+                <div className="w-10 text-blue-500">{(dataUserId.data) * 5000 }</div>
             </div>
             <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
                 onClick={handleOrder}
             >
             주문하기
             </div>
-         </div> :
-         <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
-         onClick={()=>handleSubscription()}>
-         청약하기
+
          </div> 
+        :
+         <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
+         onClick={()=>handleSubscription()}>청약하기</div> 
         }
         </>
     )
