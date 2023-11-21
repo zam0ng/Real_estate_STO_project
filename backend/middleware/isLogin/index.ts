@@ -3,22 +3,21 @@ import axios from "axios";
 import { db } from "../../models";
 
 // 들어온 요청이 GET 요청인지 POST 요청인지 판단
-async function handleMethodCheck(_req: any, _method: string) {
-  if (_method === "GET") {
-    return _req.query.token as string;
-  } else {
-    return _req.body.token;
-  }
-}
+// async function handleMethodCheck(_req: any, _method: string) {
+//   if (_method === "GET") {
+//     return _req.query.token as string;
+//   } else {
+//     return _req.body.token;
+//   }
+// }
 
 // Access token 검증
 async function handleAccesstokenVerify(_token: string) {
-  
   const result = await axios.post(`https://bouns.io/api/jwt-verify`, {
     token: _token,
     projectId: process.env.PROJECTID,
   });
-  
+
   return result;
 }
 
@@ -32,13 +31,14 @@ async function handleWalletAddress(_token: string) {
   );
 
   const didtoken = createDidtoken.data;
-    
+
   const verifyDidToken = await axios.post(
     `https://bouns.io/api/verify-did-token`,
     { token: didtoken }
   );
 
   const wallet = verifyDidToken.data.iss.split(":")[2];
+
   return wallet;
 }
 
@@ -48,19 +48,39 @@ export const isLogin = async (
   next: NextFunction
 ) => {
   try {
-    const method: string = req.method;
-
-    let token: string = await handleMethodCheck(req, method);
+    if (!req.body.token) return res.send("다시 로그인 하세요.");
+    let token: string = req.body.token;
 
     const verify = await handleAccesstokenVerify(token);
-    if (verify.status != 200) return res.send("다시 로그인 하세요.");
+    if (verify?.status != 200) return res.send("다시 로그인 하세요.");
+    const user_email = verify.data.email;
+
     const wallet = await handleWalletAddress(token);
 
-    req.body.userEmail = verify.data.email;
+    req.body.user_email = user_email;
     req.body.wallet = wallet;
 
-    if (verify) next();
-    else return res.status(404).send("다시 로그인 하세요.");
+    const member_check = await db.Users.findOne({
+      where: { user_email: verify.data.email },
+      raw: true,
+    });
+
+    if (!member_check) {
+      await db.Users.create({
+        user_profile_img: "/images/test.png",
+        user_email: user_email,
+        user_pw: "aa",
+        wallet: wallet,
+        balance: 0,
+        using_balance: 0,
+        blacklist: false,
+      });
+    }
+
+    if (req.route.path !== "/") next();
+    if (verify) {
+      return verify.data.email;
+    } else return res.status(404).send("다시 로그인 하세요.");
   } catch (error) {
     console.error(error);
   }
