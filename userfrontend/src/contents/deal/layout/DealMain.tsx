@@ -16,7 +16,7 @@ const DealMain: React.FC<socketProps> = ({isSocket}) => {
                 <OrderInfo isSocket = {isSocket}/>
                 <div className='w-2/5 h-full flex flex-col'>
                     <BuySellTabInfo isSocket = {isSocket} />
-                    <HistoryTabInfo />
+                    <HistoryTabInfo isSocket = {isSocket}/>
                 </div>
             </div>
         </div>

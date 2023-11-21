@@ -3,10 +3,14 @@ import HistoryTabStructure from './HistoryTabStructure';
 import CompleteDeal from './CompleteDeal';
 import IncompleteDeal from './IncompleteDeal';
 
-const HistoryTabInfo: React.FC = () => {
+interface socketProps {
+    isSocket: any;
+}
+
+const HistoryTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const orderHistoryTabs = [
         {id: "tab1", title: "체결", content: <CompleteDeal />},
-        {id: "tab2", title: "미체결", content: <IncompleteDeal />}
+        {id: "tab2", title: "미체결", content: <IncompleteDeal isSocket={isSocket} />}
     ];
 
     return (
