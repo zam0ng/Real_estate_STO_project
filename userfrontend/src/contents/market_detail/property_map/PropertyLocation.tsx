@@ -1,5 +1,5 @@
 import React from 'react'
-import KakaoMap from '../../../components/kakaoMap';
+import KakaoMap from '../../../components/KakaoMap';
 import PropertyMap from './PropertyMap';
 
 const PropertyLocation: React.FC = () => {

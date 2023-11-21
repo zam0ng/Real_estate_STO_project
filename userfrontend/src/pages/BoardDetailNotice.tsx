@@ -4,7 +4,8 @@ import BoardDetailTitleBox from '../contents/board_detail/BoardDetailTitleBox';
 import BoardDetailBody from '../contents/board_detail/BoardDetailBody';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
+import { serverurl } from '../components/serverurl';
 
 export interface BoardDetailContentRequest {
   category: string;
@@ -18,13 +19,13 @@ const BoardDetailNotice: React.FC = () => {
   console.log(currentPage.state);
 
   const fetchDetailContent = async (): Promise<BoardDetailContentRequest> => {
-    const {data} = await axios.get(`http://127.0.0.1:8080/market/detail/board_detail/${currentPage.state.id}`);
+    const {data} = await axios.get(`${serverurl}/market/detail/board_detail/${currentPage.state.id}`);
     return data;
   };
 
   const {data,error,isLoading,isError} = useQuery<BoardDetailContentRequest>(
-    ["boardDetailFetch",currentPage.state.id],
-    fetchDetailContent
+    {queryKey:["boardDetailFetch",currentPage.state.id],
+    queryFn:fetchDetailContent}
   );
 
   if(isLoading){
@@ -40,7 +41,7 @@ const BoardDetailNotice: React.FC = () => {
   };
 
   return (
-    <div className='w-screen h-screen border border-black'>
+    <div className='w-screen h-screen'>
       <BoardDetailHeader category={data?.category} />
       <BoardDetailTitleBox  notice_title={data?.notice_title} createdAt={data?.createdAt} real_estate_name={currentPage.state.real_estate_name} />
       <BoardDetailBody notice_content={data?.notice_content} />

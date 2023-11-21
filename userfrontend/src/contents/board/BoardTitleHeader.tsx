@@ -6,7 +6,7 @@ const BoardTitleHeader: React.FC = () => {
     const title = currentPage.state.infoType;
 
     return (
-        <div className='w-full h-[20%] flex justify-start items-end text-2xl pl-7 mb-5'>
+        <div className='w-full h-[10%] flex justify-start items-end text-2xl pl-7 pb-3'>
             {title}
         </div>
     )

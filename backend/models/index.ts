@@ -13,7 +13,9 @@ import Dividends from "./dividends";
 import Dividend_details from "./dividend_details";
 import Notices from "./notices";
 import Votes from "./votes";
-import PropertyOwnHistory from "./property_own_history";
+import Real_estates_own_history from "./real_estates_own_history";
+import Tx_block from "./tx_block";
+import Tx_receipt from "./tx_receipt";
 
 export const sequelize = new Sequelize(
   config.dev.database!,
@@ -41,7 +43,9 @@ export interface DB {
   Dividend_details: typeof Dividend_details;
   Notices: typeof Notices;
   Votes: typeof Votes;
-  PropertyOwnHistory: typeof PropertyOwnHistory;
+  Real_estates_own_history: typeof Real_estates_own_history;
+  Tx_block: typeof Tx_block;
+  Tx_receipt: typeof Tx_receipt;
 }
 
 export const db: DB = {
@@ -59,7 +63,9 @@ export const db: DB = {
   Dividend_details,
   Notices,
   Votes,
-  PropertyOwnHistory,
+  Real_estates_own_history,
+  Tx_block,
+  Tx_receipt,
 };
 
 db.sequelize = sequelize;
@@ -78,7 +84,9 @@ Dividend_details.initModel(sequelize);
 Notices.initModel(sequelize);
 Real_estates_own.initModel(sequelize);
 Votes.initModel(sequelize);
-PropertyOwnHistory.initModel(sequelize);
+Real_estates_own_history.initModel(sequelize);
+Tx_block.initModel(sequelize);
+Tx_receipt.initModel(sequelize);
 
 Subscriptions.associate(db);
 Real_estates.associate(db);
@@ -90,9 +98,11 @@ Subscription_application.associate(db);
 // Trades.associate(db);
 Dividends.associate(db);
 Dividend_details.associate(db);
-PropertyOwnHistory.associate(db);
+Real_estates_own_history.associate(db);
 Subscriptions.associate(db);
 Real_estates.associate(db);
 Real_estates_own.associate(db);
 Subscriptions_own.associate(db);
 Subscription_application.associate(db);
+Tx_block.associate(db);
+Tx_receipt.associate(db);

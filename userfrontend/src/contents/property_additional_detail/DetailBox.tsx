@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import SingleDetail from './SingleDetail';
+import { serverurl } from '../../components/serverurl';
 
 export interface AdditionalDetailBuildingRequest {
   floors: string;
@@ -27,7 +28,7 @@ export interface AdditionalDetailPublishRequest {
 }
 
 const additionalBuildingInfoFetch = async (propertyName: string) : Promise<AdditionalDetailBuildingRequest> => {
-  const response = await fetch(`http://127.0.0.1:8080/market/detail/budling_info/${propertyName}`);
+  const response = await fetch(`${serverurl}/market/detail/budling_info/${propertyName}`);
   if(!response.ok){
     throw new Error("could not fetch data from /market/detail/budling_info");
   };
@@ -35,7 +36,7 @@ const additionalBuildingInfoFetch = async (propertyName: string) : Promise<Addit
 };
 
 const additionalPublishInfoFetch = async (propertyName: string): Promise<AdditionalDetailPublishRequest> => {
-  const response = await fetch(`http://127.0.0.1:8080/market/detail/publish_info/${propertyName}`);
+  const response = await fetch(`${serverurl}/market/detail/publish_info/${propertyName}`);
   if(!response.ok){
     throw new Error("could not fetch data from /market/detail/publish_info");
   };
@@ -52,7 +53,7 @@ const DetailBox: React.FC = () => {
   const queryKey = isBuildingInfo ? ["buildingInfoFetch",propertyName] : ["publishInfoFetch",propertyName];
   const queryFn = isBuildingInfo ? ()=>additionalBuildingInfoFetch(propertyName) : ()=>additionalPublishInfoFetch(propertyName);
 
-  const {data,error,isLoading,isError} = useQuery<any>(queryKey,queryFn);
+  const {data,error,isLoading,isError} = useQuery<any>({queryKey:queryKey,queryFn:queryFn});
   console.log(data);
 
   if(isLoading){

@@ -117,11 +117,18 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
   return all_result;
 }
 
+// function formatDate(date: Date): string {
+//   const year = date.getFullYear();
+//   const month = String(date.getMonth() + 1).padStart(2, "0");
+//   const day = String(date.getDate()).padStart(2, "0");
+//   return `${year}-${month}-${day}`;
+// }
+
 // 매물 전체 정보
 export const realEstatesList = async (req: Request, res: Response) => {
   try {
     type Subscription = {
-      subscription_img: string;
+      subscription_img_1: string;
       subscription_name: string;
       subscription_description: string;
       current_price: number;
@@ -130,7 +137,7 @@ export const realEstatesList = async (req: Request, res: Response) => {
 
     const result = await db.Subscriptions.findAll({
       attributes: [
-        "subscription_img",
+        "subscription_img_1",
         "subscription_name",
         "subscription_description",
         [db.sequelize.col("Real_estates.current_price"), "current_price"],
@@ -224,19 +231,19 @@ export const usersList = async (req: Request, res: Response) => {
 export const recentTradeList = async (req: Request, res: Response) => {
   try {
     type RecentTrade = {
-      subscription_img: string;
+      subscription_img_1: string;
       real_estate_name: string;
       trade_price: number;
       created_at: Date;
     };
 
     type GetSubscriptionImg = {
-      subscription_img: string;
+      subscription_img_1: string;
       subscription_name: string;
     };
 
     const getSubscriptionImgs = (await db.Subscriptions.findAll({
-      attributes: ["subscription_img", "subscription_name"],
+      attributes: ["subscription_img_1", "subscription_name"],
       raw: true,
     })) as [] as GetSubscriptionImg[];
 
@@ -253,7 +260,7 @@ export const recentTradeList = async (req: Request, res: Response) => {
       const findimg = getSubscriptionImgs.find(
         (sub) => sub.subscription_name === rs.real_estate_name
       );
-      if (findimg) rs.subscription_img = findimg.subscription_img;
+      if (findimg) rs.subscription_img_1 = findimg.subscription_img_1;
     });
 
     if (result?.length) return res.status(200).json(result);
@@ -417,6 +424,154 @@ export const tradeMonthList = async (req: Request, res: Response) => {
   }
 };
 
+// 매물 관리 페이지 (매물 관련 전체 데이터 넘겨주기)
+export const realEstateManagement = async (req: Request, res: Response) => {
+  try {
+    const result = await db.Subscriptions.findAll({
+      attributes: [
+        "id",
+        "subscription_img_1",
+        "subscription_name",
+        "subscription_description",
+        "subscription_status",
+        [
+          db.sequelize.literal(
+            "((subscription_order_amount / subscription_totalsupply) * 100) - 100"
+          ),
+          "achievement_rate",
+        ],
+        "subscription_totalprice",
+        [
+          db.sequelize.literal(
+            "subscription_offering_price * subscription_order_amount"
+          ),
+          "contest_totalprice",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_start_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_end_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_end_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_result_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_result_date",
+        ],
+      ],
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 매물 관리 상세 페이지
+export const realEstateDetail = async (req: Request, res: Response) => {
+  try {
+    const real_estate_id = req.params.id as string;
+
+    const result = await db.Subscriptions.findOne({
+      attributes: [
+        "id",
+        "subscription_img_1",
+        "subscription_img_2",
+        "subscription_img_3",
+        "subscription_img_4",
+        "subscription_img_5",
+        "subscription_name",
+        "subscription_address",
+        "subscription_totalprice",
+        "subscription_totalsupply",
+        "subscription_description",
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_start_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_end_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_end_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_result_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_result_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_building_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_building_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_trading_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_trading_start_date",
+        ],
+        "subscription_order_amount",
+        "subscription_offering_price",
+        "subscription_status",
+        "floors",
+        "purpose",
+        "main_purpose",
+        "area",
+        "all_area",
+        "build_area",
+        "floor_area",
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("completion"),
+            "YYYY-MM-DD"
+          ),
+          "completion",
+        ],
+        "stock_type",
+        "publisher",
+      ],
+      where: { id: real_estate_id },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request , res : Response) =>{
@@ -440,7 +595,11 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
 
   try {
       const result = await Subscriptions.create({
-          subscription_img : imgPathArr[0],
+          subscription_img_1: imgPathArr[0],
+          subscription_img_2: imgPathArr[1],
+          subscription_img_3: imgPathArr[2],
+          subscription_img_4: imgPathArr[3],
+          subscription_img_5 : imgPathArr[4],
           subscription_name : name,
           subscription_address: address,
           subscription_totalprice : totalprice,
@@ -472,7 +631,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
     res.sendStatus(400);
   }
 
-  // subscription_img varchar // 매물 이미지
+  // subscription_img_1 varchar // 매물 이미지
   // subscription_name varchar // 매물 이름
   // subscription_address varchar // 매물 주소
   // subscription_totalprice bigint // 청약 총 공모금액
@@ -522,24 +681,24 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   console.log(req.body);
-  const {real_estate_name , dividend_price , basedate , paymentdate} = req.body;
-  const month = paymentdate.slice(5,7);
+  const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
+  const month = paymentdate.slice(5, 7);
   try {
-      const result  = await Dividends.create({
-          real_estate_name : real_estate_name,
-          dividend_price : dividend_price,
-          dividend_basedate : basedate,
-          dividend_paymentdate : paymentdate,
-      })
+    const result = await Dividends.create({
+      real_estate_name: real_estate_name,
+      dividend_price: dividend_price,
+      dividend_basedate: basedate,
+      dividend_paymentdate: paymentdate,
+    });
 
-      await Notices.create({
-        category : "공시",
-        notice_title : `${month}월 배당금 지급 안내`,
-        notice_content : `안녕하세요. 카사입니다. \n 아래와 같이 ${real_estate_name} ${month} 월 배당금 지급 관련하여 안내해 드립니다. \n 1. 건물명 : ${real_estate_name} \n 2. 예상 배당금 : ${dividend_price}원 \n 3. 배당기준일 : ${basedate} \n 4. 지급예정일 : ${paymentdate} \n 5. 배당종류 : 현금배당`,
-        notice_writer : "admin",
-        real_estate_name : real_estate_name,
-      })
-      res.sendStatus(201);
+    await Notices.create({
+      category: "공시",
+      notice_title: `${month}월 배당금 지급 안내`,
+      notice_content: `안녕하세요. 카사입니다. \n 아래와 같이 ${real_estate_name} ${month} 월 배당금 지급 관련하여 안내해 드립니다. \n 1. 건물명 : ${real_estate_name} \n 2. 예상 배당금 : ${dividend_price}원 \n 3. 배당기준일 : ${basedate} \n 4. 지급예정일 : ${paymentdate} \n 5. 배당종류 : 현금배당`,
+      notice_writer: "admin",
+      real_estate_name: real_estate_name,
+    });
+    res.sendStatus(201);
   } catch (error) {
     console.log(error);
     res.sendStatus(400);

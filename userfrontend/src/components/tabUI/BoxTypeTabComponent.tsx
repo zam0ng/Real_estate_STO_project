@@ -1,20 +1,18 @@
 import React from "react"
 import { useState } from "react"
 
-const data = [
-    {
-        tabName : "4번",
-        content : <div>4번컨텐츠</div>
-    },{
-        tabName : "5번",
-        content : <div>5번컨텐츠</div>
-    },{
-        tabName : "6번",
-        content : <div>6번컨텐츠</div>
-    }
-]
+type dataType ={
+    tabName : string,
+    content : React.ReactNode | (()=>React.ReactNode);
+}
 
-export default function LineTypeTabComponent (){
+type BoxTypeComponentProps = {
+    data : dataType[];
+}
+
+
+
+export default function BoxTypeTabComponent ({data} : BoxTypeComponentProps){
 
     const [tabNum,setTabNum] = useState(0);
 
@@ -22,13 +20,22 @@ export default function LineTypeTabComponent (){
 
     const leftPosition = `calc(${tabNum} * (100% / ${data.length}))`;
 
+    const renderContent = ()=>{
+        const currentContent = data[tabNum].content;
+        if(typeof currentContent === 'function'){
+            return currentContent();
+        }
+        return currentContent;
+    }
+
 
     let title = data.map((item, index) => {
         // 현재 탭이 선택된 탭인지 확인하고, 적절한 텍스트 색상 클래스를 적용
+        const textColorClass = index === tabNum ? "text-white" : "text-black";
 
         return (
             <div 
-                className={` z-10 p-1 text-sm font-bold`} 
+                className={`shadow-900/20 z-10 p-1 text-sm font-bold ${textColorClass}`} 
                 data-index={index} 
                 onClick={() => setTabNum(index)} 
                 key={index}
@@ -47,16 +54,16 @@ export default function LineTypeTabComponent (){
     }
 
     return(
-        <div className="w-screen m-auto">
-            <div className=" relative  text-center border-b-2 h-7 mb-9 "
+        <div className=" ">
+            <div className=" relative w-5/6 text-center bg-gray-200 shadow-2xl shadow-900/20 rounded-md h-7 mt-3 m-auto  "
             style={{ display: 'grid', gridTemplateColumns: `repeat(${data.length}, minmax(0, 1fr))` }}
             >
-                <div className="absolute  border-b-2 border-blue-500 h-7 indicator"
+                <div className="absolute  bg-blue-500 shadow-md rounded-md h-7 indicator"
                 style={{ width: tabWidth, left: leftPosition }}
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border border-black w-9/12 m-auto h-64 rounded-xl shadow-lg">{data[tabNum].content}</div>
+            <div className="mt-3 border= w-5/6  rounded-xl shadow-lg m-auto min-h-[30%]">{renderContent()}</div>
         </div>
     )
 }
