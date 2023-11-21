@@ -37,8 +37,11 @@ export default function Mypage () {
             <MyCash />
             <div className="w-full border-t-2 border-slate-200"></div>
             <MyAsset />
+            <div className="w-full border-t-2 border-slate-200"></div>
             <MyDividend />
+            <div className="w-full border-t-2 border-slate-200"></div>
             <MyVote />
+            <div className="w-full border-t-2 border-slate-200"></div>
             <MySubscription />
             <TabBar />
         </div>

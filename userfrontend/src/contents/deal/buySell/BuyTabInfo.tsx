@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect ,useContext } from 'react';
 import { serverurl } from '../../../components/serverurl';
 import { useLocation } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Cookies } from 'react-cookie';
 
 interface BuyPost {
     price: number;
@@ -13,11 +14,13 @@ interface socketProps {
     isSocket: any;
 }
 
-const buyPost = async (propertyName: string,buyData:BuyPost): Promise<string> => {
+const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promise<string> => {
     
-    // 여기에 소켓 send.
-    console.log(buyData); // {price: 1000, amount: 5} 
-    const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,buyData);
+    // console.log(buyData); // {price: 1000, amount: 5} 
+    const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,{
+        ...buyData,
+        token: token
+    });
     // console.log(data);
     return data;
 }
@@ -30,6 +33,10 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
     // console.log(currentPage.state);
     const queryClient = useQueryClient();
+
+    const cookies = new Cookies();
+
+    const isCookie = cookies.get("accessToken");
 
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
@@ -77,11 +84,12 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
         {
-            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData),
+            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie),
             onSuccess: (data) => {
                 console.log(data);
                 clearInputs2();
-                queryClient.refetchQueries({queryKey:["incompleteDeals"]})
+                queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
+                queryClient.refetchQueries({queryKey:["incompleteDeals"]});
                 isSocket.emit("purchase_completed")
             },
             onError: (error) => {

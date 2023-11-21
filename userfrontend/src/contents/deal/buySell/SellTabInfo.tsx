@@ -3,14 +3,18 @@ import axios from 'axios';
 import { serverurl } from '../../../components/serverurl';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
+import { Cookies } from 'react-cookie';
 
 interface SellPost {
     price: number;
     amount: number;
 }
 
-const sellPost = async (propertyName: string,sellData:SellPost): Promise<string> => {
-    const {data} = await axios.post<string>(`${serverurl}/order/sell/${propertyName}`,sellData);
+const sellPost = async (propertyName: string,sellData:SellPost,token:string): Promise<string> => {
+    const {data} = await axios.post<string>(`${serverurl}/order/sell/${propertyName}`,{
+        ...sellData,
+        token : token
+    });
     // console.log(data);
     return data;
 }
@@ -23,6 +27,10 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const currentPage = useLocation();
 
     const queryClient = useQueryClient();
+
+    const cookies = new Cookies();
+
+    const isCookie = cookies.get("accessToken");
 
     const [sellPrice,setSellPrice] = useState<any>(0);
     const [sellAmount,setSellAmount] = useState<any>(0);
@@ -70,7 +78,7 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     const mutation = useMutation<string,Error,{propertyName: string; sellData:SellPost}>(
         {
-            mutationFn:({propertyName,sellData})=>sellPost(propertyName,sellData),
+            mutationFn:({propertyName,sellData})=>sellPost(propertyName,sellData,isCookie),
             onSuccess: (data)=>{
                 console.log(data);
                 clearInputs2();
