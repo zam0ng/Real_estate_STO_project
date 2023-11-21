@@ -1208,9 +1208,9 @@ export const orderMain = async (req: Request, res: Response) => {
 
 export const orderConclusion = async (req: Request, res: Response) => {
   try {
-    if (req.body?.user_email) return res.send("비로그인 유저");
-
-    const { name, user_email } = req.body;
+    if (!req.body?.user_email) return res.send("비로그인 유저");
+    const { name } = req.params;
+    const { user_email } = req.body;
     console.log(name);
 
     //  임시 유저
@@ -1267,7 +1267,6 @@ export const orderConclusion = async (req: Request, res: Response) => {
         el[key] = value2;
       }
     });
-
     res.json(conclusion);
   } catch (error) {
     console.log(error);
@@ -1276,8 +1275,9 @@ export const orderConclusion = async (req: Request, res: Response) => {
 
 export const notConclusion = async (req: Request, res: Response) => {
   try {
-    if (req.body?.user_email) return res.send("비로그인 유저");
-    const { name, user_email } = req.body;
+    if (!req.body?.user_email) return res.send("비로그인 유저");
+    const { name } = req.params;
+    const { user_email } = req.body;
     console.log(name);
     // 임시 유저
     // const islogin = "test@naver.com";
@@ -1310,7 +1310,7 @@ export const notConclusion = async (req: Request, res: Response) => {
 
 export const cancelOrder = async (req: Request, res: Response) => {
   try {
-    if (req.body?.user_email) return res.send("비로그인 유저");
+    if (!req.body?.user_email) return res.send("비로그인 유저");
     const { id, name, user_email } = req.body;
     console.log(name, id);
     // 임시 로그인

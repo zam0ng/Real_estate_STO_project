@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import SellPriceBox from './SellPriceBox';
 import BuyPriceBox from './BuyPriceBox';
+import { Cookies } from 'react-cookie';
 
 interface BuySellList {
     order_price: number;
@@ -19,6 +20,10 @@ interface BuySellDataRequest {
 const PriceBox: React.FC = () => {
     const currentPage = useLocation();
     // console.log(currentPage);
+
+    const cookies = new Cookies();
+
+    const isCookie = cookies.get("accessToken");
 
     const fetchOrderList = async (): Promise<BuySellDataRequest>=>{
         const {data} = await axios.get(`${serverurl}/order/main/${currentPage.state.propertyName}`);

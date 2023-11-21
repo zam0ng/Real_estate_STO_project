@@ -55,10 +55,7 @@ export const isLogin = async (
     if (verify?.status != 200) return res.send("다시 로그인 하세요.");
     const user_email = verify.data.email;
 
-    const wallet = await handleWalletAddress(token);
-
     req.body.user_email = user_email;
-    req.body.wallet = wallet;
 
     const member_check = await db.Users.findOne({
       where: { user_email: verify.data.email },
@@ -66,6 +63,7 @@ export const isLogin = async (
     });
 
     if (!member_check) {
+      const wallet = await handleWalletAddress(token);
       await db.Users.create({
         user_profile_img: "/images/test.png",
         user_email: user_email,
@@ -76,8 +74,9 @@ export const isLogin = async (
         blacklist: false,
       });
     }
-
-    if (req.route.path !== "/") next();
+    console.log(verify.data.email);
+    console.log(req.route.path);
+    if (req.route.path != "/") next();
     if (verify) {
       return verify.data.email;
     } else return res.status(404).send("다시 로그인 하세요.");
