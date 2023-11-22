@@ -28,7 +28,7 @@ const TableContent = async () => {
         <TableColumnName columnName={"청약 발표일"} />
         <TableColumnName columnName={"STO 발행"} />
 
-        {estateList.map((item: EstateDataItem) => {
+        {estateList?.map((item: EstateDataItem) => {
           return <TableRow key={item.id} item={item} />;
         })}
 
