@@ -2,14 +2,10 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const MyVoteListItem: React.FC = () => {
-  const navigation = useNavigate();
-
-  const toMyVoteListPage = ()=>{
-    navigation("/mypage/my-vote-list");
-  };
+  // const navigation = useNavigate();
 
   return (
-    <div className='w-full h-20 flex flex-row border-b border-slate-300' onClick={toMyVoteListPage}>
+    <div className='w-full h-20 flex flex-row border-b border-slate-300'>
         <div className='w-[20%] h-full flex justify-center items-center'>
             <img className='w-14 h-14 border border-black rounded-lg' src='' />
         </div>
