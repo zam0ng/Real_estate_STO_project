@@ -68,7 +68,6 @@ export const isLogin = async (
       await db.Users.create({
         user_profile_img: "/images/test.png",
         user_email: user_email,
-        user_pw: "aa",
         wallet: wallet,
         balance: 0,
         using_balance: 0,
