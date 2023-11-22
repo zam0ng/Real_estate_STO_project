@@ -1,7 +1,7 @@
 import TableTitle from "@/app/_contents/admin/real_estates/TableTitle";
 import TableContent from "@/app/_contents/admin/real_estates/TableContent";
 
-export default function Real_estates() {
+export default function RealEstates() {
   return (
     <>
       <div className="h-screen bg-admin_content_bg">

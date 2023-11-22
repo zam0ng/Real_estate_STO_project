@@ -10,7 +10,7 @@ export interface EstateDataItem {
   subscription_name: string;
   subscription_description: string;
   subscription_status: string;
-  achievement_rate : string | number;
+  achievement_rate : number;
   subscription_totalprice: number;
   subscription_start_date: string;
   subscription_end_date: string;
@@ -43,7 +43,7 @@ export interface StatusProps {
 
 // 테이블 ROW > ProgressProps
 export interface ProgressProps {
-  progress: string;
+  progress: string | number ;
   id : number;
 }
 
