@@ -10,8 +10,6 @@ import {
   tradeMonthList,
   realEstateManagement,
   realEstateDetail,
-  subscription, // DJ 임시 테스트 ✅✅✅
-  subscriptionDetail, // DJ 임시 테스트 ✅✅✅
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,

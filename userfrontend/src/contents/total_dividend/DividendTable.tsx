@@ -1,13 +1,14 @@
 import React from 'react';
 import DividendTableHeader from './DividendTableHeader';
-import { useQuery } from 'react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'react-router-dom';
 import DividendPayInfo from './DividendPayInfo';
+import { serverurl } from '../../components/serverurl';
 
 export interface TotalDividendRequest {
-    dividend_basedate: string;
-    dividend_paymentdate: string;
-    dividend_price: number;
+    dividend_basedate: any;
+    dividend_paymentdate: any;
+    dividend_price: any;
 }
 
 const DividendTable: React.FC = () => {
@@ -16,7 +17,7 @@ const DividendTable: React.FC = () => {
     const propertyName = currentPage.state.propertyName;
 
     const totalDividendFetch = async (): Promise<TotalDividendRequest[]> => {
-        const response = await fetch(`http://127.0.0.1:8080/market/detail/dividend/${propertyName}`);
+        const response = await fetch(`${serverurl}/market/detail/dividend/${propertyName}`);
         if(!response.ok){
             throw new Error("could not fetch data from /market/detail/dividend");
         };
@@ -24,8 +25,8 @@ const DividendTable: React.FC = () => {
     };
 
     const {data,error,isLoading,isError} = useQuery<TotalDividendRequest[],Error>(
-        ["totalDividendQuery",propertyName],
-        totalDividendFetch
+        {queryKey:["totalDividendQuery",propertyName],
+        queryFn:totalDividendFetch}
     );
 
     console.log(data);

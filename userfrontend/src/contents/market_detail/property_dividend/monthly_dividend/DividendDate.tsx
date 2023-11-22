@@ -8,6 +8,7 @@ const DividendDate = () => {
     const [payDate,setPayDate] = useState<Date>(new Date());
 
     const data = useContext(MarketDetailContext);
+    console.log(data);
 
     useEffect(()=>{
         if(data?.dividend_basedate !== undefined){

@@ -14,7 +14,7 @@ const DailyHistoryTableInfo: React.FC<DailyHistoryProps> = ({date,next_trade_pri
     useEffect(()=>{
         if(fluctuation_price < 0){
             setTextColor("text-blue-500");
-            setChangeType(`-${fluctuation_price}`);
+            setChangeType(`${fluctuation_price}`);
         }else if(fluctuation_price > 0){
             setTextColor("text-red-500");
             setChangeType(`+${fluctuation_price}`);

@@ -6,11 +6,16 @@ interface dividendAttribute {
   dividend_price: number;
   dividend_basedate: Date;
   dividend_paymentdate: Date;
-  createdAt?: Date;
+  dividend_status?: string;
 }
 
 class Dividends extends Model<dividendAttribute> {
-  declare date : Date;
+  declare real_estate_name: string;
+  declare dividend_price: number;
+  declare dividend_basedate: Date;
+  declare dividend_paymentdate: Date;
+  declare dividend_status: string;
+
   static initModel(sequelize: Sequelize): typeof Dividends {
     Dividends.init(
       {
@@ -30,6 +35,10 @@ class Dividends extends Model<dividendAttribute> {
           type: DataTypes.DATE,
           allowNull: false,
         },
+        dividend_status: {
+          type: DataTypes.STRING,
+          defaultValue: "예정",
+        },
       },
       {
         sequelize,
@@ -46,7 +55,7 @@ class Dividends extends Model<dividendAttribute> {
     db.Dividends.hasMany(db.Dividend_details, {
       foreignKey: "dividend_id",
     });
-    db.Dividends.hasMany(db.PropertyOwnHistory, {
+    db.Dividends.hasMany(db.Real_estates_own_history, {
       foreignKey: "dividend_id",
     });
   }
