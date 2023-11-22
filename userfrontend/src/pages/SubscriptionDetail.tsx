@@ -27,13 +27,15 @@ export default function SubscriptionDetail(){
 
     if(error) return <>접속이 원활하지 않습니다 ..</>
 
+    let [detail] = data
+
 
     let test1 = [{
         tabName : "투자 포인트",
         content : <>투자 포인트 화면입니다</> 
     },{
         tabName : "모집 현황",
-        content : <SubStatus />
+        content : <SubStatus detail={detail}/>
     },{
         tabName : "상세 정보",
         content : <>상세 정보 화면입니다</>

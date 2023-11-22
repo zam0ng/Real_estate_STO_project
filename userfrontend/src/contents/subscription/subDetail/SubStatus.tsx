@@ -1,7 +1,20 @@
 import ProgressBar from "../../../components/ProgressBar"
 import { AiOutlineAlert } from "react-icons/ai";
+import { SubDetail } from "../../../features/SubDetail";
 
-export default function SubStatus(){
+type SubStatusType = {
+    detail : SubDetail
+}
+
+export default function SubStatus({detail} : SubStatusType){
+
+    let statusBox = [
+        { number: 1, title: "청약 시작", date: detail.subscription_start_date },
+        { number: 2, title: "결과 발표", date: detail.subscription_end_date },
+        { number: 3, title: "건물 입고", date: detail.subscription_building_date },
+        { number: 4, title: "거래 시작 ", date: detail.subscription_trading_start_date },
+    ]
+
     return(
         <>
             <div className=" w-5/6 h-24 m-auto rounded-xl bg-slate-100">
@@ -21,16 +34,22 @@ export default function SubStatus(){
                 </div>
             </div>
             <div className="w-5/6 min-h-[25rem] m-auto rounded-xl bg-slate-100 mt-3 border border-black">
-                <div className="border border-black w-full h-16">
-                    <div className="flex h-full">
-                        <div className=" w-1/4">
-                            <div className="w-10 h-10 border-2 border-blue-500 m-auto mt-2 flex items-center justify-center rounded-full font-extrabold">1</div>
-                        </div>
+                <div className="border border-black w-full h-16 ">
+                    {statusBox.map((i)=>{
+                        return (
+                        <div className="flex h-full">
+                            <div className=" w-1/4">
+                                <div className="w-10 h-10 border-2 border-blue-500 m-auto mt-2 flex items-center justify-center rounded-full font-extrabold">{i.number}</div>
+                            </div>
                         <div className="mt-2">
-                            <div className="">건물 입고</div>
-                            <div className="text-xs text-gray-700">11월 17일 금요일 오후 10시 0분</div>
+                            <div className="font-extrabold text-lg">{i.title}</div>
+                                <div className="text-xs text-gray-700">{i.date}</div>
+                            </div>
                         </div>
-                    </div>
+                        )
+                    })}
+
+
                 </div>
             </div>
             <div className="w-5/6 h-16 rounded-xl bg-slate-200 m-auto mt-2  ">

@@ -38,7 +38,8 @@ export default function SubscriptionBtn({props} : subdetailtype){
         queryFn: fetchData
     });
 
-
+    let [detail] = dataSubDetail
+    console.log(detail)
 
 
 
@@ -95,8 +96,8 @@ export default function SubscriptionBtn({props} : subdetailtype){
             }
 
             if (newQuantity < 1) return 0;
-            if (newQuantity > dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount) {
-              return dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount;
+            if (newQuantity > detail.subscription_totalsupply - detail.subscription_order_amount) {
+              return detail.subscription_totalsupply - detail.subscription_order_amount;
             }
             if (newQuantity > Math.floor( dataUserId / 5000 )){
                 return Math.floor( dataUserId / 5000 )
