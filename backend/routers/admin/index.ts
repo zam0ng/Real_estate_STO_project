@@ -8,6 +8,8 @@ import {
   tradeDayList,
   tradeWeekList,
   tradeMonthList,
+  subscription, // DJ 임시 테스트 ✅✅✅
+  subscriptionDetail, // DJ 임시 테스트 ✅✅✅
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -25,7 +27,7 @@ import { Upload } from '../../middleware/imgUpload';
 
 const router: Router = express.Router();
 
-// router.post("/subscription_submit", realEstateSubmit);
+// router.post("/subscription_submit", realEstateSubmit); ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
 
 /////////////////////////////////////////////////////
 // 매물 전체 정보
@@ -64,4 +66,12 @@ router.get("/trade_month_list", tradeMonthList);
 router.post('/subscription_submit',Upload.array("upload"),realEstateSubmit);
 router.post('/notice_submit',noticeSubmit);
 router.post('/dividend_submit',dividendSubmit);
+
+
+
+ // DJ 임시 테스트 ✅✅✅✅✅✅
+router.get('/subscription' , subscription)
+router.get('/subscription/detail/:id' , subscriptionDetail)
+
+
 export default router;

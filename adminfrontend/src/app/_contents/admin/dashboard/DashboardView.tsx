@@ -5,9 +5,11 @@ import ActionBtn from "@/app/_contents/admin/dashboard/ActionBtn";
 
 
 import { CreateEstateBtn } from "../main";
+import LineChartLarge from "./LineChartLarge";
 
 
-export default function DashboardView() {
+export default async function DashboardView() {
+
   return (
     <div className="flex items-center justify-center">
       
@@ -90,19 +92,18 @@ export default function DashboardView() {
           {/* 오른쪽 영역 */}
           <div className="flex flex-col h-full justify-evenly">
             {/* 그래프, 일별, 주별, 월별 통계 */}
-            <div className="flex flex-col w-30rem bg-sky-50">
+            <div className="flex flex-col w-30rem ">
               <div className="flex justify-between">
                 <h3 className="text-xl font-bold">Market Statistics</h3>
                 <p className="flex items-center text-sm font-normal text-dashboard_card_transaction_view">
                   Week
                 </p>
-
               </div>
 
               <div className="flex items-center justify-center bg-neutral-300 w-30rem h-15rem">
-                <div className="flex items-center justify-center w-11/12 bg-green-300 h-5/6 ">
-                  <p> 통계그림 </p>
-                </div>
+                  {/* <p> 통계그림 </p> */}
+                  <LineChartLarge />
+
               </div>
             </div>
 

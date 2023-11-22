@@ -27,6 +27,7 @@ module.exports = {
         backdrop_calc: "calc(100% - 4rem)",
         "4.5rem": "4.5rem",
         "5.375rem": "5.375rem",
+
         "116rem": "116rem",
         "80rem": "80rem,",
       },
@@ -48,7 +49,8 @@ module.exports = {
         "60rem": "60rem",
         "55.62rem": "55.62rem",
         "50rem": "50rem",
-        "45.625rem" : "45.625rem"
+        "45.625rem" : "45.625rem",
+        "36.5rem" : "36.5rem",
       },
 
       gridTemplateColumns: {
@@ -124,6 +126,14 @@ module.exports = {
 
         state_pending_back: "#FFF0E2",
         state_pending_text: "#E7AB74",
+        state_enable_bg: "#befee0",
+        state_enable_bg_check: "#4ea474",
+        state_enable_bg_check_text: "#5aa984",
+
+        state_disable_bg : "#e8e8e8 ",
+        state_disable_bg_check : "#c9c9c9",
+        state_disable_bg_test : "#e5e5e5",
+        
         action_btn_border: "#EDEDED",
         action_btn_text: "#8C8C8C",
         table_crieria_text: "#8f979d",

@@ -24,7 +24,7 @@
 
 /* 스크롤바 호버 */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #f0eded;
 }
 
 

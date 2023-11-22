@@ -9,6 +9,8 @@ import adminRouter from "./routers/admin";
 import marketRouter from "./routers/market";
 import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
+import path from "path";
+
 
 const app: Express = express();
 
@@ -35,6 +37,11 @@ app.use("/admin", adminRouter);
 app.use("/market", marketRouter);
 app.use("/order", orderRouter);
 app.use("/main", mainRouter);
+
+
+// 이미지 가져오기 위한 임시 테스트 by DJ ✅✅✅
+app.use('/imgs', express.static(  path.join(__dirname , '/imgs')  ));
+
 
 app.listen(8080, () => {
   console.log("server on");

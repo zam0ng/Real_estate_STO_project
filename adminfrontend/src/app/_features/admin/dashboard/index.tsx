@@ -14,3 +14,12 @@
         _placeholder : string;
         _step? : string 
     }
+
+ 
+// 
+    export interface RenderItemProps {
+        title : string
+        desc : string | number | undefined | null
+    }
+
+    

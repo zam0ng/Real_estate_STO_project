@@ -30,7 +30,7 @@ import {
   NoticesListData,
 } from "@/app/_features/admin/main";
 
-export default async function AdminMain({ searchParams }: SearchParamsProps) {
+export default async function AdminMain( { searchParams }: SearchParamsProps) {
   // const voteListData: VoteProps[] = await getVoteList();
   // console.log("voteListData", voteListData);
 
