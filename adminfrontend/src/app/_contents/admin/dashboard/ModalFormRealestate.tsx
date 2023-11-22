@@ -32,43 +32,44 @@ export default function ModalFormRealestate () {
   const handleCreateEstate = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const form = e.target as HTMLFormElement;
+    // const form = e.target as HTMLFormElement;
+    
+    // if (uploadFile) {
+    //   formData.append("upload", uploadFile);
+    //   console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
+    // }
 
-    if (uploadFile) {
-      formData.append("img", uploadFile);
-      console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
-    }
+    // const keyList = [
+    //   "name",
+    //   "address",
+    //   "totalprice",
+    //   "totalsupply",
+    //   "description",
+    //   "start_date",
+    //   "end_date",
+    //   "result_date",
+    //   "building_date",
+    //   "trading_start_date",
+    //   "order_amount",
+    //   "offering_price",
+    //   "status",
+    //   "floors",
+    //   "purpose",
+    //   "area",
+    //   "all_area",
+    //   "build_area",
+    //   "floor_area",
+    //   "completion",
+    //   "stock_type",
+    //   "stock_type",
+    //   "publisher",
+    // ];
 
-    const keyList = [
-      "address",
-      "totalprice",
-      "description",
-      "start_date",
-      "end_date",
-      "result_date",
-      "building_date",
-      "trading_start_date",
-      "order_amount",
-      "offering_price",
-      "status",
-      "floors",
-      "purpose",
-      "area",
-      "all_area",
-      "build_area",
-      "floor_area",
-      "completion",
-      "stock_type",
-      "stock_type",
-      "publisher",
-    ];
+    // keyList.forEach((item) => {
+    //   const value = form[item].value; // ex) form.address.value 인데, 배열에서 꺼내기 때문에 form[item].value
 
-    keyList.forEach((item) => {
-      const value = form[item].value; // ex) form.address.value 인데, 배열에서 꺼내기 때문에 form[item].value
-
-      formData.append(`${item}`, value);
-      console.log("item : value" , item, value)
-    });
+    //   formData.append(`${item}`, value);
+    // });
 
     // ✅ 파일 전송 완료 확인 하고 -> forEach 확인하고 -> 지울 것 
     // formData.append("address", form.address.value);
@@ -94,16 +95,23 @@ export default function ModalFormRealestate () {
     // formData.append("stock_type", form.stock_type.value);
     // formData.append("publisher", form.publisher.value);
 
-    await fetch(process.env.NEXT_PUBLIC_API_URL + "admin/subscription_submit", {
+    await fetch("http://localhost:8080/admin/subscription_submit", {
       method: "POST",
       body: formData,
     })
-      .then((res) => res.json())
+      // .then((res) => res.json())
       .then((result) => {
         console.log("result", result);
 
-        router.refresh();
-        router.replace(`http://localhost:3000/admin/main`); // 방금 쓴 글을 확인하기 위한 리디렉션
+        if(result.status == 201){
+          
+          router.refresh();
+          router.replace(`http://localhost:3000/admin/real_estates`); // 방금 쓴 글을 확인하기 위한 리디렉션
+          
+        }
+        else{
+          // 오류 처리
+        }
       });
   };
 
@@ -118,13 +126,14 @@ export default function ModalFormRealestate () {
           <label> img </label>
           <input
             type="file"
-            name="img"
+            name="upload"
             placeholder="ex) img"
             onChange={handleUploadFile}
+            multiple // 🔥
           />
         </p>
 
-        {/* <p>
+        <p>
           <label> name </label>
           <input type="text" name="name" placeholder="ex) 문래공차" />
         </p>
@@ -191,12 +200,12 @@ export default function ModalFormRealestate () {
         </p>
         <p>
           <label> offering_price </label>
-          <input type="text" name="offering_price" placeholder="ex) 5000" />
+          <input type="number" name="offering_price" placeholder="ex) 5000" />
         </p>
 
         <p>
           <label> status </label>
-          <input type="text" name="status" placeholder="ex) pading" />
+          <input type="text" name="status" placeholder="ex) pending" />
         </p>
 
         <p>
@@ -216,21 +225,22 @@ export default function ModalFormRealestate () {
             placeholder="ex) 근린생활시설"
           />
         </p>
+        {/* step = '0.1' 소수점 1개짜리 가능 */}
         <p>
           <label> area </label>
-          <input type="number" name="area" placeholder="ex) 1322.3" />
+          <input type="number" name="area" placeholder="ex) 1322.3" step='0.1'/>
         </p>
         <p>
           <label> all_area </label>
-          <input type="text" name="all_area" placeholder="ex) 7068.8" />
+          <input type="number" name="all_area" placeholder="ex) 7068.8" step='0.1'/>
         </p>
         <p>
           <label> build_area </label>
-          <input type="text" name="build_area" placeholder="ex) 57.6" />
+          <input type="number" name="build_area" placeholder="ex) 57.6" step='0.1'/>
         </p>
         <p>
           <label> floor_area </label>
-          <input type="text" name="floor_area" placeholder="ex) 399.6" />
+          <input type="number" name="floor_area" placeholder="ex) 399.6" step='0.1'/>
         </p>
         <p>
           <label> completion </label>
@@ -248,13 +258,10 @@ export default function ModalFormRealestate () {
             placeholder="ex) 한국투자부동산신탁"
           />
         </p>
-        */}
-
         <p>
           <input type="submit" value="건물 정보 등록" />
         </p>
       </form>
-
 
         <Link href={"/admin/dashboard"} > ❎ </Link>
 

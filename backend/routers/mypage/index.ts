@@ -3,6 +3,7 @@ import {
   depositBalance,
   withDrawal,
   userInfo,
+  myBalance,
   totalDeposit,
   totalDrawal,
   // transactionList,
@@ -13,7 +14,11 @@ import {
   subscriptionList,
 } from "../../controllers/mypage";
 
+import { isLogin } from "../../middleware/isLogin";
+
 const router = Router();
+
+router.post("/", isLogin);
 
 router.post("/deposit_balance", depositBalance);
 router.post("/withdrawal", withDrawal);

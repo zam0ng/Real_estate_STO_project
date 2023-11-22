@@ -23,6 +23,8 @@ import {
   dividendSubmit,
 } from "../../controllers/admin";
 
+import { Upload } from '../../middleware/imgUpload';
+
 const router: Router = express.Router();
 
 /////////////////////////////////////////////////////
@@ -63,7 +65,7 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 // router.get("/real_estates_trade_list", realEstateTradeList);
 
 // 재영 어드민 부분
-router.post("/subscription_submit", realEstateSubmit);
-router.post("/notice_submit", noticeSubmit);
-router.post("/dividend_submit", dividendSubmit);
+router.post('/subscription_submit',Upload.array("upload"),realEstateSubmit);
+router.post('/notice_submit',noticeSubmit);
+router.post('/dividend_submit',dividendSubmit);
 export default router;

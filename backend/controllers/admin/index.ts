@@ -573,68 +573,59 @@ export const realEstateDetail = async (req: Request, res: Response) => {
 };
 
 // 재영 어드민 부분
-export const realEstateSubmit = async (req: Request, res: Response) => {
+const imgPathArr = new Array(5).fill("");
+export const realEstateSubmit = async (req: Request , res : Response) =>{
+  console.log("realEstateSubmit 들어오니?");
   // console.log("test",req.body);
+  // console.log(req.files);
+  
+  // ⭐ ts에서 length를 사용하려면 아래 구문이 필요함 있는지 && 배열형태인지 ⭐
+  if (req.files && Array.isArray(req.files)) {
+    for (let index = 0; index < req.files.length; index++) {
+      imgPathArr[index] = req.files[index].path;
+    }
+  }
+  console.log("++++++++",req.body);
 
-  const {
-    img,
-    name,
-    address,
-    totalprice,
-    totalsupply,
-    description,
-    start_date,
-    end_date,
-    result_date,
-    building_date,
-    trading_start_date,
-    order_amount,
-    offering_price,
-    status,
-    floors,
-    purpose,
-    mainpurpose,
-    area,
-    allarea,
-    buildarea,
-    floorarea,
-    completion,
-    stock_type,
-    publisher,
-  } = req.body;
+  const{ name,address,totalprice,totalsupply,description,
+          start_date,end_date,result_date,building_date,trading_start_date,
+          order_amount,offering_price,status,floors,purpose,mainpurpose,area,
+          all_area,build_area,floor_area,completion,stock_type,publisher
+      } = req.body;
 
   try {
-    const result = await Subscriptions.create({
-      subscription_img_1: img,
-      subscription_img_2: img,
-      subscription_img_3: img,
-      subscription_img_4: img,
-      subscription_img_5: img,
-      subscription_name: name,
-      subscription_address: address,
-      subscription_totalprice: totalprice,
-      subscription_totalsupply: totalsupply,
-      subscription_description: description,
-      subscription_start_date: start_date,
-      subscription_end_date: end_date,
-      subscription_result_date: result_date,
-      subscription_building_date: building_date,
-      subscription_trading_start_date: trading_start_date,
-      subscription_order_amount: order_amount,
-      subscription_offering_price: offering_price,
-      subscription_status: status,
-      floors: floors,
-      purpose: purpose,
-      main_purpose: mainpurpose,
-      area: area,
-      all_area: allarea,
-      build_area: buildarea,
-      floor_area: floorarea,
-      completion: completion,
-      stock_type: stock_type,
-      publisher: publisher,
-    });
-    res.sendStatus(201);
+      const result = await Subscriptions.create({
+          subscription_img_1: imgPathArr[0],
+          subscription_img_2: imgPathArr[1],
+          subscription_img_3: imgPathArr[2],
+          subscription_img_4: imgPathArr[3],
+          subscription_img_5 : imgPathArr[4],
+          subscription_name : name,
+          subscription_address: address,
+          subscription_totalprice : totalprice,
+          subscription_totalsupply : totalsupply,
+          subscription_description : description,
+          subscription_start_date : start_date,
+          subscription_end_date : end_date,
+          subscription_result_date : result_date,
+          subscription_building_date : building_date,
+          subscription_trading_start_date : trading_start_date,
+          subscription_order_amount : order_amount,
+          subscription_offering_price : offering_price,
+          subscription_status : status,
+          floors : floors,
+          purpose : purpose,
+          main_purpose : mainpurpose,
+          area : area,
+          all_area : all_area,
+          build_area : build_area,
+          floor_area : floor_area,
+          completion : completion,
+          stock_type : stock_type,
+          publisher : publisher,
+      })
+      res.sendStatus(201);
+
   } catch (error) {
     console.log(error);
     res.sendStatus(400);

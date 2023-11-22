@@ -3,16 +3,20 @@ import OrderInfo from '../priceChart/OrderInfo';
 import BuySellTabInfo from '../buySell/BuySellTabInfo';
 import HistoryTabInfo from '../history/HistoryTabInfo';
 
-const DealMain: React.FC = () => {
+interface socketProps {
+    isSocket: any;
+}
+
+const DealMain: React.FC<socketProps> = ({isSocket}) => {
 
     return (
         <div className='w-full h-5/6 flex flex-col'>
             <div className='w-full h-[5%] flex justify-center items-center border-b border-dashed border-black'>주문</div>
             <div className='w-full h-[95%] flex flex-row'>
-                <OrderInfo />
+                <OrderInfo isSocket = {isSocket}/>
                 <div className='w-2/5 h-full flex flex-col'>
-                    <BuySellTabInfo />
-                    <HistoryTabInfo />
+                    <BuySellTabInfo isSocket = {isSocket} />
+                    <HistoryTabInfo isSocket = {isSocket}/>
                 </div>
             </div>
         </div>

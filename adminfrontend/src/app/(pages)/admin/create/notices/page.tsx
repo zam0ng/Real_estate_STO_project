@@ -19,7 +19,7 @@ export default function AdminCreateNotices() {
     const form = e.target as HTMLFormElement
 
     // form 태그에서 필요한 정보 가져오기
-    const title = form.title.value; // 투표 안건 제목
+    // const title = form.title.value; // 투표 안건 제목
     
     const description = form.description.value; // 투표 안건 설명 
     /* ✅ 추가 필요한 정보 
@@ -35,7 +35,7 @@ export default function AdminCreateNotices() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title, 
+        // title, 
         description
       }),
     };

@@ -35,7 +35,7 @@ class Users extends Model<UserAttributes> {
         },
         balance: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          defaultValue: 0,
         },
         using_balance: {
           type: DataTypes.INTEGER,
