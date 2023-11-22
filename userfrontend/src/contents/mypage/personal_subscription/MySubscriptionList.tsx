@@ -5,6 +5,9 @@ const MySubscriptionList: React.FC = () => {
   return (
     <div className='w-full h-full'>
       <MySubscriptionListItem />
+      <MySubscriptionListItem />
+      <MySubscriptionListItem />
+      <MySubscriptionListItem />
     </div>
   )
 }

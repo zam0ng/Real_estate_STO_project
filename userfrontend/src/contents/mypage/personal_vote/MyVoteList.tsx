@@ -3,7 +3,10 @@ import MyVoteListItem from './MyVoteListItem';
 
 const MyVoteList: React.FC = () => {
   return (
-    <div className='w-full h-[70%] overflow-y-scroll'>
+    <div className='w-full h-[65%] overflow-y-scroll'>
+      <MyVoteListItem />
+      <MyVoteListItem />
+      <MyVoteListItem />
       <MyVoteListItem />
     </div>
   )
