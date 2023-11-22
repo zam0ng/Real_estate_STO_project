@@ -24,7 +24,7 @@ const Deal: React.FC = () => {
   return (
     <div className='deal w-screen h-screen overflow-hidden flex flex-col justify-center box-border'>
       <div className='w-full h-full'>
-        <DealHeader />
+        <DealHeader isSocket = {isSocket}/>
         <DealMain isSocket = {isSocket}/>
       </div>
     </div>

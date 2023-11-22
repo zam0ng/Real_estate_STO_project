@@ -28,7 +28,7 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promi
 const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     // const {socket} = useContext(GlobalContext);
-    console.log(isSocket);
+    // console.log(isSocket);
 
     const currentPage = useLocation();
     // console.log(currentPage.state);
@@ -90,6 +90,7 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
+                queryClient.refetchQueries({queryKey:["headerInfo"]});
                 isSocket.emit("purchase_completed")
             },
             onError: (error) => {

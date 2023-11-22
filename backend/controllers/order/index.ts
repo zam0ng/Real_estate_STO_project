@@ -95,7 +95,7 @@ export const orderSell = async (req: Request, res: Response) => {
             },
             order: [
               ["order_price", "DESC"],
-              ["createdAt", "ASC"],
+              ["createdAt", "DESC"],
             ],
             raw: true,
           });
@@ -1063,20 +1063,20 @@ export const orderBuy = async (req: Request, res: Response) => {
           // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
           // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
           const lastTradePrice: { trade_price: number }[] | null =
-            (await Trades.findAll({
+            await Trades.findAll({
               where: {
                 real_estate_name: name,
               },
 
               attributes: ["trade_price"],
 
-              order: [["createdAt", "ASC"]],
+              order: [["createdAt", "DESC"]],
 
               limit: 1,
               raw: true,
-            })) as { trade_price: number }[] | null;
+            }) as { trade_price: number }[] | null;
 
-          console.log(lastTradePrice?.[0]?.trade_price);
+          console.log("lastprice++",lastTradePrice?.[0]?.trade_price);
 
           await Real_estates.update(
             {
@@ -1159,7 +1159,7 @@ export const orderMain = async (req: Request, res: Response) => {
       attributes: [
         "order_price",
         [
-          sequelize.fn("SUM", sequelize.col("order_amount")),
+          sequelize.fn("SUM", sequelize.col("possible_amount")),
           "total_order_amount",
         ],
       ],
@@ -1394,3 +1394,25 @@ export const cancelOrder = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+export const headerInfo = async (req : Request , res : Response) =>{
+  const {name} = req.params;
+  
+  try {
+    const result = await Real_estates.findOne({
+      attributes : [
+        'current_price',
+        [sequelize.literal('((current_price*100)/start_price)-100'),'fluctuation_rate'],
+        [sequelize.literal('current_price-start_price'),'rating'],
+      ],
+      where : {
+        real_estate_name : name,
+      },
+      raw : true,
+    }) 
+    // console.log(result);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+  }
+}

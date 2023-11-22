@@ -84,6 +84,8 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
+                queryClient.refetchQueries({queryKey:["headerInfo"]});
+
                 isSocket.emit('sale_completed')
             },
             onError: (error)=>{
