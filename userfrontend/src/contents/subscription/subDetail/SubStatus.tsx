@@ -15,22 +15,26 @@ export default function SubStatus({detail} : SubStatusType){
         { number: 4, title: "거래 시작 ", date: detail.subscription_trading_start_date },
     ]
 
+    function formatCurrency(amount :number) {
+        return `${amount.toLocaleString('ko-KR')}`;
+    }
+
     return(
         <>
-            <div className=" w-5/6 h-24 m-auto rounded-xl bg-slate-100">
+            <div className=" w-5/6 h-24 m-auto rounded-xl ">
                 <div className="w-full h-16 border border-black">
-                    <div className="grid grid-cols-2 h-full ">
+                    <div className="grid grid-cols-3 h-full ">
                         <div className="">
-                            <div className=" border border-black h-full pt-2">
+                            <div className=" border border-black h-full pt-2 pl-5">
                                 <div className="text-xs text-gray-500">청약 모집률</div>
-                                <div className="font-bold text-2xl">38%</div>
+                                <div className="font-bold text-2xl ">{detail.subscription_order_amount/ detail.subscription_totalsupply * 100}%</div>
                             </div>
                         </div>
-                        <div className="text-xs">마감까지 17억 3500만원 남음</div>
+                        <div className="text-xs col-span-2 text-center pt-8"><span className="bg-gray-200 text-blue-400 rounded-sm px-2 py-1 font-bold">{`마감까지 ${formatCurrency(5000 *(detail.subscription_totalsupply-detail.subscription_order_amount))}원 남음👏`}</span></div>
                     </div>
                 </div>
-                <div className="w-faull h-8 border border-black">
-                    <ProgressBar percent={38} />
+                <div className=" ">
+                    <ProgressBar percent={detail.subscription_order_amount/ detail.subscription_totalsupply * 100} />
                 </div>
             </div>
             <div className="w-5/6 min-h-[25rem] m-auto rounded-xl bg-slate-100 mt-3 border border-black">
