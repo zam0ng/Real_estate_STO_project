@@ -212,12 +212,12 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
 // 내 잔액 가져오기
 export const getBalance = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.body;
     // const user_email = req.query.user_email as string;
 
     const result = await db.Users.findOne({
       attributes: ["using_balance"],
-      where: { user_email: userEmail },
+      where: { user_email: user_email },
       raw: true,
     });
 

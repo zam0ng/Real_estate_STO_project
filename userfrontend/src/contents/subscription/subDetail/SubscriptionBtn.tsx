@@ -38,7 +38,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
         queryFn: fetchData
     });
 
-    console.log(dataSubDetail);
 
 
 
@@ -52,21 +51,25 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
 
         const fetchId = async()=>{
-            const { data } = await axios.get(`/subscription/get_balance`,{
-                    headers : {
-                        'token': `${accessToken}`
-                    }
+            const {data}= await axios.post(`/subscription/get_balance`,{
+                   
+                        token: accessToken
+                    
             })
+            return data;
+            
         }
 
         const {
             isLoading: isLoadingUserId,
             error: errorUserId,
-            data: dataUserId= { data : 0}
+            data: dataUserId,
         } = useQuery({
-            queryKey: ['UserID', buildingId],
+            queryKey: ['UserID'],
             queryFn: fetchId
         });
+
+        console.log( dataUserId);
 
 
 
@@ -121,9 +124,9 @@ export default function SubscriptionBtn({props} : subdetailtype){
         ? 
          <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl ">
             <RiArrowDropDownLine  className="mt-4 ml-4 w-6 h-6 m-auto" onClick={()=>setIsCookie(false)}/>
-            <div className="text-right  h-6 mb-5 pr-8 text-sm">
+            <div className="w-5/6  m-auto text-right  h-6 mb-5 text-sm">
                 <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
-                잔고 : {dataUserId.data}
+                잔고 : {dataUserId}
                 </span>
             </div>
             <div className=" text-right h-14 w-5/6 m-auto flex justify-between mb-5">
@@ -149,11 +152,11 @@ export default function SubscriptionBtn({props} : subdetailtype){
             </div>
             <div className="w-5/6 m-auto h-9 font-extrabold flex justify-between">
                 <div>구매수량</div>
-                <div className="w-10">{dataUserId.data}</div>
+                <div className="w-10">{dataUserId}</div>
             </div>
             <div className="w-5/6 m-auto h-9 border-t-2 border-black font-extrabold flex justify-between pt-3">
                 <div className="text-blue-500">총 청약 금액</div>
-                <div className="w-10 text-blue-500">{(dataUserId.data) * 5000 }</div>
+                <div className="w-10 text-blue-500">{(dataUserId) * 5000 }</div>
             </div>
             <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
                 onClick={handleOrder}
