@@ -417,6 +417,158 @@ export const tradeMonthList = async (req: Request, res: Response) => {
   }
 };
 
+
+// 매물 관리 페이지 (매물 관련 전체 데이터 넘겨주기)
+export const realEstateManagement = async (req: Request, res: Response) => {
+  try {
+    const result = await db.Subscriptions.findAll({
+      attributes: [
+        "id",
+        "subscription_img_1",
+        "subscription_name",
+        "subscription_description",
+        "subscription_status",
+        [
+          db.sequelize.literal(
+            "((subscription_order_amount / subscription_totalsupply) * 100) - 100"
+          ),
+          "achievement_rate",
+        ],
+        "subscription_totalprice",
+        [
+          db.sequelize.literal(
+            "subscription_offering_price * subscription_order_amount"
+          ),
+          "contest_totalprice",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_start_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_end_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_end_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_result_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_result_date",
+        ],
+      ],
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+// 매물 관리 상세 페이지
+export const realEstateDetail = async (req: Request, res: Response) => {
+  try {
+    const real_estate_id = req.params.id as string;
+
+    const result = await db.Subscriptions.findOne({
+      attributes: [
+        "id",
+        "subscription_img_1",
+        "subscription_img_2",
+        "subscription_img_3",
+        "subscription_img_4",
+        "subscription_img_5",
+        "subscription_name",
+        "subscription_address",
+        "subscription_totalprice",
+        "subscription_totalsupply",
+        "subscription_description",
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_start_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_end_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_end_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_result_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_result_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_building_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_building_date",
+        ],
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("subscription_trading_start_date"),
+            "YYYY-MM-DD"
+          ),
+          "subscription_trading_start_date",
+        ],
+        "subscription_order_amount",
+        "subscription_offering_price",
+        "subscription_status",
+        "floors",
+        "purpose",
+        "main_purpose",
+        "area",
+        "all_area",
+        "build_area",
+        "floor_area",
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.col("completion"),
+            "YYYY-MM-DD"
+          ),
+          "completion",
+        ],
+        "stock_type",
+        "publisher",
+      ],
+      where: { id: real_estate_id },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+
+
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request , res : Response) =>{

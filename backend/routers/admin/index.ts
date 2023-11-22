@@ -8,6 +8,8 @@ import {
   tradeDayList,
   tradeWeekList,
   tradeMonthList,
+  realEstateManagement,
+  realEstateDetail,
   subscription, // DJ 임시 테스트 ✅✅✅
   subscriptionDetail, // DJ 임시 테스트 ✅✅✅
   // subscriptionsList,
@@ -27,7 +29,9 @@ import { Upload } from '../../middleware/imgUpload';
 
 const router: Router = express.Router();
 
-// router.post("/subscription_submit", realEstateSubmit); ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
+// router.post("/subscription_submit", realEstateSubmit); 
+  // ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
+  // [231122] 아마도 삭제가 된 듯? 
 
 /////////////////////////////////////////////////////
 // 매물 전체 정보
@@ -46,6 +50,10 @@ router.get("/trade_day_list", tradeDayList);
 router.get("/trade_week_list", tradeWeekList);
 // 매물별 거래량 차트 (월)
 router.get("/trade_month_list", tradeMonthList);
+// 매물 관리 페이지
+router.get("/management/real_estates_list", realEstateManagement);
+// 매물 관리 페이지 상세
+router.get("/management/real_estates_detail/:id", realEstateDetail);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////
@@ -70,8 +78,8 @@ router.post('/dividend_submit',dividendSubmit);
 
 
  // DJ 임시 테스트 ✅✅✅✅✅✅
-router.get('/subscription' , subscription)
-router.get('/subscription/detail/:id' , subscriptionDetail)
+// router.get('/subscription' , subscription) => [정현이가 추가한 버전] router.get("/management/real_estates_list", realEstateManagement); 로 변경
+// router.get('/subscription/detail/:id' , subscriptionDetail) => [정현이가 추가한 버전]  router.get("/management/real_estates_detail/:id", realEstateDetail); 로 변경
 
 
 export default router;

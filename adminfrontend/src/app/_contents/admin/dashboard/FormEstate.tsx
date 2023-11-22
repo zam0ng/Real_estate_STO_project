@@ -6,7 +6,7 @@ import BtnCreate from "@/app/_components/_ui/BtnCreate";
 import MessageBoxInfo from "@/app/_components/_ui/MessageBoxInfo";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
-import { postEstateData } from "@/app/_api/_archive/postEstateData.sample";
+// import { postEstateData } from "@/app/_api/_archive/postEstateData.sample";
 import { useRouter } from "next/navigation";
 import InputFormItem from "./InputFormItem";
 import { Console } from "console";

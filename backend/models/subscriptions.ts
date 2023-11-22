@@ -11,7 +11,11 @@ export enum status_enum {
 
 interface SubscriptionsAttribute {
   id?: number;
-  subscription_img: string;
+  subscription_img_1: string;
+  subscription_img_2: string;
+  subscription_img_3: string;
+  subscription_img_4: string;
+  subscription_img_5: string;
   subscription_name: string;
   subscription_address: string;
   subscription_totalprice: bigint;
@@ -38,6 +42,17 @@ interface SubscriptionsAttribute {
 }
 
 class Subscriptions extends Model<SubscriptionsAttribute> {
+  declare subscription_img_1: string;
+  declare subscription_img_2: string;
+  declare subscription_img_3: string;
+  declare subscription_img_4: string;
+  declare subscription_img_5: string;
+  declare subscription_start_date: Date;
+  declare subscription_end_date: Date;
+  declare subscription_result_date: Date;
+  declare subscription_building_date: Date;
+  declare subscription_trading_start_date: Date;
+  declare completion: Date;
   static initModel(sequelize: Sequelize): typeof Subscriptions {
     Subscriptions.init(
       {
@@ -46,9 +61,20 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           primaryKey: true,
           autoIncrement: true,
         },
-        subscription_img: {
+        subscription_img_1: {
           type: DataTypes.STRING,
-          allowNull: false,
+        },
+        subscription_img_2: {
+          type: DataTypes.STRING,
+        },
+        subscription_img_3: {
+          type: DataTypes.STRING,
+        },
+        subscription_img_4: {
+          type: DataTypes.STRING,
+        },
+        subscription_img_5: {
+          type: DataTypes.STRING,
         },
         subscription_name: {
           type: DataTypes.STRING,

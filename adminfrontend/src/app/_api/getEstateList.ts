@@ -1,16 +1,24 @@
+
+
 export const getEstateList = async () => {
 
-    // 임시 주소
-    const res = await fetch(`http://localhost:8080/admin/subscription`, {
-    cache: "no-store",
-    })
+    // path 
+        // 기존 DJ 테스트 주소 : http://localhost:8080/admin/subscription
+        // 변경 주소 : /admin/management/real_estates_list
 
-    if(!res.ok) {
-        throw new Error('Failed to fetch data')
+    const path = `admin/management/real_estates_list`;
+    const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
+    const url = `${domain}${path}`
+
+    try {
+        const res = await fetch(`${url}`, {
+        cache: "no-store",
+        })
+
+        return res.json()
+        
+    } catch (error) {
+        console.log(error)
     }
-
-    console.log("res🚀🚀" , res)
-
-    return res.json()
 
 };
