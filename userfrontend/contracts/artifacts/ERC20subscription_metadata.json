@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.23+commit.f704f362"
+		"version": "0.8.20+commit.a1b79de6"
 	},
 	"language": "Solidity",
 	"output": {
@@ -226,6 +226,37 @@
 					}
 				],
 				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "value",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
+					}
+				],
+				"name": "TransferWithSymbol",
 				"type": "event"
 			},
 			{
@@ -640,11 +671,11 @@
 	},
 	"sources": {
 		"contracts/ERC20subscription.sol": {
-			"keccak256": "0xfd6f75889c08f71e87574f7b4c356c4489afbbb6170d89f361dc30c139daea77",
+			"keccak256": "0xd63ddf198f915a33026102d4bf18bebbd0b2106197757733ccd0dd279dee76e8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9d03e186cf6bb204cb832c1834a0aa597d78f8bf2b06ee73a76ec3b37704466d",
-				"dweb:/ipfs/QmcN4DwLeJVTNdZFprZQs9K25cqA2wzsUsv6zioDpQsnc8"
+				"bzz-raw://6b5c8611dd4ef74eb20aeaa2a3886653db00fae0d6363b814a2990a4a88a611c",
+				"dweb:/ipfs/QmcT73LxHmdrVLk17SuJZzcifpkydJ9Ki1AVyvkfWMM8Vt"
 			]
 		},
 		"node_modules/@openzeppelin/contracts/access/Ownable.sol": {

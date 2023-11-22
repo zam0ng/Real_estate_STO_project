@@ -10,6 +10,7 @@ contract ERC20subscription is ERC20, Ownable {
     uint256 private _lockTime;
     uint256 public _adminLockTime;
     string private _documentURI;
+    string private _tokenSymbol;
 
     modifier lockTimeCheck() {
         if (msg.sender == owner()) {
@@ -37,6 +38,7 @@ contract ERC20subscription is ERC20, Ownable {
             subscribers.length == amounts.length,
             "subscribers and their amounts do not match"
         );
+        _tokenSymbol = _symbol;
         _totalSupply = __totalSupply;
         _lockTime = block.timestamp + __lockTime;
         _documentURI = __documentURI;
@@ -54,6 +56,13 @@ contract ERC20subscription is ERC20, Ownable {
         }
     }
 
+    event TransferWithSymbol(
+        address from,
+        address to,
+        uint256 value,
+        string symbol
+    );
+
     function decimals() public pure override returns (uint8) {
         return 0;
     }
@@ -67,6 +76,8 @@ contract ERC20subscription is ERC20, Ownable {
             newTotalBalance < (20 * totalSupply()) / 100,
             "Ownership capped at 20% to ensure decentralization"
         );
+
+        emit TransferWithSymbol(msg.sender, to, amount, _tokenSymbol);
 
         return super.transfer(to, amount);
     }

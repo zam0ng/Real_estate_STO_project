@@ -1,10 +1,8 @@
-require('dotenv').config();
-const HDWalletProvider = require('@truffle/hdwallet-provider');
+require("dotenv").config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
 const { INFURA_API_KEY, MNEMONIC } = process.env;
 
-
 module.exports = {
-
   networks: {
     development: {
       host: "127.0.0.1",
@@ -16,6 +14,12 @@ module.exports = {
       network_id: "11155111",
       gas: 4465030,
     },
+    BNC: {
+      provider: () =>
+        new HDWalletProvider(MNEMONIC, "https://network.bouncecode.net"),
+      network_id: "18328",
+      gas: 29999999,
+    },
   },
 
   // Set default mocha options here, use special reporters, etc.
@@ -26,7 +30,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.20",      // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.8.20", // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       // settings: {          // See the solidity docs for advice about optimization and evmVersion
       //  optimizer: {
@@ -35,7 +39,7 @@ module.exports = {
       //  },
       //  evmVersion: "byzantium"
       // }
-    }
+    },
   },
 
   // Truffle DB is currently disabled by default; to enable it, change enabled:

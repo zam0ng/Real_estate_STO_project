@@ -22,7 +22,7 @@ import Web3 from "web3";
 import abi from "./abi/ERC20subscription.json";
 
 function App() {
-  const [web3, setWeb3] = useState(new Web3("https://127.0.0.1:7545"));
+  const [web3, setWeb3] = useState(new Web3("https://network.bouncecode.net"));
   const [ERC20Contract, setERC20Contract] = useState<any>();
 
   let queryClient = new QueryClient();
@@ -32,21 +32,47 @@ function App() {
       if (ERC20Contract) return;
       const ERC20 = new web3.eth.Contract(
         abi,
-        "0x62C0F9b732F7cdBa02d46cE955479F9f7b0136e9",
+        "0xAB3D0B67Eb5255971EBB3B2Ef3047939C39882B8",
         { data: "" }
       );
 
-      setInterval(() => {
-        web3.eth.getBlockNumber().then((latestBlockNumber) => {
-          console.log("Latest Block Number:", latestBlockNumber);
-
-          web3.eth.getBlock(latestBlockNumber).then((block: any) => {
-            console.log("Block Details:", block);
-            console.log(block.hash);
-            web3.eth.getTransactionReceipt(block.hash).then(console.log);
-          });
+      const result = async () => {
+        await ERC20.deploy({ data: "" }).send({
+          from: "0xFeB2F0F4537bc7CE81A7244520b238950fC846f2",
+          gas: "3000000",
         });
-      }, 5000);
+      };
+      result();
+
+      const logLatestBlockEvents = async () => {
+        try {
+          const latestBlock: any = await web3.eth.getBlock("latest", true);
+
+          if (latestBlock.transactions) {
+            console.log(`Checking latest block.transactions`);
+            console.log(latestBlock);
+            console.log(latestBlock.transactions);
+
+            for (const tx of latestBlock.transactions) {
+              const receipt = await web3.eth.getTransactionReceipt(
+                tx.hash || tx
+              );
+              const value = await web3.utils.fromWei(tx.value, "ether");
+              console.log("receipt");
+              console.log(receipt);
+              console.log("blockNumber : ", tx.blockNumber);
+              console.log("from : ", tx.from);
+              console.log("to : ", tx.to);
+              console.log("value : ", value);
+              console.log("logs : ", tx.logs);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching latest block events:", error);
+        }
+      };
+
+      setInterval(logLatestBlockEvents, 5000);
 
       setERC20Contract(ERC20);
     }

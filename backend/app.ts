@@ -52,7 +52,8 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 
 // web3 테스트
-const rpcEndpoint = "https://network.bouncecode.net";
+// const rpcEndpoint = "https://network.bouncecode.net";
+const rpcEndpoint = "http://localhost:8545";
 
 const web3 = new Web3(rpcEndpoint);
 
