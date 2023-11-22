@@ -18,7 +18,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
     let { buildingId } = useParams();
     const [userBalance,setUserBalance] = useState(0);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [orderConfirm,setOrderConfirm] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -69,7 +69,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
             queryFn: fetchId
         });
 
-        console.log( dataUserId);
 
 
 
@@ -87,21 +86,37 @@ export default function SubscriptionBtn({props} : subdetailtype){
         }
     }
 
-    function handleQuantity(num : number){
+    function handleQuantityBtn(num : number){
         setQuantity((prev)=>{
+            
             const newQuantity = prev + num;
+            if(dataUserId < 5000){
+                setQuantity(0);
+            }
 
             if (newQuantity < 1) return 0;
             if (newQuantity > dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount) {
               return dataSubDetail[0].subscription_totalsupply - dataSubDetail[0].subscription_order_amount;
             }
-            if (newQuantity > Math.floor( dataUserId?.data / 5000 )){
-                return Math.floor( dataUserId?.data / 5000 )
+            if (newQuantity > Math.floor( dataUserId / 5000 )){
+                return Math.floor( dataUserId / 5000 )
             }
             return newQuantity;
 
         })
     }
+
+        function handleQuantityInput(num : number){
+            if(num < 1){
+                setQuantity(1)
+            }
+            else if(num > Math.floor( dataUserId / 5000 )){
+
+                setQuantity(Math.floor(dataUserId / 5000));
+            }else{
+                setQuantity(num)
+            }
+        }
 
     function handleOrder(){
         setOrderConfirm(true);
@@ -113,12 +128,19 @@ export default function SubscriptionBtn({props} : subdetailtype){
         if (isCookie) {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
-      }, [isCookie]);
+    }, [isCookie]);
+
+    function formatCurrency(amount :number) {
+        return `${amount.toLocaleString('ko-KR')}`;
+    }
+
+
+
 
 
     return(
         <>
-        {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} />: null}
+        {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} quantity={quantity} />: null}
         
         {isCookie 
         ? 
@@ -127,20 +149,21 @@ export default function SubscriptionBtn({props} : subdetailtype){
             <div className="w-5/6  m-auto text-right  h-6 mb-5 text-sm">
                 <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
                 잔고 : {dataUserId}
+                <span className="ml-1"></span>
                 </span>
             </div>
             <div className=" text-right h-14 w-5/6 m-auto flex justify-between mb-5">
                 <div>
-                    <input className=" w-8 mt-3 font-extrabold text-center" value={1}></input><span className="text-xs">주</span>
+                    <input type="number" className=" w-8 mt-3 font-extrabold text-center" placeholder="0" value={quantity} onChange={(event)=>handleQuantityInput(parseInt(event?.target.value))}></input><span className="text-xs">주</span>
                 </div>
                 <div className="w-28  ">
                     <div className="inline-block border border-gray-200 w-12 h-12 text-center text-gray-400 hover:text-blue-400 ">
-                        <button className="h-full " onClick={()=>handleQuantity(-1)} >
+                        <button className="h-full " onClick={()=>handleQuantityBtn(-1)} >
                         <FaMinus className=" " />
                         </button>
                     </div>
                     <div className="inline-block border border-gray-200 w-12 h-12 text-center text-gray-400 hover:text-blue-400">
-                        <button className="h-full " onClick={()=>handleQuantity(+1)}>
+                        <button className="h-full " onClick={()=>handleQuantityBtn(+1)}>
                         <FaPlus className=""/>
                         </button>
                     </div>
@@ -152,21 +175,23 @@ export default function SubscriptionBtn({props} : subdetailtype){
             </div>
             <div className="w-5/6 m-auto h-9 font-extrabold flex justify-between">
                 <div>구매수량</div>
-                <div className="w-10">{dataUserId}</div>
+                <div className="w-20 text-right">{formatCurrency(quantity)}</div>
             </div>
             <div className="w-5/6 m-auto h-9 border-t-2 border-black font-extrabold flex justify-between pt-3">
                 <div className="text-blue-500">총 청약 금액</div>
-                <div className="w-10 text-blue-500">{(dataUserId) * 5000 }</div>
+                <div className="w-25 text-blue-500 text-right">{formatCurrency((quantity) * 5000) }<span className="ml-1">원</span></div>
             </div>
-            <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
-                onClick={handleOrder}
+            <div className=  {` w-5/6 h-12 rounded-md ${quantity ? "bg-blue-950" : "bg-gray-400"} text-white m-auto flex justify-center items-center font-semibold my-4`}
+                onClick={quantity ? handleOrder : undefined}
             >
             주문하기
             </div>
 
+           
+
          </div> 
         :
-         <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
+         <div className= " w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
          onClick={()=>handleSubscription()}>청약하기</div> 
         }
         </>

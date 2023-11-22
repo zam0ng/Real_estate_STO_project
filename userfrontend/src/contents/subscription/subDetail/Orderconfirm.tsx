@@ -10,9 +10,10 @@ type OrderConfirmType = {
     setOrderConfirm : React.Dispatch<React.SetStateAction<boolean>>,
     dataUserId : SubUserBalance,
     dataSubDetail : SubDetail[]
+    quantity : number
 }
 
-export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail} : OrderConfirmType ){
+export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail, quantity} : OrderConfirmType ){
 
     const Navigate = useNavigate();
 
@@ -28,6 +29,10 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
 
     function handleAfterOrder(){
         Navigate('/subscription')
+    }
+
+    function formatCurrency(amount :number) {
+        return `${amount.toLocaleString('ko-KR')}`;
     }
 
     return(
@@ -49,7 +54,7 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
                     청약 수량
                 </div>
                 <div className="mr-4 mt-3">
-                    1,000원
+                    {quantity}
                 </div>
             </div>
             <div className="w-full h-12 bg-blue-100 flex justify-between text-gray-400">
@@ -57,7 +62,7 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
                     청약 금액
                 </div>
                 <div className="mr-4 mt-3">
-                    1,000원
+                    {formatCurrency(quantity * 5000)}원
                 </div>
             </div>
             <div className="w-full h-12 flex justify-between text-gray-400">
@@ -74,12 +79,12 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
                     최종 금액
                 </div>
                 <div className="mr-4 mt-3">
-                    1,000원
+                    {formatCurrency(quantity * 5000)}원
                 </div>
             </div>
             <div className="w-full h-12  flex justify-between text-gray-400">
                 <div className="ml-4 mt-3">
-                    설정일
+                    청약일
                 </div>
                 <div className="mr-4 mt-3">
                     {currentDate.toLocaleDateString()}
