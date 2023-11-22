@@ -84,7 +84,8 @@ sequelize
   console.log("err", err);
 });
 
-app.use("/estate_img", express.static(path.join(__dirname,"/imgs/estate")));
+// ✅ 이미지 가져오는 미들웨어 경로 수정 by DJ 
+app.use("/estate_img", express.static(path.join(__dirname,  "/imgs/estate" )));
 
 app.use("/admin", adminRouter);
 app.use("/market", marketRouter);

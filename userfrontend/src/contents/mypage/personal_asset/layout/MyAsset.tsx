@@ -6,8 +6,8 @@ import MyAssetHistoryTable from '../asset_history/MyAssetHistoryTable';
 
 const MyAsset: React.FC = () => {
   return (
-    <div className='w-full h-96 border border-black'>
-      <div className='w-full h-[15%] border-b border-black'>
+    <div className='w-[90%] h-96 border border-black'>
+      <div className='w-full h-[15%] border-b border-black flex justify-start items-center text-xl pl-3'>
         총 자산
       </div>
       <MyAssetValueChange />

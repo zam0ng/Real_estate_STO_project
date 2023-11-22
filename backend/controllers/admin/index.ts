@@ -704,3 +704,32 @@ export const dividendSubmit = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 };
+
+
+
+export const subscription = async (req : Request , res : Response) => {
+
+  try {
+    const subscription = await Subscriptions.findAll()
+    res.status(200).json(subscription);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500)
+  }
+}
+
+
+export const subscriptionDetail = async (req : Request , res : Response) => {
+
+  try {
+    
+    const subscriptionDetail = await Subscriptions.findByPk(req.params.id)
+    console.log("subscriptionDetail" , subscriptionDetail)
+    res.status(200).json(subscriptionDetail)
+
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+
+}

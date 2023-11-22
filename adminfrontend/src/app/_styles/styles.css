@@ -1,0 +1,16 @@
+/* 스크롤바 트랙(경로)에 대한 스타일 */
+.modal-custom-scrollbar::-webkit-scrollbar-track {
+  border-radius: 10px; /* 둥근 모서리의 크기 조정 */
+  background: #4059f7; /* 배경 색상 */
+}
+
+/* 스크롤바 핸들(스크롤 막대)에 대한 스타일 */
+.modal-custom-scrollbar::-webkit-scrollbar-thumb {
+  border-radius: 10px; /* 둥근 모서리의 크기 조정 */
+  background: #888; /* 스크롤바 색상 */
+}
+
+/* 스크롤바 호버 */
+.modal-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #555; /* 스크롤바 호버 시 색상 */
+}
