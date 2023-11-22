@@ -35,10 +35,13 @@ const RenderEstateInfo: React.FC<RenderEstateInfoProps> = ({
   floor_area,
   completion,
 }) => {
-  
+    
   const path = `${image}`.replace(/\\/g, '/');   // 정규표현식활용, 백슬래시를 슬래시로 교체
+  const fileName = path.split('/')[2]
+
   const finalDomain = `${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL}`
-  const finalImageURL = `${finalDomain}${path}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
+  const finalImageURL = `${finalDomain}estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
+
   console.log(finalImageURL , "finalImageURL🚀🚀")
 
 

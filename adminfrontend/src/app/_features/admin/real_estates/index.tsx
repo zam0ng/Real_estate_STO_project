@@ -6,7 +6,7 @@ export interface TableRow {
 // DB 에서 받은 데이터 ROW 하나 당 타입
 export interface EstateDataItem {
   id: number;
-  subscription_img: string;
+  subscription_img_1: string;
   subscription_name: string;
   subscription_description: string;
   subscription_status: string;
@@ -145,7 +145,7 @@ export interface DetailData {
   build_area: number;
   floor_area: number;
   completion: string; // or Date
-  subscription_img: string;
+  subscription_img_1: string;
 
 
   

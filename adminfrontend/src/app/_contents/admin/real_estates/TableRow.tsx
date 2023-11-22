@@ -24,11 +24,11 @@ const TableRow = async ({ item }: TableRow) => {
 return (
     <>
     {/* 구분선 */}
-    <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 "></div>
+    <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 "> </div>
 
     <ImageName
         id={item.id}
-        imageURL={item.subscription_img}
+        imageURL={item.subscription_img_1}
         name={item.subscription_name}
     />
     <Description 

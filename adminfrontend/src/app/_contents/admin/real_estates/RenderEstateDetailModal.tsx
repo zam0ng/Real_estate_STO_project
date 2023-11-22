@@ -84,7 +84,7 @@ export default function RenderEstateDetailModal() {
                   <RenderEstateInfo
                     title="건물정보"
                     desc="어떤 건물이 STO 토큰으로 발행되는지에 대한 정보 제공"
-                    image={detailData && detailData.subscription_img}
+                    image={detailData && detailData.subscription_img_1}
                     name={detailData && detailData.subscription_name}
                     subscription_address={
                       detailData && detailData.subscription_address
