@@ -32,17 +32,15 @@ export default function Mypage () {
         )
     }
     return(
-        <div className="w-screen h-screen border border-black pb-16 overflow-y-scroll">
+        <div className="w-screen h-screen pb-16 overflow-y-scroll">
             <MyInfo />
-            <MyCash />
-            <div className="w-full border-t-2 border-slate-200"></div>
-            <MyAsset />
-            <div className="w-full border-t-2 border-slate-200"></div>
-            <MyDividend />
-            <div className="w-full border-t-2 border-slate-200"></div>
-            <MyVote />
-            <div className="w-full border-t-2 border-slate-200"></div>
-            <MySubscription />
+            <div className="w-full h-auto flex flex-col justify-center items-center">
+                <MyCash />
+                <MyAsset />
+                <MyDividend />
+                <MyVote />
+                <MySubscription />
+            </div>
             <TabBar />
         </div>
     )

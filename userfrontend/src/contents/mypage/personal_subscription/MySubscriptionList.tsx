@@ -3,7 +3,7 @@ import MySubscriptionListItem from './MySubscriptionListItem';
 
 const MySubscriptionList: React.FC = () => {
   return (
-    <div className='w-full h-full border-b border-black'>
+    <div className='w-full h-full'>
       <MySubscriptionListItem />
     </div>
   )
