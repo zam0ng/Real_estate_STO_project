@@ -15,11 +15,9 @@ import DisableButton from "./DisableButton";
 
 const TableRow = async ({ item }: TableRow) => {
 
-    // 임시 변수 
-    // const subscriptionProgress = item.achievement_rate // api 에 따르면 진행률은 achievement_rate 
-    const subscriptionProgress = 0.8        // 우선, 0.8 로 하드코딩 
+    const subscriptionProgress = item.achievement_rate // api 에 따르면 진행률은 achievement_rate 
+    console.log( "진행률👏" , subscriptionProgress)
     
-
     
 return (
     <>
@@ -39,7 +37,7 @@ return (
         status={item.subscription_status} />
     <Progress 
         id={item.id}
-        progress={"80%"} />
+        progress={item.achievement_rate} />
     <Totalprice 
         id={item.id}
         totalPrice={item.subscription_totalprice} />
@@ -56,7 +54,7 @@ return (
         resultDate={item.subscription_result_date} />
     
     {subscriptionProgress >= 0.8 
-        ? <EnableButton  text="Enable" /> 
+        ? <EnableButton  text="Enable" />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
         : <DisableButton  text="Disable" />
     }
 

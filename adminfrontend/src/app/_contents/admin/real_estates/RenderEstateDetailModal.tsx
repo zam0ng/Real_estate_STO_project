@@ -30,6 +30,7 @@ import { DetailData } from "@/app/_features/admin/real_estates";
 
 export default function RenderEstateDetailModal() {
   const [detailData, setDetailData] = useState<DetailData | null>(null);
+  console.log("detailData" , detailData)
 
   const router = useRouter();
   const params = useParams();
@@ -62,8 +63,7 @@ export default function RenderEstateDetailModal() {
               <div className="my-8 w-40rem mx-7 h-37.9rem ">
                 {/* 제목 : About your page */}
                 <h1 className="text-3xl font-bold tracking-tighter text-center w-40rem text-adminLayout_menubar_name">
-                  {detailData ? detailData.subscription_name : "loading"} 상세
-                  정보
+                  {detailData ? detailData.subscription_name : "loading"} 상세 정보
                 </h1>
 
                 {/* 임시 취소 */}
