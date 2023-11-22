@@ -27,13 +27,11 @@ contract ERC20subscription is ERC20, Ownable {
         uint256 __totalSupply ,
         address[] memory subscribers ,
         uint256[] memory amounts,
-        uint256 __lockTime,
-        string memory __documentURI
+        uint256 __lockTime
     )  ERC20(_name,_symbol) Ownable(_owner){
         require(subscribers.length == amounts.length, "subscribers and their amounts do not match");
         _totalSupply = __totalSupply;
         _lockTime = block.timestamp + __lockTime;
-        _documentURI = __documentURI;
 
         for(uint256 i = 0; i<subscribers.length; i++){
             require(amounts[i] + _totalMinted <= _totalSupply );
@@ -76,6 +74,10 @@ contract ERC20subscription is ERC20, Ownable {
   
     function getDocumentURI() public view returns (string memory) {
         return _documentURI;
+    }
+
+    function setDocumentURI (string memory __documentURI) public onlyOwner{
+        _documentURI = __documentURI;
     }
 
     function ForceMint(address _useraddress, uint256 amount) public onlyOwner{
