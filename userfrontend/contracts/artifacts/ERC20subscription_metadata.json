@@ -679,11 +679,11 @@
 	},
 	"sources": {
 		"userfrontend/contracts/ERC20subscription.sol": {
-			"keccak256": "0x7db8ff90cd7fc03807b4fa80cf0bf9816dd8404a930e827f0b0e43e8a570fa50",
+			"keccak256": "0x7f8cbb3b3560d024efa6a8225684ea2d8cf3af4d38b9d85806f9d776f3f084eb",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://5dc70208dca0a257efe4d7a895718c20b71d31ee806fb5a16d7046dad56923b1",
-				"dweb:/ipfs/Qme44g72f3BiNNAWmdDfutP1TEyCwhhHUbbw74tnamVbPb"
+				"bzz-raw://96c0da45156c7773fe02355e8105eb27d3fc3c9ad9f3f7dfcf1c2da5633b9456",
+				"dweb:/ipfs/QmdvBwUrjwNb8GNAMy5f7BQv2LpvvyuTZBZonMDZJsSUsm"
 			]
 		},
 		"userfrontend/node_modules/@openzeppelin/contracts/access/Ownable.sol": {

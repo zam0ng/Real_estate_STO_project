@@ -11,13 +11,14 @@ export default function DetailPictures({detail} :DetailPicturesType){
     return(
         <>
         
-        <div className="relative w-screen h-1/5 ">
-        <div className="absolute top-40 border border-black top w-4/5 left-9 h-40 z-20 pointer-events-none">
-            <div className="border border-black h-7  font-bold">{detail.subscription_description}</div>
-            <div className="border border-black h-14  text-center font-extrabold text-3xl pt-2">{detail.subscription_name}</div>
-            <div className="border border-black h-14 "></div>
-        </div>
-        <Slider width="w-[screen]" />
+        <div className=" w-screen h-1/5 ">
+            <div className=" h-12 w-4/5 ml-3 mt-4">
+                <div className=" h-12 font-extrabold text-3xl pt-2 ml-2 border-b-4 ">{detail.subscription_name}</div>
+                <div className="text-sm font-semibold ml-3 mt-1">{detail.subscription_description}</div>
+            </div>
+            <div className="  pt-10">
+                <Slider width="w-[screen]" />
+            </div>
         </div>
         </>
     )
