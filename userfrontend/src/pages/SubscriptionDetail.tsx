@@ -9,6 +9,7 @@ import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
 import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
 import MapDetail from "../contents/subscription/subDetail/MapDetail";
+import BackBtn from "../components/BackBtn";
 
 export default function SubscriptionDetail(){
 
@@ -44,6 +45,7 @@ export default function SubscriptionDetail(){
 
     return(
         <>  
+            <BackBtn />
             <DetailPictures detail={detail}/>
             <LineTypeTabComponent data={tab} />
             <SubscriptionBtn props={`${buildingId}`} />
