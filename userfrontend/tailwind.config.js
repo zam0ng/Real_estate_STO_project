@@ -23,18 +23,19 @@ module.exports = {
         over: "120%",
         "112": "28rem",
         "128": "32rem"
-      },
-      animation: {
-        marquee: 'marquee 10s linear infinite',
+      },animation: {
+        marquee: 'marquee 25s linear infinite',
+        marquee2: 'marquee2 25s linear infinite',
       },
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },
-          '25%': { transform: 'translateX(-25%)' },
-          '50%': { transform: 'translateX(-50%)' },
-          '75%': { transform: 'translateX(-75%)' },
           '100%': { transform: 'translateX(-100%)' },
-        }
+        },
+        marquee2: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' },
+        },
       },keyframes: {
         slideUp: {
           '0%': { transform: 'translateY(100%)' },
