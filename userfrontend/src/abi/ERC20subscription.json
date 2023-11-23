@@ -35,11 +35,6 @@
         "internalType": "uint256",
         "name": "__lockTime",
         "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "__documentURI",
-        "type": "string"
       }
     ],
     "stateMutability": "nonpayable",
@@ -223,37 +218,6 @@
     "type": "event"
   },
   {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "from",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "to",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "value",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "string",
-        "name": "symbol",
-        "type": "string"
-      }
-    ],
-    "name": "TransferWithSymbol",
-    "type": "event"
-  },
-  {
     "inputs": [
       {
         "internalType": "address",
@@ -380,19 +344,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getDocumentURI",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
