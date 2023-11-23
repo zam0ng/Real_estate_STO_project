@@ -15,7 +15,7 @@ const MyAssetValueChange: React.FC<TotalValueChangeProps> = ({total_profit_loss,
     }else if(profit_loss_ratio && profit_loss_ratio < 0){
       setTextColor("text-blue-500");
     };
-  },[]);
+  },[profit_loss_ratio]);
 
   return (
     <div className='w-full h-[10%] border-b border-slate-200 flex flex-row'>

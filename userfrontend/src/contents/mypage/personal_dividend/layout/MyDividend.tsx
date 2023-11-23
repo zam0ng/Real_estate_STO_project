@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 import MyTotalDividend from '../MyTotalDividend';
 import MyTotalDividendHistoryTable from '../MyTotalDividendHistoryTable';
 import axios from 'axios';
@@ -14,7 +14,7 @@ interface MyTotalDividendsRequest {
   anticipation_dividend: number;
   dividend_status: string;
   dividend_basedate: string;
-  dividend_patmentdate: string;
+  dividend_paymentdate: string;
   total_anticipation_dividend: number;
 }
 
@@ -27,6 +27,9 @@ const fetchMyTotalDividend = async (email: string): Promise<MyTotalDividendsRequ
   return response.data;
 };
 
+export const TotalDividendHistoryContext = createContext<MyTotalDividendsRequest[] | undefined>(undefined);
+
+// 컴포넌트
 const MyDividend: React.FC<UserEmailProps> = ({email}) => {
   const {data,isLoading,error,isError} = useQuery<MyTotalDividendsRequest[]>({
     queryKey: ["fetchMyTotalDividend",email],
@@ -39,13 +42,15 @@ const MyDividend: React.FC<UserEmailProps> = ({email}) => {
   },[data]);
 
   return (
-    <div className='w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pl-5 pr-5'>
-      <div className='w-full h-[30%] flex justify-start items-center text-xl'>
-        배당금 상세
+    <TotalDividendHistoryContext.Provider value={data}>
+      <div className='w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pl-5 pr-5'>
+        <div className='w-full h-[30%] flex justify-start items-center text-xl'>
+          배당금 상세
+        </div>
+        <MyTotalDividend />
+        <MyTotalDividendHistoryTable />
       </div>
-      <MyTotalDividend />
-      <MyTotalDividendHistoryTable />
-    </div>
+    </TotalDividendHistoryContext.Provider>
   )
 }
 

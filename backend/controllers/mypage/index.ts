@@ -281,17 +281,17 @@ export const assetInformation = async (req: Request, res: Response) => {
     const result = await db.Real_estates_own.findAll({
       attributes: [
         "real_estate_name",
-        [db.sequelize.literal(`(price)`), "price"],
+        [db.sequelize.literal(`(price * amount)`), "price"],
         "amount",
         [
           // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
           db.sequelize.literal(`(current_price * amount - price * amount)`),"valuation",],
+        [db.sequelize.literal(`(current_price * amount)`), "present_price"],
         // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
-        [db.sequelize.literal(`(current_price)`), "present_price"],
 
         "possible_quantity",
-        // [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (current_price * amount)) * 100)::numeric, 2)`),
-        [db.sequelize.literal(`(current_price - price) / price * 100`),
+        [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (price * amount)) * 100)::numeric, 2)`),
+        // [db.sequelize.literal(`(current_price - price) / price * 100`),
         
           "rate_of_return",
         ],
@@ -395,21 +395,24 @@ export const dividendList = async (req: Request, res: Response) => {
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
     const { user_email } = req.query;
+    // const userEmail = "a@naver.com";
 
     const query = `
-      select a.subscription_name,
-        a.subscription_img_1,
-        DATE(b."createdAt") as application_date , 
-        DATE(a.subscription_end_date) as subscription_end_date, 
-        b.subscription_my_amount, 
-        a.subscription_offering_price,
-        (a.subscription_offering_price * b.subscription_my_amount) as refund_price
-      from subscriptions a join subscription_application b 
-          on a.id = b.subscription_id
-      where b.subscription_user_email = '${user_email}'`;
+    select a.subscription_name,
+      a.subscription_img_1,
+      a.subscription_totalsupply,
+      a.subscription_order_amount,
+      DATE(b."createdAt") as application_date , 
+      DATE(a.subscription_end_date AT TIME ZONE 'Asia/Seoul') as subscription_end_date, 
+      b.subscription_my_amount, 
+      a.subscription_offering_price,
+      (a.subscription_offering_price * b.subscription_my_amount) as refund_price
+    from subscriptions a join subscription_application b 
+        on a.id = b.subscription_id
+    where b.subscription_user_email = '${user_email}'`;
 
     const result = await db.sequelize.query(query, {
-      replacements: { userEmail: user_email },
+      replacements: { user_email: user_email },
       type: QueryTypes.SELECT,
     });
 

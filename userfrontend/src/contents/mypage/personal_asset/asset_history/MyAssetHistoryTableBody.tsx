@@ -22,7 +22,7 @@ const MyAssetHistoryTableBody: React.FC<AssetTableBodyProps> = ({name,price,amou
     },[]);
 
     return (
-        <div className='w-full h-[20%] border-b border-slate-200 flex flex-row text-sm'>
+        <div className='w-full h-20 border-b border-slate-200 flex flex-row text-sm'>
             <div className='w-[30%] h-full border-r border-slate-200 flex justify-center items-center'>
                 {name}
             </div>
@@ -36,7 +36,7 @@ const MyAssetHistoryTableBody: React.FC<AssetTableBodyProps> = ({name,price,amou
             </div>
             <div className='w-[30%] h-full'>
                 <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{valuation.toLocaleString()}</div>
-                <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{rate_of_return.toFixed(2)}%</div>
+                <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{rate_of_return}%</div>
             </div>
         </div>
     )

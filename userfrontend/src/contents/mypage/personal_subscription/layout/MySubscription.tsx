@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect } from 'react';
 import MySubscriptionList from '../MySubscriptionList';
 import axios from 'axios';
 import { serverurl } from '../../../../components/serverurl';
@@ -13,6 +13,8 @@ interface MySubscriptionListRequest {
   subscription_my_amount: number;
   subscription_offering_price: number;
   refund_price: number;
+  subscription_order_amount: number;
+  subscription_totalsupply: number;
 }
 
 const fetchMySubscriptionList = async (email: string): Promise<MySubscriptionListRequest[]> => {
@@ -24,6 +26,9 @@ const fetchMySubscriptionList = async (email: string): Promise<MySubscriptionLis
   return response.data;
 }
 
+export const SubscriptionContext = createContext<MySubscriptionListRequest[] | undefined>(undefined);
+
+// 컴포넌트
 const MySubscription: React.FC<UserEmailProps> = ({email}) => {
   const {data,isLoading,error,isError} = useQuery<MySubscriptionListRequest[]>({
     queryKey: ["fetchMySubscriptionList",email],
@@ -36,14 +41,16 @@ const MySubscription: React.FC<UserEmailProps> = ({email}) => {
   },[data]);
 
   return (
-    <div className='w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5'>
-      <div className='w-full h-[20%] flex justify-start items-center text-xl'>
-        내 청약 목록
+    <SubscriptionContext.Provider value={data}>
+      <div className='w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5'>
+        <div className='w-full h-[20%] flex justify-start items-center text-xl'>
+          내 청약 목록
+        </div>
+        <div className='w-full h-[75%] overflow-y-scroll'>
+          <MySubscriptionList />
+        </div>
       </div>
-      <div className='w-full h-[75%] overflow-y-scroll'>
-        <MySubscriptionList />
-      </div>
-    </div>
+    </SubscriptionContext.Provider>
   )
 }
 

@@ -39,8 +39,9 @@ const MyAssetHistoryTable: React.FC<UserEmailProps> = ({email}) => {
   return (
     <div className='w-full h-[65%] flex flex-col justify-center items-center rounded-lg'>
       <MyAssetHistoryTableHeader />
-      {data && data.map((item,index)=>(
-        <MyAssetHistoryTableBody 
+      <div className='w-full h-[70%] border-b border-slate-200 flex flex-col text-sm overflow-y-scroll'>
+        {data && data.map((item,index)=>(
+          <MyAssetHistoryTableBody 
           key={index}
           name={item.real_estate_name} 
           price={item.price} 
@@ -49,7 +50,8 @@ const MyAssetHistoryTable: React.FC<UserEmailProps> = ({email}) => {
           present_price={item.present_price} 
           possible_quantity={item.possible_quantity} 
           rate_of_return={item.rate_of_return} />
-      ))}
+        ))}
+      </div>
     </div>
   )
 }
