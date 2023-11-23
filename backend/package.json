@@ -7,7 +7,9 @@
     "express-session": "^1.17.3",
     "pg": "^8.11.3",
     "sequelize": "^6.33.0",
-    "web3": "^4.2.2"
+    "web3": "^4.2.2",
+    "web3-eth-abi": "^4.1.4",
+    "web3-utils": "^4.0.7"
   },
   "name": "backend",
   "version": "1.0.0",

@@ -276,7 +276,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 // 종목별 자산 정보
 export const assetInformation = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
 
     const result = await db.Real_estates_own.findAll({
       attributes: [
@@ -303,7 +303,7 @@ export const assetInformation = async (req: Request, res: Response) => {
         },
       ],
       where: {
-        user_email: `${userEmail}`,
+        user_email: `${user_email}`,
       },
       raw: true,
     });

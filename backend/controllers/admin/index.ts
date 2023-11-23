@@ -436,7 +436,7 @@ export const realEstateManagement = async (req: Request, res: Response) => {
         "subscription_status",
         [
           db.sequelize.literal(
-            "((subscription_order_amount / subscription_totalsupply) * 100) - 100"
+            "((subscription_order_amount * 100 / subscription_totalsupply))"
           ),
           "achievement_rate",
         ],
