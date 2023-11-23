@@ -39,9 +39,10 @@ export default function SubscriptionBtn({props} : subdetailtype){
     });
 
     let [detail] = dataSubDetail
+
     console.log(detail)
-
-
+    
+    parseInt(detail.subscription_offering_price)
 
     
     const [isCookie,setIsCookie] = useState(false);
@@ -91,7 +92,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
         setQuantity((prev)=>{
             
             const newQuantity = prev + num;
-            if(dataUserId < 5000){
+            if(dataUserId < parseInt(detail.subscription_offering_price)){
                 setQuantity(0);
             }
 
@@ -99,8 +100,9 @@ export default function SubscriptionBtn({props} : subdetailtype){
             if (newQuantity > detail.subscription_totalsupply - detail.subscription_order_amount) {
               return detail.subscription_totalsupply - detail.subscription_order_amount;
             }
-            if (newQuantity > Math.floor( dataUserId / 5000 )){
-                return Math.floor( dataUserId / 5000 )
+    parseInt(detail.subscription_offering_price)
+            if (newQuantity > Math.floor( dataUserId / parseInt(detail.subscription_offering_price)  )){
+                return Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )
             }
             return newQuantity;
 
@@ -111,9 +113,9 @@ export default function SubscriptionBtn({props} : subdetailtype){
             if(num < 1){
                 setQuantity(1)
             }
-            else if(num > Math.floor( dataUserId / 5000 )){
+            else if(num > Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )){
 
-                setQuantity(Math.floor(dataUserId / 5000));
+                setQuantity(Math.floor(dataUserId / parseInt(detail.subscription_offering_price)));
             }else{
                 setQuantity(num)
             }
@@ -149,7 +151,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
             <RiArrowDropDownLine  className="mt-4 ml-4 w-6 h-6 m-auto" onClick={()=>setIsCookie(false)}/>
             <div className="w-5/6  m-auto text-right  h-6 mb-5 text-sm">
                 <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
-                잔고 : {dataUserId}
+                잔고 : {formatCurrency(dataUserId)}
                 <span className="ml-1"></span>
                 </span>
             </div>
@@ -180,7 +182,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
             </div>
             <div className="w-5/6 m-auto h-9 border-t-2 border-black font-extrabold flex justify-between pt-3">
                 <div className="text-blue-500">총 청약 금액</div>
-                <div className="w-25 text-blue-500 text-right">{formatCurrency((quantity) * 5000) }<span className="ml-1">원</span></div>
+                <div className="w-25 text-blue-500 text-right">{formatCurrency((quantity) * parseInt(detail.subscription_offering_price)) }<span className="ml-1">원</span></div>
             </div>
             <div className=  {` w-5/6 h-12 rounded-md ${quantity ? "bg-blue-950" : "bg-gray-400"} text-white m-auto flex justify-center items-center font-semibold my-4`}
                 onClick={quantity ? handleOrder : undefined}
