@@ -8,6 +8,7 @@ import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
 import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
+import MapDetail from "../contents/subscription/subDetail/MapDetail";
 
 export default function SubscriptionDetail(){
 
@@ -38,7 +39,7 @@ export default function SubscriptionDetail(){
         content : <SubStatus detail={detail}/>
     },{
         tabName : "상세 정보",
-        content : <>상세 정보 화면입니다</>
+        content : <MapDetail detail={detail} />
     }]
 
     return(

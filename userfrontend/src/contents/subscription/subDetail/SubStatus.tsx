@@ -42,9 +42,9 @@ export default function SubStatus({detail} : SubStatusType){
             </div>
             <div className="w-5/6 h-72 m-auto rounded-xl  mt-3 border ">
                 <div className="w-full h-16 mt-1">
-                    {statusBox.map((i)=>{
+                    {statusBox.map((i,index)=>{
                         return (
-                        <div className="flex h-full mb-2">
+                        <div key={index} className="flex h-full mb-2">
                             <div className=" w-1/4 pt-1">
                                 <div className="w-10 h-10 border-2 border-blue-500 m-auto mt-2 flex items-center justify-center rounded-full font-extrabold">{i.number}</div>
                             </div>
