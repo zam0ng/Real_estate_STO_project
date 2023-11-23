@@ -27,56 +27,56 @@ function App() {
 
   let queryClient = new QueryClient();
 
-  useEffect(() => {
-    if (web3 !== null) {
-      if (ERC20Contract) return;
-      const ERC20 = new web3.eth.Contract(
-        abi,
-        "0xAB3D0B67Eb5255971EBB3B2Ef3047939C39882B8",
-        { data: "" }
-      );
+  // useEffect(() => {
+  //   if (web3 !== null) {
+  //     if (ERC20Contract) return;
+  //     const ERC20 = new web3.eth.Contract(
+  //       abi,
+  //       "0xAB3D0B67Eb5255971EBB3B2Ef3047939C39882B8",
+  //       { data: "" }
+  //     );
 
-      const result = async () => {
-        await ERC20.deploy({ data: "" }).send({
-          from: "0xFeB2F0F4537bc7CE81A7244520b238950fC846f2",
-          gas: "3000000",
-        });
-      };
-      result();
+  //     const result = async () => {
+  //       await ERC20.deploy({ data: "" }).send({
+  //         from: "0xFeB2F0F4537bc7CE81A7244520b238950fC846f2",
+  //         gas: "3000000",
+  //       });
+  //     };
+  //     result();
 
-      const logLatestBlockEvents = async () => {
-        try {
-          const latestBlock: any = await web3.eth.getBlock("latest", true);
+  //     const logLatestBlockEvents = async () => {
+  //       try {
+  //         const latestBlock: any = await web3.eth.getBlock("latest", true);
 
-          if (latestBlock.transactions) {
-            console.log(`Checking latest block.transactions`);
-            console.log(latestBlock);
-            console.log(latestBlock.transactions);
+  //         if (latestBlock.transactions) {
+  //           console.log(`Checking latest block.transactions`);
+  //           console.log(latestBlock);
+  //           console.log(latestBlock.transactions);
 
-            for (const tx of latestBlock.transactions) {
-              const receipt = await web3.eth.getTransactionReceipt(
-                tx.hash || tx
-              );
-              const value = await web3.utils.fromWei(tx.value, "ether");
-              console.log("receipt");
-              console.log(receipt);
-              console.log("blockNumber : ", tx.blockNumber);
-              console.log("from : ", tx.from);
-              console.log("to : ", tx.to);
-              console.log("value : ", value);
-              console.log("logs : ", tx.logs);
-            }
-          }
-        } catch (error) {
-          console.error("Error fetching latest block events:", error);
-        }
-      };
+  //           for (const tx of latestBlock.transactions) {
+  //             const receipt = await web3.eth.getTransactionReceipt(
+  //               tx.hash || tx
+  //             );
+  //             const value = await web3.utils.fromWei(tx.value, "ether");
+  //             console.log("receipt");
+  //             console.log(receipt);
+  //             console.log("blockNumber : ", tx.blockNumber);
+  //             console.log("from : ", tx.from);
+  //             console.log("to : ", tx.to);
+  //             console.log("value : ", value);
+  //             console.log("logs : ", tx.logs);
+  //           }
+  //         }
+  //       } catch (error) {
+  //         console.error("Error fetching latest block events:", error);
+  //       }
+  //     };
 
-      setInterval(logLatestBlockEvents, 5000);
+  //     setInterval(logLatestBlockEvents, 5000);
 
-      setERC20Contract(ERC20);
-    }
-  }, [web3]);
+  //     setERC20Contract(ERC20);
+  //   }
+  // }, [web3]);
 
   return (
     <BrowserRouter>
