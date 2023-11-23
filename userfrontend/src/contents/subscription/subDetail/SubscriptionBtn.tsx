@@ -18,7 +18,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
     let { buildingId } = useParams();
     const [userBalance,setUserBalance] = useState(0);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
     const [orderConfirm,setOrderConfirm] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
 
@@ -40,7 +40,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
     let [detail] = dataSubDetail
 
-    console.log(detail)
     
     parseInt(detail.subscription_offering_price)
 

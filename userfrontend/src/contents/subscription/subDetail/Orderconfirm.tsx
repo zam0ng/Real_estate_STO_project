@@ -1,9 +1,11 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { SubDetail } from "../../../features/SubDetail";
 import { SubUserBalance } from "../../../features/SubUserBalance";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from '../../../components/url';
+import { useCookies } from "react-cookie";
 
 
 type OrderConfirmType = {
@@ -15,6 +17,27 @@ type OrderConfirmType = {
 
 export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail, quantity} : OrderConfirmType ){
 
+    const mutation = useMutation({
+        mutationFn : ()=>{
+            return axios.post(`/subscription/detail/subscription_application/${buildingId}`,{
+                    
+                token: accessToken,
+                id : buildingId,
+                amount : quantity
+            })
+        }
+    })
+
+
+
+
+
+    const {buildingId} = useParams();
+
+    const [cookies] = useCookies(['accessToken'])
+
+    const accessToken = cookies.accessToken;
+
     const Navigate = useNavigate();
 
     const [isConfirmed,setIsConfirmed] = useState(false);
@@ -22,8 +45,16 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
     const currentDate = new Date();
 
     function handleSubscriptionOrder(){
+
+        mutation.mutate();
+
+        if(mutation.isError){
+
+        }
+
         setIsConfirmed(true);
         console.log('청약신청완료')
+
         
     }
 
@@ -93,14 +124,21 @@ export default function OrderConfirm({setOrderConfirm, dataUserId, dataSubDetail
 
 
         </div>
-        {isConfirmed ? <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
+        {isConfirmed 
+        ? 
+        <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
             onClick={()=>handleAfterOrder()}>
         <>청약 페이지로 돌아가기</>
-        </div>:
+        </div>
+        :
         <div className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
             onClick={()=>handleSubscriptionOrder()}>
         <>확인</>
         </div> }
+        {mutation.isError
+        ? <div>오류가 발생했습니다 다시 시도해주세요</div>
+        : undefined
+        }
     </div> 
     )
 }

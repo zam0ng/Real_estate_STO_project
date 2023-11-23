@@ -153,9 +153,9 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       using_balance: number;
       blacklist: boolean;
     };
-    const { userEmail } = req as AddRequest;
+    // const { userEmail } = req as AddRequest;
     // const { id, user_email, amount } = req.body;
-    const { id, amount } = req.body;
+    const { id, amount, user_email } = req.body;
     const application_amount = 5000 * amount;
 
     const getUserInfo = (await db.Users.findOne({
@@ -166,7 +166,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
         "using_balance",
         "blacklist",
       ],
-      where: { user_email: userEmail },
+      where: { user_email: user_email },
       raw: true,
     })) as Object as GetUserInfo;
 
@@ -177,14 +177,14 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       {
         using_balance: getUserInfo.using_balance - application_amount,
       },
-      { where: { user_email: userEmail }, transaction }
+      { where: { user_email: user_email }, transaction }
     );
 
     const insert_subscription_application =
       await db.Subscription_application.create(
         {
           subscription_id: id,
-          subscription_user_email: userEmail as string,
+          subscription_user_email: user_email as string,
           subscription_my_amount: amount,
         },
         { transaction }
