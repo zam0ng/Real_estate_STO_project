@@ -7,7 +7,7 @@ import Slider from "../components/Slider";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
-
+import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
 
 export default function SubscriptionDetail(){
 
@@ -30,7 +30,7 @@ export default function SubscriptionDetail(){
     let [detail] = data
 
 
-    let test1 = [{
+    let tab = [{
         tabName : "투자 포인트",
         content : <>투자 포인트 화면입니다</> 
     },{
@@ -42,9 +42,9 @@ export default function SubscriptionDetail(){
     }]
 
     return(
-        <>
-            <Slider width="w-[screen]" />
-            <LineTypeTabComponent data={test1} />
+        <>  
+            <DetailPictures detail={detail}/>
+            <LineTypeTabComponent data={tab} />
             <SubscriptionBtn props={`${buildingId}`} />
         </>
     )
