@@ -276,23 +276,23 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 // 종목별 자산 정보
 export const assetInformation = async (req: Request, res: Response) => {
   try {
-    const { user_email } = req.params;
+    const { user_email } = req.query;
 
     const result = await db.Real_estates_own.findAll({
       attributes: [
         "real_estate_name",
-        [db.sequelize.literal(`(price * amount)`), "price"],
+        [db.sequelize.literal(`(price)`), "price"],
         "amount",
         [
-          db.sequelize.literal(`(price * amount - current_price * amount)`),
-          "valuation",
-        ],
-        [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+          // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
+          db.sequelize.literal(`(current_price * amount - price * amount)`),"valuation",],
+        // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+        [db.sequelize.literal(`(current_price)`), "present_price"],
+
         "possible_quantity",
-        [
-          db.sequelize.literal(
-            `ROUND((((price * amount - current_price * amount) / (current_price * amount)) * 100)::numeric, 2)`
-          ),
+        // [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (current_price * amount)) * 100)::numeric, 2)`),
+        [db.sequelize.literal(`(current_price - price) / price * 100`),
+        
           "rate_of_return",
         ],
       ],
@@ -318,7 +318,7 @@ export const assetInformation = async (req: Request, res: Response) => {
 // 배당금
 export const dividendList = async (req: Request, res: Response) => {
   try {
-    const { user_email } = req.params;
+    const { user_email } = req.query;
 
     const query = `
       select 
@@ -394,7 +394,7 @@ export const dividendList = async (req: Request, res: Response) => {
 // 내 청약 목록
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
-    const { user_email } = req.params;
+    const { user_email } = req.query;
 
     const query = `
       select a.subscription_name,

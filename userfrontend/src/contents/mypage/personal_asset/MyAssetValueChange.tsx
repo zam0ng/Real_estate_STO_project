@@ -19,7 +19,7 @@ const MyAssetValueChange: React.FC<TotalValueChangeProps> = ({total_profit_loss,
 
   return (
     <div className='w-full h-[10%] border-b border-slate-200 flex flex-row'>
-      <div className='w-[20%] h-full flex justify-start items-center'>
+      <div className='w-[20%] h-full flex justify-start items-center text-sm'>
         총 손익
       </div>
       <div className='w-[80%] h-full flex justify-center items-center'>

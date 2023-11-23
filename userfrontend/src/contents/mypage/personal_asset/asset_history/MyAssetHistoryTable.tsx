@@ -1,35 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MyAssetHistoryTableHeader from './MyAssetHistoryTableHeader';
 import MyAssetHistoryTableBody from './MyAssetHistoryTableBody';
+import axios from 'axios';
+import { serverurl } from '../../../../components/serverurl';
+import { UserEmailProps } from '../../personal_info/layout/MyInfo';
+import { useQuery } from '@tanstack/react-query';
 
-const MyAssetHistoryTable: React.FC = () => {
-  const owningRealEstates = [
-    {
-      name: "문래 공차",
-      price: 5000,
-      amount: 2,
-      valuation: 1000,
-      present_price: 2000,
-      possible_quantity: 2,
-      rate_of_return: 10
-    },
-    {
-      name: "수원 행궁",
-      price: 4000,
-      amount: 2,
-      valuation: 2000,
-      present_price: 2500,
-      possible_quantity: 2,
-      rate_of_return: 10
+interface UserAssetsRequest {
+  real_estate_name: string;
+  price: number;
+  amount: number;
+  valuation: number;
+  present_price: number;
+  possible_quantity: number;
+  rate_of_return: number;
+}
+
+const fetchUserAssets = async (email: string): Promise<UserAssetsRequest[]>=>{
+  const {data} = await axios.get(`${serverurl}/mypage/asset_information`,{
+    params: {
+      user_email: email
     }
-  ]
+  });
+  return data;
+}
+
+const MyAssetHistoryTable: React.FC<UserEmailProps> = ({email}) => {
+  const {data,isLoading,error,isError} = useQuery<UserAssetsRequest[],Error>({
+    queryKey: ["fetchUserAssets",email],
+    queryFn: ()=>fetchUserAssets(email),
+    enabled: !!email
+  });
+
+  useEffect(()=>{
+    console.log("types : ",data);
+  },[data]);
+
   return (
     <div className='w-full h-[65%] flex flex-col justify-center items-center rounded-lg'>
       <MyAssetHistoryTableHeader />
-      {owningRealEstates.map((item,index)=>(
+      {data && data.map((item,index)=>(
         <MyAssetHistoryTableBody 
           key={index}
-          name={item.name} 
+          name={item.real_estate_name} 
           price={item.price} 
           amount={item.amount} 
           valuation={item.valuation} 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface AssetTableBodyProps {
     name: string;
@@ -11,22 +11,32 @@ interface AssetTableBodyProps {
 }
 
 const MyAssetHistoryTableBody: React.FC<AssetTableBodyProps> = ({name,price,amount,valuation,present_price,possible_quantity,rate_of_return}) => {
+    const [textColor,setTextColor] = useState<string>("");
+
+    useEffect(()=>{
+        if(price > present_price){
+            setTextColor("text-blue-500");
+        }else if(price < present_price){
+            setTextColor("text-red-500");
+        }
+    },[]);
+
     return (
-        <div className='w-full h-[25%] border-dashed border-b border-black flex flex-row'>
-            <div className='w-[30%] h-full border-r border-dashed border-black flex justify-center items-center'>
+        <div className='w-full h-[20%] border-b border-slate-200 flex flex-row text-sm'>
+            <div className='w-[30%] h-full border-r border-slate-200 flex justify-center items-center'>
                 {name}
             </div>
-            <div className='w-1/5 h-full border-r border-dashed border-black flex flex-col'>
-                <div className='w-full h-1/2 flex justify-center items-center'>{price}</div>
-                <div className='w-full h-1/2 flex justify-center items-center'>{present_price}</div>
+            <div className='w-1/5 h-full flex flex-col'>
+                <div className='w-full h-1/2 flex justify-center items-center'>{price.toLocaleString()}</div>
+                <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{present_price.toLocaleString()}</div>
             </div>
-            <div className='w-1/5 h-full border-r border-dashed border-black'>
+            <div className='w-1/5 h-full'>
                 <div className='w-full h-1/2 flex justify-center items-center'>{amount}</div>
                 <div className='w-full h-1/2 flex justify-center items-center'>{possible_quantity}</div>
             </div>
             <div className='w-[30%] h-full'>
-                <div className='w-full h-1/2 flex justify-center items-center'>{valuation}</div>
-                <div className='w-full h-1/2 flex justify-center items-center'>{rate_of_return}%</div>
+                <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{valuation.toLocaleString()}</div>
+                <div className={`w-full h-1/2 flex justify-center items-center ${textColor}`}>{rate_of_return.toFixed(2)}%</div>
             </div>
         </div>
     )

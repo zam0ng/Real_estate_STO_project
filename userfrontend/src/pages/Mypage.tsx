@@ -69,9 +69,9 @@ export default function Mypage () {
             <div className="w-full h-auto flex flex-col justify-center items-center">
                 <MyCash />
                 <MyAsset email={userEmail} />
-                <MyDividend />
+                <MyDividend email={userEmail} />
                 <MyVote />
-                <MySubscription />
+                <MySubscription email={userEmail} />
             </div>
             <TabBar />
         </div>

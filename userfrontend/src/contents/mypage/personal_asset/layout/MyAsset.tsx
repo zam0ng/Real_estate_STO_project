@@ -15,27 +15,8 @@ interface UserTotalAssetRequest {
   appraise_balance: number;
 }
 
-interface UserAssetsRequest {
-  name: string;
-  price: number;
-  amount: number;
-  valuation: number;
-  present_price: number;
-  possible_quantity: number;
-  rate_of_return: number;
-}
-
 const fetchUserTotalAsset = async (email: string): Promise<UserTotalAssetRequest[]>=>{
   const {data} = await axios.get(`${serverurl}/mypage/sum_profit_lost`,{
-    params: {
-      user_email: email
-    }
-  });
-  return data;
-}
-
-const fetchUserAssets = async (email: string): Promise<UserAssetsRequest[]>=>{
-  const {data} = await axios.get(`${serverurl}/mypage/asset_information`,{
     params: {
       user_email: email
     }
@@ -53,20 +34,12 @@ const MyAsset: React.FC<UserEmailProps> = ({email}) => {
     enabled: !!email
   });
 
-
-  const {data:assetTypes,isLoading:assetTypesLoading,error:assetTypesError} = useQuery<UserAssetsRequest[],Error>({
-    queryKey: ["fetchUserAssets",email],
-    queryFn: ()=>fetchUserAssets(email),
-    enabled: !!email
-  });
-
   useEffect(()=>{
     console.log("total : ",totalAsset);
-    console.log("types : ",assetTypes);
     if(totalAsset){
       setTotalAssetValue(totalAsset[0]);
     }
-  },[totalAsset,assetTypes]);
+  },[totalAsset]);
 
   return (
     <div className='w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5'>
@@ -78,7 +51,7 @@ const MyAsset: React.FC<UserEmailProps> = ({email}) => {
         <MyTotalBuy />
         <MyTotalValue />
       </div>
-      <MyAssetHistoryTable />
+      <MyAssetHistoryTable email={email} />
     </div>
   )
 }
