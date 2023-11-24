@@ -11,11 +11,11 @@ module.exports = {
       port: 8545,
       network_id: "*",
     },
-    sepolia: {
-      provider: () => new HDWalletProvider(MNEMONIC, INFURA_API_KEY),
-      network_id: "11155111",
-      gas: 4465030,
-    },
+    // sepolia: {
+    //   provider: () => new HDWalletProvider(MNEMONIC, INFURA_API_KEY),
+    //   network_id: "11155111",
+    //   gas: 4465030,
+    // },
   },
 
   // Set default mocha options here, use special reporters, etc.

@@ -9,7 +9,7 @@ import Link from "next/link";
 const TableContent = async () => {
   
   const estateList = await getEstateList();
-  
+  console.log("estateList_+_+_+_",estateList);
   return (
     <>
       {/* <div className="grid gap-2 pb-12 pl-12 pr-12 text-base tracking-tight text-center bg-white border-b-2 w-4/4 rounded-b-3xl justify-items-center grid-cols-table mx-44 h-36.5rem  overflow-y-auto		"> */}

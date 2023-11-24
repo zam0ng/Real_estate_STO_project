@@ -7,8 +7,11 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@openzeppelin/*": ["./node_modules/@openzeppelin"]
+    }
   },
   "include": ["**/app.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }
