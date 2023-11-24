@@ -2,21 +2,23 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface txReceiptAttribute {
-  id: number;
-  tx_block_id: number;
+  id?: number;
+  ca: string;
   tx_from: string;
   tx_to: string;
   tx_value: number;
   tx_symbol?: string;
+  block_num: number;
 }
 
 class Tx_receipt extends Model<txReceiptAttribute> {
   declare id: number;
-  declare tx_block_id: number;
+  declare ca: string;
   declare tx_from: string;
   declare tx_to: string;
   declare tx_value: number;
   declare tx_symbol?: string;
+  declare block_num: number;
   static initModel(sequelize: Sequelize): typeof Tx_receipt {
     Tx_receipt.init(
       {
@@ -25,8 +27,8 @@ class Tx_receipt extends Model<txReceiptAttribute> {
           autoIncrement: true,
           primaryKey: true,
         },
-        tx_block_id: {
-          type: DataTypes.INTEGER,
+        ca: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
         tx_from: {
@@ -43,6 +45,11 @@ class Tx_receipt extends Model<txReceiptAttribute> {
         },
         tx_symbol: {
           type: DataTypes.STRING,
+          allowNull: false,
+        },
+        block_num: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
         },
       },
       {
@@ -56,11 +63,11 @@ class Tx_receipt extends Model<txReceiptAttribute> {
     );
     return Tx_receipt;
   }
-  static associate(db: DB) {
-    db.Tx_receipt.belongsTo(db.Tx_block, {
-      foreignKey: "tx_block_id",
-    });
-  }
+  // static associate(db: DB) {
+  //   db.Tx_receipt.belongsTo(db.Tx_block, {
+  //     foreignKey: "tx_block_id",
+  //   });
+  // }
 }
 
 export default Tx_receipt;

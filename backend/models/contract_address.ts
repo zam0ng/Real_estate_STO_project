@@ -2,18 +2,25 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface caAttribute {
+  id?: number;
   address: string;
   real_estate_name: string;
   symbol: string;
 }
 
 class Contract_address extends Model<caAttribute> {
+  declare id: number;
   declare address: string;
   declare real_estate_name: string;
   declare symbol: string;
   static initModel(sequelize: Sequelize): typeof Contract_address {
     Contract_address.init(
       {
+        id: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
+          primaryKey: true,
+        },
         address: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -38,11 +45,11 @@ class Contract_address extends Model<caAttribute> {
     );
     return Contract_address;
   }
-  static associate(db: DB) {
-    db.Contract_address.hasMany(db.Tx_block, {
-      foreignKey: "contract_address_id",
-    });
-  }
+  // static associate(db: DB) {
+  //   db.Contract_address.hasMany(db.Tx_block, {
+  //     foreignKey: "contract_address_id",
+  //   });
+  // }
 }
 
 export default Contract_address;

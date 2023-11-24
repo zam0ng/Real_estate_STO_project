@@ -52,7 +52,7 @@ app.use("/main", mainRouter);
 app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 
-setInterval(logLatestBlockEvents, 6000);
+setInterval(logLatestBlockEvents, 10000);
 
 app.listen(8080, () => {
   console.log("server on");
