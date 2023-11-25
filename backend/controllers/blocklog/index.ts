@@ -5,7 +5,7 @@ import { myEmitter } from "../../middleware/eventEmitter";
 
 export const blockNumberCheck = async () => {
   try {
-    const result = await db.Tx_block.findOne({
+    const result = await db.Tx_receipt.findOne({
       attributes: ["block_num"],
       order: [["createdAt", "DESC"]],
       raw: true,
