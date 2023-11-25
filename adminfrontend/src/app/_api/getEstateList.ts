@@ -15,7 +15,6 @@ export const getEstateList = async () => {
         cache: "no-store",
         })
 
-        console.log("res+_+_+_",res);
         return res.json()
         
     } catch (error) {

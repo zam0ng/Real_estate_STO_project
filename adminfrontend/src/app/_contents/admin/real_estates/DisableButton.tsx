@@ -1,6 +1,7 @@
 import { DisableButton } from "@/app/_features/admin/real_estates";
 
 const DisableButton = ({ text }: DisableButton) => {
+  
   return (
     <>
       {/* STO 등록 또는 청약 등록 */}

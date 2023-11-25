@@ -79,6 +79,7 @@ export interface ActionButton {
 
 export interface EnableButtonParam {
     text : string
+    id : number;
   }
   
 export interface DisableButton {

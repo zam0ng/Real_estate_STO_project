@@ -21,6 +21,8 @@ import {
   realEstateSubmit,
   noticeSubmit,
   dividendSubmit,
+  caRegister,
+  subscriptionList
 } from "../../controllers/admin";
 
 import { Upload } from '../../middleware/imgUpload';
@@ -72,6 +74,8 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.post('/subscription_submit',Upload.array("upload"),realEstateSubmit);
 router.post('/notice_submit',noticeSubmit);
 router.post('/dividend_submit',dividendSubmit);
+router.post('/ca_register',caRegister);
+router.get('/subscription_list/:id',subscriptionList);
 
 
 

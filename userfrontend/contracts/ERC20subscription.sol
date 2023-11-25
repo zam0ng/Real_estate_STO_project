@@ -7,16 +7,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract ERC20subscription is ERC20, Ownable {
     uint256 private _totalMinted;
     uint256 private _totalSupply;
-    
-
-    // address _owner;
-    // string  _name;
-    // string  _symbol;
-    // uint256 _totalSupply;
-    // address[] subscribers;
-    // uint256[] amounts;
-    // uint256 _lockTime ;
     uint256 private _lockTime;
+
     uint256 public _adminLockTime;
     string private _documentURI;
     string private _tokenSymbol;

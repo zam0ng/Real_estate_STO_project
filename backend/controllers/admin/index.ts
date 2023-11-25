@@ -1,9 +1,13 @@
 import express, { Express, Request, Response, Router } from "express";
-import { Op } from "sequelize";
+import { Model, Op } from "sequelize";
 import { db } from "../../models";
 import Notices from "../../models/notices";
 import Dividends from "../../models/dividends";
 import Subscriptions from "../../models/subscriptions";
+import Contract_address from "../../models/contract_address";
+import Real_estates_own from "../../models/real_estates_own";
+import Subscriptions_own from "../../models/subscriptions_own";
+import { group } from "console";
 
 // 정현이형 어드민 부분
 type TradeDate = {
@@ -587,7 +591,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
   }
   console.log("++++++++",req.body);
 
-  const{ name,address,totalprice,totalsupply,description,
+  const{ name,address,symbol,totalprice,totalsupply,description,
           start_date,end_date,result_date,building_date,trading_start_date,
           order_amount,offering_price,status,floors,purpose,mainpurpose,area,
           all_area,build_area,floor_area,completion,stock_type,publisher
@@ -601,6 +605,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
           subscription_img_4: imgPathArr[3],
           subscription_img_5 : imgPathArr[4],
           subscription_name : name,
+          subscription_symbol : symbol,
           subscription_address: address,
           subscription_totalprice : totalprice,
           subscription_totalsupply : totalsupply,
@@ -732,4 +737,63 @@ export const subscriptionDetail = async (req : Request , res : Response) => {
     res.sendStatus(500)
   }
 
+}
+
+export const caRegister  = async(req : Request , res : Response)=>{
+
+  console.log(req.body);
+  const {address ,real_estate_name , symbol} =req.body;
+  try {
+    await Contract_address.create({
+      address : address,
+      real_estate_name : real_estate_name,
+      symbol : symbol,
+    })
+    res.sendStatus(201);
+  } catch (error) {
+    res.sendStatus(400);
+    console.log("caRegister에서 오류",error);
+  }
+}
+
+export const subscriptionList  = async(req : Request , res : Response) =>{
+  const {id} =req.params;
+  const result = await Subscriptions_own.findAll({
+    where :{
+      subscription_id : id,
+      
+    },
+    attributes : [
+      'user_email',
+      'amount',
+    ],
+    order :[
+      ['id',"ASC"],
+    ],
+
+    include : [
+      {
+        model : Subscriptions,
+        attributes : ['subscription_name','subscription_totalsupply','subscription_symbol','subscription_building_date'],
+      },
+    ],
+    raw : true,
+  })
+  const estateInfo = result.slice(0, 1).map((el : any) => ({
+    'Subscription.subscription_name': el['Subscription.subscription_name'],
+    'Subscription.subscription_totalsupply': el['Subscription.subscription_totalsupply'],
+    'Subscription.subscription_symbol': el['Subscription.subscription_symbol'],
+    'Subscription.subscription_building_date': el['Subscription.subscription_building_date']
+  }));
+  
+  const email_list = result.map((el : any)=>el.user_email);
+  const amount_list = result.map((el : any)=>el.amount);
+  // console.log(email_list);
+  // console.log(amount_list);
+  try {
+    res.json({estateInfo,email_list,amount_list});
+  } catch (error) {
+    res.sendStatus(400);
+    console.log("subscriptionList 에서 오류",error);
+  }
 }

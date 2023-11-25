@@ -16,6 +16,7 @@ import Votes from "./votes";
 import Real_estates_own_history from "./real_estates_own_history";
 import Tx_block from "./tx_block";
 import Tx_receipt from "./tx_receipt";
+import Contract_address from './contract_address';
 
 export const sequelize = new Sequelize(
   config.dev.database!,
@@ -46,6 +47,7 @@ export interface DB {
   Real_estates_own_history: typeof Real_estates_own_history;
   Tx_block: typeof Tx_block;
   Tx_receipt: typeof Tx_receipt;
+  Contract_address : typeof Contract_address ;
 }
 
 export const db: DB = {
@@ -66,6 +68,7 @@ export const db: DB = {
   Real_estates_own_history,
   Tx_block,
   Tx_receipt,
+  Contract_address,
 };
 
 db.sequelize = sequelize;
@@ -87,6 +90,7 @@ Votes.initModel(sequelize);
 Real_estates_own_history.initModel(sequelize);
 Tx_block.initModel(sequelize);
 Tx_receipt.initModel(sequelize);
+Contract_address.initModel(sequelize);
 
 Subscriptions.associate(db);
 Real_estates.associate(db);

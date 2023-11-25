@@ -17,6 +17,7 @@ interface SubscriptionsAttribute {
   subscription_img_4: string;
   subscription_img_5: string;
   subscription_name: string;
+  subscription_symbol: string;
   subscription_address: string;
   subscription_totalprice: bigint;
   subscription_totalsupply: number;
@@ -77,6 +78,10 @@ class Subscriptions extends Model<SubscriptionsAttribute> {
           type: DataTypes.STRING,
         },
         subscription_name: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        subscription_symbol :{
           type: DataTypes.STRING,
           allowNull: false,
         },

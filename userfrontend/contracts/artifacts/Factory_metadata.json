@@ -6,6 +6,32 @@
 	"output": {
 		"abi": [
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "message",
+						"type": "string"
+					}
+				],
+				"name": "DebugLog",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"name": "EstateCreated",
+				"type": "event"
+			},
+			{
 				"inputs": [],
 				"name": "callCA",
 				"outputs": [
@@ -157,19 +183,19 @@
 			]
 		},
 		"ERC20subscription.sol": {
-			"keccak256": "0x29fe8fd5ea7cdcd11e2f1f8cb358349d406c101c31faaeb967603c596ffc4933",
+			"keccak256": "0xa77c75d6abf12bb1f441aa53824a2015ae8462a77a49244a7ac5b6ff66e42327",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://9af72556cd517ecd1be5a9cf14610cf3e8a23facd8f1808f86b635ba5802ba88",
-				"dweb:/ipfs/QmWyBPCiZywVVagF8i49bVFsn8xnCeU5FjtdPq6i6qZibQ"
+				"bzz-raw://eb0b0a80633a159bd9c478c32244f53f3f425a3c6eee69cd83f63e9e72341af0",
+				"dweb:/ipfs/QmWNMakQy9fYuUCPuULbevhg4Hvwjawaw5FEknNGgREewV"
 			]
 		},
 		"Factory.sol": {
-			"keccak256": "0x219c3ac9be09b16172417ab7a76f8a538904af54d79dcddcffbf9c4a5a6c9784",
+			"keccak256": "0x4230bff19c4f4732fa23a59b8cf4362f79188f7ba18e3b1e3e93d31dfaff7617",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://39eba06b7d29a951dd4833c1cda95795b7d5626d96c9319236233d5676362682",
-				"dweb:/ipfs/QmeiVuDSMLAwjgBkzEKkxkSYco2DyU7JHPpH5jWxHPtKpp"
+				"bzz-raw://e5a867d9e1dbc1b2f31e72ebd1d036508e47f64ae153f5234c659edb8081260f",
+				"dweb:/ipfs/Qmc4fG1DfnTqkD9t53GcHCeWAxaUj97GuHRDHqToUimwSc"
 			]
 		}
 	},
