@@ -573,9 +573,21 @@ export const realEstateDetail = async (req: Request, res: Response) => {
 };
 
 // 토큰 내/외부 전송
-export const transferInOut = async () => {
+export const transferInOutList = async (req: Request, res: Response) => {
   try {
-    //
+    const result = await db.Tx_receipt.findAll({
+      attributes: [
+        "tx_from",
+        "tx_symbol",
+        "transmission",
+        [db.sequelize.fn("COUNT", db.sequelize.col("transmission")), "cnt"],
+      ],
+      group: ["tx_from", "tx_symbol", "transmission"],
+      order: [["cnt", "DESC"]],
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
   }

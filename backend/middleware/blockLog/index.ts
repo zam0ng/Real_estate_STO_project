@@ -53,6 +53,7 @@ export const handleSymbol = async () => {
 handleSymbol();
 
 // 데이터베이스에 있는 마지막 블록 번호를 가져옴
+// 지금은 구현하지 않았지만 추후에 서버가 꺼져있을다가 켜졌을떄 지나친 블록이 있다면 지나친 블록에 트랜잭션을 검사하여 데이터베이스에 반영시키려고 블록 번호를 가져오는 로직은 구현해둠
 export const handleBlockNum = async () => {
   try {
     return (block_num = (await blockNumberCheck()) ?? 0);
@@ -122,6 +123,7 @@ export const logLatestBlockEvents = async () => {
     if (currentBlockNum == block_num) return; // 현재 블록 번호와 데이터베이스에 있는 마지막 블록 번호 비교
 
     console.log("blockNumber : ", currentBlockNum, " 시작");
+    // console.time("logLatestBlockEvents");
 
     // 이부분이 현재 블록과 마지막에 검사한 블록의 번호를 비교하는 조건문
     if (block_num >= currentBlockNum) return;
@@ -130,6 +132,10 @@ export const logLatestBlockEvents = async () => {
 
     // 검사한 블록에 트랜잭션이 있으면 트랜잭션을 검사
     if (latestBlock.transactions) {
+      console.log(
+        "latestBlock.transactions.length : ",
+        latestBlock.transactions.length
+      );
       // 트랜잭션은 배열형태로 존재하기 때문에 for of 문을 사용하여 모든 트랜잭션을 검사
       for (const tx of latestBlock.transactions) {
         // input에는 어떤 동작인지에 대한 내용이 해시화되어 있는데 앞의 4바이트로 어떤 동작인지 유추 가능
@@ -203,6 +209,7 @@ export const logLatestBlockEvents = async () => {
   } catch (error) {
     // console.error(error);
   }
+  // console.timeEnd("logLatestBlockEvents");
 };
 
 // 나중에 매물 추가되는 곳에
