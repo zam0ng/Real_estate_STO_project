@@ -86,8 +86,20 @@ handleWalletAddress();
 // 지갑 주소를 검사
 const walletCheck = async (tx_from: string, tx_to: string) => {
   try {
-    user_wallets = await userWalletAddress();
-    return "ex";
+    const from_check = user_wallets.some(
+      (userWallet) => userWallet.wallet === tx_from
+    );
+
+    const to_check = user_wallets.some(
+      (userWallet) => userWallet.wallet === tx_to
+    );
+
+    // tx_from이 users 테이블에 있고 tx_to가 없으면 내부에서 외부로 나간것으로 판단
+    if (from_check && !to_check) return "out";
+    // 반대로 tx_from이 users 테이블에 없고 tx_to가 있으면 외부에서 내부로 들어온것으로 판단
+    if (!from_check && to_check) return "in";
+    // tx_from, tx_to가 모두 있으면 내부거래로 판단 빈 문자열을 반환
+    return "";
   } catch (error) {
     console.error(error);
     return "walletCheck error";
@@ -97,6 +109,8 @@ const walletCheck = async (tx_from: string, tx_to: string) => {
 // 블록에 있는 트랜잭션 저장
 export const logLatestBlockEvents = async () => {
   try {
+    // console.log("symbols : ", symbols);
+    // console.log("user_wallets : ", user_wallets);
     // 해당 네트워크의 마지막 블록을 가져옴
     const latestBlock: any = await web3.eth.getBlock("latest", true);
     // 현재 블록이 몇번쨰인지 가져옴
@@ -149,7 +163,7 @@ export const logLatestBlockEvents = async () => {
               log.topics.slice(1)
             );
             // 우리꺼 symbol을 보통 두글자 이기떄문에 그것보다 긴 symbol이 들어 올 경우 걸러냄
-            if (decodedLog.symbol.length > 5) continue;
+            if (decodedLog.symbol.length > 3) continue;
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
             if (symbols.includes(decodedLog.symbol)) {
@@ -158,6 +172,9 @@ export const logLatestBlockEvents = async () => {
                 decodedLog.from,
                 decodedLog.to
               );
+
+              // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김
+              if (addressCheck == "") continue;
 
               const logData = {
                 ca: address,

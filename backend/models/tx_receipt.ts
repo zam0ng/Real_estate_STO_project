@@ -9,7 +9,7 @@ interface txReceiptAttribute {
   tx_value: number;
   tx_symbol?: string;
   block_num: number;
-  transmission: string;
+  transmission?: string;
 }
 
 class Tx_receipt extends Model<txReceiptAttribute> {
@@ -20,7 +20,7 @@ class Tx_receipt extends Model<txReceiptAttribute> {
   declare tx_value: number;
   declare tx_symbol?: string;
   declare block_num: number;
-  declare transmission: string;
+  declare transmission?: string;
   static initModel(sequelize: Sequelize): typeof Tx_receipt {
     Tx_receipt.init(
       {
@@ -55,7 +55,6 @@ class Tx_receipt extends Model<txReceiptAttribute> {
         },
         transmission: {
           type: DataTypes.STRING,
-          allowNull: false,
         },
       },
       {
