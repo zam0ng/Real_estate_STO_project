@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from "express";
-import { Op } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 import Notices from "../../models/notices";
 import Dividends from "../../models/dividends";
@@ -575,15 +575,19 @@ export const realEstateDetail = async (req: Request, res: Response) => {
 // 토큰 내/외부 전송
 export const transferInOutList = async (req: Request, res: Response) => {
   try {
-    const result = await db.Tx_receipt.findAll({
-      attributes: [
-        "tx_from",
-        "tx_symbol",
-        "transmission",
-        [db.sequelize.fn("COUNT", db.sequelize.col("transmission")), "cnt"],
-      ],
-      group: ["tx_from", "tx_symbol", "transmission"],
-      order: [["cnt", "DESC"]],
+    //
+    const query = `
+    select 
+      CASE 
+        WHEN u.wallet = tr.tx_from THEN tr.tx_from 
+        WHEN u.wallet = tr.tx_to THEN tr.tx_to 
+      END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
+    from  tx_receipt tr
+      join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
+      group by tx_wallet, tr.tx_symbol, tr.transmission;`;
+
+    const result = await db.sequelize.query(query, {
+      type: QueryTypes.SELECT,
     });
 
     if (result) return res.status(200).json(result);
