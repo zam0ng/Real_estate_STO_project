@@ -8,6 +8,7 @@ import {
   symbolCheck,
   txReceipt,
   blockNumberCheck,
+  userWalletAddress,
 } from "../../controllers/blocklog";
 
 // const rpcEndpoint = "http://localhost:8545";
@@ -28,19 +29,23 @@ interface logDataAttribute {
   tx_value: number;
   tx_symbol: string;
   block_num: number;
+  transmission: string;
+}
+
+interface UserWallet {
+  wallet: string;
 }
 
 let block_num: number | 0;
 let symbols: any;
+let user_wallets: UserWallet[];
 let transactionLogs: logDataAttribute[] = [];
 
 // 데이터베이스에 있는 심볼들 가져오기
+// 네트워크에 우리 심볼만 있는게 아니라 다른 토큰의 심볼들도 나오기 때문에 우리 토큰 만 찾기 위해 심볼을 검사하기 위해 데이터베이스에 있는 심볼을 가져옴
 export const handleSymbol = async () => {
   try {
-    const result = await symbolCheck();
-    symbols = result;
-    console.log(symbols);
-    return;
+    return (symbols = await symbolCheck());
   } catch (error) {
     console.error(error);
   }
@@ -50,9 +55,7 @@ handleSymbol();
 // 데이터베이스에 있는 마지막 블록 번호를 가져옴
 export const handleBlockNum = async () => {
   try {
-    const result = await blockNumberCheck();
-    block_num = result ?? 0;
-    return;
+    return (block_num = (await blockNumberCheck()) ?? 0);
   } catch (error) {
     console.error(error);
   }
@@ -67,6 +70,27 @@ const handleTransactions = async (logData: logDataAttribute[]) => {
     return;
   } catch (error) {
     console.error(error);
+  }
+};
+
+// users 테이블의 지갑주소를 다 가져옴
+export const handleWalletAddress = async () => {
+  try {
+    return (user_wallets = (await userWalletAddress()) ?? []);
+  } catch (error) {
+    console.error(error);
+  }
+};
+handleWalletAddress();
+
+// 지갑 주소를 검사
+const walletCheck = async (tx_from: string, tx_to: string) => {
+  try {
+    user_wallets = await userWalletAddress();
+    return "ex";
+  } catch (error) {
+    console.error(error);
+    return "walletCheck error";
   }
 };
 
@@ -129,6 +153,12 @@ export const logLatestBlockEvents = async () => {
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
             if (symbols.includes(decodedLog.symbol)) {
+              // 내부 전송인지 외부 전송인지 판단
+              const addressCheck = await walletCheck(
+                decodedLog.from,
+                decodedLog.to
+              );
+
               const logData = {
                 ca: address,
                 tx_from: decodedLog.from,
@@ -136,6 +166,7 @@ export const logLatestBlockEvents = async () => {
                 tx_value: parseInt(decodedLog.value),
                 tx_symbol: decodedLog.symbol,
                 block_num: block_num,
+                transmission: addressCheck,
               };
               // 하나의 블록에 여러개의 transfer 동작이 일어날 수 있으니 배열의 형태로 저장
               transactionLogs.push(logData);

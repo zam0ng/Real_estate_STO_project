@@ -10,7 +10,9 @@ interface UserAttributes {
 }
 
 class Users extends Model<UserAttributes> {
+  declare user_profile_img: string;
   declare user_email: string;
+  declare wallet: string;
   declare balance: number;
   declare using_balance: number;
   declare blacklist: boolean;

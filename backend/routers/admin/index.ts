@@ -10,6 +10,7 @@ import {
   tradeMonthList,
   realEstateManagement,
   realEstateDetail,
+  transferInOut,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -46,6 +47,8 @@ router.get("/trade_month_list", tradeMonthList);
 router.get("/management/real_estates_list", realEstateManagement);
 // 매물 관리 페이지 상세
 router.get("/management/real_estates_detail/:id", realEstateDetail);
+// 토큰 내/외부 전송 현황
+router.get("/transfer_in_out_list", transferInOut);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////

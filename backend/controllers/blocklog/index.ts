@@ -3,6 +3,20 @@ import { db } from "../../models";
 
 import { myEmitter } from "../../middleware/eventEmitter";
 
+interface logDataAttribute {
+  ca: string;
+  tx_from: string;
+  tx_to: string;
+  tx_value: number;
+  tx_symbol: string;
+  block_num: number;
+  transmission: string;
+}
+
+interface UserWallet {
+  wallet: string;
+}
+
 export const blockNumberCheck = async () => {
   try {
     const result = await db.Tx_receipt.findOne({
@@ -19,6 +33,7 @@ export const blockNumberCheck = async () => {
     return block_num;
   } catch (error) {
     console.error(error);
+    return 0;
   }
 };
 
@@ -37,6 +52,25 @@ export const symbolCheck = async () => {
     else return [];
   } catch (error) {
     console.error(error);
+    return [];
+  }
+};
+
+export const userWalletAddress = async (): Promise<UserWallet[]> => {
+  try {
+    const result = await db.Users.findAll({
+      attributes: ["wallet"],
+      raw: true,
+    });
+
+    if (result) {
+      return result.map((user) => ({ wallet: user.wallet }));
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 };
 
@@ -62,15 +96,6 @@ export const txBlock = async (symbol: string, blockNumber: number) => {
   }
 };
 
-interface logDataAttribute {
-  ca: string;
-  tx_from: string;
-  tx_to: string;
-  tx_value: number;
-  tx_symbol: string;
-  block_num: number;
-}
-
 export const txReceipt = async (logData: logDataAttribute[]) => {
   try {
     const result = await db.Tx_receipt.bulkCreate(logData);
@@ -79,5 +104,6 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     else return false;
   } catch (error) {
     console.error(error);
+    return false;
   }
 };

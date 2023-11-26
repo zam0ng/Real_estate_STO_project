@@ -572,6 +572,15 @@ export const realEstateDetail = async (req: Request, res: Response) => {
   }
 };
 
+// 토큰 내/외부 전송
+export const transferInOut = async () => {
+  try {
+    //
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 재영 어드민 부분
 export const realEstateSubmit = async (req: Request, res: Response) => {
   // console.log("test",req.body);

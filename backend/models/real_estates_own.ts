@@ -38,7 +38,6 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        
       },
       {
         sequelize,
