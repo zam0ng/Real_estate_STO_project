@@ -10,7 +10,7 @@ export default function SubscriptionAd(){
                     <div className="bg-slate-100 w-28 rounded-xl text-sm h-9 text-center pt-2 font-bold mt-2">청약하러 가기</div>
                 </div>
                 <div className="h-full">
-                        <img src={process.env.PUBLIC_URL + `/images/home/coin.gif`} className="mt-20 pr-3 "/>
+                        <img src={process.env.PUBLIC_URL + `/images/home/coin.gif`} className="mt-20 pr-3 hidden xs:block md:hidden"/>
                 </div>
             </div>
         </div>

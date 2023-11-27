@@ -13,7 +13,7 @@ export default function Home() {
       content : <>공시자료 화면</>
   }]
   return (
-    <div className="mb-16">
+    <div className="mb-24">
       <HomeAds/>
       <LineTypeTabComponent data={tab}/>
       <TabBar />

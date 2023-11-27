@@ -262,10 +262,10 @@ export const mainSearch = async (req: Request, res: Response) => {
   console.log("mainSearch 들어옴?");
   try {
     const result = await Real_estates.findAll({
-      attributes: ["real_estate_name"],
+      attributes: ["id","real_estate_name"],
       raw: true,
     });
-    // console.log(result);
+    console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
