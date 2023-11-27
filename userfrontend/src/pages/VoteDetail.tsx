@@ -6,7 +6,9 @@ const VoteDetail: React.FC = () => {
     return (
         <div className='w-screen h-screen'>
             <VoteDetailHeader />
-            <VoteDetailBody />
+            <div className='w-full h-[90%] overflow-y-scroll pl-2 pr-2'>
+                <VoteDetailBody />
+            </div>
         </div>
     )
 }

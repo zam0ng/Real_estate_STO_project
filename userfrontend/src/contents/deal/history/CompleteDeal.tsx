@@ -37,7 +37,7 @@ const CompleteDeal: React.FC = () => {
 
     useEffect(()=>{
         console.log(data);
-    },[]);
+    },[data]);
 
     useEffect(()=>{
         if(data === undefined){
@@ -52,7 +52,7 @@ const CompleteDeal: React.FC = () => {
 
             setFromRecent(sortedByDate);
         }
-    },[]);
+    },[data]);
     
     // console.log(fromRecent);
 

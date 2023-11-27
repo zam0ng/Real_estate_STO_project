@@ -76,7 +76,7 @@ export const isLogin = async (
     }
     console.log(verify.data.email);
     console.log(req.route.path);
-    if (req.route.path != "/") next();
+    if (req.route.path != "/") return next();
     if (verify) {
       return res.send(verify.data.email);
     } else return res.status(404).send("다시 로그인 하세요.");

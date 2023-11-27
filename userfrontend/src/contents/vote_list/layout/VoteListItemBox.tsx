@@ -3,7 +3,7 @@ import VoteListItem from '../VoteListItem';
 
 const VoteListItemBox: React.FC = () => {
   return (
-    <div className='w-full h-auto border border-black'>
+    <div className='w-full h-fit'>
       <VoteListItem />
       <VoteListItem />
       <VoteListItem />

@@ -2,7 +2,9 @@ import React from 'react';
 
 const VoteAdditionalInfo: React.FC = () => {
   return (
-    <div>VoteAdditionalInfo</div>
+    <div className='w-full h-32'>
+
+    </div>
   )
 }
 

@@ -67,7 +67,7 @@ function App() {
             path="/subscription/detail/:buildingId"
             element={<SubscriptionDetail />}
           />
-          <Route path="/vote-detail/:real-estate/:vote-name" element={<VoteDetail />} />
+          <Route path="/vote-detail/:name/:title" element={<VoteDetail />} />
           <Route path="/vote-list" element={<VoteList />} />
         </Routes>
       </QueryClientProvider>
