@@ -2,7 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface subscriptions_ownAttribute {
-  user_email: string;
+  wallet: string;
   subscription_id: number;
   amount: number;
 }
@@ -11,7 +11,7 @@ class Subscriptions_own extends Model<subscriptions_ownAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions_own {
     Subscriptions_own.init(
       {
-        user_email: {
+        wallet: {
           type: DataTypes.STRING,
           allowNull: false,
         },

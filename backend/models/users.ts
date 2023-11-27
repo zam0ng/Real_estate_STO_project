@@ -1,4 +1,5 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
+import { DB } from "../models";
 
 interface UserAttributes {
   user_profile_img: string;
@@ -52,6 +53,11 @@ class Users extends Model<UserAttributes> {
       }
     );
     return Users;
+  }
+  static associate(db: DB) {
+    db.Users.hasMany(db.Vote_history, {
+      foreignKey: "user_id",
+    });
   }
 }
 

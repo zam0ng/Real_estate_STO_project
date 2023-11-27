@@ -17,6 +17,7 @@ import Real_estates_own_history from "./real_estates_own_history";
 import Contract_address from "./contract_address";
 import Tx_block from "./tx_block";
 import Tx_receipt from "./tx_receipt";
+import Vote_history from "./vote_history";
 
 export const sequelize = new Sequelize(
   config.dev.database!,
@@ -48,6 +49,7 @@ export interface DB {
   Contract_address: typeof Contract_address;
   Tx_block: typeof Tx_block;
   Tx_receipt: typeof Tx_receipt;
+  Vote_history: typeof Vote_history;
 }
 
 export const db: DB = {
@@ -69,11 +71,13 @@ export const db: DB = {
   Contract_address,
   Tx_block,
   Tx_receipt,
+  Vote_history,
 };
 
 db.sequelize = sequelize;
 db.Orders = Orders;
 db.Trades = Trades;
+
 Users.initModel(sequelize);
 Orders.initModel(sequelize);
 Trades.initModel(sequelize);
@@ -87,18 +91,18 @@ Dividend_details.initModel(sequelize);
 Notices.initModel(sequelize);
 Real_estates_own.initModel(sequelize);
 Votes.initModel(sequelize);
+Vote_history.initModel(sequelize);
 Real_estates_own_history.initModel(sequelize);
-
 Contract_address.initModel(sequelize);
 Tx_block.initModel(sequelize);
 Tx_receipt.initModel(sequelize);
 
+Users.associate(db);
 Subscriptions.associate(db);
 Real_estates.associate(db);
 Real_estates_own.associate(db);
 Subscriptions_own.associate(db);
 Subscription_application.associate(db);
-
 // Orders.associate(db);
 // Trades.associate(db);
 Dividends.associate(db);
@@ -112,3 +116,5 @@ Subscription_application.associate(db);
 // Contract_address.associate(db);
 // Tx_block.associate(db);
 // Tx_receipt.associate(db);
+Votes.associate(db);
+Vote_history.associate(db);
