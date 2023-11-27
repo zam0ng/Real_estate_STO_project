@@ -1,4 +1,12 @@
 import BoxTypeTabComponent from "../../../components/tabUI/BoxTypeTabComponent"
+import HomeSoaring from "./HomeSoaring"
+import HomeFalling from "./HomeFalling"
+import HomeSearch from "./HomeSearch"
+import HomeVolume from "./HomeVolume"
+import HomeDividend from "./HomeDividend"
+
+
+
 
 export default function HomeChart(){
 
@@ -6,22 +14,16 @@ export default function HomeChart(){
 
     let homeRank = [{
         tabName : "거래량",
-        content : <>
-            <div>d</div>
-            <div>d</div>
-            <div>d</div>
-            <div>d</div>
-            <div>d</div>
-        </> 
+        content : <HomeVolume />
     },{
         tabName : "급상승",
-        content : <>급상승입니다</>
+        content : <HomeSoaring />
     },{
         tabName : "급하락",
-        content : <>급하락입니다</>
+        content : <HomeFalling />
     },{
         tabName : "배당",
-        content : <>배당순위입니다</>
+        content : <HomeDividend />
     }
 
     ]

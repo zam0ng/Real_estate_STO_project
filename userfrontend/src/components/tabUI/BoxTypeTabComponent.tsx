@@ -63,7 +63,7 @@ export default function BoxTypeTabComponent ({data} : BoxTypeComponentProps){
                 ></div>
                 {title}
             </div>
-            <div className="mt-3 border= w-5/6  rounded-xl shadow-lg m-auto min-h-[30%]">{renderContent()}</div>
+            <div className="mt-3 border= w-5/6  rounded-xl shadow-sm m-auto min-h-[30%]">{renderContent()}</div>
         </div>
     )
 }

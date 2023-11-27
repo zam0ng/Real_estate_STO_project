@@ -64,7 +64,7 @@ export default function HomeSearch(){
 
     return(
         <>        
-            <div className="w-5/6   mt-1 h-9 m-auto border border ">
+            <div className="w-5/6   mt-1 h-9 m-auto border ">
                 <input 
                 type="text" 
                 placeholder="등록된 모든 건물을 검색할 수 있어요   🍳" 

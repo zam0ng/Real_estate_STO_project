@@ -1,9 +1,10 @@
 import axios from '../../../components/url';
 import { useQuery } from "@tanstack/react-query"
 
-export default function HomeFalling(){
 
-    const fetchFalling = async ()=>{
+export default function HomeDividend(){
+
+    const fetchDividend = async ()=>{
         const { data } = await axios.get('/main/sudden_increment');
         return data;
     }
@@ -11,18 +12,18 @@ export default function HomeFalling(){
     const {
         isLoading,
         error,
-        data : falling
+        data : dividend
     } = useQuery({
-        queryKey: ['falling'],
-        queryFn: fetchFalling
+        queryKey: ['dividend'],
+        queryFn: fetchDividend
     });
 
-    console.log(falling);
+    console.log(dividend);
 
 
     return(
         <>
-            급락순위
+            배당금 순위
         </>
     )
 }
