@@ -638,16 +638,15 @@ export const transferInOutList = async (req: Request, res: Response) => {
 };
 
 // 컨트랙트 주소 가져오기
-export const contractAddressForVote = async (req: Request, res: Response) => {
-  const real_estate_name = req.query.real_estate_name as string;
+export const contractAddressList = async (req: Request, res: Response) => {
   try {
-    const result = await db.Contract_address.findOne({
-      attributes: ["address"],
-      where: { real_estate_name: real_estate_name, ca_type: "token" },
+    const result = await db.Contract_address.findAll({
+      attributes: ["id", "address", "real_estate_name", "symbol"],
+      where: { ca_type: "token" },
       raw: true,
     });
 
-    if (result) return res.status(200).send(result.address);
+    if (result) return res.status(200).send(result);
     else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);

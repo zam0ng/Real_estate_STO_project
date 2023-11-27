@@ -13,7 +13,7 @@ import {
   transferInOutList,
   blackListAdd,
   blackListDel,
-  contractAddressForVote,
+  contractAddressList,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -57,7 +57,7 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 // 토큰 내/외부 전송 현황
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
-router.get("/contract_address_for_vote", contractAddressForVote);
+router.get("/contract_address_list", contractAddressList);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////

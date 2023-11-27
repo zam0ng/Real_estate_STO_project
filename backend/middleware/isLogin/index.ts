@@ -22,26 +22,26 @@ async function handleAccesstokenVerify(_token: string) {
 }
 
 // Access token 발급 후 didtoken을 생성하여 wallet 주소 가져오기
-async function handleWalletAddress(_token: string) {
-  const createDidtoken = await axios.post(
-    `https://bouns.io/api/create-did-token`,
-    {
-      token: _token,
-    }
-  );
+// async function handleWalletAddress(_token: string) {
+//   const createDidtoken = await axios.post(
+//     `https://bouns.io/api/create-did-token`,
+//     {
+//       token: _token,
+//     }
+//   );
 
-  const didtoken = createDidtoken.data;
+//   const didtoken = createDidtoken.data;
 
-  // 지갑주소를 얻기 위해 didtoken을 검증
-  const verifyDidToken = await axios.post(
-    `https://bouns.io/api/verify-did-token`,
-    { token: didtoken }
-  );
+//   // 지갑주소를 얻기 위해 didtoken을 검증
+//   const verifyDidToken = await axios.post(
+//     `https://bouns.io/api/verify-did-token`,
+//     { token: didtoken }
+//   );
 
-  const wallet = verifyDidToken.data.iss.split(":")[2];
+//   const wallet = verifyDidToken.data.iss.split(":")[2];
 
-  return wallet;
-}
+//   return wallet;
+// }
 
 export const isLogin = async (
   req: Request,
