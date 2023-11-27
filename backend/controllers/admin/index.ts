@@ -291,6 +291,7 @@ export const blackList = async (req: Request, res: Response) => {
   }
 };
 
+// 블랙리스트 등록
 export const blackListAdd = async (req: Request, res: Response) => {
   try {
     const { user_email } = req.body;
@@ -301,11 +302,13 @@ export const blackListAdd = async (req: Request, res: Response) => {
     );
 
     if (result) return res.status(200).send(true);
-    else return;
+    else return false;
   } catch (error) {
     console.error(error);
   }
 };
+
+// 블랙리스트 해제
 export const blackListDel = async (req: Request, res: Response) => {
   try {
     const { user_email } = req.body;
@@ -315,8 +318,8 @@ export const blackListDel = async (req: Request, res: Response) => {
       { where: { user_email: user_email } }
     );
 
-    if (result) return res.status(200).send(false);
-    else return;
+    if (result) return res.status(200).send(true);
+    else return false;
   } catch (error) {
     console.error(error);
   }
@@ -628,6 +631,23 @@ export const transferInOutList = async (req: Request, res: Response) => {
     });
 
     if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 컨트랙트 주소 가져오기
+export const contractAddressForVote = async (req: Request, res: Response) => {
+  const real_estate_name = req.query.real_estate_name as string;
+  try {
+    const result = await db.Contract_address.findOne({
+      attributes: ["address"],
+      where: { real_estate_name: real_estate_name, ca_type: "token" },
+      raw: true,
+    });
+
+    if (result) return res.status(200).send(result.address);
     else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);

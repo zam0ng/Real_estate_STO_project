@@ -13,6 +13,7 @@ class Contract_address extends Model<caAttribute> {
   declare id: number;
   declare address: string;
   declare real_estate_name: string;
+  declare ca_type: string;
   declare symbol: string;
   static initModel(sequelize: Sequelize): typeof Contract_address {
     Contract_address.init(

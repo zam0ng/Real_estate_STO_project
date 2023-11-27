@@ -12,6 +12,7 @@ import marketRouter from "./routers/market";
 import mainRouter from "./routers/main";
 import subscriptionRouter from "./routers/subscription";
 import mypageRouter from "./routers/mypage";
+import voteRouter from "./routers/vote";
 
 import { logLatestBlockEvents } from "./middleware/blockLog";
 
@@ -51,6 +52,7 @@ app.use("/market", marketRouter);
 app.use("/main", mainRouter);
 app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
+app.use("/vote", voteRouter);
 
 setInterval(logLatestBlockEvents, 10000);
 
