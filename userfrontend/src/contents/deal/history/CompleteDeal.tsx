@@ -52,7 +52,7 @@ const CompleteDeal: React.FC = () => {
 
             setFromRecent(sortedByDate);
         }
-    },[]);
+    },[data]);
     
     // console.log(fromRecent);
 
