@@ -15,7 +15,7 @@ export default function HomeIndices(){
                 <HomeChart />
             </div>
             <div className="text-xl font-bold mt-6 ">찾는 부동산이 있으세요?</div>
-            <div className="w-full m-auto border rounded-2xl  mt-5">
+            <div className="w-full m-auto   mt-5">
                 <HomeSearch />
             </div>
         </div>
