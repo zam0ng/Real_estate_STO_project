@@ -1,5 +1,5 @@
 import express, { Express, Request, Response, Router } from "express";
-import { Op } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 import Notices from "../../models/notices";
 import Dividends from "../../models/dividends";
@@ -99,8 +99,12 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
     let ten_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+    // console.log("find_real_estate_names : ", find_real_estate_names);
     const insert_ten_days_amount = find_real_estate_names.map((item) => {
+      console.log("item : ", item);
+      console.log("ten_date : ", ten_date);
       const getIndexOf = ten_date.indexOf(item.trade_date);
+      // console.log("getIndexOf : ", getIndexOf);
       if (getIndexOf < 0) return;
       else ten_amount[getIndexOf] = parseInt(item.trade_amount);
     });
@@ -111,6 +115,7 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
         ten_amount: ten_amount,
       },
     };
+
     all_result.push(real_estate_object);
   });
 
@@ -286,6 +291,40 @@ export const blackList = async (req: Request, res: Response) => {
   }
 };
 
+// 블랙리스트 등록
+export const blackListAdd = async (req: Request, res: Response) => {
+  try {
+    const { user_email } = req.body;
+
+    const result = await db.Users.update(
+      { blacklist: true },
+      { where: { user_email: user_email } }
+    );
+
+    if (result) return res.status(200).send(true);
+    else return false;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 블랙리스트 해제
+export const blackListDel = async (req: Request, res: Response) => {
+  try {
+    const { user_email } = req.body;
+
+    const result = await db.Users.update(
+      { blacklist: false },
+      { where: { user_email: user_email } }
+    );
+
+    if (result) return res.status(200).send(true);
+    else return false;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 매물별 거래량 차트 (일)
 export const tradeDayList = async (req: Request, res: Response) => {
   try {
@@ -391,7 +430,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
             ),
             "YYYY-MM"
           ),
-          "trade_month",
+          "trade_date",
         ],
         [
           db.sequelize.fn("sum", db.sequelize.col("trade_amount")),
@@ -406,7 +445,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
           "YYYY-MM"
         ),
       ],
-      order: [[db.sequelize.col("trade_month"), "DESC"]],
+      order: [[db.sequelize.col("trade_date"), "DESC"]],
       where: {
         createdAt: {
           [Op.gte]: tenMonthsAgo,
@@ -414,6 +453,8 @@ export const tradeMonthList = async (req: Request, res: Response) => {
       },
       raw: true,
     })) as [] as TradeDate[];
+
+    // console.log(result);
 
     const all_result = await setRealEstateAmount(result, "month");
 
@@ -436,7 +477,7 @@ export const realEstateManagement = async (req: Request, res: Response) => {
         "subscription_status",
         [
           db.sequelize.literal(
-            "((subscription_order_amount / subscription_totalsupply) * 100) - 100"
+            "((subscription_order_amount * 100 / subscription_totalsupply))"
           ),
           "achievement_rate",
         ],
@@ -566,6 +607,46 @@ export const realEstateDetail = async (req: Request, res: Response) => {
     });
 
     if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 토큰 내/외부 전송
+export const transferInOutList = async (req: Request, res: Response) => {
+  try {
+    const query = `
+    select 
+      CASE 
+        WHEN u.wallet = tr.tx_from THEN tr.tx_from 
+        WHEN u.wallet = tr.tx_to THEN tr.tx_to 
+      END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
+    from  tx_receipt tr
+      join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
+      group by tx_wallet, tr.tx_symbol, tr.transmission;`;
+
+    const result = await db.sequelize.query(query, {
+      type: QueryTypes.SELECT,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 컨트랙트 주소 가져오기
+export const contractAddressList = async (req: Request, res: Response) => {
+  try {
+    const result = await db.Contract_address.findAll({
+      attributes: ["id", "address", "real_estate_name", "symbol"],
+      where: { ca_type: "token" },
+      raw: true,
+    });
+
+    if (result) return res.status(200).send(result);
     else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
