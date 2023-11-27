@@ -101,8 +101,8 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
     // console.log("find_real_estate_names : ", find_real_estate_names);
     const insert_ten_days_amount = find_real_estate_names.map((item) => {
-      console.log("item : ", item);
-      console.log("ten_date : ", ten_date);
+      // console.log("item : ", item);
+      // console.log("ten_date : ", ten_date);
       const getIndexOf = ten_date.indexOf(item.trade_date);
       // console.log("getIndexOf : ", getIndexOf);
       if (getIndexOf < 0) return;
