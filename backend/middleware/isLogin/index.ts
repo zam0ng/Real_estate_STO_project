@@ -32,6 +32,7 @@ async function handleWalletAddress(_token: string) {
 
   const didtoken = createDidtoken.data;
 
+  // 지갑주소를 얻기 위해 didtoken을 검증
   const verifyDidToken = await axios.post(
     `https://bouns.io/api/verify-did-token`,
     { token: didtoken }
@@ -63,12 +64,12 @@ export const isLogin = async (
     });
 
     if (!member_check) {
-      const wallet = await handleWalletAddress(token);
+      // const wallet = await handleWalletAddress(token);
 
       await db.Users.create({
         user_profile_img: "/images/test.png",
         user_email: user_email,
-        wallet: wallet,
+        wallet: "",
         balance: 0,
         using_balance: 0,
         blacklist: false,

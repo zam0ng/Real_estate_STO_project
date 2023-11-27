@@ -28,7 +28,6 @@ class Users extends Model<UserAttributes> {
         },
         wallet: {
           type: DataTypes.STRING,
-          allowNull: false,
         },
         balance: {
           type: DataTypes.INTEGER,

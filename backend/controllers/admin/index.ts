@@ -99,8 +99,12 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
     let ten_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
+    // console.log("find_real_estate_names : ", find_real_estate_names);
     const insert_ten_days_amount = find_real_estate_names.map((item) => {
+      console.log("item : ", item);
+      console.log("ten_date : ", ten_date);
       const getIndexOf = ten_date.indexOf(item.trade_date);
+      // console.log("getIndexOf : ", getIndexOf);
       if (getIndexOf < 0) return;
       else ten_amount[getIndexOf] = parseInt(item.trade_amount);
     });
@@ -111,6 +115,7 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
         ten_amount: ten_amount,
       },
     };
+
     all_result.push(real_estate_object);
   });
 
@@ -391,7 +396,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
             ),
             "YYYY-MM"
           ),
-          "trade_month",
+          "trade_date",
         ],
         [
           db.sequelize.fn("sum", db.sequelize.col("trade_amount")),
@@ -406,7 +411,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
           "YYYY-MM"
         ),
       ],
-      order: [[db.sequelize.col("trade_month"), "DESC"]],
+      order: [[db.sequelize.col("trade_date"), "DESC"]],
       where: {
         createdAt: {
           [Op.gte]: tenMonthsAgo,
@@ -414,6 +419,8 @@ export const tradeMonthList = async (req: Request, res: Response) => {
       },
       raw: true,
     })) as [] as TradeDate[];
+
+    // console.log(result);
 
     const all_result = await setRealEstateAmount(result, "month");
 
