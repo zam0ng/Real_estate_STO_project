@@ -8,8 +8,11 @@
     "strict": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
+    "paths": {
+      "@openzeppelin/*": ["./node_modules/@openzeppelin"]
+    },
     "moduleResolution": "node"
   },
   "include": ["**/app.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

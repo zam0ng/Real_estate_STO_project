@@ -15,7 +15,6 @@ const sellPost = async (propertyName: string,sellData:SellPost,token:string): Pr
         ...sellData,
         token : token
     });
-    // console.log(data);
     return data;
 }
 
@@ -81,11 +80,14 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
             mutationFn:({propertyName,sellData})=>sellPost(propertyName,sellData,isCookie),
             onSuccess: (data)=>{
                 console.log(data);
+                console.log(sellAmount);
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
+                queryClient.refetchQueries({queryKey:["headerInfo"]});
+
                 isSocket.emit('sale_completed')
-            },
+            }, 
             onError: (error)=>{
                 console.log(error);
             }

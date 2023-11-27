@@ -16,8 +16,7 @@ interface socketProps {
 
 const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promise<string> => {
     
-    // 여기에 소켓 send.
-    console.log(buyData); // {price: 1000, amount: 5} 
+    // console.log(buyData); // {price: 1000, amount: 5} 
     const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,{
         ...buyData,
         token: token
@@ -29,7 +28,7 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promi
 const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     // const {socket} = useContext(GlobalContext);
-    console.log(isSocket);
+    // console.log(isSocket);
 
     const currentPage = useLocation();
     // console.log(currentPage.state);
@@ -91,7 +90,7 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
-                console.log("refetch passed");
+                queryClient.refetchQueries({queryKey:["headerInfo"]});
                 isSocket.emit("purchase_completed")
             },
             onError: (error) => {

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 
+import DashboardActionIcon from "../dashboard/DashboardActionIcon";
+
 export const CreateEstateBtn = () => {
 // const [isEstateModalOpen, setIsEstateModalOpen] = useState(false)
 
@@ -30,10 +32,25 @@ const handleEstateBtn = () => {
     // });
 };
 
+
 return (
     <>
     {/* <button onClick={handleEstateBtn}> 매물 등록 </button> */}
-    <Link href="/admin/dashboard?estateModal=true">매물 등록</Link>
+    
+    <Link 
+        href="/admin/dashboard?estateModal=true" 
+        className="w-5.375rem h-5.375rem bg-dashboard_btn_estate  rounded-md flex items-center justify-evenly flex-col">
+        
+        <div>
+            <DashboardActionIcon/>
+        </div>
+        
+        <div>
+            <p className="text-base font-medium tracking-tight text-white"> 매물 등록 </p>
+        </div>
+        
+    </Link>
+
     </>
 );
 };

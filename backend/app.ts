@@ -86,7 +86,8 @@ sequelize
   console.log("err", err);
 });
 
-app.use("estate_img", express.static(path.join(__dirname,"imgs", "estate")));
+
+app.use("/estate_img", express.static(path.join(__dirname,  "/imgs/estate" )));
 
 app.use("/admin", adminRouter);
 app.use("/market", marketRouter);

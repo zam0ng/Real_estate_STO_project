@@ -1,9 +1,15 @@
 import express, { Express, Request, Response, Router } from "express";
-import { Op, QueryTypes } from "sequelize";
+import { Model, Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 import Notices from "../../models/notices";
 import Dividends from "../../models/dividends";
 import Subscriptions from "../../models/subscriptions";
+import Contract_address from "../../models/contract_address";
+import Real_estates_own from "../../models/real_estates_own";
+import Subscriptions_own from "../../models/subscriptions_own";
+import { group } from "console";
+import Real_estates from "../../models/real_estates";
+import Users from "../../models/users";
 
 // 정현이형 어드민 부분
 type TradeDate = {
@@ -668,7 +674,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
   }
   console.log("++++++++",req.body);
 
-  const{ name,address,totalprice,totalsupply,description,
+  const{ name,address,symbol,totalprice,totalsupply,description,
           start_date,end_date,result_date,building_date,trading_start_date,
           order_amount,offering_price,status,floors,purpose,mainpurpose,area,
           all_area,build_area,floor_area,completion,stock_type,publisher
@@ -682,6 +688,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
           subscription_img_4: imgPathArr[3],
           subscription_img_5 : imgPathArr[4],
           subscription_name : name,
+          subscription_symbol : symbol,
           subscription_address: address,
           subscription_totalprice : totalprice,
           subscription_totalsupply : totalsupply,
@@ -785,3 +792,165 @@ export const dividendSubmit = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 };
+
+
+
+export const subscription = async (req : Request , res : Response) => {
+
+  try {
+    const subscription = await Subscriptions.findAll()
+    res.status(200).json(subscription);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500)
+  }
+}
+
+
+export const subscriptionDetail = async (req : Request , res : Response) => {
+
+  try {
+    
+    const subscriptionDetail = await Subscriptions.findByPk(req.params.id)
+    console.log("subscriptionDetail" , subscriptionDetail)
+    res.status(200).json(subscriptionDetail)
+
+  } catch (error) {
+    console.log(error)
+    res.sendStatus(500)
+  }
+
+}
+
+export const caRegister  = async(req : Request , res : Response)=>{
+
+  console.log(req.body);
+  const {address ,real_estate_name , symbol} =req.body;
+  try {
+    await Contract_address.create({
+      address : address,
+      real_estate_name : real_estate_name,
+      symbol : symbol,
+    })
+    res.sendStatus(201);
+  } catch (error) {
+    res.sendStatus(400);
+    console.log("caRegister에서 오류",error);
+  }
+}
+
+// 청약자 리스트
+export const subscriptionList  = async(req : Request , res : Response) =>{
+  const {id} =req.params;
+  try {
+  const result = await Subscriptions_own.findAll({
+    where :{
+      subscription_id : id,
+      
+    },
+    attributes : [
+      'user_email',
+      'amount',
+    ],
+    order :[
+      ['id',"ASC"],
+    ],
+
+    include : [
+      {
+        model : Subscriptions,
+        attributes : ['subscription_name','subscription_totalsupply','subscription_symbol','subscription_building_date'],
+      },
+    ],
+    raw : true,
+  })
+
+  const estateInfo = result.slice(0, 1).map((el : any) => ({
+    'Subscription.subscription_name': el['Subscription.subscription_name'],
+    'Subscription.subscription_totalsupply': el['Subscription.subscription_totalsupply'],
+    'Subscription.subscription_symbol': el['Subscription.subscription_symbol'],
+    'Subscription.subscription_building_date': el['Subscription.subscription_building_date']
+  }));
+  
+  const wallet_list = result.map((el : any)=>el.user_email);
+  const amount_list = result.map((el : any)=>el.amount);
+
+  console.log(wallet_list);
+  const emails = await Users.findAll({
+    where : {
+      wallet : wallet_list,
+    },
+    attributes : [
+      'user_email'
+    ],
+    raw : true,
+  })
+  // .then(users => {
+  //   const emails = users.map(user => user.user_email);
+  //   console.log("이메일 배열:", emails);
+  // })
+  // .catch(error => {
+  //   console.error("에러 발생:", error);
+  // });
+  // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
+  const email_list = emails.map(el=>el.user_email);
+  // console.log(email_list);
+  
+  const data = await Subscriptions.findOne({
+    where :{
+      id : id,
+    },
+    attributes : [
+      'id','subscription_name', 'subscription_offering_price', 'subscription_symbol'
+    ],
+    raw : true,
+  })
+  // console.log(data?.id);
+  // console.log(data?.subscription_name);
+  // console.log(data?.subscription_symbol);
+  // console.log(data?.subscription_offering_price);
+
+  // real_estates 생성
+  await Real_estates.create({
+    subscription_id : data!.id,
+    real_estate_name : data!.subscription_name,
+    current_price : data!.subscription_offering_price,
+    start_price : data!.subscription_offering_price,
+    // 건물가치는 임의 지정
+    value : 5500,
+    token_name : data!.subscription_symbol,
+  })
+  
+  const estateId = await Real_estates.findOne({
+    where : {
+      real_estate_name : data!.subscription_name,
+    },
+    attributes :[
+      'id'
+    ],
+    raw : true,
+  })
+  // console.log(estateId);
+
+  // real_estates_own 에 넣어주기.
+  email_list.forEach(async(element,index) => {
+    
+    await Real_estates_own.create({
+      user_email : element,
+      real_estate_id : estateId!.id,
+      real_estate_name : data!.subscription_name,
+      price : data!.subscription_offering_price,
+      amount : amount_list[index],
+      possible_quantity : amount_list[index],
+
+    })
+  });
+  
+  // console.log(wallet_list);
+  // console.log(amount_list);
+    res.json({estateInfo,wallet_list,amount_list});
+  } catch (error) {
+    res.sendStatus(400);
+    console.log("subscriptionList 에서 오류",error);
+  }
+}
