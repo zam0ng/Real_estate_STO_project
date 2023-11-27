@@ -104,7 +104,7 @@ export const withDrawal = async (req: Request, res: Response) => {
 // 유저 정보 보내주기
 export const userInfo = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
 
     const result = await db.Users.findOne({
       attributes: [
@@ -114,7 +114,7 @@ export const userInfo = async (req: Request, res: Response) => {
         "balance",
         "using_balance",
       ],
-      where: { user_email: userEmail },
+      where: { user_email: String(user_email) },
       raw: true,
     });
 
@@ -128,11 +128,11 @@ export const userInfo = async (req: Request, res: Response) => {
 // 내 잔액 보여주기
 export const myBalance = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.params;
 
     const result = await db.Users.findOne({
       attributes: ["balance"],
-      where: { user_email: userEmail },
+      where: { user_email: user_email },
       raw: true,
     });
 
@@ -148,14 +148,14 @@ export const myBalance = async (req: Request, res: Response) => {
 // 입금액 보여주기
 export const totalDeposit = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.params;
 
     const result = await db.Deposit_drawal.findAll({
       attributes: [
         "user_email",
         [db.sequelize.fn("sum", db.sequelize.col("balance")), "balance"],
       ],
-      where: { [Op.and]: [{ user_email: userEmail }, { status: "입금" }] },
+      where: { [Op.and]: [{ user_email: user_email }, { status: "입금" }] },
       group: "user_email",
       raw: true,
     });
@@ -171,14 +171,14 @@ export const totalDeposit = async (req: Request, res: Response) => {
 // 출금액 보여주기
 export const totalDrawal = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.params;
 
     const result = await db.Deposit_drawal.findAll({
       attributes: [
         "user_email",
         [db.sequelize.fn("sum", db.sequelize.col("balance")), "balance"],
       ],
-      where: { [Op.and]: [{ user_email: userEmail }, { status: "출금" }] },
+      where: { [Op.and]: [{ user_email: user_email }, { status: "출금" }] },
       group: "user_email",
       raw: true,
     });
@@ -210,7 +210,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
 // 총 손익 보여주기
 export const sumProfitLost = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
 
     type ProfitLoss = {
       total_profit_loss: number;
@@ -220,7 +220,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
     };
 
     const user = await db.Users.findOne({
-      where: { user_email: `${userEmail}` },
+      where: { user_email: `${user_email}` },
       attributes: ["balance"],
       raw: true,
     });
@@ -244,7 +244,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
         },
       ],
       where: {
-        user_email: `${userEmail}`,
+        user_email: `${user_email}`,
       },
       group: ["user_email"],
       raw: true,
@@ -276,7 +276,7 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 // 종목별 자산 정보
 export const assetInformation = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
 
     const result = await db.Real_estates_own.findAll({
       attributes: [
@@ -284,15 +284,15 @@ export const assetInformation = async (req: Request, res: Response) => {
         [db.sequelize.literal(`(price * amount)`), "price"],
         "amount",
         [
-          db.sequelize.literal(`(price * amount - current_price * amount)`),
-          "valuation",
-        ],
+          // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
+          db.sequelize.literal(`(current_price * amount - price * amount)`),"valuation",],
         [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+        // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+
         "possible_quantity",
-        [
-          db.sequelize.literal(
-            `ROUND((((price * amount - current_price * amount) / (current_price * amount)) * 100)::numeric, 2)`
-          ),
+        [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (price * amount)) * 100)::numeric, 2)`),
+        // [db.sequelize.literal(`(current_price - price) / price * 100`),
+        
           "rate_of_return",
         ],
       ],
@@ -303,7 +303,7 @@ export const assetInformation = async (req: Request, res: Response) => {
         },
       ],
       where: {
-        user_email: `${userEmail}`,
+        user_email: `${user_email}`,
       },
       raw: true,
     });
@@ -318,7 +318,7 @@ export const assetInformation = async (req: Request, res: Response) => {
 // 배당금
 export const dividendList = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
 
     const query = `
       select 
@@ -343,18 +343,18 @@ export const dividendList = async (req: Request, res: Response) => {
         DATE(a.dividend_paymentdate) as dividend_paymentdate
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${userEmail}'
+      where b.user_email = '${user_email}'
       ) as c
       join (
       select 
         SUM(a.dividend_price * b.amount) as total_anticipation_dividend
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${userEmail}' and a.dividend_status = '지급완료'
+      where b.user_email = '${user_email}' and a.dividend_status = '지급완료'
       ) as d on true;`;
 
     const result = await db.sequelize.query(query, {
-      replacements: { userEmail: userEmail },
+      replacements: { userEmail: user_email },
       type: QueryTypes.SELECT,
     });
 
@@ -394,22 +394,25 @@ export const dividendList = async (req: Request, res: Response) => {
 // 내 청약 목록
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.query;
+    // const userEmail = "a@naver.com";
 
     const query = `
-      select a.subscription_name,
-        a.subscription_img_1,
-        DATE(b."createdAt") as application_date , 
-        DATE(a.subscription_end_date) as subscription_end_date, 
-        b.subscription_my_amount, 
-        a.subscription_offering_price,
-        (a.subscription_offering_price * b.subscription_my_amount) as refund_price
-      from subscriptions a join subscription_application b 
-          on a.id = b.subscription_id
-      where b.subscription_user_email = '${userEmail}'`;
+    select a.subscription_name,
+      a.subscription_img_1,
+      a.subscription_totalsupply,
+      a.subscription_order_amount,
+      DATE(b."createdAt") as application_date , 
+      DATE(a.subscription_end_date AT TIME ZONE 'Asia/Seoul') as subscription_end_date, 
+      b.subscription_my_amount, 
+      a.subscription_offering_price,
+      (a.subscription_offering_price * b.subscription_my_amount) as refund_price
+    from subscriptions a join subscription_application b 
+        on a.id = b.subscription_id
+    where b.subscription_user_email = '${user_email}'`;
 
     const result = await db.sequelize.query(query, {
-      replacements: { userEmail: userEmail },
+      replacements: { user_email: user_email },
       type: QueryTypes.SELECT,
     });
 

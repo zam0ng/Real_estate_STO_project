@@ -14,34 +14,46 @@ interface CompleteDealRequest {
     trade_price: number;
 }
 
-const CompleteDeal: React.FC = () => {
-    const currentPage = useLocation();
+const fetchCompleteDeal = async (propertyName: string, isCookie: string): Promise<CompleteDealRequest[]> => {
+    const response = await axios.post(`${serverurl}/order/conclusion/${propertyName}`,
+    { token : isCookie });
+    return response.data;
+};
 
-    const [orderType,setOrderType] = useState<string>("");
-    const [koreanTime,setKoreanTime] = useState<string[]>([]);
+const CompleteDeal: React.FC = () => {
+    const [fromRecent,setFromRecent] = useState<CompleteDealRequest[]>([]);
+
+    const currentPage = useLocation();
 
     const cookies = new Cookies();
 
     const isCookie = cookies.get("accessToken");
     // console.log(isCookie);
 
-    const fetchCompleteDeal = async (): Promise<CompleteDealRequest[]> => {
-        const response = await axios.post(`${serverurl}/order/conclusion/${currentPage.state.propertyName}`,
-        { token : isCookie });
-        return response.data;
-    };
-
     const {data,error,isLoading,isError} = useQuery<CompleteDealRequest[]>(
         {queryKey:["fetchCompleteDeal",currentPage.state.propertyName],
-        queryFn:fetchCompleteDeal}
+        queryFn:()=>fetchCompleteDeal(currentPage.state.propertyName,isCookie)}
     );
 
-    const fromRecent = data && data?.sort((a,b)=>{
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
+    useEffect(()=>{
+        console.log(data);
+    },[]);
 
-        return dateB.getTime() - dateA.getTime();
-    });
+    useEffect(()=>{
+        if(data === undefined){
+            return;
+        }else{
+            const sortedByDate = data.sort((a,b)=>{
+                const dateA = new Date(a.createdAt);
+                const dateB = new Date(b.createdAt);
+            
+                return dateB.getTime() - dateA.getTime();
+            });
+
+            setFromRecent(sortedByDate);
+        }
+    },[]);
+    
     // console.log(fromRecent);
 
     return (

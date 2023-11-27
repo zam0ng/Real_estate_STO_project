@@ -43,7 +43,6 @@ const PriceBox: React.FC<socketProps> = ({isSocket}) => {
     // console.log(sortedSellList);
     const sortedBuyList = data?.buy_list.sort((a,b)=>b.order_price - a.order_price);
     // console.log(sortedBuyList);
-    
 
     // console.log(sortedSellList);
     // console.log(sortedBuyList);
@@ -64,8 +63,7 @@ const PriceBox: React.FC<socketProps> = ({isSocket}) => {
         isSocket?.on('usequery_refetch',()=>{
             refetch();
         })
-    },[isSocket,refetch])
-
+    },[isSocket,refetch]);
 
     return (
         <>

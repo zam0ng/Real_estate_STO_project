@@ -10,7 +10,7 @@ const MyCashHistory: React.FC = () => {
     const shortWalletAddress = shortenWalletAddress(walletAddress);
 
     return (
-        <div className='w-full h-[50%] pt-5'>
+        <div className='w-full h-[70%] pt-5'>
             <div className='w-full h-10 text-xl flex justify-start items-center pl-3'>
                 입출입 거래 내역
             </div>

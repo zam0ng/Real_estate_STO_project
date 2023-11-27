@@ -1,5 +1,5 @@
 import React from 'react';
-import PriceBox from './PriceChart';
+import PriceBox from './PriceBox';
 
 interface socketProps {
     isSocket: any;

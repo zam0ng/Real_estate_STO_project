@@ -18,6 +18,8 @@ import BoardDetailNotice from "./pages/BoardDetailNotice";
 import Login from "./pages/Login";
 import BounsLogin from "./pages/BounsLogin";
 import SubscriptionDetail from "./pages/SubscriptionDetail";
+import VoteDetail from "./pages/VoteDetail";
+import VoteList from "./pages/VoteList";
 
 function App() {
   let queryClient = new QueryClient();
@@ -65,6 +67,8 @@ function App() {
             path="/subscription/detail/:buildingId"
             element={<SubscriptionDetail />}
           />
+          <Route path="/vote-detail/:real-estate/:vote-name" element={<VoteDetail />} />
+          <Route path="/vote-list" element={<VoteList />} />
         </Routes>
       </QueryClientProvider>
     </BrowserRouter>
