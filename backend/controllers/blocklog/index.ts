@@ -56,6 +56,28 @@ export const symbolCheck = async () => {
   }
 };
 
+export const addressCheck = async () => {
+  try {
+    const result = await db.Contract_address.findAll({
+      attributes: ["address"],
+      where: { ca_type: "token" },
+      raw: true,
+    });
+
+    let contracts = [];
+
+    contracts = result.map(
+      (item, idx) => (contracts[idx] = item.address.toLowerCase())
+    );
+
+    if (contracts) return contracts;
+    else return [];
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 export const userWalletAddress = async (): Promise<UserWallet[]> => {
   try {
     const result = await db.Users.findAll({

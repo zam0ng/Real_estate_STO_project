@@ -6,6 +6,7 @@ import { myEmitter } from "../eventEmitter";
 
 import {
   symbolCheck,
+  addressCheck,
   txReceipt,
   blockNumberCheck,
   userWalletAddress,
@@ -38,6 +39,7 @@ interface UserWallet {
 
 let block_num: number | 0;
 let symbols: any;
+let contracts: any;
 let user_wallets: UserWallet[];
 let transactionLogs: logDataAttribute[] = [];
 
@@ -51,6 +53,15 @@ export const handleSymbol = async () => {
   }
 };
 handleSymbol();
+
+export const handleAddress = async () => {
+  try {
+    return (contracts = await addressCheck());
+  } catch (error) {
+    console.error(error);
+  }
+};
+handleAddress();
 
 // 데이터베이스에 있는 마지막 블록 번호를 가져옴
 // 지금은 구현하지 않았지만 추후에 서버가 꺼져있을다가 켜졌을떄 지나친 블록이 있다면 지나친 블록에 트랜잭션을 검사하여 데이터베이스에 반영시키려고 블록 번호를 가져오는 로직은 구현해둠
@@ -110,8 +121,6 @@ const walletCheck = async (tx_from: string, tx_to: string) => {
 // 블록에 있는 트랜잭션 저장
 export const logLatestBlockEvents = async () => {
   try {
-    // console.log("symbols : ", symbols);
-    // console.log("user_wallets : ", user_wallets);
     // 해당 네트워크의 마지막 블록을 가져옴
     const latestBlock: any = await web3.eth.getBlock("latest", true);
     // 현재 블록이 몇번쨰인지 가져옴
@@ -132,10 +141,6 @@ export const logLatestBlockEvents = async () => {
 
     // 검사한 블록에 트랜잭션이 있으면 트랜잭션을 검사
     if (latestBlock.transactions) {
-      console.log(
-        "latestBlock.transactions.length : ",
-        latestBlock.transactions.length
-      );
       // 트랜잭션은 배열형태로 존재하기 때문에 for of 문을 사용하여 모든 트랜잭션을 검사
       for (const tx of latestBlock.transactions) {
         // input에는 어떤 동작인지에 대한 내용이 해시화되어 있는데 앞의 4바이트로 어떤 동작인지 유추 가능
@@ -172,7 +177,7 @@ export const logLatestBlockEvents = async () => {
             if (decodedLog.symbol.length > 3) continue;
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
-            if (symbols.includes(decodedLog.symbol)) {
+            if (contracts.includes(address.toLowerCase())) {
               // 내부 전송인지 외부 전송인지 판단
               const addressCheck = await walletCheck(
                 decodedLog.from,
@@ -216,3 +221,4 @@ export const logLatestBlockEvents = async () => {
 // myEmitter.emit("symbolCheckEvent");
 // 이거 추가해야됨
 myEmitter.on("symbolCheckEvent", handleSymbol);
+myEmitter.on("contractsCheckEvent", handleAddress);
