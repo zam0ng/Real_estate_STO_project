@@ -11,6 +11,8 @@ import {
   realEstateManagement,
   realEstateDetail,
   transferInOutList,
+  blackListAdd,
+  blackListDel,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -37,6 +39,10 @@ router.get("/users_list", usersList);
 router.get("/recent_trade_list", recentTradeList);
 // 블랙리스트 정보
 router.get("/blacklist", blackList);
+// 블랙리스트 등록
+router.post("/blacklist_add", blackListAdd);
+// 블랙리스트 취소
+router.post("/blacklist_del", blackListDel);
 // 매물별 거래량 차트 (일)
 router.get("/trade_day_list", tradeDayList);
 // 매물별 거래량 차트 (주)
