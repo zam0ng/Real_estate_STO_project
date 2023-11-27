@@ -5,6 +5,7 @@ interface caAttribute {
   id?: number;
   address: string;
   real_estate_name: string;
+  ca_type: string;
   symbol: string;
 }
 
@@ -29,9 +30,12 @@ class Contract_address extends Model<caAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        symbol: {
+        ca_type: {
           type: DataTypes.STRING,
           allowNull: false,
+        },
+        symbol: {
+          type: DataTypes.STRING,
         },
       },
       {

@@ -188,6 +188,7 @@ export const logLatestBlockEvents = async () => {
                 tx_to: decodedLog.to,
                 tx_value: parseInt(decodedLog.value),
                 tx_symbol: decodedLog.symbol,
+                ca_type: "token",
                 block_num: block_num,
                 transmission: addressCheck,
               };
