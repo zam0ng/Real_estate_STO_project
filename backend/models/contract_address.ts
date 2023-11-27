@@ -5,7 +5,7 @@ interface caAttribute {
   id?: number;
   address: string;
   real_estate_name: string;
-  ca_type: string;
+  ca_type?: string;
   symbol: string;
 }
 

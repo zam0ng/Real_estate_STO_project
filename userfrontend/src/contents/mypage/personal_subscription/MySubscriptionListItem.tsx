@@ -14,19 +14,19 @@ const MySubscriptionListItem: React.FC = () => {
 
     useEffect(()=>{
         console.log(mySubscriptions);
-        if(mySubscriptions){
-            console.log(mySubscriptions[0].subscription_end_date);
-            console.log(new Date(mySubscriptions[0].subscription_end_date));
+        if(mySubscriptions !== undefined){
+            console.log(mySubscriptions[0]?.subscription_end_date);
+            console.log(new Date(mySubscriptions[0]?.subscription_end_date));
             console.log(new Date());
-            if(mySubscriptions[0].subscription_order_amount === mySubscriptions[0].subscription_totalsupply){
+            if(mySubscriptions[0]?.subscription_order_amount === mySubscriptions[0]?.subscription_totalsupply){
                 setCompletionText("입고");
                 setTextColor("text-blue-500");
                 setBgColor("bg-blue-200");
-            }else if(new Date() < new Date(mySubscriptions[0].subscription_end_date)){
+            }else if(new Date() < new Date(mySubscriptions[0]?.subscription_end_date)){
                 setCompletionText("진행중");
                 setTextColor("text-yellow-500");
                 setBgColor("bg-yellow-200");
-            }else if(new Date() > new Date(mySubscriptions[0].subscription_end_date) && mySubscriptions[0].subscription_order_amount < mySubscriptions[0].subscription_totalsupply){
+            }else if(new Date() > new Date(mySubscriptions[0]?.subscription_end_date) && mySubscriptions[0]?.subscription_order_amount < mySubscriptions[0]?.subscription_totalsupply){
                 setCompletionText("미입고");
                 setTextColor("text-red-500");
                 setBgColor("bg-red-200");

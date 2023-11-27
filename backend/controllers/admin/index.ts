@@ -831,6 +831,7 @@ export const caRegister  = async(req : Request , res : Response)=>{
       address : address,
       real_estate_name : real_estate_name,
       symbol : symbol,
+      ca_type : "token",
     })
     res.sendStatus(201);
   } catch (error) {
@@ -942,7 +943,6 @@ export const subscriptionList  = async(req : Request , res : Response) =>{
       price : data!.subscription_offering_price,
       amount : amount_list[index],
       possible_quantity : amount_list[index],
-
     })
   });
   

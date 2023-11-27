@@ -7,8 +7,8 @@ const MySubscriptionListItemImg: React.FC = () => {
     const [imgLink,setImgLink] = useState<string>("");
 
     useEffect(()=>{
-        if(mySubscriptions){
-            setImgLink(mySubscriptions[0].subscription_img);
+        if(mySubscriptions !== undefined){
+            setImgLink(mySubscriptions[0]?.subscription_img);
         }
     },[mySubscriptions]);
 

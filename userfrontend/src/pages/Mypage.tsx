@@ -63,6 +63,12 @@ export default function Mypage () {
         )
     };
 
+    if(isLoading){
+        return (
+            <div>Loading...</div>
+        )
+    }
+
     return(
         <div className="w-screen h-screen pb-16 overflow-y-scroll">
             <MyInfo email={userEmail} />

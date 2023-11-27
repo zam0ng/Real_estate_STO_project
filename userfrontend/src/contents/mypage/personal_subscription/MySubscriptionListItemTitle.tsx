@@ -10,12 +10,12 @@ const MySubscriptionListItemTitle: React.FC = () => {
 
     useEffect(()=>{
         console.log(mySubscriptions);
-        if(mySubscriptions){
+        if(mySubscriptions !== undefined){
             const currentDate = new Date();
-            const endDate = new Date(mySubscriptions[0].subscription_end_date);
+            const endDate = new Date(mySubscriptions[0]?.subscription_end_date);
             console.log(currentDate.getTime());
             console.log(endDate.getTime());
-            if(mySubscriptions[0].subscription_order_amount === mySubscriptions[0].subscription_totalsupply){
+            if(mySubscriptions[0]?.subscription_order_amount === mySubscriptions[0]?.subscription_totalsupply){
                 setCompletionText("입고");
                 setTextColor("text-blue-500");
                 setBgColor("bg-blue-200");

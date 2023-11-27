@@ -36,7 +36,7 @@ function TabBar() {
       <TabButtons imgName="buy" btnName="청약" urlName="subscription" />
       <TabButtons imgName="cart" btnName="마켓" urlName="market" />
       <TabButtons imgName="user" btnName="My" urlName="mypage" />
-      <TabButtons imgName="more" btnName="더보기" urlName="more" />
+      <TabButtons imgName="more" btnName="더보기" urlName="vote-list" />
     </div>
   );
 }

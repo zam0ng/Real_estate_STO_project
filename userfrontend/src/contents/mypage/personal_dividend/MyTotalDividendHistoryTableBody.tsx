@@ -9,11 +9,15 @@ const MyTotalDividendHistoryTableBody: React.FC = () => {
 
     useEffect(()=>{
         console.log(myDividendHistory);
-        if(myDividendHistory){
-            const baseDateParts = myDividendHistory[0].dividend_basedate.split("-");
-            setBaseDate(`${baseDateParts[1]}.${baseDateParts[2]}`);
-            const payDateParts =  myDividendHistory[0].dividend_paymentdate.split("-");
-            setPayDate(`${payDateParts[1]}.${payDateParts[2]}`);
+        if(myDividendHistory !== undefined){
+            const baseDateParts = myDividendHistory[0]?.dividend_basedate.split("-");
+            if(baseDateParts !== undefined){
+                setBaseDate(`${baseDateParts[1]}.${baseDateParts[2]}`);
+            }
+            const payDateParts =  myDividendHistory[0]?.dividend_paymentdate.split("-");
+            if(payDateParts !== undefined){
+                setPayDate(`${payDateParts[1]}.${payDateParts[2]}`);
+            }
         }
     },[myDividendHistory]);
 
@@ -26,7 +30,7 @@ const MyTotalDividendHistoryTableBody: React.FC = () => {
     return (
         <div className='w-full h-1/4 rounded-lg flex flex-row text-xs'>
             <div className='w-1/6 h-full flex justify-center items-center'>
-                {myDividendHistory[0].real_estate_name}
+                {myDividendHistory[0]?.real_estate_name}
             </div>
             <div className='w-1/6 h-full flex justify-center items-center'>
                 {baseDate}
@@ -35,13 +39,13 @@ const MyTotalDividendHistoryTableBody: React.FC = () => {
                 {payDate}
             </div>
             <div className='w-1/6 h-full flex justify-center items-center'>
-                {myDividendHistory[0].dividend_price}원
+                {myDividendHistory[0]?.dividend_price}원
             </div>
             <div className='w-1/6 h-full flex justify-center items-center'>
-                {myDividendHistory[0].anticipation_dividend}원
+                {myDividendHistory[0]?.anticipation_dividend}원
             </div>
             <div className='w-1/6 h-full flex justify-center items-center'>
-                {myDividendHistory[0].dividend_status}
+                {myDividendHistory[0]?.dividend_status}
             </div>
         </div>
     )

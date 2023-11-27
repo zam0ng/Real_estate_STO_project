@@ -2,7 +2,7 @@ import React from 'react';
 import VoteTitle from '../VoteTitle';
 import VotePeriod from '../VotePeriod';
 import VotePropertyImg from '../VotePropertyImg';
-import VoteStatus from '../VoteStatus';
+import VoteStatus from '../vote_status/VoteStatus';
 import VoteAdditionalInfo from '../VoteAdditionalInfo';
 import VoteOwned from '../VoteOwned';
 
