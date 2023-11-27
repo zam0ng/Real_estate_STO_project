@@ -1,9 +1,14 @@
 import React from 'react';
 
-const MyBalance: React.FC = () => {
+interface UserBalanceProps {
+  balance: number|undefined;
+}
+
+const MyBalance: React.FC<UserBalanceProps> = ({balance}) => {
+  const moneyForm = balance?.toLocaleString();
   return (
     <div className='w-full h-[10%] flex justify-center items-center text-2xl'>
-        MyBalance
+        {moneyForm}원
     </div>
   )
 }
