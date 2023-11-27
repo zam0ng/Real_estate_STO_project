@@ -99,7 +99,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);

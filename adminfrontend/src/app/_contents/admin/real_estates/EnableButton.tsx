@@ -689,8 +689,9 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
         // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
         // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
         // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
-        // console.log(list.email_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
+        // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
         // console.log(list.amount_list); // [5, 2, 10]
+
         const estateName = list.estateInfo[0]["Subscription.subscription_name"];
         const symbol = list.estateInfo[0]["Subscription.subscription_name"];
         const totalsupply = list.estateInfo[0]["Subscription.subscription_name"];
@@ -707,14 +708,13 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
         estateName,
         symbol,
         totalsupply,
-        list.email_list,
+        list.wallet_list,
         list.amount_list,
         seconds,  // database 추가 필요
       ).send({
         from : account,
       }).then(async (data :any)=>{
         // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
-        // setCAList((prevCAList : any) => [...prevCAList, data.events?.EstateCreated.returnValues[0]]); // CA 저장
 
         await fetch(`${domain}admin/ca_register`,{
           method : "POST",
@@ -727,8 +727,6 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
             symbol : symbol,
           }),
         })
-        // real_estate 에 등록
-        // await 
       })
     } 
   // useEffect(()=>{

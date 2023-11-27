@@ -43,6 +43,10 @@ interface SubscriptionsAttribute {
 }
 
 class Subscriptions extends Model<SubscriptionsAttribute> {
+  declare id : number;
+  declare subscription_name : string;
+  declare subscription_symbol : string;
+  declare subscription_offering_price : number;
   declare subscription_img_1: string;
   declare subscription_img_2: string;
   declare subscription_img_3: string;
