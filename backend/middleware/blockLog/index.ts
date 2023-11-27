@@ -45,15 +45,17 @@ let transactionLogs: logDataAttribute[] = [];
 
 // 데이터베이스에 있는 심볼들 가져오기
 // 네트워크에 우리 심볼만 있는게 아니라 다른 토큰의 심볼들도 나오기 때문에 우리 토큰 만 찾기 위해 심볼을 검사하기 위해 데이터베이스에 있는 심볼을 가져옴
-export const handleSymbol = async () => {
-  try {
-    return (symbols = await symbolCheck());
-  } catch (error) {
-    console.error(error);
-  }
-};
-handleSymbol();
+// export const handleSymbol = async () => {
+//   try {
+//     return (symbols = await symbolCheck());
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+// handleSymbol();
 
+// 위에 심볼을 검사하는 방식에서 ca를 검사하는 방식으로 바꿈
+// 토큰의 이름이 겹치는 경우가 발생할 거 같아서 ca를 검사하는 방식으로 바꿈
 export const handleAddress = async () => {
   try {
     return (contracts = await addressCheck());
@@ -220,5 +222,5 @@ export const logLatestBlockEvents = async () => {
 // 나중에 매물 추가되는 곳에
 // myEmitter.emit("symbolCheckEvent");
 // 이거 추가해야됨
-myEmitter.on("symbolCheckEvent", handleSymbol);
+// myEmitter.on("symbolCheckEvent", handleSymbol);
 myEmitter.on("contractsCheckEvent", handleAddress);
