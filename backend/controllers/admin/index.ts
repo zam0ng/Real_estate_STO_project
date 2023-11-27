@@ -575,7 +575,6 @@ export const realEstateDetail = async (req: Request, res: Response) => {
 // 토큰 내/외부 전송
 export const transferInOutList = async (req: Request, res: Response) => {
   try {
-    //
     const query = `
     select 
       CASE 
