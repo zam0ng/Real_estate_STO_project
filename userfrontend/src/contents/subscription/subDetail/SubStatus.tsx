@@ -27,7 +27,7 @@ export default function SubStatus({detail} : SubStatusType){
                         <div className="">
                             <div className="h-full pt-2 pl-5">
                                 <div className="text-xs text-gray-500">청약 모집률</div>
-                                <div className="font-bold text-2xl w-5/6 m-auto ">{parseInt(detail.subscription_order_amount)/ parseInt(detail.subscription_totalsupply) * 100}%</div>
+                                <div className="font-bold text-2xl w-5/6 m-auto ">{Math.ceil(parseInt(detail.subscription_order_amount)/ parseInt(detail.subscription_totalsupply) * 100 * 10) /10}%</div>
                             </div>
                         </div>
                         <div className="text-xs col-span-2 text-center pt-2">
