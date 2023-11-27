@@ -80,7 +80,7 @@ export default function HomeSearch(){
                         {searchedName.map((item) => (
                             <li 
                             key={item.id} 
-                            className="w-5/6 m-auto border rounded-lg text-center pt-1 mt-2 mb-3 h-9 shadow-2xl font-bold"
+                            className="w-5/6 m-auto border rounded-md text-center pt-1 mt-2 mb-3 h-9 shadow-sm font-bold"
                             onClick={()=>{handleSearch(item.id)}}
                             >{item.real_estate_name}</li>
                         ))}
