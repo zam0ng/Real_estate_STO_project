@@ -291,6 +291,37 @@ export const blackList = async (req: Request, res: Response) => {
   }
 };
 
+export const blackListAdd = async (req: Request, res: Response) => {
+  try {
+    const { user_email } = req.body;
+
+    const result = await db.Users.update(
+      { blacklist: true },
+      { where: { user_email: user_email } }
+    );
+
+    if (result) return res.status(200).send(true);
+    else return;
+  } catch (error) {
+    console.error(error);
+  }
+};
+export const blackListDel = async (req: Request, res: Response) => {
+  try {
+    const { user_email } = req.body;
+
+    const result = await db.Users.update(
+      { blacklist: false },
+      { where: { user_email: user_email } }
+    );
+
+    if (result) return res.status(200).send(false);
+    else return;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 매물별 거래량 차트 (일)
 export const tradeDayList = async (req: Request, res: Response) => {
   try {
