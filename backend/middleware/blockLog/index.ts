@@ -1,11 +1,10 @@
 import Web3 from "web3";
 import fs from "fs";
 import path from "path";
-import { Request, Response } from "express";
 import { myEmitter } from "../eventEmitter";
 
 import {
-  symbolCheck,
+  // symbolCheck,
   addressCheck,
   txReceipt,
   blockNumberCheck,
@@ -38,7 +37,7 @@ interface UserWallet {
 }
 
 let block_num: number | 0;
-let symbols: any;
+// let symbols: any;
 let contracts: any;
 let user_wallets: UserWallet[];
 let transactionLogs: logDataAttribute[] = [];
@@ -133,7 +132,7 @@ export const logLatestBlockEvents = async () => {
     // 그렇기 때문에 블록 검사를 시작하게 되면 블록 번호를 업데이트 시켜 같은 블록을 검사하는것을 방지
     if (currentBlockNum == block_num) return; // 현재 블록 번호와 데이터베이스에 있는 마지막 블록 번호 비교
 
-    console.log("blockNumber : ", currentBlockNum, " 시작");
+    // console.log("blockNumber : ", currentBlockNum, " 시작");
     // console.time("logLatestBlockEvents");
 
     // 이부분이 현재 블록과 마지막에 검사한 블록의 번호를 비교하는 조건문
@@ -212,7 +211,7 @@ export const logLatestBlockEvents = async () => {
       // 트랜잭션을 데이터베이스에 저장
       await handleTransactions(transactionLogs);
     }
-    console.log("block_num : ", block_num, " 끝");
+    // console.log("block_num : ", block_num, " 끝");
   } catch (error) {
     // console.error(error);
   }
