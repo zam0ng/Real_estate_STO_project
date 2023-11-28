@@ -26,7 +26,7 @@ export default function HomeVolume(){
         queryFn: fetchVolume
     });
 
-    console.log(volume);
+    // console.log(volume);
 
 
     return(
