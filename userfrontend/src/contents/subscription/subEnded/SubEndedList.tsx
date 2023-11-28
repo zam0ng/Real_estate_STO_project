@@ -31,14 +31,17 @@ export default function SubEndedList({ props }: SubAllListType) {
     );
   }
 
-  return (
-    <>
-      {newData.map((building: SubAllList, index: number) => (
-        <div className="border-b-2  w-5/6 h-12 m-auto mt-1 flex justify-between">
-          <div className=" mr-2 ml-2 w-10 h-10  rounded-xl bg-[url('http://newsteacher.chosun.com/site/data/img_dir/2023/04/03/2023040302645_0.jpg')] bg-cover">
-            {" "}
-          </div>
-          <div className=" h-14 w-32 flex flex-col text-left  ">
+
+
+    return(
+
+        <>
+        
+        {newData.map((building :SubAllList, index : number) => (
+
+        <div key={index} className='border-b-2  w-5/6 h-12 m-auto mt-1 flex justify-between'>
+        <div className=" mr-2 ml-2 w-10 h-10  rounded-xl bg-[url('http://newsteacher.chosun.com/site/data/img_dir/2023/04/03/2023040302645_0.jpg')] bg-cover"> </div>
+        <div className=" h-14 w-32 flex flex-col text-left  ">
             <span className="text-xs">{building.subscription_name}</span>
             <span className="text-xs pt-1">현재가{building.start_price}</span>
           </div>

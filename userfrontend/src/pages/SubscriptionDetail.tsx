@@ -7,9 +7,13 @@ import Slider from "../components/Slider";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
+import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
+import MapDetail from "../contents/subscription/subDetail/MapDetail";
+import BackBtn from "../components/BackBtn";
 
-export default function SubscriptionDetail() {
-  let { buildingId } = useParams();
+export default function SubscriptionDetail(){
+
+    let { buildingId } = useParams();
 
   const fetchData = async () => {
     const { data } = await axios.get(`/subscription/detail/${buildingId}`);
@@ -25,29 +29,26 @@ export default function SubscriptionDetail() {
 
   if (error) return <>접속이 원활하지 않습니다 ..</>;
 
-  // console.log(data);
+    let [detail] = data
 
-  let test1 = [
-    {
-      tabName: "투자 포인트",
-      content: <>투자 포인트 화면입니다</>,
-    },
-    {
-      tabName: "모집 현황",
-      content: <SubStatus />,
-    },
-    {
-      tabName: "상세 정보",
-      content: <>상세 정보 화면입니다</>,
-    },
-  ];
 
-  return (
-    <>
-      <Slider width="w-[80%]" />
-      <>청약 {buildingId}번 매물 상세페이지입니다</>
-      <LineTypeTabComponent data={test1} />
-      <SubscriptionBtn props={buildingId} />
-    </>
-  );
+    let tab = [{
+        tabName : "투자 포인트",
+        content : <>투자 포인트 화면입니다</> 
+    },{
+        tabName : "모집 현황",
+        content : <SubStatus detail={detail}/>
+    },{
+        tabName : "상세 정보",
+        content : <MapDetail detail={detail} />
+    }]
+
+    return(
+        <>  
+            <BackBtn />
+            <DetailPictures detail={detail}/>
+            <LineTypeTabComponent data={tab} />
+            <SubscriptionBtn props={`${buildingId}`} />
+        </>
+    )
 }
