@@ -105,12 +105,12 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
     let ten_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    // console.log("find_real_estate_names : ", find_real_estate_names);
+    // // console.log("find_real_estate_names : ", find_real_estate_names);
     const insert_ten_days_amount = find_real_estate_names.map((item) => {
-      // console.log("item : ", item);
-      // console.log("ten_date : ", ten_date);
+      // // console.log("item : ", item);
+      // // console.log("ten_date : ", ten_date);
       const getIndexOf = ten_date.indexOf(item.trade_date);
-      // console.log("getIndexOf : ", getIndexOf);
+      // // console.log("getIndexOf : ", getIndexOf);
       if (getIndexOf < 0) return;
       else ten_amount[getIndexOf] = parseInt(item.trade_amount);
     });
@@ -460,7 +460,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
       raw: true,
     })) as [] as TradeDate[];
 
-    // console.log(result);
+    // // console.log(result);
 
     const all_result = await setRealEstateAmount(result, "month");
 
@@ -661,59 +661,79 @@ export const contractAddressList = async (req: Request, res: Response) => {
 
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
-export const realEstateSubmit = async (req: Request , res : Response) =>{
-  console.log("realEstateSubmit 들어오니?");
-  // console.log("test",req.body);
-  // console.log(req.files);
-  
+export const realEstateSubmit = async (req: Request, res: Response) => {
+  // console.log("realEstateSubmit 들어오니?");
+  // // console.log("test",req.body);
+  // // console.log(req.files);
+
   // ⭐ ts에서 length를 사용하려면 아래 구문이 필요함 있는지 && 배열형태인지 ⭐
   if (req.files && Array.isArray(req.files)) {
     for (let index = 0; index < req.files.length; index++) {
       imgPathArr[index] = req.files[index].path;
     }
   }
-  console.log("++++++++",req.body);
+  // console.log("++++++++",req.body);
 
-  const{ name,address,symbol,totalprice,totalsupply,description,
-          start_date,end_date,result_date,building_date,trading_start_date,
-          order_amount,offering_price,status,floors,purpose,mainpurpose,area,
-          all_area,build_area,floor_area,completion,stock_type,publisher
-      } = req.body;
+  const {
+    name,
+    address,
+    symbol,
+    totalprice,
+    totalsupply,
+    description,
+    start_date,
+    end_date,
+    result_date,
+    building_date,
+    trading_start_date,
+    order_amount,
+    offering_price,
+    status,
+    floors,
+    purpose,
+    mainpurpose,
+    area,
+    all_area,
+    build_area,
+    floor_area,
+    completion,
+    stock_type,
+    publisher,
+  } = req.body;
 
   try {
-      const result = await Subscriptions.create({
-          subscription_img_1: imgPathArr[0],
-          subscription_img_2: imgPathArr[1],
-          subscription_img_3: imgPathArr[2],
-          subscription_img_4: imgPathArr[3],
-          subscription_img_5 : imgPathArr[4],
-          subscription_name : name,
-          subscription_symbol : symbol,
-          subscription_address: address,
-          subscription_totalprice : totalprice,
-          subscription_totalsupply : totalsupply,
-          subscription_description : description,
-          subscription_start_date : start_date,
-          subscription_end_date : end_date,
-          subscription_result_date : result_date,
-          subscription_building_date : building_date,
-          subscription_trading_start_date : trading_start_date,
-          subscription_order_amount : order_amount,
-          subscription_offering_price : offering_price,
-          subscription_status : status,
-          floors : floors,
-          purpose : purpose,
-          main_purpose : mainpurpose,
-          area : area,
-          all_area : all_area,
-          build_area : build_area,
-          floor_area : floor_area,
-          completion : completion,
-          stock_type : stock_type,
-          publisher : publisher,
-      })
-      res.sendStatus(201);
-
+    const result = await Subscriptions.create({
+      subscription_img_1: imgPathArr[0],
+      subscription_img_2: imgPathArr[1],
+      subscription_img_3: imgPathArr[2],
+      subscription_img_4: imgPathArr[3],
+      subscription_img_5: imgPathArr[4],
+      subscription_name: name,
+      subscription_symbol: symbol,
+      subscription_address: address,
+      subscription_totalprice: totalprice,
+      subscription_totalsupply: totalsupply,
+      subscription_description: description,
+      subscription_start_date: start_date,
+      subscription_end_date: end_date,
+      subscription_result_date: result_date,
+      subscription_building_date: building_date,
+      subscription_trading_start_date: trading_start_date,
+      subscription_order_amount: order_amount,
+      subscription_offering_price: offering_price,
+      subscription_status: status,
+      floors: floors,
+      purpose: purpose,
+      main_purpose: mainpurpose,
+      area: area,
+      all_area: all_area,
+      build_area: build_area,
+      floor_area: floor_area,
+      completion: completion,
+      stock_type: stock_type,
+      publisher: publisher,
+    });
+    res.sendStatus(201);
   } catch (error) {
     console.log(error);
     res.sendStatus(400);
@@ -746,7 +766,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
 };
 
 export const noticeSubmit = async (req: Request, res: Response) => {
-  // console.log(req.body);
+  // // console.log(req.body);
   const { category, title, content, real_estate_name } = req.body;
   const writer: string = "admin";
   // const htmlText = req.body.content.replace(/\n/g, '<br>');
@@ -758,7 +778,7 @@ export const noticeSubmit = async (req: Request, res: Response) => {
       notice_writer: writer,
       real_estate_name: real_estate_name,
     });
-    console.log(result);
+    // console.log(result);
 
     res.sendStatus(201);
   } catch (error) {
@@ -768,7 +788,7 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 };
 
 export const dividendSubmit = async (req: Request, res: Response) => {
-  console.log(req.body);
+  // console.log(req.body);
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
   const month = paymentdate.slice(5, 7);
   try {
@@ -793,164 +813,155 @@ export const dividendSubmit = async (req: Request, res: Response) => {
   }
 };
 
-
-
-export const subscription = async (req : Request , res : Response) => {
-
+export const subscription = async (req: Request, res: Response) => {
   try {
-    const subscription = await Subscriptions.findAll()
+    const subscription = await Subscriptions.findAll();
     res.status(200).json(subscription);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
-}
+};
 
-
-export const subscriptionDetail = async (req : Request , res : Response) => {
-
+export const subscriptionDetail = async (req: Request, res: Response) => {
   try {
-    
-    const subscriptionDetail = await Subscriptions.findByPk(req.params.id)
-    console.log("subscriptionDetail" , subscriptionDetail)
-    res.status(200).json(subscriptionDetail)
-
+    const subscriptionDetail = await Subscriptions.findByPk(req.params.id);
+    // console.log("subscriptionDetail" , subscriptionDetail)
+    res.status(200).json(subscriptionDetail);
   } catch (error) {
-    console.log(error)
-    res.sendStatus(500)
+    console.log(error);
+    res.sendStatus(500);
   }
+};
 
-}
-
-export const caRegister  = async(req : Request , res : Response)=>{
-
-  console.log(req.body);
-  const {address ,real_estate_name , symbol} =req.body;
+export const caRegister = async (req: Request, res: Response) => {
+  // console.log(req.body);
+  const { address, real_estate_name, symbol } = req.body;
   try {
     await Contract_address.create({
-      address : address,
-      real_estate_name : real_estate_name,
-      symbol : symbol,
-      ca_type : "token",
-    })
+      address: address,
+      real_estate_name: real_estate_name,
+      symbol: symbol,
+      ca_type: "token",
+    });
     res.sendStatus(201);
   } catch (error) {
     res.sendStatus(400);
-    console.log("caRegister에서 오류",error);
+    // console.log("caRegister에서 오류",error);
   }
-}
+};
 
 // 청약자 리스트
-export const subscriptionList  = async(req : Request , res : Response) =>{
-  const {id} =req.params;
+export const subscriptionList = async (req: Request, res: Response) => {
+  const { id } = req.params;
   try {
-  const result = await Subscriptions_own.findAll({
-    where :{
-      subscription_id : id,
-      
-    },
-    attributes : [
-      'user_email',
-      'amount',
-    ],
-    order :[
-      ['id',"ASC"],
-    ],
-
-    include : [
-      {
-        model : Subscriptions,
-        attributes : ['subscription_name','subscription_totalsupply','subscription_symbol','subscription_building_date'],
+    const result = await Subscriptions_own.findAll({
+      where: {
+        subscription_id: id,
       },
-    ],
-    raw : true,
-  })
+      attributes: ["user_email", "amount"],
+      order: [["id", "ASC"]],
 
-  const estateInfo = result.slice(0, 1).map((el : any) => ({
-    'Subscription.subscription_name': el['Subscription.subscription_name'],
-    'Subscription.subscription_totalsupply': el['Subscription.subscription_totalsupply'],
-    'Subscription.subscription_symbol': el['Subscription.subscription_symbol'],
-    'Subscription.subscription_building_date': el['Subscription.subscription_building_date']
-  }));
-  
-  const wallet_list = result.map((el : any)=>el.user_email);
-  const amount_list = result.map((el : any)=>el.amount);
+      include: [
+        {
+          model: Subscriptions,
+          attributes: [
+            "subscription_name",
+            "subscription_totalsupply",
+            "subscription_symbol",
+            "subscription_building_date",
+          ],
+        },
+      ],
+      raw: true,
+    });
 
-  console.log(wallet_list);
-  const emails = await Users.findAll({
-    where : {
-      wallet : wallet_list,
-    },
-    attributes : [
-      'user_email'
-    ],
-    raw : true,
-  })
-  // .then(users => {
-  //   const emails = users.map(user => user.user_email);
-  //   console.log("이메일 배열:", emails);
-  // })
-  // .catch(error => {
-  //   console.error("에러 발생:", error);
-  // });
-  // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
-  const email_list = emails.map(el=>el.user_email);
-  // console.log(email_list);
-  
-  const data = await Subscriptions.findOne({
-    where :{
-      id : id,
-    },
-    attributes : [
-      'id','subscription_name', 'subscription_offering_price', 'subscription_symbol'
-    ],
-    raw : true,
-  })
-  // console.log(data?.id);
-  // console.log(data?.subscription_name);
-  // console.log(data?.subscription_symbol);
-  // console.log(data?.subscription_offering_price);
+    const estateInfo = result.slice(0, 1).map((el: any) => ({
+      "Subscription.subscription_name": el["Subscription.subscription_name"],
+      "Subscription.subscription_totalsupply":
+        el["Subscription.subscription_totalsupply"],
+      "Subscription.subscription_symbol":
+        el["Subscription.subscription_symbol"],
+      "Subscription.subscription_building_date":
+        el["Subscription.subscription_building_date"],
+    }));
 
-  // real_estates 생성
-  await Real_estates.create({
-    subscription_id : data!.id,
-    real_estate_name : data!.subscription_name,
-    current_price : data!.subscription_offering_price,
-    start_price : data!.subscription_offering_price,
-    // 건물가치는 임의 지정
-    value : 5500,
-    token_name : data!.subscription_symbol,
-  })
-  
-  const estateId = await Real_estates.findOne({
-    where : {
-      real_estate_name : data!.subscription_name,
-    },
-    attributes :[
-      'id'
-    ],
-    raw : true,
-  })
-  // console.log(estateId);
+    const wallet_list = result.map((el: any) => el.user_email);
+    const amount_list = result.map((el: any) => el.amount);
 
-  // real_estates_own 에 넣어주기.
-  email_list.forEach(async(element,index) => {
-    
-    await Real_estates_own.create({
-      user_email : element,
-      real_estate_id : estateId!.id,
-      real_estate_name : data!.subscription_name,
-      price : data!.subscription_offering_price,
-      amount : amount_list[index],
-      possible_quantity : amount_list[index],
-    })
-  });
-  
-  // console.log(wallet_list);
-  // console.log(amount_list);
-    res.json({estateInfo,wallet_list,amount_list});
+    // console.log(wallet_list);
+    const emails = await Users.findAll({
+      where: {
+        wallet: wallet_list,
+      },
+      attributes: ["user_email"],
+      raw: true,
+    });
+    // .then(users => {
+    //   const emails = users.map(user => user.user_email);
+    //   // console.log("이메일 배열:", emails);
+    // })
+    // .catch(error => {
+    //   console.error("에러 발생:", error);
+    // });
+    // // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
+    const email_list = emails.map((el) => el.user_email);
+    // // console.log(email_list);
+
+    const data = await Subscriptions.findOne({
+      where: {
+        id: id,
+      },
+      attributes: [
+        "id",
+        "subscription_name",
+        "subscription_offering_price",
+        "subscription_symbol",
+      ],
+      raw: true,
+    });
+    // // console.log(data?.id);
+    // // console.log(data?.subscription_name);
+    // // console.log(data?.subscription_symbol);
+    // // console.log(data?.subscription_offering_price);
+
+    // real_estates 생성
+    await Real_estates.create({
+      subscription_id: data!.id,
+      real_estate_name: data!.subscription_name,
+      current_price: data!.subscription_offering_price,
+      start_price: data!.subscription_offering_price,
+      // 건물가치는 임의 지정
+      value: 5500,
+      token_name: data!.subscription_symbol,
+    });
+
+    const estateId = await Real_estates.findOne({
+      where: {
+        real_estate_name: data!.subscription_name,
+      },
+      attributes: ["id"],
+      raw: true,
+    });
+    // // console.log(estateId);
+
+    // real_estates_own 에 넣어주기.
+    email_list.forEach(async (element, index) => {
+      await Real_estates_own.create({
+        user_email: element,
+        real_estate_id: estateId!.id,
+        real_estate_name: data!.subscription_name,
+        price: data!.subscription_offering_price,
+        amount: amount_list[index],
+        possible_quantity: amount_list[index],
+      });
+    });
+
+    // // console.log(wallet_list);
+    // // console.log(amount_list);
+    res.json({ estateInfo, wallet_list, amount_list });
   } catch (error) {
     res.sendStatus(400);
-    console.log("subscriptionList 에서 오류",error);
+    // console.log("subscriptionList 에서 오류",error);
   }
-}
+};

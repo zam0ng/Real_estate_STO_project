@@ -30,14 +30,14 @@ import { DetailData } from "@/app/_features/admin/real_estates";
 
 export default function RenderEstateDetailModal() {
   const [detailData, setDetailData] = useState<DetailData | null>(null);
-  console.log("detailData" , detailData)
+  // console.log("detailData" , detailData)
 
   const router = useRouter();
   const params = useParams();
   const id = params.id;
-  console.log("id🔵🔵", id);
-  console.log("typeof(id)", typeof id);
-  console.log("params.id🔥", params.id);
+  // console.log("id🔵🔵", id);
+  // console.log("typeof(id)", typeof id);
+  // console.log("params.id🔥", params.id);
 
   useEffect(() => {
     getEstateDetail({ id })

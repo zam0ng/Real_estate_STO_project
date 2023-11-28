@@ -3,7 +3,7 @@
 import { getEstateDetailProps } from "../_features/admin/real_estates";
 
 const getEstateDetail = async (params: getEstateDetailProps ) => {
-    console.log("🚀🚀 @getEstateDetail" , params)
+    // console.log("🚀🚀 @getEstateDetail" , params)
 
     // path 
         // 기존 DJ 테스트 path : `admin/subscription/detail/${params.id}`

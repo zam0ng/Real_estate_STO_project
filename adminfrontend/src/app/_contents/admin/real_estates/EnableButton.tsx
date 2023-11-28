@@ -685,12 +685,12 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
 
     const handleSTOBtn = async(id : number) => {
         const list = await getSubscriptionList(id);
-        // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
-        // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
-        // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
-        // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
-        // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
-        // console.log(list.amount_list); // [5, 2, 10]
+        // // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
+        // // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
+        // // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
+        // // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
+        // // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
+        // // console.log(list.amount_list); // [5, 2, 10]
 
         const estateName = list.estateInfo[0]["Subscription.subscription_name"];
         const symbol = list.estateInfo[0]["Subscription.subscription_name"];
@@ -700,7 +700,7 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
         
         // lockTime 설정 : 입고날짜 - 현재날짜 빼고 초로 환산
         const seconds: number = Math.floor((Math.abs(buildingDate.getTime() - currentDate.getTime()))/1000);
-        console.log(seconds); // 212471
+        // console.log(seconds); // 212471
 
         // 버튼 누를 때 팩토리 ca가 실행되서 매물 토큰 발행 ca를 생성
         factoryContract?.methods.createCA(
@@ -714,7 +714,7 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
       ).send({
         from : account,
       }).then(async (data :any)=>{
-        // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
+        // // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
 
         await fetch(`${domain}admin/ca_register`,{
           method : "POST",
@@ -730,18 +730,18 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
       })
     } 
   // useEffect(()=>{
-  //   console.log(CAList);
-  //   console.log(CAList[0]);
+  //   // console.log(CAList);
+  //   // console.log(CAList[0]);
     
   // },[CAList])
   
   // 문래 0번
   // const testBtn = async() =>{
   //   const monraeContract = web3 ? new web3.eth.Contract(estate_abi ,CAList[0],{data: ""}) : null;
-  //   console.log(monraeContract)
+  //   // console.log(monraeContract)
 
   //   const data = await monraeContract?.methods.balanceOf("0xB623C7CfB353Bd3a0619F1614d0d661f40978af8").call();
-  //   console.log(data);
+  //   // console.log(data);
   // }  
   return (
     <>

@@ -105,12 +105,12 @@
 
         const isEstateDetailModalOpen = searchParams?.estateDetailModal;
 
-        // console.log("isEstateDetailModalOpen" , isEstateDetailModalOpen)
-        // console.log("params" , {params})
-        // console.log("params" , params.id)/
+        // // console.log("isEstateDetailModalOpen" , isEstateDetailModalOpen)
+        // // console.log("params" , {params})
+        // // console.log("params" , params.id)/
 
         // const router = useRouter();
-        // console.log("router", router)
+        // // console.log("router", router)
         // const { id } = router.query; // 여기에서 id를 추출
         
 

@@ -16,7 +16,7 @@ export default function BounsLogin() {
     "message",
     (event) => {
       if (event.data === "navigateToURL") {
-        console.log("리로딩해주세요");
+        // console.log("리로딩해주세요");
         window.location.href = `${data}`;
       }
     },

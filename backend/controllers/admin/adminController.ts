@@ -3,10 +3,9 @@ import { Op } from "sequelize";
 import { db } from "../../models";
 
 export const realEstateSubmit = async (req: Request, res: Response) => {
-  console.log("req.body" ,req.body);
-  console.log("req.body.options" ,req.body.options);
-  console.log(" form data " , req.body.formData);
-  
+  // // console.log("req.body" ,req.body);
+  // // console.log("req.body.options" ,req.body.options);
+  // // console.log(" form data " , req.body.formData);
 };
 
 // 매물 전체 정보
@@ -125,7 +124,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 //       ],
 //     });
 
-//     console.log("subscriptionsList : ", result);
+//     // console.log("subscriptionsList : ", result);
 
 //     if (result) res.status(200).json(result);
 //     else res.status(404).send("empty");
@@ -148,7 +147,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 //       group: "real_estate_name",
 //     });
 
-//     console.log("realEstateTradeList : ", result);
+//     // console.log("realEstateTradeList : ", result);
 
 //     if (result) res.status(200).json(result);
 //     else res.status(404).send("empty");
@@ -169,7 +168,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 //       limit: 10,
 //     });
 
-//     console.log("realEstateOwnList : ", result);
+//     // console.log("realEstateOwnList : ", result);
 
 //     if (result) res.status(200).send(result);
 //     else res.status(404).send("empty");
@@ -183,7 +182,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 //   try {
 //     const result = await db.Users.findAll({ where: { blacklist: true } });
 
-//     console.log("blacklist : ", result);
+//     // console.log("blacklist : ", result);
 
 //     if (result) res.status(200).send(result);
 //     else res.status(404).send("empty");
@@ -214,7 +213,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 //       ],
 //     });
 
-//     console.log("realEstateOwnList : ", result);
+//     // console.log("realEstateOwnList : ", result);
 
 //     if (result) res.status(200).send(result);
 //     else res.status(404).send("empty");
