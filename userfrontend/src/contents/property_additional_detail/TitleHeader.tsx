@@ -6,7 +6,7 @@ const TitleHeader: React.FC = () => {
   const title = currentPage.state.infoType;
 
   return (
-    <div className='w-full h-[20%] flex justify-start items-end text-2xl pl-5'>
+    <div className='w-full h-[15%] flex justify-start items-end text-2xl pl-5'>
       {title}
     </div>
   )

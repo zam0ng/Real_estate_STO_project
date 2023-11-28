@@ -3,7 +3,7 @@ import { DB } from "../models";
 
 interface real_estates_ownAttribute {
   user_email: string;
-  wallet: string;
+  wallet?: string;
   real_estate_id: number;
   real_estate_name: string;
   price: number;

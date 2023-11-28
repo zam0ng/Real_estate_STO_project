@@ -19,9 +19,6 @@ export default function RootLayout({
     <html>
       <body>
         
-        {/* <h3> 목차 </h3> */}
-        {/* <Link href="/"> home 으로 이동 </Link> <br></br> */}
-        {/* <Link href = {"/admin/main"} > 🚀🚀🚀 어드민 페이지 이동 </Link> */}
 
         {/* page 내용들 */}
         {children}

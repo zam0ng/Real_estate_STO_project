@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ERC20subscription is ERC20, Ownable {
     uint256 private _totalMinted;
     uint256 private _totalSupply;
     uint256 private _lockTime;
+
     uint256 public _adminLockTime;
     string private _documentURI;
     string private _tokenSymbol;
@@ -110,7 +111,7 @@ contract ERC20subscription is ERC20, Ownable {
         return _documentURI;
     }
 
-    function setDocumentURI(string memory __documentURI) public onlyOwner {
+    function setDocumentURI (string memory __documentURI) public onlyOwner{
         _documentURI = __documentURI;
     }
 

@@ -3,10 +3,14 @@ import BuyTabInfo from './BuyTabInfo';
 import SellTabInfo from './SellTabInfo';
 import BuySellTabStructure from './BuySellTabStructure';
 
-const BuySellTabInfo: React.FC = () => {
+interface socketProps {
+    isSocket: any;
+}
+
+const BuySellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const buySellTabs = [
-        {id: "buyTab", title: "매수", content: <BuyTabInfo />},
-        {id: "sellTab", title: "매도", content: <SellTabInfo />}
+        {id: "buyTab", title: "매수", content: <BuyTabInfo isSocket={isSocket} />},
+        {id: "sellTab", title: "매도", content: <SellTabInfo isSocket={isSocket} />}
     ];
 
     return (

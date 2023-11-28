@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { PropertyInfo } from "../contents/market/on_sale_list/PropertyListBox";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../components/serverurl";
+import BackBtn from "../components/BackBtn";
 
 interface MarketDetailRequest {
   current_price: number;
@@ -24,9 +25,7 @@ interface PropertyDataProps {
   propertyData: PropertyInfo | undefined;
 }
 
-export const MarketDetailContext = createContext<
-  MarketDetailRequest | undefined
->(undefined);
+export const MarketDetailContext = createContext<MarketDetailRequest | undefined>(undefined);
 
 const MarketDetail: React.FC = () => {
   const currentPage = useLocation();
@@ -66,7 +65,8 @@ const MarketDetail: React.FC = () => {
 
   return (
     <MarketDetailContext.Provider value={data}>
-      <div className="w-screen h-screen overflow-x-hidden">
+      <div className="w-screen h-screen overflow-x-hidden relative">
+        <BackBtn />
         <PropertyImg />
         <PropertyWordBox />
       </div>

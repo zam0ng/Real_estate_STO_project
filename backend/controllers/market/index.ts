@@ -83,10 +83,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
         "current_price",
 
         // ⭐⭐ 값들이 int 로 선언되어 소수점 계산이 안되서 계산식 순서를 바꿈
-        [
-          sequelize.literal("((current_price*100)/start_price)-100"),
-          "fluctuation_rate",
-        ],
+        [sequelize.literal("((current_price*100)/start_price)-100"),"fluctuation_rate",],
         [sequelize.literal("((current_price*100)/value)-100"), "rating"],
       ],
       include: [
@@ -102,7 +99,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -112,7 +109,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
 export const marketDetail = async (req: Request, res: Response) => {
   console.log("marketDetail get요청 들어옴?");
   const { name } = req.params;
-  console.log(name);
+  // console.log(name);
   try {
     const result = await Real_estates.findAll({
       where: { real_estate_name: name },

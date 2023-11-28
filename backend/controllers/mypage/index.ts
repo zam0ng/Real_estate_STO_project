@@ -284,15 +284,15 @@ export const assetInformation = async (req: Request, res: Response) => {
         [db.sequelize.literal(`(price * amount)`), "price"],
         "amount",
         [
-          db.sequelize.literal(`(price * amount - current_price * amount)`),
-          "valuation",
-        ],
+          // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
+          db.sequelize.literal(`(current_price * amount - price * amount)`),"valuation",],
         [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+        // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+
         "possible_quantity",
-        [
-          db.sequelize.literal(
-            `ROUND((((price * amount - current_price * amount) / (current_price * amount)) * 100)::numeric, 2)`
-          ),
+        [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (price * amount)) * 100)::numeric, 2)`),
+        // [db.sequelize.literal(`(current_price - price) / price * 100`),
+        
           "rate_of_return",
         ],
       ],

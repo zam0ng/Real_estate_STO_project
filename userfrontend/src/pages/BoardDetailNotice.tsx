@@ -41,7 +41,7 @@ const BoardDetailNotice: React.FC = () => {
   };
 
   return (
-    <div className='w-screen h-screen border border-black'>
+    <div className='w-screen h-screen'>
       <BoardDetailHeader category={data?.category} />
       <BoardDetailTitleBox  notice_title={data?.notice_title} createdAt={data?.createdAt} real_estate_name={currentPage.state.real_estate_name} />
       <BoardDetailBody notice_content={data?.notice_content} />

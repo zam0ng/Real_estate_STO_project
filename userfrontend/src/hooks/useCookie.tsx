@@ -19,22 +19,12 @@ export default function useCookie(urlProps: string) {
     const isCookie = cookies.get("accessToken");
     if (isCookie) {
       try {
-        axios
-          .post("http://localhost:8080/order/sell/문래 공차", {
-            token: isCookie,
-          })
-          .then((res) => {
-            console.log(res);
-          });
-
-        // axios
-        //   .post("http://localhost:8080/subscription/get_balance", {
+        setLoginCheck(true);
+        // axios.get("http://localhost:8080/mypage/my_balance", {
+        //   params: {
         //     token: isCookie,
-        //   })
-        //   .then((res) => {
-        //     console.log(res);
-        //   });
-
+        //   },
+        // });
         // axios
         //   .post(`https://bouns.io/api/jwt-verify`, {
         //     token: isCookie,
