@@ -12,7 +12,6 @@ export default function UsersLayout({
         <div className="w-auto col-span-2 bg-blue-100 h-36 rounded-adminLayout_header -z-10 ">
           {/* border-radius: 3rem 3rem 0rem 0rem; */}
         </div>
-
         {/* 메뉴바 가이드 라인 */}
         <div className="bg-green-300 min-h-[50vh] w-96">
           {/* 왼쪽 menu bar | 메뉴바 */}

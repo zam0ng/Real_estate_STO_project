@@ -2,6 +2,10 @@ import { Response, Request, NextFunction } from "express";
 import axios from "axios";
 import { db } from "../../models";
 
+ // ✅ 추가 | npm i gravatar
+const gravatar = require('gravatar');
+
+
 // 들어온 요청이 GET 요청인지 POST 요청인지 판단
 // async function handleMethodCheck(_req: any, _method: string) {
 //   if (_method === "GET") {
@@ -55,6 +59,11 @@ export const isLogin = async (
     if (verify?.status != 200) return res.send("다시 로그인 하세요.");
     const user_email = verify.data.email;
 
+    // ✅ 추가
+    const gravatarUrl = gravatar.url(user_email, {s: '68', d: 'robohash'});
+    console.log("gravatarUrl" , gravatarUrl)  // ✅ DJ 추가
+
+
     req.body.user_email = user_email;
 
     const member_check = await db.Users.findOne({
@@ -65,7 +74,7 @@ export const isLogin = async (
     if (!member_check) {
       const wallet = await handleWalletAddress(token);
       await db.Users.create({
-        user_profile_img: "/images/test.png",
+        user_profile_img: gravatarUrl, // ✅ 추가
         user_email: user_email,
         user_pw: "aa",
         wallet: wallet,

@@ -2,7 +2,7 @@
 
 import { EnableButtonParam } from "@/app/_features/admin/real_estates";
 
-const EnableButton = ({ text }: EnableButtonParam) => {
+const EnableButton = ({ text  }: EnableButtonParam) => {
 
   const handleSTOBtn = () => {
     alert("🔥STO 발행 시작🔥")

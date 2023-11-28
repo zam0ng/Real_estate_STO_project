@@ -26,7 +26,7 @@ const handleBlacklist = async (e : FormEvent<HTMLFormElement>) => {
         - 블랙리스트 사유
         - 선정 일시
     */
-    
+
 
     // 통신 방식, headers 및 DB 에 보낼 정보 설정
     const options = {

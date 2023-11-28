@@ -40,7 +40,7 @@ const RenderEstateInfo: React.FC<RenderEstateInfoProps> = ({
   const fileName = path.split('/')[2]
 
   const finalDomain = `${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL}`
-  const finalImageURL = `${finalDomain}estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
+  const finalImageURL = `${finalDomain}/estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
 
   console.log(finalImageURL , "finalImageURL🚀🚀")
 
@@ -65,7 +65,7 @@ const RenderEstateInfo: React.FC<RenderEstateInfoProps> = ({
       <div className="relative w-24 h-24 my-auto rounded-md bg-slate-500 ">
           <Image
             alt="매물 사진"
-            src={finalImageURL}
+            src={finalImageURL}   // next.config.js 에 기재한 경로와 맞아야 함
             sizes="100vw"
             style={{objectFit: "cover"}}	
             fill={true}

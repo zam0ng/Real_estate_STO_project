@@ -391,7 +391,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
             ),
             "YYYY-MM"
           ),
-          "trade_month",
+          "trade_date",
         ],
         [
           db.sequelize.fn("sum", db.sequelize.col("trade_amount")),
@@ -406,7 +406,7 @@ export const tradeMonthList = async (req: Request, res: Response) => {
           "YYYY-MM"
         ),
       ],
-      order: [[db.sequelize.col("trade_month"), "DESC"]],
+      order: [[db.sequelize.col("trade_date"), "DESC"]],
       where: {
         createdAt: {
           [Op.gte]: tenMonthsAgo,
@@ -416,6 +416,10 @@ export const tradeMonthList = async (req: Request, res: Response) => {
     })) as [] as TradeDate[];
 
     const all_result = await setRealEstateAmount(result, "month");
+
+    console.log("all_result🚀🚀" , all_result)
+
+
 
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
@@ -656,6 +660,7 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
   // stock_type varchar // 증권타입
   // publisher varchar // 발행인
 };
+
 
 export const noticeSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);

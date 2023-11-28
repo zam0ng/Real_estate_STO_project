@@ -3,6 +3,20 @@ export interface TableRow {
   item: EstateDataItem;
 }
 
+// DB 에서 받은 데이터 ROW 당 타입
+export interface UserTableRow {
+  item: UserDataItem;
+}
+
+// DB 에서 받은 데이터 ROW 당 타입
+export interface TransactionTableRow {
+  item: TransactionDataItem;
+}
+
+// DB 에서 받은 데이터 ROW 당 타입
+export interface TableRowEstate {
+  item: EstateDataItem;
+}
 // DB 에서 받은 데이터 ROW 하나 당 타입
 export interface EstateDataItem {
   id: number;
@@ -17,6 +31,33 @@ export interface EstateDataItem {
   subscription_result_date: string;
 }
 
+// DB 에서 받은 데이터 ROW 하나 당 타입
+export interface UserDataItem {
+  id: number;
+  user_profile_img: string;
+  user_email: string;
+  wallet: string;
+  
+  balance : number, 
+  using_balance : number, 
+  blacklist : boolean, 
+  createdAt : string,
+  updatedAt : string,
+}
+
+
+// DB 에서 받은 데이터 ROW 하나 당 타입
+export interface TransactionDataItem {
+  id : number,
+  tx_from : string,
+  tx_to : string,
+  tx_value : number,
+  tx_symbol : string,
+  block_num : number,
+  transmission : string,
+  createdAt : string,
+}
+
 // 테이블 속성 타입
 export interface TableColumnNameProps {
   columnName: string;
@@ -28,6 +69,12 @@ export interface ImageNameProps {
   imageURL: string;
   name: string;
 }
+// 테이블 ROW > 이미지 & 이름 타입
+export interface ImageEmailPrpos {
+  id : number
+  imageURL: string;
+  name: string;
+}
 
 // 테이블 ROW > 설명
 export interface DescriptionProps {
@@ -35,8 +82,33 @@ export interface DescriptionProps {
   id : number;
 }
 
+// 테이블 ROW > 설명
+export interface UserDescriptionProps {
+  desc: string | number;
+  id : number;
+}
+
+
 // 테이블 ROW > status
 export interface StatusProps {
+  id : number;
+  status: string;
+}
+
+// 테이블 ROW > status
+export interface BlacklistStatusProps {
+  id : number;
+  status: boolean;
+}
+
+// 테이블 ROW > status
+export interface UserStatusProps {
+  id : number;
+  status: boolean;
+}
+
+// 테이블 ROW > status
+export interface TransactionStatusProps {
   id : number;
   status: string;
 }
@@ -45,6 +117,12 @@ export interface StatusProps {
 export interface ProgressProps {
   progress: string | number ;
   id : number;
+}
+
+// 테이블 ROW > ProgressProps
+export interface BalanceProps {
+  id : number;
+  balance: number ;
 }
 
 // 테이블 ROW > TotalpriceProps
@@ -81,19 +159,24 @@ export interface EnableButtonParam {
     text : string
   }
   
-export interface DisableButton {
+  export interface EnrollBlacklistButtonParams {
+      text : string
+      user_email : string
+    }
+
+    export interface DisableButton {
     text : string
   }
 
 
 
 
-// rea_estate 상세 
+// real_estate 상세 
 export interface getEstateDetailProps {
         id: string | string[];
   }
 
-// rea_estate 상세 | props가 { params: { id: string } } 형태의 객체라고 가정
+// real_estate 상세 | props가 { params: { id: string } } 형태의 객체라고 가정
 export interface ReadProps {
   params: {
       id: string;
@@ -147,8 +230,6 @@ export interface DetailData {
   completion: string; // or Date
   subscription_img_1: string;
 
-
-  
   subscription_totalprice: string;
   subscription_totalsupply: number;
   subscription_description: string;
@@ -166,4 +247,6 @@ export interface DetailData {
   updatedAt: string; // or Date
   subscription_id: number | null;
 }
+
+
 

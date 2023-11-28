@@ -5,21 +5,43 @@
         searchParams: Record<string, string> | null | undefined;
     };
 
-
 // inputForm 에서 데이터를 받는 type
     export interface InputFormItemProps {
         _title : string;
         _type : string;
         _name : string;
         _placeholder : string;
-        _step? : string 
+        _step? : string;
     }
 
- 
-// 
+// inputForm 에서 데이터를 받는 type
+    export interface InputFormDateItemProps {
+        _title : string;
+        _type : string;
+        // _name : string;
+        _placeholder : string;
+        _step? : string;
+        setDate : Function;
+    }
+
+
     export interface RenderItemProps {
         title : string
         desc : string | number | undefined | null
     }
 
-    
+
+// small graph chart type
+export interface LineChartSmallProps {
+    _lineColor: string;
+    _data: number[];
+    _label: string[];
+  }
+
+
+// blacklist 유저 타입 
+export interface IblackListUser {
+    user_profile_img: string;
+    user_email: string;
+    slice : Function;
+}
