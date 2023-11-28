@@ -1,38 +1,44 @@
-import React from 'react';
+import React from "react";
 
 interface ImageProps {
   img: string;
-  totalPrice : number;
+  totalPrice: number;
 }
 
-const BuildingImg: React.FC<ImageProps> = ({img,totalPrice}) => {
+const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
   const totalPriceCut = Number(totalPrice) / 10000;
-  console.log(totalPrice);
-  
+  // console.log(totalPrice);
+
   let priceKr;
-  if(totalPriceCut <= 1){
+  if (totalPriceCut <= 1) {
     priceKr = "약 1만원 모집";
-  }else if(totalPriceCut > 1 && totalPriceCut < 10000){
+  } else if (totalPriceCut > 1 && totalPriceCut < 10000) {
     priceKr = `총 ${totalPriceCut}만원 모집`;
-  }else if(totalPriceCut >= 10000){
+  } else if (totalPriceCut >= 10000) {
     let uk = Math.floor(totalPriceCut / 10000);
     let man = totalPriceCut % 10000;
-    if(man === 0){
+    if (man === 0) {
       priceKr = `총 ${uk}억원 모집`;
-    }else{
+    } else {
       priceKr = `총 ${uk}억 ${man}만원 모집`;
     }
-  };
-  
+  }
+
   return (
-    <div className='w-[85%] h-80 rounded-lg mt-4 relative'>
-      <div className='absolute top-5 left-0 w-1/2 h-6 opacity-80 bg-slate-700 rounded-tr-md rounded-br-md 
-      text-white text-xs-sm flex justify-center items-center'>
+    <div className="w-[85%] h-80 rounded-lg mt-4 relative">
+      <div
+        className="absolute top-5 left-0 w-1/2 h-6 opacity-80 bg-slate-700 rounded-tr-md rounded-br-md 
+      text-white text-xs-sm flex justify-center items-center"
+      >
         {priceKr}
       </div>
-      <img className='w-full h-full rounded-lg' src={img} alt='building image' />
+      <img
+        className="w-full h-full rounded-lg"
+        src={process.env.PUBLIC_URL + img}
+        alt="building image"
+      />
     </div>
-  )
-}
+  );
+};
 
 export default BuildingImg;

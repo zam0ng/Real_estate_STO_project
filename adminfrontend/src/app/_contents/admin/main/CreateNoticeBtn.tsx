@@ -7,7 +7,7 @@ const router = useRouter();
 
 // 매물 등록 페이지로 이동
 const handleNoticeBtn = () => {
-    console.log("게시글 등록 버튼 클릭");
+    // console.log("게시글 등록 버튼 클릭");
 
     // 서버에서 최신 id fetching 받아오기
     fetch(process.env.NEXT_PUBLIC_API_URL + "admin", { cache: "no-store" })

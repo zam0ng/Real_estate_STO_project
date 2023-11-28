@@ -13,11 +13,14 @@ interface MapProps {
     height: string;
 }
 
+
+
+
 const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
 
 
     useEffect(()=>{
-        window.kakao.maps.load(()=>{
+        window.kakao.maps?.load(()=>{
 
             let mapContainer = document.getElementById('map');
             let mapOption = {
@@ -27,7 +30,7 @@ const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
             let geocoder = new window.kakao.maps.services.Geocoder();
             
             geocoder.addressSearch(addressKor,function(result : any,status : any){
-                if(status === window.kakao.maps.services.Status.OK) {
+                if(status === window.kakao.maps?.services.Status.OK) {
                     let coords = new window.kakao.maps.LatLng(result[0].y,result[0].x);
                     map.setCenter(coords);
                     
@@ -46,7 +49,7 @@ const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
             let mapTypeControl = new window.kakao.maps.MapTypeControl();
             // let zoomControl = new window.kakao.maps.ZoomControl();
             
-            map.addControl(mapTypeControl,window.kakao.maps.ControlPosition.TOPRIGHT);
+            map.addControl(mapTypeControl,window.kakao.maps?.ControlPosition.TOPRIGHT);
             // map.addControl(zoomControl,window.kakao.maps.ControlPosition.RIGHT);
             
         })

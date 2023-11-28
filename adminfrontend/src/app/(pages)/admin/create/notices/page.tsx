@@ -19,7 +19,7 @@ export default function AdminCreateNotices() {
     const form = e.target as HTMLFormElement
 
     // form 태그에서 필요한 정보 가져오기
-    const title = form.title.value; // 투표 안건 제목
+    // const title = form.title.value; // 투표 안건 제목
     
     const description = form.description.value; // 투표 안건 설명 
     /* ✅ 추가 필요한 정보 
@@ -35,7 +35,7 @@ export default function AdminCreateNotices() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title, 
+        // title, 
         description
       }),
     };
@@ -44,7 +44,7 @@ export default function AdminCreateNotices() {
     fetch(process.env.NEXT_PUBLIC_API_URL + `notices`, options)
       .then((res) => res.json()) // 방금 저장한 데이터를 return 받아서 -> json 으로 변환
       .then((result) => {
-        console.log("처리한 데이터가 잘 들어왔는지 확인", result);
+        // console.log("처리한 데이터가 잘 들어왔는지 확인", result);
 
         router.refresh();
 

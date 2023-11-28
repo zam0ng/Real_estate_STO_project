@@ -2,13 +2,15 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface txBlockAttribute {
-  id: number;
-  blocknumber: number;
+  id?: number;
+  contract_address_id: number;
+  block_num: number;
 }
 
 class Tx_block extends Model<txBlockAttribute> {
   declare id: number;
-  declare blocknumber: number;
+  declare contract_address_id: number;
+  declare block_num: number;
   static initModel(sequelize: Sequelize): typeof Tx_block {
     Tx_block.init(
       {
@@ -17,7 +19,11 @@ class Tx_block extends Model<txBlockAttribute> {
           autoIncrement: true,
           primaryKey: true,
         },
-        blocknumber: {
+        contract_address_id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        block_num: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -33,11 +39,14 @@ class Tx_block extends Model<txBlockAttribute> {
     );
     return Tx_block;
   }
-  static associate(db: DB) {
-    db.Tx_block.hasMany(db.Tx_receipt, {
-      foreignKey: "tx_block_id",
-    });
-  }
+  // static associate(db: DB) {
+  //   db.Tx_block.belongsTo(db.Contract_address, {
+  //     foreignKey: "contract_address_id",
+  //   });
+  //   db.Tx_block.hasMany(db.Tx_receipt, {
+  //     foreignKey: "tx_block_id",
+  //   });
+  // }
 }
 
 export default Tx_block;

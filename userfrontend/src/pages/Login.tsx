@@ -24,10 +24,10 @@ export default function Login() {
   }
 
   return (
-    <>
+    <div className="animate-slide-up border-8 border-black w-full h-screen">
       <button className="border border-black" onClick={handleLogin}>로그인하러가기</button>
       <button className="border border-black" onClick={handleSurfing}>둘러보기</button>
-    </>
+    </div>
   );
 }
 

@@ -1,26 +1,30 @@
 export type SubDetail = {
-        subscription_img : string,
-        subscription_name : string,
-        subscription_address : string,
-        subscription_totalprice : number,
-        subscription_totalsupply : number,
-        subscription_description : string,
-        subscription_start_date : string,
-        subscription_end_date : string,
-        subscription_result_date : string,
-        subscription_building_date : string,
-        subscription_trading_start_date : string,
-        subscription_order_amount : number,
-        subscription_offering_price : number,
-        subscription_status : string,
-        floors : string,
-        purpose : string,
-        main_purpose : string,
-        area : number,
-        all_area : number,
-        build_area : number,
-        floor_area : number,
-        completion : string,
-        stock_type : string,
-        publisher : string
-}
+  subscription_img_1: string;
+  subscription_img_2: string;
+  subscription_img_3: string;
+  subscription_img_4: string;
+  subscription_img_5: string;
+  subscription_name: string;
+  subscription_address: string;
+  subscription_totalprice: string;
+  subscription_totalsupply: string;
+  subscription_description: string;
+  subscription_start_date: string;
+  subscription_end_date: string;
+  subscription_result_date: string;
+  subscription_building_date: string;
+  subscription_trading_start_date: string;
+  subscription_order_amount: string;
+  subscription_offering_price: string;
+  subscription_status: string;
+  floors: string;
+  purpose: string;
+  main_purpose: string;
+  area: number;
+  all_area: number;
+  build_area: number;
+  floor_area: number;
+  completion: string;
+  stock_type: string;
+  publisher: string;
+};

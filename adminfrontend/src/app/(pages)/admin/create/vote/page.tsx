@@ -18,7 +18,7 @@
         const form = e.target as HTMLFormElement;
 
         // form 태그에서 필요한 정보 가져오기
-        const title = form.title.value; // 투표 안건 제목
+        // const title = form.title.value; // 투표 안건 제목
 
         const description = form.description.value; // 투표 안건 설명 
         /* ✅ 추가 필요한 정보 
@@ -26,8 +26,8 @@
             - 이건, 블록체인으로 올라갈 것
         */
 
-        console.log("title", title)
-        console.log("description" , description)
+        // // console.log("title", title)
+        // console.log("description" , description)
         
 
         // 통신 방식, headers 및 DB 에 보낼 정보 설정
@@ -37,7 +37,7 @@
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            title, 
+            // title, 
             description
         }),
         };
@@ -46,7 +46,7 @@
         fetch(process.env.NEXT_PUBLIC_API_URL + `votes`, options)
         .then((res) => res.json()) // 방금 저장한 데이터를 return 받아서 -> json 으로 변환
         .then((result) => {
-            console.log("처리한 데이터가 잘 들어왔는지 확인", result);
+            // console.log("처리한 데이터가 잘 들어왔는지 확인", result);
 
             router.refresh();
 
