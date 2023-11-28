@@ -13,7 +13,7 @@ const currentDate = `${year}-${month}-${day}`;
 
 // 메인 청약 배너
 export const mainBanner = async (req: Request, res: Response) => {
-  console.log("main 배너 요청 들어오니?");
+  // // console.log("main 배너 요청 들어오니?");
   try {
     const result = await Subscriptions.findAll({
       where: { subscription_status: "start" },
@@ -67,7 +67,7 @@ export const mainBanner = async (req: Request, res: Response) => {
 
 // 주요지수 매물정보
 export const mainRealEstate = async (req: Request, res: Response) => {
-  console.log("mainRealEstate 들어오니?");
+  // // console.log("mainRealEstate 들어오니?");
   try {
     const result = await Real_estates.findAll({
       attributes: [
@@ -90,7 +90,7 @@ export const mainRealEstate = async (req: Request, res: Response) => {
 
 // 거래량
 export const tradingVolumeRN = async (req: Request, res: Response) => {
-  console.log("tradingVolumeRN 들어오니>");
+  // // console.log("tradingVolumeRN 들어오니>");
   try {
     const result = await Trades.findAll({
       attributes: [
@@ -153,7 +153,7 @@ export const tradingVolumeRN = async (req: Request, res: Response) => {
 
 // 급상승
 export const suddenIncrement = async (req: Request, res: Response) => {
-  console.log("suddenIncrement 들어오니??");
+  // // console.log("suddenIncrement 들어오니??");
   try {
     const result = await Real_estates.findAll({
       attributes: [
@@ -175,7 +175,7 @@ export const suddenIncrement = async (req: Request, res: Response) => {
       order: [["fluctuation_rate", "DESC"]],
       raw: true,
     });
-    // console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -184,7 +184,7 @@ export const suddenIncrement = async (req: Request, res: Response) => {
 
 // 급하락
 export const suddenDecrement = async (req: Request, res: Response) => {
-  console.log("suddenDecrement 들어오니??");
+  // // console.log("suddenDecrement 들어오니??");
   try {
     const result = await Real_estates.findAll({
       attributes: [
@@ -214,7 +214,7 @@ export const suddenDecrement = async (req: Request, res: Response) => {
 
 //이달의 배당
 export const rateOfReturn = async (req: Request, res: Response) => {
-  console.log("rateOfReturn 들어오니?");
+  // // console.log("rateOfReturn 들어오니?");
   try {
     interface DividendResult {
       real_estate_name: string;
@@ -245,13 +245,13 @@ export const rateOfReturn = async (req: Request, res: Response) => {
         });
       })
     );
-    // console.log(result);
-    // console.log(findOneResult);
+    // // console.log(result);
+    // // console.log(findOneResult);
     const mergeobj = result.map((el, idx) => ({
       ...el,
       ...findOneResult[idx],
     }));
-    // console.log(mergeobj);
+    // // console.log(mergeobj);
     res.json(mergeobj);
   } catch (error) {
     console.log(error);
@@ -259,13 +259,13 @@ export const rateOfReturn = async (req: Request, res: Response) => {
 };
 
 export const mainSearch = async (req: Request, res: Response) => {
-  console.log("mainSearch 들어옴?");
+  // // console.log("mainSearch 들어옴?");
   try {
     const result = await Real_estates.findAll({
       attributes: ["real_estate_name"],
       raw: true,
     });
-    // console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);

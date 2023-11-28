@@ -136,7 +136,7 @@ export const myBalance = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    console.log(result);
+    // // console.log(result);
 
     if (result) return res.status(200).json(result);
     else return res.status(404).send("Not found");
@@ -285,14 +285,19 @@ export const assetInformation = async (req: Request, res: Response) => {
         "amount",
         [
           // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
-          db.sequelize.literal(`(current_price * amount - price * amount)`),"valuation",],
+          db.sequelize.literal(`(current_price * amount - price * amount)`),
+          "valuation",
+        ],
         [db.sequelize.literal(`(current_price * amount)`), "present_price"],
         // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
 
         "possible_quantity",
-        [db.sequelize.literal(`ROUND((((current_price * amount - price * amount) / (price * amount)) * 100)::numeric, 2)`),
-        // [db.sequelize.literal(`(current_price - price) / price * 100`),
-        
+        [
+          db.sequelize.literal(
+            `ROUND((((current_price * amount - price * amount) / (price * amount)) * 100)::numeric, 2)`
+          ),
+          // [db.sequelize.literal(`(current_price - price) / price * 100`),
+
           "rate_of_return",
         ],
       ],
@@ -385,7 +390,7 @@ export const dividendList = async (req: Request, res: Response) => {
 //       raw: true,
 //     });
 
-//     console.log("real_estate_img : ", real_estate_img);
+//     // console.log("real_estate_img : ", real_estate_img);
 //   } catch (error) {
 //     console.error(error);
 //   }

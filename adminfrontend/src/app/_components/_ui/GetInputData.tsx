@@ -10,7 +10,7 @@ const GetInputData = () => {
   //   const input = e.target as HTMLInputElement;
 
   //   if (input.files) {
-  //     console.log("파일 저장 @GetInputData 컴포넌트", input.files[0]);
+  //     // console.log("파일 저장 @GetInputData 컴포넌트", input.files[0]);
   //     setUploadFile(input.files[0]);
   //   }
   // };

@@ -2,7 +2,7 @@
 
 // 실행환경 확인
 const isDev = process.env.NODE_ENV === 'development';
-console.log("isDev??" , isDev)
+// console.log("isDev??" , isDev)
 
 
 // 3. isDev 상태값에 따른 경로 요청 : 정상 작동 🔵

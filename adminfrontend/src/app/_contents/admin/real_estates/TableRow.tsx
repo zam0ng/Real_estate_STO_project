@@ -16,7 +16,7 @@ import DisableButton from "./DisableButton";
 const TableRow = async ({ item }: TableRow) => {
 
     const subscriptionProgress = item.achievement_rate // api 에 따르면 진행률은 achievement_rate 
-    console.log( "진행률👏" , subscriptionProgress)
+    // console.log( "진행률👏" , subscriptionProgress)
     
     
 return (

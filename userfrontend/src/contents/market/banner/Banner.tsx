@@ -29,7 +29,7 @@ const Banner: React.FC = () => {
     SubscriptionInfo[],
     Error
   >({ queryKey: ["subscriptionData"], queryFn: querySubscriptionInfo });
-  console.log("subscription info : ", data);
+  // console.log("subscription info : ", data);
   const dataRep = data && data[0];
   const completionRate =
     data &&

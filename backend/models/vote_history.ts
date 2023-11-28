@@ -25,7 +25,14 @@ class Vote_history extends Model<voteHistoryAttribute> {
           allowNull: false,
         },
       },
-      { sequelize }
+      {
+        sequelize,
+        modelName: "Vote_history",
+        tableName: "vote_history",
+        timestamps: true,
+        charset: "utf8",
+        collate: "utf8_general_ci",
+      }
     );
     return Vote_history;
   }
