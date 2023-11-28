@@ -33,8 +33,8 @@ export default function useCookie(urlProps: string) {
         //   .then((res) => {
         //     const { data, status } = res;
         //     const userEmail = data.email;
-        //     console.log(res);
-        //     console.log("userEmail : ", userEmail);
+        //     // console.log(res);
+        //     // console.log("userEmail : ", userEmail);
 
         //     if (status == 200) setLoginCheck(true);
         //   })

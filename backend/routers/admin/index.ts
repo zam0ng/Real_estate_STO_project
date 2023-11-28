@@ -10,6 +10,10 @@ import {
   tradeMonthList,
   realEstateManagement,
   realEstateDetail,
+  transferInOutList,
+  blackListAdd,
+  blackListDel,
+  contractAddressList,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -21,11 +25,17 @@ import {
   realEstateSubmit,
   noticeSubmit,
   dividendSubmit,
+  caRegister,
+  subscriptionList
 } from "../../controllers/admin";
 
 import { Upload } from '../../middleware/imgUpload';
 
 const router: Router = express.Router();
+
+// router.post("/subscription_submit", realEstateSubmit); 
+  // ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
+  // [231122] 아마도 삭제가 된 듯? 
 
 /////////////////////////////////////////////////////
 // 매물 전체 정보
@@ -38,6 +48,10 @@ router.get("/users_list", usersList);
 router.get("/recent_trade_list", recentTradeList);
 // 블랙리스트 정보
 router.get("/blacklist", blackList);
+// 블랙리스트 등록
+router.post("/blacklist_add", blackListAdd);
+// 블랙리스트 취소
+router.post("/blacklist_del", blackListDel);
 // 매물별 거래량 차트 (일)
 router.get("/trade_day_list", tradeDayList);
 // 매물별 거래량 차트 (주)
@@ -48,6 +62,10 @@ router.get("/trade_month_list", tradeMonthList);
 router.get("/management/real_estates_list", realEstateManagement);
 // 매물 관리 페이지 상세
 router.get("/management/real_estates_detail/:id", realEstateDetail);
+// 토큰 내/외부 전송 현황
+router.get("/transfer_in_out_list", transferInOutList);
+// CA 가져오기
+router.get("/contract_address_list", contractAddressList);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////
@@ -68,4 +86,14 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.post('/subscription_submit',Upload.array("upload"),realEstateSubmit);
 router.post('/notice_submit',noticeSubmit);
 router.post('/dividend_submit',dividendSubmit);
+router.post('/ca_register',caRegister);
+router.get('/subscription_list/:id',subscriptionList);
+
+
+
+ // DJ 임시 테스트 ✅✅✅✅✅✅
+// router.get('/subscription' , subscription) => [정현이가 추가한 버전] router.get("/management/real_estates_list", realEstateManagement); 로 변경
+// router.get('/subscription/detail/:id' , subscriptionDetail) => [정현이가 추가한 버전]  router.get("/management/real_estates_detail/:id", realEstateDetail); 로 변경
+
+
 export default router;

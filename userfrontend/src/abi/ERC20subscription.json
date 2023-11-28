@@ -35,11 +35,6 @@
         "internalType": "uint256",
         "name": "__lockTime",
         "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "__documentURI",
-        "type": "string"
       }
     ],
     "stateMutability": "nonpayable",
@@ -349,19 +344,6 @@
       }
     ],
     "stateMutability": "pure",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getDocumentURI",
-    "outputs": [
-      {
-        "internalType": "string",
-        "name": "",
-        "type": "string"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {

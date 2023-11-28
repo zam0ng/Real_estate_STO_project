@@ -1,9 +1,13 @@
 import React from 'react';
 
-const MyEmail: React.FC = () => {
+interface UserEmailProps {
+  email: string|undefined;
+}
+
+const MyEmail: React.FC<UserEmailProps> = ({email}) => {
   return (
     <div className='w-full h-[10%] flex justify-center items-center'>
-        MyEmail
+        {email}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import Menubar from "@/app/_contents/layout/Menubar";
 
-export default function DashboardLayout({
+export default function RealEstateLayout({
   children,
 }: {
   children: React.ReactNode;
