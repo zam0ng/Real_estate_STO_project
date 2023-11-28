@@ -2,9 +2,8 @@
 import { useQuery } from "@tanstack/react-query"
 import { useState, useEffect } from "react"
 import axios from '../../../components/url';
-import { HomeSearchType } from "../../../features/HomeSearch";
 import { useNavigate } from "react-router-dom";
-
+import { HomeSearchType } from "../../../features/HomeSearch";
 
 export default function HomeSearch(){
     
