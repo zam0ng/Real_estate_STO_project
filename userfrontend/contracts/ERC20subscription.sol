@@ -33,17 +33,12 @@ contract ERC20subscription is ERC20, Ownable {
         address[] memory subscribers,
         uint256[] memory amounts,
         uint256 __lockTime
-<<<<<<< HEAD
-    )  ERC20(_name,_symbol) Ownable(_owner){
-        require(subscribers.length == amounts.length, "subscribers and their amounts do not match");
-=======
     ) ERC20(_name, _symbol) Ownable(_owner) {
         require(
             subscribers.length == amounts.length,
             "subscribers and their amounts do not match"
         );
         _tokenSymbol = _symbol;
->>>>>>> o
         _totalSupply = __totalSupply;
         _lockTime = block.timestamp + __lockTime;
 
@@ -109,6 +104,8 @@ contract ERC20subscription is ERC20, Ownable {
             "Ownership capped at 20% to ensure decentralization"
         );
 
+        emit TransferWithSymbol(msg.sender, to, amount, _tokenSymbol);
+
         return super.transferFrom(from, to, amount);
     }
 
@@ -116,7 +113,7 @@ contract ERC20subscription is ERC20, Ownable {
         return _documentURI;
     }
 
-    function setDocumentURI (string memory __documentURI) public onlyOwner{
+    function setDocumentURI(string memory __documentURI) public onlyOwner {
         _documentURI = __documentURI;
     }
 

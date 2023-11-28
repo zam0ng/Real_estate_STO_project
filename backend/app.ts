@@ -96,8 +96,8 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 app.use("/vote", voteRouter);
 
+setInterval(logLatestBlockEvents, 3000);
 
-setInterval(logLatestBlockEvents, 10000);
 server.listen(8080, () => {
   console.log("server on");
 });
