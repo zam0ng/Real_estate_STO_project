@@ -265,11 +265,7 @@ export const mainSearch = async (req: Request, res: Response) => {
       attributes: ["id","real_estate_name"],
       raw: true,
     });
-<<<<<<< HEAD
-    console.log(result);
-=======
-    // // console.log(result);
->>>>>>> o
+
     res.json(result);
   } catch (error) {
     console.log(error);

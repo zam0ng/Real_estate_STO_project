@@ -215,11 +215,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       await db.Subscription_application.create(
         {
           subscription_id: id,
-<<<<<<< HEAD
-          subscription_user_email: user_email as string,
-=======
           subscription_user_email: user_email,
->>>>>>> o
           subscription_my_amount: amount,
         },
         { transaction }

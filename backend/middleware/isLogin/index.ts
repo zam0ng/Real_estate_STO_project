@@ -64,11 +64,7 @@ export const isLogin = async (
     });
 
     if (!member_check) {
-<<<<<<< HEAD
-      const wallet = await handleWalletAddress(token);
-=======
       // const wallet = await handleWalletAddress(token);
->>>>>>> o
 
       await db.Users.create({
         user_profile_img: "/images/test.png",

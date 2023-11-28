@@ -96,44 +96,10 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 app.use("/vote", voteRouter);
 
+
 setInterval(logLatestBlockEvents, 10000);
-
-<<<<<<< HEAD
-const web3 = new Web3(rpcEndpoint);
-
-async function logLatestBlockEvents() {
-  try {
-    const latestBlock: any = await web3.eth.getBlock("latest", true);
-
-    if (latestBlock.transactions) {
-      console.log(`Checking latest block.transactions`);
-      console.log(latestBlock);
-      console.log(latestBlock.transactions);
-
-      for (const tx of latestBlock.transactions) {
-        const receipt = await web3.eth.getTransactionReceipt(tx.hash || tx);
-        const value = await web3.utils.fromWei(tx.value, "ether");
-        console.log("receipt");
-        console.log(receipt);
-        console.log("blockNumber : ", tx.blockNumber);
-        console.log("from : ", tx.from);
-        console.log("to : ", tx.to);
-        console.log("value : ", value);
-        console.log("logs : ", tx.logs);
-      }
-    }
-  } catch (error) {
-    console.error("Error fetching latest block events:", error);
-  }
-}
-
-// setInterval(logLatestBlockEvents, 5000);
 server.listen(8080, () => {
   console.log("server on");
-=======
-server.listen(8080, () => {
-  // console.log("server on");
->>>>>>> o
 });
 
 export { server };
