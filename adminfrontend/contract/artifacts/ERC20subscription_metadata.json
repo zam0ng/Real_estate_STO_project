@@ -664,7 +664,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/ERC20subscription.sol": "ERC20subscription"
+			"ERC20subscription.sol": "ERC20subscription"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -726,12 +726,12 @@
 				"dweb:/ipfs/QmNgFkoXNWoUbAyw71rr1sKQ95Rj2GfvYiWg79xEYDn2NY"
 			]
 		},
-		"contract/ERC20subscription.sol": {
-			"keccak256": "0xa77c75d6abf12bb1f441aa53824a2015ae8462a77a49244a7ac5b6ff66e42327",
+		"ERC20subscription.sol": {
+			"keccak256": "0x26918efbd2de0378f44507f36575a898db147017f6f2e40ef203975dbdac1232",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://eb0b0a80633a159bd9c478c32244f53f3f425a3c6eee69cd83f63e9e72341af0",
-				"dweb:/ipfs/QmWNMakQy9fYuUCPuULbevhg4Hvwjawaw5FEknNGgREewV"
+				"bzz-raw://3de91228acef801e9a4ceefdf73ddfc53a14c31106175dc37006b5d37c7e6a2a",
+				"dweb:/ipfs/QmU88pTne7Pptu6ekrnzEzhgcTYgnhdiztzCCrEqB5L8XU"
 			]
 		}
 	},
