@@ -39,12 +39,16 @@ module.exports = {
         slideUp: {
           '0%': { transform: 'translateY(100%)' },
           '100%': { transform: 'translateY(0)' },
-        },
+        },swipe: {
+          '0%' : { transform : 'translateX(100%)'},
+          '100%' : { transform : 'translateX(0)'},
+        }
       },
       animation: {
         marquee: 'marquee 14s linear infinite',
         marquee2: 'marquee2 14s linear infinite',
         'slide-up': 'slideUp 0.4s ease-out',
+        swipe : 'swipe 0.2s ease-out'
       },
     },
   },
