@@ -48,8 +48,8 @@ const MyAsset: React.FC<UserEmailProps> = ({email}) => {
       </div>
       <MyAssetValueChange total_profit_loss={totalAssetValue?.total_profit_loss} profit_loss_ratio={totalAssetValue?.profit_loss_ratio} />
       <div className='w-full h-[10%] flex flex-row'>
-        <MyTotalBuy />
-        <MyTotalValue />
+        <MyTotalBuy balance={totalAssetValue?.balance} />
+        <MyTotalValue appraise_balance={totalAssetValue?.appraise_balance} />
       </div>
       <MyAssetHistoryTable email={email} />
     </div>

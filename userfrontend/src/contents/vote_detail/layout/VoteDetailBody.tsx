@@ -4,7 +4,8 @@ import VotePeriod from '../VotePeriod';
 import VotePropertyImg from '../VotePropertyImg';
 import VoteStatus from '../vote_status/VoteStatus';
 import VoteAdditionalInfo from '../VoteAdditionalInfo';
-import VoteOwned from '../VoteOwned';
+import VoteBtns from '../vote_status/agree_disagree/VoteBtns';
+import VoteCount from '../VoteCount';
 
 const VoteDetailBody: React.FC = () => {
   return (
@@ -13,8 +14,8 @@ const VoteDetailBody: React.FC = () => {
         <VotePeriod />
         <VotePropertyImg />
         <VoteStatus />
-        <VoteOwned />
-        <VoteAdditionalInfo />
+        <VoteBtns />
+        <VoteCount />
     </div>
   )
 }
