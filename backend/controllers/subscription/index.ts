@@ -162,7 +162,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       (await db.Subscriptions.findOne({
         attributes: [
           [
-            db.sequelize.literal(`"subscription_totalsupply" * 0.2`),
+            db.sequelize.literal(`"subscription_totalsupply" * 0.3`),
             "subscription_rate",
           ],
         ],
@@ -171,7 +171,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
       })) ?? 0;
 
     if (subscription_rate_check < amount)
-      return res.send("전체 공급량의 20% 이상 구매 할 수 없습니다.");
+      return res.send("전체 공급량의 30% 이상 구매 할 수 없습니다.");
 
     const get_user_application = await db.Subscription_application.findAll({
       attributes: [
@@ -186,7 +186,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     });
 
     if (get_user_application + amount > subscription_rate_check)
-      return res.send("전체 공급량의 20% 이상 구매 할 수 없습니다.");
+      return res.send("전체 공급량의 30% 이상 구매 할 수 없습니다.");
 
     const get_user_info = (await db.Users.findOne({
       attributes: [
@@ -237,6 +237,7 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
   } catch (error) {
     await transaction.rollback();
     console.error(error);
+    return res.send("청약 실패");
   }
 };
 
