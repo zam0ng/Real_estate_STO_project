@@ -22,6 +22,7 @@ export const marketSubscription = async (req: Request, res: Response) => {
       limit: 1,
       order: [["createdAt", "DESC"]],
       attributes: [
+        "id",
         "subscription_img_1",
         "subscription_totalprice",
         "subscription_description",
@@ -45,6 +46,7 @@ export const marketSubscription = async (req: Request, res: Response) => {
         limit: 1,
         order: [["createdAt", "DESC"]],
         attributes: [
+          "id",
           "subscription_img_1",
           "subscription_totalprice",
           "subscription_description",

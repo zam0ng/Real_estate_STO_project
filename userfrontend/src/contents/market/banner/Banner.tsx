@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../../../components/serverurl";
 
 interface SubscriptionInfo {
+  id: number;
   subscription_img_1: string;
   subscription_totalprice: number;
   subscription_description: string;
@@ -59,7 +60,7 @@ const Banner: React.FC = () => {
               completionRate={completionRate}
               restdate={dataRep.subscription_restdate}
             />
-            <BuyBtn />
+            <BuyBtn id={dataRep.id} />
           </div>
         )
       )}
