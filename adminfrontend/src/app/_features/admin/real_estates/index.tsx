@@ -17,6 +17,12 @@ export interface TransactionTableRow {
 export interface TableRowEstate {
   item: EstateDataItem;
 }
+
+// DB 에서 받은 데이터 ROW 당 타입
+export interface TableRowNotice {
+  item: NoticeDataItem;
+}
+
 // DB 에서 받은 데이터 ROW 하나 당 타입
 export interface EstateDataItem {
   id: number;
@@ -29,6 +35,18 @@ export interface EstateDataItem {
   subscription_start_date: string;
   subscription_end_date: string;
   subscription_result_date: string;
+}
+
+// DB 에서 받은 데이터 ROW 하나 당 타입
+export interface NoticeDataItem {
+  id : number
+  real_estate_name : string
+  category : string
+  notice_title : string
+  notice_content : string
+  notice_writer : string
+  createdAt : string
+  updatedAt : string
 }
 
 // DB 에서 받은 데이터 ROW 하나 당 타입

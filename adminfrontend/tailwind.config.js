@@ -104,6 +104,10 @@ module.exports = {
         userTable: "repeat(8, minmax(5rem, auto))",
         // transactionTable: "repeat(8, minmax(5rem, auto))",
         transactionTable: "2rem 3rem 21rem 21rem 2rem 5rem 5rem ",
+        // noticeTable: "5rem 5rem 15rem 15rem 5rem  ",
+        noticeTable: "4rem 5rem 5rem repeat(5, minmax(5rem, auto))",
+        // noticeTable: "5rem 5rem 5rem 15rem 15rem 5rem ",
+
       },
       gridTemplateRows: {
         // userTable : "auto",

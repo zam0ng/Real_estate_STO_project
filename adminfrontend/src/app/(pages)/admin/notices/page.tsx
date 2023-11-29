@@ -1,5 +1,5 @@
 import TableTitle from "@/app/_contents/admin/real_estates/TableTitle";
-import TableContent from "@/app/_contents/admin/real_estates/TableContentEstate";
+import TableContentNotice from "@/app/_contents/admin/real_estates/TableContentNotice";
 
 export default function Notices() {
   return (
@@ -15,7 +15,7 @@ export default function Notices() {
                 <TableTitle title="게시글" />
 
                 {/* table 내용 */}
-                <TableContent />
+                <TableContentNotice />
               </div>
             </div>
           </div>
