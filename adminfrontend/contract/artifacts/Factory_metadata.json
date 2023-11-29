@@ -120,7 +120,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"contract/Factory.sol": "Factory"
+			"Factory.sol": "Factory"
 		},
 		"evmVersion": "shanghai",
 		"libraries": {},
@@ -182,15 +182,15 @@
 				"dweb:/ipfs/QmNgFkoXNWoUbAyw71rr1sKQ95Rj2GfvYiWg79xEYDn2NY"
 			]
 		},
-		"contract/ERC20subscription.sol": {
-			"keccak256": "0xa77c75d6abf12bb1f441aa53824a2015ae8462a77a49244a7ac5b6ff66e42327",
+		"ERC20subscription.sol": {
+			"keccak256": "0x962606f4f82e56fc7aaec53c27d78a777f9ee6392074befbcc4b9959747b9bb7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://eb0b0a80633a159bd9c478c32244f53f3f425a3c6eee69cd83f63e9e72341af0",
-				"dweb:/ipfs/QmWNMakQy9fYuUCPuULbevhg4Hvwjawaw5FEknNGgREewV"
+				"bzz-raw://0328948dfaef55098c81ca7e111c0a25ec57894d1e30edd7e36ab420e75f6388",
+				"dweb:/ipfs/Qmb4BvNHVvMnfyiHdWMdi3jpT6m7q7i8N3XG6MBdugTbqK"
 			]
 		},
-		"contract/Factory.sol": {
+		"Factory.sol": {
 			"keccak256": "0x4230bff19c4f4732fa23a59b8cf4362f79188f7ba18e3b1e3e93d31dfaff7617",
 			"license": "MIT",
 			"urls": [

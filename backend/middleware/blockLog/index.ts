@@ -12,8 +12,8 @@ import {
 } from "../../controllers/blocklog";
 
 // const rpcEndpoint = "http://localhost:8545";
-const rpcEndpoint = "https://rpc.sepolia.org";
-// const rpcEndpoint = "https://network.bouncecode.net";
+// const rpcEndpoint = "https://rpc.sepolia.org";
+const rpcEndpoint = "https://network.bouncecode.net";
 const web3 = new Web3(rpcEndpoint);
 
 // ABI 파일의 경로 설정
@@ -150,12 +150,12 @@ export const logLatestBlockEvents = async () => {
         //    컨트랙트 배포는 0x60806040로 고정
         // 아래 0xa9059cbb000000000000000000000000 는 0xa9059cbb로 transfer인 것을 알 수 있지만 뒤의 숫자는 내가 발생한 이벤트에 대한 고정값? 인듯
         // 같은 sol을 배포했을때 네트워크에 따라 0xa9059cbb000000000000000000000000 이 뒤에 부분은 달라졌지만 저부분은 어느 네트워크든 같았음(sepolia, ganache)
-        // if (!tx.input.includes("0xa9059cbb")) continue;
-        // console.log("tx : ", tx);
-        // console.log("tx.from : ", tx.from);
-        // console.log("tx.to : ", tx.to);
-        if (tx.input.length > 300) continue;
-        // console.log("tx.input : ", tx.input);
+        // transferFrom의 input 앞 4바이트는 0x23b872dd
+        if (
+          !tx.input.includes("0xa9059cbb") &&
+          !tx.input.includes("0x23b872dd")
+        )
+          continue;
 
         // 트랜잭션에 hash 부분을 해싱하게 되면 영수증이 나오게 되는데 그 영수증 안에 logs 정보가 들어 있음
         const receipt: any = await web3.eth.getTransactionReceipt(tx.hash);

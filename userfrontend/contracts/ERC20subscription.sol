@@ -104,6 +104,8 @@ contract ERC20subscription is ERC20, Ownable {
             "Ownership capped at 20% to ensure decentralization"
         );
 
+        emit TransferWithSymbol(msg.sender, to, amount, _tokenSymbol);
+
         return super.transferFrom(from, to, amount);
     }
 
@@ -111,7 +113,7 @@ contract ERC20subscription is ERC20, Ownable {
         return _documentURI;
     }
 
-    function setDocumentURI (string memory __documentURI) public onlyOwner{
+    function setDocumentURI(string memory __documentURI) public onlyOwner {
         _documentURI = __documentURI;
     }
 

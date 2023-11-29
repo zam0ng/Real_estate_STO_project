@@ -14,6 +14,8 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
+import web3 from "web3";
+
 const confirmLoginStatus = async (isCookie: string): Promise<string> => {
   const response = await axios.post(`${serverurl}/mypage`, {
     token: isCookie,
@@ -71,7 +73,7 @@ export default function Mypage() {
   }
 
   return (
-    <div className="w-screen h-screen pb-16 overflow-y-scroll">
+    <div className="w-screen h-screen pb-16 overflow-y-scroll animate-swipe">
       <MyInfo email={userEmail} />
       <div className="w-full h-auto flex flex-col justify-center items-center">
         <MyCash />

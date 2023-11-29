@@ -6,36 +6,122 @@ import Users from "../../models/users";
 import { sequelize } from "../../models";
 import { Op, Sequelize } from "sequelize";
 import Trades from "../../models/trades";
+import Contract_address from "../../models/contract_address";
 
 interface AddRequest extends Request {
   userEmail?: string;
   wallet?: string;
 }
 
+async function mysellorders(_user_email : string,_name : string){
+  // 현재 내가 주문한 매도 주문들
+  const data = await Orders.findAll({
+    where: {
+      user_email: _user_email,
+      real_estate_name: _name,
+      order_type: 'sell',
+      order_status: '0',
+    },
+
+    attributes: [
+      [
+        sequelize.fn("SUM", sequelize.col("possible_amount")),
+        "total_possible_amount",
+      ],
+    ],
+    raw: true,
+  })
+  const data2 = await Contract_address.findOne({
+    where : {
+      real_estate_name : _name,
+    },
+    attributes :[
+      'address',
+    ],
+    raw : true,
+  })
+
+  // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
+  const data3: any = await Real_estates_own.findOne({
+    where: { 
+      user_email: _user_email, 
+      real_estate_name: _name 
+    },
+    attributes: [
+      "possible_quantity"
+    ],
+    raw: true,
+  });
+  console.log(data3);
+  const newObj = {...data[0],...data2,...data3};
+  console.log(newObj);
+  return newObj;
+}
+
+async function getSellerWallet(user_email:string) {
+  // 판매자 지갑 주소 가져오기
+  console.log("getSellerWallet 실행됨?");
+  const {wallet} :any = await Users.findOne({
+    where : {
+      user_email : user_email,
+    },
+    attributes :[
+      'wallet'
+    ],
+    raw : true,
+  })
+  return wallet;
+}
+
+async function getBuyerWallet(user_email:string) {
+  // 구매자 지갑 주소 가져오기
+  console.log("getBuyerWallet 실행됨?");
+  const {wallet} :any = await Users.findOne({
+    where : {
+      user_email : user_email,
+    },
+    attributes :[
+      'wallet'
+    ],
+    raw : true,
+  })
+  return wallet;
+}
+
 // 매도 주문
 export const orderSell = async (req: Request, res: Response) => {
   const { price, amount } = req.body;
-  const user_email = req.body.user_email;
+  const user_email = req.body.user_email; // 판매자
   const { name } = req.params;
   let restamount = amount;
-
+  const tradeArr = [];
+  
   // 유저 임시
   // const islogin = "test@naver.com"
   try {
-    // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
-    const holdings: any = await Real_estates_own.findAll({
-      where: { user_email: user_email, real_estate_name: name },
-      attributes: ["possible_quantity"],
-      raw: true,
-    });
-    // // console.log("holdings------", holdings);
+
+    const sellerWallet = await getSellerWallet(user_email);
+
+    // // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
+    // const holdings: any = await Real_estates_own.findAll({
+    //   where: { 
+    //     user_email: user_email, 
+    //     real_estate_name: name 
+    //   },
+    //   attributes: [
+    //     "possible_quantity"
+    //   ],
+    //   raw: true,
+    // });
+    // console.log("holdings------", holdings);
     // 물량이 아예 없을 때 반환
-    if (holdings.length <= 0) {
-      res.send("보유 물량 없음");
-    }
+    // if (holdings.length <= 0 || holdings[0].possible_quantity == 0) {
+    //   res.send("보유 물량 없음");
+    // }
     // 물량은 있지만 주문수량 이상으로 있는지 확인
-    else {
-      if (holdings[0].possible_quantity >= amount) {
+    // else {
+      // if (holdings[0].possible_quantity >= amount) {
+
         // 매물의 현재가 가져오기
         const currentPrice: { current_price: number } | null =
           (await Real_estates.findOne({
@@ -72,9 +158,13 @@ export const orderSell = async (req: Request, res: Response) => {
               },
             }
           );
-          // // console.log("ㄷㅈㄱㄷㅈㄱㄷㅈ");
+          console.log("ㄷㅈㄱㄷㅈㄱㄷㅈ");
+          // const _mysellorders = await mysellorders(user_email,name);
+          // console.log(_mysellorders);
 
+          // res.send({ message: "매도 주문 완료", data : _mysellorders });
           res.send("매도 주문 완료");
+
         } else {
           // 현재가보다 매도 주문금액이 낮거나 같을 때
           // 먼저, 현재가로 buy 가 있는지 판단
@@ -125,8 +215,11 @@ export const orderSell = async (req: Request, res: Response) => {
                 },
               }
             );
-
+            // const _mysellorders = await mysellorders(user_email,name);
+            // console.log(_mysellorders);
+            // res.send({ message: "매도 주문 완료", data: _mysellorders });
             res.send("매도 주문 완료");
+
           } else {
             // // console.log("buyOrders---", buyOrdes);
 
@@ -150,13 +243,15 @@ export const orderSell = async (req: Request, res: Response) => {
             // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
 
             for (const el of result) {
-              // // console.log(el);
-
+              console.log(el);
+              
+              const buyerWallet = await getBuyerWallet(el.user_email);
+              console.log(buyerWallet);
               restamount = restamount - el.possible_amount;
-
+              
               if (restamount < 0) {
-                // // console.log("restamount 0아래임", restamount);
-
+                console.log("restamount 0아래임", restamount);
+                const conclusionAmount = el.possible_amount+ restamount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -286,11 +381,14 @@ export const orderSell = async (req: Request, res: Response) => {
                     }
                   );
                 }
+                // [판매자 지갑 , 구매자 지갑, 양]
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
+
 
                 break;
               } else if (restamount == 0) {
-                // console.log("restamount 0임", restamount);
-
+                console.log("restamount 0임", restamount);
+                const conclusionAmount = el.possible_amount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -409,11 +507,12 @@ export const orderSell = async (req: Request, res: Response) => {
                     }
                   );
                 }
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
 
                 break;
               } else {
-                // // console.log("restamount 0이상임", restamount);
-
+                console.log("restamount 0이상임", restamount);
+                const conclusionAmount = el.possible_amount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -532,10 +631,11 @@ export const orderSell = async (req: Request, res: Response) => {
                     }
                   );
                 }
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
               }
             }
-            // // console.log("최종 amount", restamount);
-
+            console.log("최종 amount", restamount);
+            console.log(tradeArr);
             // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
             // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
             const lastTradePrice: { trade_price: number }[] | null =
@@ -612,13 +712,13 @@ export const orderSell = async (req: Request, res: Response) => {
               );
             }
 
-            res.send("매도 완료");
+            res.send({message:"매도 완료",data : tradeArr});
           }
         }
-      } else {
-        res.send("보유 수량 부족");
-      }
-    }
+      // } else {
+      //   res.send("보유 수량 부족");
+      // }
+    // }
   } catch (error) {
     console.log(error);
   }
@@ -1260,7 +1360,7 @@ export const orderMain = async (req: Request, res: Response) => {
         // order_price 같은 값인 컬럼의 order_amount 값을 더해서 total_order_amount 값으로 반환할건데,
         // 그럼 group 속성으로 묶어주는게 필요함
         [
-          sequelize.fn("SUM", sequelize.col("order_amount")),
+          sequelize.fn("SUM", sequelize.col("possible_amount")),
           "total_order_amount",
         ],
       ],
@@ -1492,4 +1592,16 @@ export const headerInfo = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
   }
-};
+}
+
+export const getCaMysellorders = async (req: Request, res : Response)=>{
+  const {user_email} = req.body;
+  const {name} = req.params;
+  try {
+    const _mysellorders = await mysellorders(user_email,name);
+    // console.log(_mysellorders);
+    res.json(_mysellorders);
+  } catch (error) {
+    console.log("getCaMysellorders에서 오류남",getCaMysellorders);
+  }
+}

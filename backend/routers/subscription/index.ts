@@ -15,10 +15,6 @@ router.get("/detail/:id", subsciptionDetail);
 
 router.post("/get_balance", isLogin, getBalance);
 
-router.post(
-  "/detail/subscription_application/:id",
-  isLogin,
-  subscriptionApplication
-);
+router.post("/detail/subscription_application/:id", isLogin, subscriptionApplication);
 
 export default router;

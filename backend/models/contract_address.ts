@@ -6,7 +6,7 @@ interface caAttribute {
   address: string;
   real_estate_name: string;
   ca_type?: string;
-  symbol: string;
+  symbol?: string;
 }
 
 class Contract_address extends Model<caAttribute> {

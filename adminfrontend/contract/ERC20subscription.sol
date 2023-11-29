@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.20;
 
-// import "@openzeppelin/contracts/access/Ownable.sol";
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+// import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+// import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract ERC20subscription is ERC20, Ownable {
     uint256 private _totalMinted;
@@ -103,6 +104,8 @@ contract ERC20subscription is ERC20, Ownable {
             newTotalBalance < (20 * totalSupply()) / 100,
             "Ownership capped at 20% to ensure decentralization"
         );
+
+        emit TransferWithSymbol(from, to, amount, _tokenSymbol);
 
         return super.transferFrom(from, to, amount);
     }
