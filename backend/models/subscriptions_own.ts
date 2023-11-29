@@ -11,7 +11,6 @@ class Subscriptions_own extends Model<subscriptions_ownAttribute> {
   static initModel(sequelize: Sequelize): typeof Subscriptions_own {
     Subscriptions_own.init(
       {
-        // 이거 user_wallet 으로 바꿔야함 ! 💪
         wallet: {
           type: DataTypes.STRING,
           allowNull: false,

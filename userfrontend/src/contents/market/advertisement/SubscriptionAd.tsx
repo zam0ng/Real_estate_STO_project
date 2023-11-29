@@ -20,7 +20,7 @@ const SubscriptionAd: React.FC = () => {
     AdvertisementInfoRequest[]
   >({ queryKey: ["fetchAdData"], queryFn: fetchAdData });
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="w-[80%] h-20 rounded-lg flex flex-col justify-center bg-sky-700 mt-5">

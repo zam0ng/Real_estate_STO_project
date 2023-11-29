@@ -25,7 +25,9 @@ interface PropertyDataProps {
   propertyData: PropertyInfo | undefined;
 }
 
-export const MarketDetailContext = createContext<MarketDetailRequest | undefined>(undefined);
+export const MarketDetailContext = createContext<
+  MarketDetailRequest | undefined
+>(undefined);
 
 const MarketDetail: React.FC = () => {
   const currentPage = useLocation();
@@ -53,7 +55,7 @@ const MarketDetail: React.FC = () => {
     queryFn: queryMarketDetail,
     enabled: !!propertyName,
   });
-  console.log(data);
+  // console.log(data);
 
   if (isLoading) {
     return <div>isLoading</div>;

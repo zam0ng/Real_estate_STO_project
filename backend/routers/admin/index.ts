@@ -10,6 +10,10 @@ import {
   tradeMonthList,
   realEstateManagement,
   realEstateDetail,
+  transferInOutList,
+  blackListAdd,
+  blackListDel,
+  contractAddressList,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -44,6 +48,10 @@ router.get("/users_list", usersList);
 router.get("/recent_trade_list", recentTradeList);
 // 블랙리스트 정보
 router.get("/blacklist", blackList);
+// 블랙리스트 등록
+router.post("/blacklist_add", blackListAdd);
+// 블랙리스트 취소
+router.post("/blacklist_del", blackListDel);
 // 매물별 거래량 차트 (일)
 router.get("/trade_day_list", tradeDayList);
 // 매물별 거래량 차트 (주)
@@ -54,6 +62,10 @@ router.get("/trade_month_list", tradeMonthList);
 router.get("/management/real_estates_list", realEstateManagement);
 // 매물 관리 페이지 상세
 router.get("/management/real_estates_detail/:id", realEstateDetail);
+// 토큰 내/외부 전송 현황
+router.get("/transfer_in_out_list", transferInOutList);
+// CA 가져오기
+router.get("/contract_address_list", contractAddressList);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////

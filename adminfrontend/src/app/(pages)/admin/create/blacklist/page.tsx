@@ -44,7 +44,7 @@ const handleBlacklist = async (e : FormEvent<HTMLFormElement>) => {
     fetch(process.env.NEXT_PUBLIC_API_URL + '/blacklist', options)
     .then((res) => res.json()) // 방금 저장한 데이터를 return 받아서 -> json 으로 변환
     .then((result) => {
-        console.log("처리한 데이터가 잘 들어왔는지 확인", result);
+        // console.log("처리한 데이터가 잘 들어왔는지 확인", result);
         
         router.refresh();
         

@@ -5,7 +5,7 @@ import SubEnded from "../contents/subscription/subEnded";
 
 export default function Subscription() {
   return (
-    <div className="mb-16">
+    <div className="mb-16 animate-swipe">
       <SubHeader />
       <SubBody />
       <SubEnded />

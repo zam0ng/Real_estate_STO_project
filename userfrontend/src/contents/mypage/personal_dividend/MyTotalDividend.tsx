@@ -16,7 +16,7 @@ const MyTotalDividend: React.FC = () => {
         총 누적 배당금
       </div>
       <div className='w-full h-[60%] flex justify-center items-start text-2xl font-medium'>
-        {myDividendHistory[0].total_anticipation_dividend}원
+        {myDividendHistory[0]?.total_anticipation_dividend}원
       </div>
     </div>
   )

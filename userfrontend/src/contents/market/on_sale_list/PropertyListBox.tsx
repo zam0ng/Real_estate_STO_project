@@ -29,7 +29,7 @@ const PropertyListBox: React.FC = () => {
     queryKey: ["tradeListData"],
     queryFn: queryPropertyList,
   });
-  console.log("property list data : ", data);
+  // console.log("property list data : ", data);
 
   const goToDetail = (propertyName: string) => {
     let selectedProperty;

@@ -18,10 +18,10 @@ export default function AdminCreateRealEstate() {
 
   const handleUploadFile = (e: FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
-    console.log("input.files", input.files);
+    // console.log("input.files", input.files);
 
     if (input.files) {
-      console.log("input.files[0]", input.files[0]);
+      // console.log("input.files[0]", input.files[0]);
       setUploadFile(input.files[0]);
     }
   };
@@ -33,7 +33,7 @@ export default function AdminCreateRealEstate() {
 
     if (uploadFile) {
       formData.append("img", uploadFile);
-      console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
+      // console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
     }
 
     const keyList = [
@@ -64,7 +64,7 @@ export default function AdminCreateRealEstate() {
       const value = form[item].value; // ex) form.address.value 인데, 배열에서 꺼내기 때문에 form[item].value
 
       formData.append(`${item}`, value);
-      console.log("item : value" , item, value)
+      // console.log("item : value" , item, value)
     });
 
     // ✅ 백엔드 테스트 하고  -> forEach 확인하고 -> 지울 것 
@@ -97,7 +97,7 @@ export default function AdminCreateRealEstate() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log("result", result);
+        // console.log("result", result);
 
         router.refresh();
         router.replace(`http://localhost:3000/admin/main`); // 방금 쓴 글을 확인하기 위한 리디렉션

@@ -143,12 +143,12 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
     console.log(factoryContract);
     const handleSTOBtn = async(id : number) => {
         const list = await getSubscriptionList(id);
-        // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
-        // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
-        // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
-        // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
-        // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
-        // console.log(list.amount_list); // [5, 2, 10]
+        // // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
+        // // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
+        // // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
+        // // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
+        // // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
+        // // console.log(list.amount_list); // [5, 2, 10]
 
         const estateName = list.estateInfo[0]["Subscription.subscription_name"];
         const symbol = list.estateInfo[0]["Subscription.subscription_symbol"];
@@ -178,8 +178,7 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
         from : account,
         gas : "3000000",
       }).then(async (data :any)=>{
-        console.log(data.events);
-        console.log(data.events?.EstateCreated.returnValues[0]); // 매물 CA 주소
+        // // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
 
         await fetch(`${domain}admin/ca_register`,{
           method : "POST",
@@ -195,18 +194,18 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
       })
     } 
   // useEffect(()=>{
-  //   console.log(CAList);
-  //   console.log(CAList[0]);
+  //   // console.log(CAList);
+  //   // console.log(CAList[0]);
     
   // },[CAList])
   
   // 문래 0번
   // const testBtn = async() =>{
   //   const monraeContract = web3 ? new web3.eth.Contract(estate_abi ,CAList[0],{data: ""}) : null;
-  //   console.log(monraeContract)
+  //   // console.log(monraeContract)
 
   //   const data = await monraeContract?.methods.balanceOf("0xB623C7CfB353Bd3a0619F1614d0d661f40978af8").call();
-  //   console.log(data);
+  //   // console.log(data);
   // }  
   return (
     <>

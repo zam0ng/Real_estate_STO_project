@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -20,6 +20,8 @@ import BounsLogin from "./pages/BounsLogin";
 import SubscriptionDetail from "./pages/SubscriptionDetail";
 import VoteDetail from "./pages/VoteDetail";
 import VoteList from "./pages/VoteList";
+import Web3 from "web3";
+import abi from "./abi/ERC20subscription.json";
 
 function App() {
   let queryClient = new QueryClient();
@@ -67,7 +69,7 @@ function App() {
             path="/subscription/detail/:buildingId"
             element={<SubscriptionDetail />}
           />
-          <Route path="/vote-detail/:real-estate/:vote-name" element={<VoteDetail />} />
+          <Route path="/vote-detail/:name/:title" element={<VoteDetail />} />
           <Route path="/vote-list" element={<VoteList />} />
         </Routes>
       </QueryClientProvider>

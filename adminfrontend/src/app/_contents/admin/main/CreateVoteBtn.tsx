@@ -7,7 +7,7 @@ export const CreateVoteBtn = () => {
 
   // 매물 등록 페이지로 이동
   const handleVoteBtn = () => {
-    console.log("매물 등록 페이지 클릭");
+    // console.log("매물 등록 페이지 클릭");
 
     // 서버에서 최신 id fetching 받아오기
     fetch(process.env.NEXT_PUBLIC_API_URL + "admin", { cache: "no-store" })

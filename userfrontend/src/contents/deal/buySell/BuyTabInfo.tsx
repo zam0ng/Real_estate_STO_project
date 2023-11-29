@@ -1,18 +1,18 @@
-import axios from 'axios';
-import React, { useState, useRef, useEffect ,useContext } from 'react';
-import { serverurl } from '../../../components/serverurl';
-import { Await, useLocation } from 'react-router-dom';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Cookies } from 'react-cookie';
+import axios from "axios";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import { serverurl } from "../../../components/serverurl";
+import { Await, useLocation } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Cookies } from "react-cookie";
 import useWeb3 from '../../../hooks/web3.hook';
 import { adminWallet , adminPrimarykey } from './adminInfo';
 
 interface BuyPost {
-    price: number;
-    amount: number;
+  price: number;
+  amount: number;
 }
 interface socketProps {
-    isSocket: any;
+  isSocket: any;
 }
 
 const estate_abi = [
@@ -601,63 +601,62 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:a
     return {data,real_estate_CA};
 }
 
-const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
+const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
+  // const {socket} = useContext(GlobalContext);
+  // // console.log(isSocket);
 
-    // const {socket} = useContext(GlobalContext);
-    // console.log(isSocket);
+  const currentPage = useLocation();
+  // // console.log(currentPage.state);
+  const queryClient = useQueryClient();
 
-    const currentPage = useLocation();
-    // console.log(currentPage.state);
-    const queryClient = useQueryClient();
+  const cookies = new Cookies();
 
-    const cookies = new Cookies();
-
-    const isCookie = cookies.get("accessToken");
+  const isCookie = cookies.get("accessToken");
 
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
     const {user,web3} = useWeb3();
 
-    const priceInputRef = useRef<HTMLInputElement>(null);
-    const amountInputRef = useRef<HTMLInputElement>(null);
+  const priceInputRef = useRef<HTMLInputElement>(null);
+  const amountInputRef = useRef<HTMLInputElement>(null);
 
-    const handlePriceInput = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        const price = parseFloat(event.target.value);
-        if(!isNaN(price)){
-            setBuyPrice(price);
-        };
-    };
+  const handlePriceInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const price = parseFloat(event.target.value);
+    if (!isNaN(price)) {
+      setBuyPrice(price);
+    }
+  };
 
-    const handleAmountInput = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        const amount = parseFloat(event.target.value);
-        if(!isNaN(amount)){
-            setBuyAmount(amount);
-        };
-    };
+  const handleAmountInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const amount = parseFloat(event.target.value);
+    if (!isNaN(amount)) {
+      setBuyAmount(amount);
+    }
+  };
 
-    // 초기화 버튼 전용
-    const clearInputs = (event: React.MouseEvent<HTMLButtonElement>)=>{
-        if(priceInputRef.current && priceInputRef.current?.value !== ""){
-            priceInputRef.current.value = "";
-        };
-        if(amountInputRef.current && amountInputRef.current?.value !== ""){
-            amountInputRef.current.value = "";
-        };
-        setBuyPrice("");
-        setBuyAmount("");
-    };
+  // 초기화 버튼 전용
+  const clearInputs = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (priceInputRef.current && priceInputRef.current?.value !== "") {
+      priceInputRef.current.value = "";
+    }
+    if (amountInputRef.current && amountInputRef.current?.value !== "") {
+      amountInputRef.current.value = "";
+    }
+    setBuyPrice("");
+    setBuyAmount("");
+  };
 
-    // 매수 완료 혹은 매수 주문 완료 전용
-    const clearInputs2 = ()=>{
-        if(priceInputRef.current && priceInputRef.current?.value !== ""){
-            priceInputRef.current.value = "";
-        };
-        if(amountInputRef.current && amountInputRef.current?.value !== ""){
-            amountInputRef.current.value = "";
-        };
-        setBuyPrice("");
-        setBuyAmount("");
-    };
+  // 매수 완료 혹은 매수 주문 완료 전용
+  const clearInputs2 = () => {
+    if (priceInputRef.current && priceInputRef.current?.value !== "") {
+      priceInputRef.current.value = "";
+    }
+    if (amountInputRef.current && amountInputRef.current?.value !== "") {
+      amountInputRef.current.value = "";
+    }
+    setBuyPrice("");
+    setBuyAmount("");
+  };
 
     const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost; user : any; web3 : any;}>(
         {
@@ -745,9 +744,9 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
         mutation.mutate({propertyName,buyData, user, web3});
     };
 
-    useEffect(()=>{
-        console.log(buyPrice);
-    },[buyPrice]);
+  useEffect(() => {
+    // console.log(buyPrice);
+  }, [buyPrice]);
 
     return (
         <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {

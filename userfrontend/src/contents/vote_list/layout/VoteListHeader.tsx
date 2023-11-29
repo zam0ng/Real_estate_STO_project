@@ -3,7 +3,7 @@ import BackBtn from '../../../components/BackBtn';
 
 const VoteListHeader: React.FC = () => {
   return (
-    <div className='relative w-full h-16 border-b border-black flex flex-row'>
+    <div className='relative w-full h-16 border-b border-slate-200 shadow-md flex flex-row'>
       <div className='absolute w-[20%] h-full'>
         <BackBtn />
       </div>

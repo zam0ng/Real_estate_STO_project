@@ -10,8 +10,8 @@ import testAbi from '../../../abi/estate.json'
 import { adminWallet , adminPrimarykey } from './adminInfo';
 // import estateAbi from '../../../abi/estate.json';
 interface SellPost {
-    price: number;
-    amount: number;
+  price: number;
+  amount: number;
 }
 const estate_abi = [
     {
@@ -620,17 +620,17 @@ const sellPost = async (propertyName: string,sellData:SellPost,token:string,user
 }
 
 interface socketProps {
-    isSocket: any;
+  isSocket: any;
 }
 
-const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
-    const currentPage = useLocation();
+const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
+  const currentPage = useLocation();
 
-    const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-    const cookies = new Cookies();
+  const cookies = new Cookies();
 
-    const isCookie = cookies.get("accessToken");
+  const isCookie = cookies.get("accessToken");
 
     const [sellPrice,setSellPrice] = useState<any>(0);
     const [sellAmount,setSellAmount] = useState<any>(0);
@@ -639,43 +639,43 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const priceInputRef = useRef<HTMLInputElement>(null);
     const amountInputRef = useRef<HTMLInputElement>(null);
 
-    const handlePriceInput = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        const price = parseFloat(event.target.value);
-        if(!isNaN(price)){
-            setSellPrice(price);
-        };
-    };
+  const handlePriceInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const price = parseFloat(event.target.value);
+    if (!isNaN(price)) {
+      setSellPrice(price);
+    }
+  };
 
-    const handleAmountInput = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        const amount = parseFloat(event.target.value);
-        if(!isNaN(amount)){
-            setSellAmount(amount);
-        };
-    };
+  const handleAmountInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const amount = parseFloat(event.target.value);
+    if (!isNaN(amount)) {
+      setSellAmount(amount);
+    }
+  };
 
-    // 초기화 버튼 전용
-    const clearInputs = (event: React.MouseEvent<HTMLButtonElement>)=>{
-        if(priceInputRef.current && priceInputRef.current?.value !== ""){
-            priceInputRef.current.value = "";
-        };
-        if(amountInputRef.current && amountInputRef.current?.value !== ""){
-            amountInputRef.current.value = "";
-        };
-        setSellPrice("");
-        setSellAmount("");
-    };
+  // 초기화 버튼 전용
+  const clearInputs = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (priceInputRef.current && priceInputRef.current?.value !== "") {
+      priceInputRef.current.value = "";
+    }
+    if (amountInputRef.current && amountInputRef.current?.value !== "") {
+      amountInputRef.current.value = "";
+    }
+    setSellPrice("");
+    setSellAmount("");
+  };
 
-    // 매도 완료 혹은 매도 주문 완료 전용
-    const clearInputs2 = ()=>{
-        if(priceInputRef.current && priceInputRef.current?.value !== ""){
-            priceInputRef.current.value = "";
-        };
-        if(amountInputRef.current && amountInputRef.current?.value !== ""){
-            amountInputRef.current.value = "";
-        };
-        setSellPrice("");
-        setSellAmount("");
-    };
+  // 매도 완료 혹은 매도 주문 완료 전용
+  const clearInputs2 = () => {
+    if (priceInputRef.current && priceInputRef.current?.value !== "") {
+      priceInputRef.current.value = "";
+    }
+    if (amountInputRef.current && amountInputRef.current?.value !== "") {
+      amountInputRef.current.value = "";
+    }
+    setSellPrice("");
+    setSellAmount("");
+  };
 
     const mutation = useMutation<string,Error,{propertyName: string; sellData:SellPost; user:any; web3:any;}>(
         {
@@ -764,9 +764,9 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
         mutation.mutate({propertyName,sellData,user,web3});
     };
 
-    useEffect(()=>{
-        console.log(sellPrice);
-    },[sellPrice]);
+  useEffect(() => {
+    // console.log(sellPrice);
+  }, [sellPrice]);
 
     return (
         <form onSubmit={(e:React.FormEvent<HTMLFormElement>)=>{

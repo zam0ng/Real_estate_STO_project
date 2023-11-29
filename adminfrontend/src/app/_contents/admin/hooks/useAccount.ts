@@ -14,7 +14,7 @@ const useAccount = () => {
         setAccount(accounts[0]);
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

@@ -16,73 +16,28 @@ export default function BounsLogin() {
     "message",
     (event) => {
       if (event.data === "navigateToURL") {
-        console.log("리로딩해주세요");
+        // console.log("리로딩해주세요");
         window.location.href = `${data}`;
       }
     },
     false
   );
 
-  if (!cookiedata) {
-    Navigate("/home"); // 홈 페이지 경로로 변경
-    return null; // 리디렉션 후에는 추가적인 렌더링을 방지하기 위해 null을 반환
-  }
-  if (cookiedata) {
-    return (
-      <>
-        {/* {cookiedata ? <div>{JSON.stringify(data, null, 2)}</div> : <div>Loading...</div>} */}
-        {cookiedata ? (
-          <div className="overflow-x-hidden relative">
-            <div className="animate-marquee whitespace-nowrap">
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-              <span className=" bg-gray-700 text-white ">
-                {" "}
-                서비스 이용을 위해서 Bouns Wallet이 필요합니다
-              </span>
-            </div>
-          </div>
-        ) : (
-          <div></div>
-        )}
-        {cookiedata}
-        <TabBar />
-      </>
-    );
-  }
-  return <></>;
+          if (!cookiedata) {
+            Navigate(data)
+            return null; // 리디렉션 후에는 추가적인 렌더링을 방지하기 위해 null을 반환
+        }
+    if(cookiedata){
+        return(
+            <>
+                {cookiedata}
+                <TabBar />
+            </>
+        )
+    }
+    return(
+        <>
+
+        </>
+    )
 }

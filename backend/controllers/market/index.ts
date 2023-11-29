@@ -9,7 +9,7 @@ import Trades from "../../models/trades";
 import { Op, QueryTypes } from "sequelize";
 
 export const marketSubscription = async (req: Request, res: Response) => {
-  console.log("marketSubscription / get 요청 들어옴?");
+  // // console.log("marketSubscription / get 요청 들어옴?");
 
   const year = new Date().getFullYear();
   const month = (new Date().getMonth() + 1).toString().padStart(2, "0");
@@ -72,7 +72,7 @@ export const marketSubscription = async (req: Request, res: Response) => {
 };
 
 export const marketTradelist = async (req: Request, res: Response) => {
-  console.log("marketTradelist / get 요청 들어옴?");
+  // // console.log("marketTradelist / get 요청 들어옴?");
 
   try {
     // sequelize 에서 컬럼간의 연산을 수행할 때는 주로 sequelize.literal를 사용
@@ -83,7 +83,10 @@ export const marketTradelist = async (req: Request, res: Response) => {
         "current_price",
 
         // ⭐⭐ 값들이 int 로 선언되어 소수점 계산이 안되서 계산식 순서를 바꿈
-        [sequelize.literal("((current_price*100)/start_price)-100"),"fluctuation_rate",],
+        [
+          sequelize.literal("((current_price*100)/start_price)-100"),
+          "fluctuation_rate",
+        ],
         [sequelize.literal("((current_price*100)/value)-100"), "rating"],
       ],
       include: [
@@ -99,7 +102,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    // console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -107,9 +110,9 @@ export const marketTradelist = async (req: Request, res: Response) => {
 };
 
 export const marketDetail = async (req: Request, res: Response) => {
-  console.log("marketDetail get요청 들어옴?");
+  // console.log("marketDetail get요청 들어옴?");
   const { name } = req.params;
-  // console.log(name);
+  // // console.log(name);
   try {
     const result = await Real_estates.findAll({
       where: { real_estate_name: name },
@@ -157,7 +160,7 @@ export const marketDetail = async (req: Request, res: Response) => {
 export const detailDividend = async (req: Request, res: Response) => {
   try {
     const { name } = req.params;
-    console.log(name);
+    // // console.log(name);
     const result = await Dividends.findAll({
       where: {
         real_estate_name: name,
@@ -173,7 +176,7 @@ export const detailDividend = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    // console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -209,7 +212,7 @@ export const budlingInfo = async (req: Request, res: Response) => {
 // 발행정보
 export const publishInfo = async (req: Request, res: Response) => {
   const { name } = req.params;
-  console.log(name);
+  // // console.log(name);
   try {
     const result = await Subscriptions.findOne({
       where: {
@@ -263,7 +266,7 @@ export const boardInfo = async (req: Request, res: Response) => {
 
 export const detailBoardInfo = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
+  // // console.log(id);
   try {
     const result = await Notices.findOne({
       where: {
@@ -272,7 +275,7 @@ export const detailBoardInfo = async (req: Request, res: Response) => {
       attributes: ["category", "notice_title", "notice_content", "createdAt"],
       raw: true,
     });
-    console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -282,7 +285,7 @@ export const detailBoardInfo = async (req: Request, res: Response) => {
 export const dayQuote = async (req: Request, res: Response) => {
   try {
     const { name } = req.params;
-    console.log(name);
+    // // console.log(name);
 
     // 등락가 를 위해 시작가 가져오기
     const startPrice: { start_price: number } | null =
@@ -294,7 +297,7 @@ export const dayQuote = async (req: Request, res: Response) => {
         raw: true,
       })) as { start_price: number } | null;
 
-    console.log(startPrice);
+    // // console.log(startPrice);
 
     const nowDate = new Date();
     // 오전 9시 장시작
@@ -340,7 +343,7 @@ export const dayQuote = async (req: Request, res: Response) => {
       order: [["createdAt", "DESC"]],
       raw: true,
     });
-    // console.log(result);
+    // // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -349,7 +352,7 @@ export const dayQuote = async (req: Request, res: Response) => {
 
 export const daliyQuote = async (req: Request, res: Response) => {
   const { name } = req.params;
-  console.log(name);
+  // // console.log(name);
 
   try {
     const query = `
@@ -388,7 +391,7 @@ export const daliyQuote = async (req: Request, res: Response) => {
         `;
 
     const result = await sequelize.query(query, {});
-    console.log(result);
+    // // console.log(result);
     res.json(result[0]);
   } catch (error) {
     console.log(error);
