@@ -6,13 +6,14 @@ import VoteListItemProgress from './VoteListItemProgress';
 import { useNavigate } from 'react-router-dom';
 import { VoteListRequest } from '../../pages/VoteList';
 
-const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_title,vote_start_date,vote_end_date}) => {
+const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,vote_title,vote_start_date,vote_end_date}) => {
     const navigation = useNavigate();
 
     const toVoteDetail = () => {
         navigation(`/vote-detail/${real_estate_name}/${vote_title}`,{
             state: {
-                real_estate_name: real_estate_name
+                real_estate_name: real_estate_name,
+                vote_id: vote_id
             }
         });
     };

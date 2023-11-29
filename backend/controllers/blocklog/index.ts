@@ -20,20 +20,24 @@ interface UserWallet {
 let contract_real_estate_name: { [key: string]: string };
 // CA 주소 가져오기
 async function contract_address() {
-  const result = await db.Contract_address.findAll({
-    attributes: ["address", "real_estate_name"],
-    where: { ca_type: "token" },
-    raw: true,
-  });
+  try {
+    const result = await db.Contract_address.findAll({
+      attributes: ["address", "real_estate_name"],
+      where: { ca_type: "token" },
+      raw: true,
+    });
 
-  contract_real_estate_name = result.reduce(
-    (acc: { [key: string]: string }, item) => {
-      acc[item.address] = item.real_estate_name;
-      return acc;
-    },
-    {}
-  );
-  return;
+    contract_real_estate_name = result.reduce(
+      (acc: { [key: string]: string }, item) => {
+        acc[item.address] = item.real_estate_name;
+        return acc;
+      },
+      {}
+    );
+    return;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 contract_address();
@@ -60,24 +64,24 @@ export const blockNumberCheck = async () => {
 };
 
 // 데이터베이스에 있는 심볼 가져오기
-export const symbolCheck = async () => {
-  try {
-    const result = await db.Contract_address.findAll({
-      attributes: ["real_estate_name"],
-      raw: true,
-    });
+// export const symbolCheck = async () => {
+//   try {
+//     const result = await db.Contract_address.findAll({
+//       attributes: ["real_estate_name"],
+//       raw: true,
+//     });
 
-    let symbols = [];
+//     let symbols = [];
 
-    symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
+//     symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
 
-    if (symbols) return symbols;
-    else return [];
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-};
+//     if (symbols) return symbols;
+//     else return [];
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
 
 // CA 가져오기
 export const addressCheck = async () => {

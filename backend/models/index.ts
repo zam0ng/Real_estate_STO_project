@@ -90,13 +90,13 @@ Dividends.initModel(sequelize);
 Dividend_details.initModel(sequelize);
 Notices.initModel(sequelize);
 Real_estates_own.initModel(sequelize);
+Contract_address.initModel(sequelize);
 Votes.initModel(sequelize);
 Vote_history.initModel(sequelize);
 Real_estates_own_history.initModel(sequelize);
-Contract_address.initModel(sequelize);
 Tx_block.initModel(sequelize);
 Tx_receipt.initModel(sequelize);
-Contract_address.initModel(sequelize);
+
 
 Users.associate(db);
 Subscriptions.associate(db);

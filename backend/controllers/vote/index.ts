@@ -5,9 +5,9 @@ import { db } from "../../models";
 // 투표 컨트랙트 주소 보내주기
 export const voteContractAddress = async (req: Request, res: Response) => {
   try {
-    const real_estate_name = req.query.real_estate_name as string;
+    const vote_id = req.query.vote_id as string;
     const result = await db.Contract_address.findAll({
-      where: { ca_type: "vote", real_estate_name: real_estate_name },
+      where: { ca_type: "vote", id: vote_id },
       raw: true,
     });
 
@@ -40,6 +40,7 @@ export const voteList = async (req: Request, res: Response) => {
     const result = await db.Votes.findAll({
       attributes: [
         "real_estate_name",
+        "vote_id",
         "vote_title",
         "vote_start_date",
         "vote_end_date",

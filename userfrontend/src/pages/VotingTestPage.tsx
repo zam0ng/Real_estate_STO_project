@@ -72,8 +72,9 @@ const VotingTestPage: React.FC = () => {
     };
 
     // 투표 테이블에 내용 넣는거
-    const sendVoteInfo = async (selectedProperty: string,voteDescription: string,startDate:string,endDate:string) => {
+    const sendVoteInfo = async (address: string,selectedProperty: string,voteDescription: string,startDate:string,endDate:string) => {
         const {data} = await axios.post(`${serverurl}/vote/vote_insert`,{
+            address: address,
             real_estate_name: selectedProperty,
             vote_title: voteDescription,
             vote_start_date: startDate,
@@ -223,7 +224,7 @@ const VotingTestPage: React.FC = () => {
 
     // 투표 테이블에 집어넣기
     const mutationVoteTable = useMutation({
-        mutationFn: ()=>sendVoteInfo(selectedProperty,voteDescription,startDateOriginal,endDateOriginal),
+        mutationFn: (address:string)=>sendVoteInfo(address,selectedProperty,voteDescription,startDateOriginal,endDateOriginal),
         onSuccess: (data)=>{
             console.log("successfully inserted vote info into vote table",data);
         },
@@ -291,11 +292,11 @@ const VotingTestPage: React.FC = () => {
             .then((newInstance: any)=>{
                 console.log(`CA : ${newInstance.options.address}`);
                 setVoteCA(newInstance.options.address);
-                mutationVoteTable.mutate();
+                mutationVoteTable.mutate(newInstance.options.address);
                 mutationCAtable.mutate(newInstance.options.address);
             })
             .catch((error: string)=>{
-                console.error("Error while deploying : ",error)
+                console.error("Error while deploying : ",error);
             })
         }
     };

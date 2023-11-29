@@ -27,7 +27,7 @@ const VoteListItemBox: React.FC = () => {
           return null;
         }
         return (
-          <VoteListItem key={index} real_estate_name={item.real_estate_name} vote_title={item.vote_title} 
+          <VoteListItem key={index} real_estate_name={item.real_estate_name} vote_id={item.vote_id} vote_title={item.vote_title} 
           vote_start_date={item.vote_start_date} vote_end_date={item.vote_end_date} />
         )
       })}

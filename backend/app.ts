@@ -15,7 +15,7 @@ import subscriptionRouter from "./routers/subscription";
 import mypageRouter from "./routers/mypage";
 import voteRouter from "./routers/vote";
 
-import { logLatestBlockEvents } from "./middleware/blockLog";
+// import { logLatestBlockEvents } from "./middleware/blockLog";
 
 import http from "http";
 
@@ -96,6 +96,7 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 app.use("/vote", voteRouter);
 
+import { logLatestBlockEvents } from "./middleware/blockLog";
 setInterval(logLatestBlockEvents, 4500);
 
 server.listen(8080, () => {

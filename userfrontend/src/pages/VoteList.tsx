@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export interface VoteListRequest {
     real_estate_name: string;
+    vote_id: number;
     vote_title: string;
     vote_start_date: string;
     vote_end_date: string;
