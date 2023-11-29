@@ -160,7 +160,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
   }
 };
 
-export const txIn = async (
+// 토큰이 외부로 나갔을떄
+export const tokenOutTransfer = async (
   from: string,
   address: string,
   amount: number,
@@ -171,16 +172,64 @@ export const txIn = async (
   try {
     const resl_estate_name = contract_real_estate_name[address];
 
-    const result = await db.Real_estates_own.findOne({
+    let result: boolean;
+
+    const decrease_amount = await db.Real_estates_own.update(
+      {
+        amount: db.sequelize.literal(`amount - ${amount}`),
+        possible_quantity: db.sequelize.literal(
+          `possible_quantity - ${amount}`
+        ),
+      },
+      {
+        where: {
+          wallet: from,
+          real_estate_name: resl_estate_name,
+        },
+        transaction,
+      }
+    );
+
+    decrease_amount ? (result = true) : (result = false);
+
+    if (result) {
+      await transaction.commit();
+      return "외부 전송 작업 완료";
+    } else {
+      await transaction.rollback();
+
+      return "외부 전송 작업 중 오류 발생";
+    }
+  } catch (error) {
+    await transaction.rollback();
+    console.error(error);
+  }
+};
+
+// 토큰이 내부로 들어왔을때
+export const tokenInTransfer = async (
+  to: string,
+  address: string,
+  amount: number,
+  symbol: string
+) => {
+  const transaction = await db.sequelize.transaction();
+
+  try {
+    const resl_estate_name = contract_real_estate_name[address];
+
+    let result: boolean;
+
+    const own_check = await db.Real_estates_own.findOne({
       where: {
-        wallet: from,
+        wallet: to,
         real_estate_name: resl_estate_name,
       },
     });
 
     const users = await db.Users.findOne({
       attributes: ["user_email"],
-      where: { wallet: from },
+      where: { wallet: to },
       raw: true,
       transaction,
     });
@@ -195,11 +244,11 @@ export const txIn = async (
     });
     if (!real_estates || !real_estates.id) return;
 
-    if (!result) {
+    if (!own_check) {
       const real_estates_own = await db.Real_estates_own.create(
         {
           user_email: users.user_email,
-          wallet: from,
+          wallet: to,
           real_estate_id: real_estates.id,
           real_estate_name: resl_estate_name,
           price: real_estates!.current_price,
@@ -209,8 +258,10 @@ export const txIn = async (
         },
         { transaction }
       );
+
+      real_estates_own ? (result = true) : (result = false);
     } else {
-      const result = await db.Real_estates_own.update(
+      const increase_amount = await db.Real_estates_own.update(
         {
           amount: db.sequelize.literal(`amount + ${amount}`),
           possible_quantity: db.sequelize.literal(
@@ -219,24 +270,25 @@ export const txIn = async (
         },
         {
           where: {
-            wallet: from,
+            wallet: to,
             real_estate_name: resl_estate_name,
           },
           transaction,
         }
       );
+
+      increase_amount ? (result = true) : (result = false);
     }
 
-    await transaction.commit();
+    if (result) {
+      await transaction.commit();
+      return "내부 전송 작업 완료";
+    } else {
+      await transaction.rollback();
+      return "내부 전송 작업 중 오류 발생";
+    }
   } catch (error) {
     await transaction.rollback();
-    console.error(error);
-  }
-};
-
-export const txOut = async (to: string, address: string) => {
-  try {
-  } catch (error) {
     console.error(error);
   }
 };
