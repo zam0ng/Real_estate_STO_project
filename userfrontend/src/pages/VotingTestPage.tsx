@@ -79,6 +79,13 @@ const VotingTestPage: React.FC = () => {
         return data;
     };
 
+    // ca 테이블에 넣는거
+    const sendVoteCAinfo = async () => {
+        const {data} = await axios.post(`${serverurl}/vote`,{
+            
+        })
+    }
+
     // 투표 목록 페이지에서 사용할 부분
     // const {data:voteCAdata,error:voteCAerror,isLoading:voteCAisLoading,isError:voteCAisError} = useQuery({
     //     queryKey: ["fetchVoteCA"],
