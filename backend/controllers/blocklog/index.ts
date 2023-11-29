@@ -20,22 +20,25 @@ interface UserWallet {
 let contract_real_estate_name: { [key: string]: string };
 // CA 주소 가져오기
 async function contract_address() {
-  const result = await db.Contract_address.findAll({
-    attributes: ["address", "real_estate_name"],
-    where: { ca_type: "token" },
-    raw: true,
-  });
-
-  contract_real_estate_name = result.reduce(
-    (acc: { [key: string]: string }, item) => {
-      acc[item.address] = item.real_estate_name;
-      return acc;
-    },
-    {}
-  );
-  return;
+  try {
+    const result = await db.Contract_address.findAll({
+      attributes: ["address", "real_estate_name"],
+      where: { ca_type: "token" },
+      raw: true,
+    });
+  
+    contract_real_estate_name = result.reduce(
+      (acc: { [key: string]: string }, item) => {
+        acc[item.address] = item.real_estate_name;
+        return acc;
+      },
+      {}
+    );
+    return;
+  } catch (error) {
+    console.log(error);
+  }
 }
-
 contract_address();
 
 // 마지막으로 실행한 블록 번호 체크

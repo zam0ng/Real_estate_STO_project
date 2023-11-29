@@ -21,9 +21,9 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
       <img
         className="block m-auto h-6 pt-1 "
         alt={btnName}
-        src={process.env.PUBLIC_URL + `/images/TabBar/${imgName}.png`}
-      />
-      <div className="text-center text-xs "  onClick={() => handleTabBtns(urlName)} >{btnName}</div>
+        src={`/images/TabBar/${imgName}.png`}
+      />                                                                                                   
+            <div className="text-center text-xs "  onClick={() => handleTabBtns(urlName)} >{btnName}</div>
     </div>
   );
 }
