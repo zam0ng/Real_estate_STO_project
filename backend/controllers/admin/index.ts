@@ -10,6 +10,7 @@ import Subscriptions_own from "../../models/subscriptions_own";
 import { group } from "console";
 import Real_estates from "../../models/real_estates";
 import Users from "../../models/users";
+import { myEmitter } from "../../middleware/eventEmitter";
 
 // 정현이형 어드민 부분
 type TradeDate = {
@@ -844,6 +845,9 @@ export const caRegister = async (req: Request, res: Response) => {
       symbol: symbol,
       ca_type: "token",
     });
+
+    myEmitter.emit("contractAddressCheck");
+    myEmitter.emit("contractsCheckEvent");
     res.sendStatus(201);
   } catch (error) {
     res.sendStatus(400);

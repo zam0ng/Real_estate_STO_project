@@ -59,7 +59,7 @@ export const voteInsert = async (req: Request, res: Response) => {
     const result = await db.Votes.create(
       {
         real_estate_name: real_estate_name,
-        vote_id: contract_id.id as number,
+        vote_id: contract_id!.id as number,
         vote_title: vote_title,
         vote_start_date: vote_start_date,
         vote_end_date: vote_end_date,
