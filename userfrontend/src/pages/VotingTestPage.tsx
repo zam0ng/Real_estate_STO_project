@@ -26,6 +26,9 @@ const VotingTestPage: React.FC = () => {
     const [amountList,setAmountList] = useState<number[]>([]);
     const [voteCA,setVoteCA] = useState<string>("");
 
+    const [startDateOriginal,setStartDateOriginal] = useState<string>("");
+    const [endDateOriginal,setEndDateOriginal] = useState<string>("");
+
     // 매물 이름, 투표 내용(제목), 시작 날짜, 종료 날짜
     const [selectedProperty,setSelectedProperty] = useState<string>("");
     const [voteDescription,setVoteDescription] = useState<string>("");
@@ -69,7 +72,7 @@ const VotingTestPage: React.FC = () => {
     };
 
     // 투표 테이블에 내용 넣는거
-    const sendVoteInfo = async (selectedProperty: string,voteDescription: string,startDate:number,endDate:number) => {
+    const sendVoteInfo = async (selectedProperty: string,voteDescription: string,startDate:string,endDate:string) => {
         const {data} = await axios.post(`${serverurl}/vote/vote_insert`,{
             real_estate_name: selectedProperty,
             vote_title: voteDescription,
@@ -199,6 +202,7 @@ const VotingTestPage: React.FC = () => {
     // 시작 날짜
     const handleStartDate: ChangeEventHandler<HTMLInputElement> = (event) => {
         const selectedDate = event.target.value;
+        setStartDateOriginal(selectedDate);
         console.log(selectedDate); // 2023-11-12
         const date = new Date(selectedDate);
         const toSeconds = date.getTime()/1000;
@@ -209,6 +213,7 @@ const VotingTestPage: React.FC = () => {
     // 종료 날짜
     const handleEndDate: ChangeEventHandler<HTMLInputElement> = (event) => {
         const selectedDate = event.target.value;
+        setEndDateOriginal(selectedDate);
         console.log(selectedDate);
         const date = new Date(selectedDate);
         const toSeconds = date.getTime()/1000;
@@ -218,7 +223,7 @@ const VotingTestPage: React.FC = () => {
 
     // 투표 테이블에 집어넣기
     const mutationVoteTable = useMutation({
-        mutationFn: ()=>sendVoteInfo(selectedProperty,voteDescription,startDate,endDate),
+        mutationFn: ()=>sendVoteInfo(selectedProperty,voteDescription,startDateOriginal,endDateOriginal),
         onSuccess: (data)=>{
             console.log("successfully inserted vote info into vote table",data);
         },
