@@ -1,7 +1,7 @@
 "use client"
 
 import { EnableButtonParam } from "@/app/_features/admin/real_estates";
-import {Contract, Web3} from "web3";
+import {Contract, InvalidNonceOrChainIdError, Web3} from "web3";
 import { useEffect, useState } from 'react';
 import useAccount from "../hooks/useAccount";
 import { getSubscriptionList } from "@/app/_api/getSubscription_list";
@@ -111,11 +111,11 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
       "type": "function"
     }
   ] as const;
+  const factory_CA = "0xDA6736253fa6f03E0a23298b6f596ae7F4C42524";
   
   const [web3, setWeb3] = useState<Web3 | null >(null);
   // const [CAList, setCAList] = useState<string[] | any>([]);
   const {account} = useAccount();
-
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
 
   useEffect(() => {
@@ -137,8 +137,9 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
 
   //  http://127.0.0.1:8545
   // https://network.bouncecode.net/
-    
-    const factoryContract = web3 ? new web3.eth.Contract(factory_abi ,"0x4cAdAf68b3FE5F4e12B28616E0D74a5f86056937",{data: ""}) : null;
+    // 0xd9145CCE52D386f254917e481eB44e9943F39138 가나쉬
+    // 0x4cAdAf68b3FE5F4e12B28616E0D74a5f86056937 세폴리아
+    const factoryContract = web3 ? new web3.eth.Contract(factory_abi ,factory_CA,{data: ""}) : null;
     console.log(factoryContract);
     const handleSTOBtn = async(id : number) => {
         const list = await getSubscriptionList(id);
@@ -175,8 +176,10 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
         0,
       ).send({
         from : account,
+        gas : "3000000",
       }).then(async (data :any)=>{
-        // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
+        console.log(data.events);
+        console.log(data.events?.EstateCreated.returnValues[0]); // 매물 CA 주소
 
         await fetch(`${domain}admin/ca_register`,{
           method : "POST",

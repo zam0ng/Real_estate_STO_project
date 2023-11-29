@@ -698,10 +698,14 @@ export const orderBuy = async (req: Request, res: Response) => {
   const { name } = req.params;
   let restamount: number = amount;
 
+  const tradeArr = [];
+  
   // 유저 임시
   // const islogin = "test2@naver.com"
 
   try {
+
+    const buyerWallet = await getBuyerWallet(user_email);
     // 구매했을 때 유저의 잔고가 주문금액 * 수량 보다 많은지 확인
     // 유저테이블의 balance 가져오기
     // balance 변수의 타입이 객체인데 안의 값이 넘버 or null 임을 정의
@@ -833,13 +837,13 @@ export const orderBuy = async (req: Request, res: Response) => {
 
           for (const el of result) {
             console.log(el);
-
+            const sellerWallet = await getSellerWallet(el.user_email);
             restamount = restamount - el.possible_amount;
 
             if (restamount < 0) {
               console.log("0볻 ㅏ작아음");
               console.log(restamount); // -2
-
+              const conclusionAmount =   el.possible_amount + restamount ; 
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
                 user_email: user_email,
@@ -851,14 +855,14 @@ export const orderBuy = async (req: Request, res: Response) => {
                 possible_amount: 0,
               });
 
-                            // 해당 id 컬럼에서 possible_amount -amount를 해주고,
-                            // 물량이 남아있으니 미체결 0 으로 두기
+              // 해당 id 컬럼에서 possible_amount -amount를 해주고,
+              // 물량이 남아있으니 미체결 0 으로 두기
 
-                            await Orders.update({
-                                possible_amount : sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
-                            },{
-                                where : { id : el.id },
-                            })
+              await Orders.update({
+                  possible_amount : sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
+              },{
+                  where : { id : el.id },
+              })
 
               // 체결 테이블 생성
               await Trades.create({
@@ -883,15 +887,15 @@ export const orderBuy = async (req: Request, res: Response) => {
                 }
               );
 
-                            // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-                            await Real_estates_own.update({
-                                amount : sequelize.literal(`amount-${el.possible_amount + restamount}`)
-                            },{
-                                where :{
-                                    user_email : el.user_email,
-                                    real_estate_name : name,
-                                }
-                            })
+              // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
+              await Real_estates_own.update({
+                  amount : sequelize.literal(`amount-${el.possible_amount + restamount}`)
+              },{
+                  where :{
+                      user_email : el.user_email,
+                      real_estate_name : name,
+                  }
+              })
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -944,13 +948,14 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
+              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
               break;
             } else if (restamount == 0) {
               console.log("0임");
               console.log(restamount);
               // 해당 id 컬럼에서 possible_amount 를 0으로 해주고,
               // order_status 를 체결로 만들어주고,
-
+              const conclusionAmount = el.possible_amount;
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
                 user_email: user_email,
@@ -1050,11 +1055,12 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
+              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount});
               break;
             } else {
               console.log("0보다 큼");
               console.log(restamount);
-
+              const conclusionAmount = el.possible_amount;
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
                 user_email: user_email,
@@ -1100,12 +1106,12 @@ export const orderBuy = async (req: Request, res: Response) => {
               // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
               await Real_estates_own.update({
                 amount : sequelize.literal(`amount-${el.possible_amount}`)
-            },{
-                where :{
-                    user_email : el.user_email,
-                    real_estate_name : name,
-                }
-            })
+              },{
+                  where :{
+                      user_email : el.user_email,
+                      real_estate_name : name,
+                  }
+              })
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -1156,10 +1162,11 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
+              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount});
             }
           }
           console.log("최종 amount", restamount);
-
+          console.log("tradeArr----",tradeArr)
           // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
           // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
           const lastTradePrice: { trade_price: number }[] | null =
@@ -1229,7 +1236,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
             );
           }
-          res.send("매수 완료");
+          res.send({message:"매수 완료",data : tradeArr});
         }
       }
     } else {
@@ -1413,8 +1420,10 @@ export const notConclusion = async (req: Request, res: Response) => {
 export const cancelOrder = async (req: Request, res: Response) => {
   try {
     if (!req.body?.user_email) return res.send("비로그인 유저");
-    const { id, name, user_email } = req.body;
-    console.log(name, id);
+    console.log(req.body);
+    console.log(req.params);
+    const {user_email} =req.body;
+    const {name, id} =req.params;
     // 임시 로그인
     // const islogin = "test@naver.com";
     // 해당 id로 orders 테이블의 order_type 을 가져와서,

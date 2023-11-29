@@ -1,28 +1,604 @@
 import axios from 'axios';
 import React, { useState, useRef, useEffect ,useContext } from 'react';
 import { serverurl } from '../../../components/serverurl';
-import { useLocation } from 'react-router-dom';
+import { Await, useLocation } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Cookies } from 'react-cookie';
+import useWeb3 from '../../../hooks/web3.hook';
+import { adminWallet , adminPrimarykey } from './adminInfo';
 
 interface BuyPost {
     price: number;
     amount: number;
 }
-
 interface socketProps {
     isSocket: any;
 }
 
-const buyPost = async (propertyName: string,buyData:BuyPost,token:string): Promise<string> => {
+const estate_abi = [
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "_symbol",
+                "type": "string"
+            },
+            {
+                "internalType": "uint256",
+                "name": "__totalSupply",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address[]",
+                "name": "subscribers",
+                "type": "address[]"
+            },
+            {
+                "internalType": "uint256[]",
+                "name": "amounts",
+                "type": "uint256[]"
+            },
+            {
+                "internalType": "uint256",
+                "name": "__lockTime",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "spender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "allowance",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "needed",
+                "type": "uint256"
+            }
+        ],
+        "name": "ERC20InsufficientAllowance",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "balance",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "needed",
+                "type": "uint256"
+            }
+        ],
+        "name": "ERC20InsufficientBalance",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "approver",
+                "type": "address"
+            }
+        ],
+        "name": "ERC20InvalidApprover",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "receiver",
+                "type": "address"
+            }
+        ],
+        "name": "ERC20InvalidReceiver",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            }
+        ],
+        "name": "ERC20InvalidSender",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "spender",
+                "type": "address"
+            }
+        ],
+        "name": "ERC20InvalidSpender",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableInvalidOwner",
+        "type": "error"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "OwnableUnauthorizedAccount",
+        "type": "error"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "spender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Approval",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "Transfer",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "internalType": "string",
+                "name": "symbol",
+                "type": "string"
+            }
+        ],
+        "name": "TransferWithSymbol",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_useraddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "ForceBurn",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_useraddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "ForceMint",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "_adminLockTime",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "spender",
+                "type": "address"
+            }
+        ],
+        "name": "allowance",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "spender",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "value",
+                "type": "uint256"
+            }
+        ],
+        "name": "approve",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "account",
+                "type": "address"
+            }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "decimals",
+        "outputs": [
+            {
+                "internalType": "uint8",
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "stateMutability": "pure",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getDocumentURI",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getLockTime",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "howBuy",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "name",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "string",
+                "name": "__documentURI",
+                "type": "string"
+            }
+        ],
+        "name": "setDocumentURI",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "symbol",
+        "outputs": [
+            {
+                "internalType": "string",
+                "name": "",
+                "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "totalSupply",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "transfer",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "from",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "to",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "transferFrom",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+] as const; 
+
+const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:any, web3:any): Promise<any> => {
     
     // console.log(buyData); // {price: 1000, amount: 5} 
+    const getCa : any = await axios.post<string>(`${serverurl}/order/getca_mysellorders/${propertyName}`,{
+        token : token
+    })
+    const real_estate_CA = getCa.data.address;
+    console.log(real_estate_CA);
+    const testCa = web3 ? new web3.eth.Contract(estate_abi,real_estate_CA,{data:""}) : null;
+    console.log(testCa);
+    console.log(user.account);
+    const howBuyAmount = await testCa.methods.howBuy().call({
+        from : user.account,
+    })
+    console.log(Number(howBuyAmount));
+
+    if(buyData.amount > Number(howBuyAmount)){
+        alert(`매수 주문 오류 : 전체 물량의 20% 초과 보유 불가 ${Number(howBuyAmount)} 개만 주문 가능 `);
+        return;
+    }
     const {data} = await axios.post<string>(`${serverurl}/order/buy/${propertyName}`,{
         ...buyData,
         token: token
     });
-    // console.log(data);
-    return data;
+    console.log(data);
+    return {data,real_estate_CA};
 }
 
 const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
@@ -40,6 +616,7 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
 
     const [buyPrice,setBuyPrice] = useState<any>(0);
     const [buyAmount,setBuyAmount] = useState<any>(0);
+    const {user,web3} = useWeb3();
 
     const priceInputRef = useRef<HTMLInputElement>(null);
     const amountInputRef = useRef<HTMLInputElement>(null);
@@ -82,11 +659,75 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
         setBuyAmount("");
     };
 
-    const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost}>(
+    const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost; user : any; web3 : any;}>(
         {
-            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie),
-            onSuccess: (data) => {
+            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie,user,web3),
+            onSuccess: async (data: any) => {
                 console.log(data);
+                console.log(data.data.data);
+                console.log(data.real_estate_CA);
+
+                if(data.data.data){
+                    console.log(adminWallet);
+
+                    for (const el of data.data.data) {
+                        
+                        console.log(el);
+                        // console.log(el.sellerWalelt)
+                        // console.log(el.buyerWallet)
+                        // console.log(el.conclusionAmount)
+
+                        let transferFromTransaction = {
+                            from: adminWallet,
+                            to: data.real_estate_CA,
+                            gas:  3000000,
+                            gasPrice: web3?.utils.toWei('100', 'gwei'),
+                            data: web3?.eth.abi.encodeFunctionCall(
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "address",
+                                            "name": "from",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "address",
+                                            "name": "to",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "amount",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "transferFrom",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
+                        };
+                        console.log(adminPrimarykey);
+                        let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, adminPrimarykey);
+                        // console.log(signedTransaction);
+                        
+                        try {
+                            const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
+                            console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
+                            console.log("TransferFrom Transaction Receipt:", receipt);
+                        } catch (error) {
+                            console.error("TransferFrom Transaction Error:", error);
+                        }
+                    }
+    
+                }
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
@@ -100,8 +741,8 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
     );
     // event: React.FormEvent<HTMLFormElement>
 
-    const handleSubmit = (propertyName: string, buyData: BuyPost)=>{
-        mutation.mutate({propertyName,buyData});
+    const handleSubmit = (propertyName: string, buyData: BuyPost, user :any , web3 : any)=>{
+        mutation.mutate({propertyName,buyData, user, web3});
     };
 
     useEffect(()=>{
@@ -112,7 +753,7 @@ const BuyTabInfo: React.FC<socketProps> = ({isSocket}) => {
         <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             const newData = {price:buyPrice,amount:buyAmount};
-            handleSubmit(currentPage.state.propertyName,newData);
+            handleSubmit(currentPage.state.propertyName,newData,user,web3);
         }}>
             <div className='buy-sell-input w-full h-full flex flex-col text-sm'>
                 <div className='buy-input w-full h-full border-b border-dashed flex flex-col justify-center items-center'>

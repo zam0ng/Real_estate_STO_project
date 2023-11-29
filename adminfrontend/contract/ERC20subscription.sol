@@ -101,7 +101,7 @@ contract ERC20subscription is ERC20, Ownable {
         }
         uint256 newTotalBalance = balanceOf(to) + amount;
         require(
-            newTotalBalance < (20 * totalSupply()) / 100,
+            newTotalBalance <= (20 * totalSupply()) / 100,
             "Ownership capped at 20% to ensure decentralization"
         );
 
@@ -124,6 +124,12 @@ contract ERC20subscription is ERC20, Ownable {
 
     function ForceBurn(address _useraddress, uint256 amount) public onlyOwner {
         _burn(_useraddress, amount);
+    }
+
+    function howBuy() public view returns (uint256){
+        uint256 myAmount = balanceOf(msg.sender);
+        uint256 howBuyAmount = ((20 * totalSupply()) / 100) - myAmount;
+        return howBuyAmount;
     }
 }
 

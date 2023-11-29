@@ -794,26 +794,24 @@ export const subscriptionList  = async(req : Request , res : Response) =>{
   const wallet_list = result.map((el : any)=>el.user_email);
   const amount_list = result.map((el : any)=>el.amount);
 
-  console.log(wallet_list);
-  const emails = await Users.findAll({
-    where : {
-      wallet : wallet_list,
-    },
-    attributes : [
-      'user_email'
-    ],
-    raw : true,
-  })
-  // .then(users => {
-  //   const emails = users.map(user => user.user_email);
-  //   console.log("이메일 배열:", emails);
-  // })
-  // .catch(error => {
-  //   console.error("에러 발생:", error);
-  // });
-  // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
-  const email_list = emails.map(el=>el.user_email);
-  // console.log(email_list);
+  // console.log(wallet_list);
+  // console.log(amount_list);
+
+  const email_list  : any = [];
+
+  for (const element of wallet_list) {
+    const emails = await Users.findOne({
+      where: {
+        wallet: element,
+      },
+      attributes: ['user_email'],
+      raw: true,
+    });
+    email_list.push(emails?.user_email);
+  }
+  
+  // console.log("---------", email_list);
+  // const email_list = emails.map(el=>el.user_email);
   
   const data = await Subscriptions.findOne({
     where :{
@@ -852,7 +850,7 @@ export const subscriptionList  = async(req : Request , res : Response) =>{
   // console.log(estateId);
 
   // real_estates_own 에 넣어주기.
-  email_list.forEach(async(element,index) => {
+  email_list.forEach(async(element :any ,index : number) => {
     
     await Real_estates_own.create({
       user_email : element,

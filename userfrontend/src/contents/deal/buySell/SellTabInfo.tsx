@@ -7,6 +7,7 @@ import { Cookies } from 'react-cookie';
 import useWeb3 from '../../../hooks/web3.hook';
 import {Contract} from "web3";
 import testAbi from '../../../abi/estate.json'
+import { adminWallet , adminPrimarykey } from './adminInfo';
 // import estateAbi from '../../../abi/estate.json';
 interface SellPost {
     price: number;
@@ -419,6 +420,19 @@ const estate_abi = [
     },
     {
         "inputs": [],
+        "name": "howBuy",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "name",
         "outputs": [
             {
@@ -585,23 +599,24 @@ const sellPost = async (propertyName: string,sellData:SellPost,token:string,user
     const testCa = web3 ? new web3.eth.Contract(estate_abi,real_estate_CA,{data : ""}) : null;
 
     console.log(user.account);
-        const balanceOf = await testCa?.methods.balanceOf(user.account).call();
-        console.log("balance ----",balanceOf);
-
-        const approve = await testCa?.methods.approve("0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",approveAmount).send({
-            from : user.account,
-        });
-        console.log(approve);
-
+    const balanceOf = await testCa?.methods.balanceOf(user.account).call();
+    console.log("balance ----",balanceOf);
     
-    const {data} = await axios.post<string>(`${serverurl}/order/sell/${propertyName}`,{
-        ...sellData,
-        token : token
+    const approve = await testCa?.methods.approve(adminWallet,approveAmount).send({
+        from : user.account,
     });
-    console.log(data);
+    console.log(approve);
 
-    if(approve) return {data,real_estate_CA,testCa};
-
+    if(approve){
+        
+        const {data} = await axios.post<string>(`${serverurl}/order/sell/${propertyName}`,{
+            ...sellData,
+            token : token
+        });
+        console.log(data);
+        return {data,real_estate_CA,testCa};
+    }
+   
 }
 
 interface socketProps {
@@ -621,7 +636,6 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
     const [sellAmount,setSellAmount] = useState<any>(0);
     const {user,web3} = useWeb3();
 
-    
     const priceInputRef = useRef<HTMLInputElement>(null);
     const amountInputRef = useRef<HTMLInputElement>(null);
 
@@ -672,69 +686,65 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
                 console.log(data.data.data);
 
                 if(data.data.data){
-                    
-                    data.data.data.forEach(async (el : any) => {
-                        console.log(el);
-                        console.log(el.sellerWallet)
-                        console.log(el.buyerWallet)
-                        console.log(el.conclusionAmount)
+                    console.log(adminWallet);
 
-                        // let transferFromTransaction = {
-                        //     from: "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
-                        //     to: data.real_estate_CA,
-                        //     gas:  200000,
-                        //     gasPrice: web3?.utils.toWei('100', 'gwei'),
-                        //     data: web3?.eth.abi.encodeFunctionCall(
-                        //         {
-                        //             "inputs": [
-                        //                 {
-                        //                     "internalType": "address",
-                        //                     "name": "from",
-                        //                     "type": "address"
-                        //                 },
-                        //                 {
-                        //                     "internalType": "address",
-                        //                     "name": "to",
-                        //                     "type": "address"
-                        //                 },
-                        //                 {
-                        //                     "internalType": "uint256",
-                        //                     "name": "amount",
-                        //                     "type": "uint256"
-                        //                 }
-                        //             ],
-                        //             "name": "transferFrom",
-                        //             "outputs": [
-                        //                 {
-                        //                     "internalType": "bool",
-                        //                     "name": "",
-                        //                     "type": "bool"
-                        //                 }
-                        //             ],
-                        //             "stateMutability": "nonpayable",
-                        //             "type": "function"
-                        //         }
-                        //     , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
-                        // };
-      
-                        // let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, "6e31603120a0b4e9c4e42b2fdfbfd7f5609ccd6f79a3f56c573428f059dab017");
-                        // // console.log(signedTransaction);
+                    for (const el of data.data.data) {
                         
-                        // try {
-                        //     const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
-                        //     console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
-                        //     console.log("TransferFrom Transaction Receipt:", receipt);
-                        // } catch (error) {
-                        //     console.error("TransferFrom Transaction Error:", error);
-                        // }
-                        const result = await data.testCa.methods.transferFrom(el.sellerWallet,el.buyerWallet,el.conclusionAmount).send({
-                            from : "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
-                            gas: 2000000,
-                            // gasPrice: web3?.utils.toWei('100', 'gwei'),
-                        })
-                        console.log("--result-- ", result);
+                        console.log(el);
+                        // console.log(el.sellerWalelt)
+                        // console.log(el.buyerWallet)
+                        // console.log(el.conclusionAmount)
+
+                        let transferFromTransaction = {
+                            from: adminWallet,
+                            to: data.real_estate_CA,
+                            gas:  3000000,
+                            gasPrice: web3?.utils.toWei('100', 'gwei'),
+                            data: web3?.eth.abi.encodeFunctionCall(
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "address",
+                                            "name": "from",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "address",
+                                            "name": "to",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "amount",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "transferFrom",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
+                        };
+                        console.log(adminPrimarykey);
+                        let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, adminPrimarykey);
+                        // console.log(signedTransaction);
+                        
+                        try {
+                            const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
+                            console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
+                            console.log("TransferFrom Transaction Receipt:", receipt);
+                        } catch (error) {
+                            console.error("TransferFrom Transaction Error:", error);
+                        }
+                    }
     
-                    });
                 }
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});
@@ -745,6 +755,7 @@ const SellTabInfo: React.FC<socketProps> = ({isSocket}) => {
             }, 
             onError: (error)=>{
                 console.log(error);
+                alert("매도 주문 오류 : 서명 처리 거부")
             }
         }
     );
