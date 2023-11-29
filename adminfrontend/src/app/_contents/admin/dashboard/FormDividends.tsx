@@ -12,14 +12,16 @@ import FormSectionNoticeInfo from "./FormSectionVoteInfo";
 import postFetchEstateForm from "@/app/api/postFetchEstateForm";
 import postFetchNoticeForm from "@/app/api/postFetchNoticeForm";
 import FormSectionNoticeInfo_ from "./FormSectionNoticeInfo_";
+import FormSectionDividendsInfo from "./FormSectionDividendsInfo";
+import postFetchDividendsForm from "@/app/api/postFetchDividendsForm";
 
-interface NoticableEstate {
-  id: number;
-  address: string;
-  real_estate_name: string;
-  cy_type: string;
-  symbol: string;
-}
+// interface NoticableEstate {
+//   id: number;
+//   address: string;
+//   real_estate_name: string;
+//   cy_type: string;
+//   symbol: string;
+// }
 
 // ✅ 임시 데이터 받기
 // const voteableEstateData = [
@@ -50,7 +52,8 @@ interface NoticableEstate {
   }
   */
 
-export default function FormNotice() {
+  
+export default function FormDividends() {
   const router = useRouter();
   // const [startDate, setStartDate] = useState(0)
   // const [endDate, setEndDate] = useState(0)
@@ -62,7 +65,7 @@ export default function FormNotice() {
   // })
   // const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
 
-  const postNoticeForm = async (e: FormEvent<HTMLFormElement>) => {
+  const postDividendsForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // e.stopPropagation()
 
@@ -79,23 +82,22 @@ export default function FormNotice() {
       console.log(`${key}: ${value}`);
     }
 
-    const response = await postFetchNoticeForm(formData);
+    // POST 요청시
+    const response = await postFetchDividendsForm(formData);
 
-    console.log("response👉👉" , response)
-    console.log("response👉👉" , response.status)
-    
-    // if (response == 'Created') {
-    //   console.log("제출 성공👏👏");
-    //   router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
-    //   router.replace(`http://localhost:3000/admin/notices`);
-    // }
+    console.log("response" , response) // Created
 
+    if (response == 'Created') {
+      router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
+      router.replace('http://localhost:3000/admin/dashboard');
+    }
   };
+  
+
 
   return (
     <div className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-full ">
-      <form encType="multipart/form-data" onSubmit={postNoticeForm}>
-        {/* 여기부터 디자인 👇👇👇 */}
+      <form encType="multipart/form-data" onSubmit={postDividendsForm}>
 
         {/* 사이즈 잡기 */}
         <div className="w-screen h-full rounded-lg ">
@@ -105,15 +107,14 @@ export default function FormNotice() {
               {/* wrapper */}
               <div className="my-8 w-40rem mx-7 h-37.9rem ">
                 <h1 className="text-3xl font-bold tracking-tighter text-center w-40rem text-adminLayout_menubar_name">
-                  공지 등록
+                  배당금 등록
                 </h1>
 
                 {/* 임시 취소 */}
                 <Link
                   className="absolute right-1 top-2"
                   href={"/admin/dashboard"}
-                >
-                  ❎
+                > ❎
                 </Link>
 
                 {/* 구분선 */}
@@ -124,8 +125,8 @@ export default function FormNotice() {
 
                 <div className="">
                   
-                  <FormSectionNoticeInfo_
-                    title="공시/공지 상세 등록"
+                  <FormSectionDividendsInfo
+                    title="배당금 등록"
                     desc="상세 내용 등록"
                   />
                 </div>

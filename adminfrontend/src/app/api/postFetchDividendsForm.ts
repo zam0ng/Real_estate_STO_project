@@ -1,14 +1,16 @@
 
-const postFetchNoticeForm = async (formData : FormData) => {
 
-  const path = `/admin/notice_submit`;
+const postFetchDividendsForm = async (formData : FormData) => {
+
+  const path = '/admin/dividend_submit';
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
   const url = `${domain}${path}`
 
   for (let [key, value] of formData.entries()) {
-    console.log("formData 확인 @postFetchNoticeForm 🐣🐣");
+    console.log("formData 확인 @postFetchDividendsForm 🐣🐣");
     console.log(`${key}: ${value}`);
   }
+
 
   // formData 를 json 으로 변환
   let object: { [key: string]: FormDataEntryValue } = {};
@@ -49,4 +51,4 @@ const postFetchNoticeForm = async (formData : FormData) => {
 
 };
 
-export default postFetchNoticeForm;
+export default postFetchDividendsForm;

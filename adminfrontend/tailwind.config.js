@@ -181,6 +181,8 @@ module.exports = {
         dashboard_btn_estate: "#EF4464",
         dashboard_btn_vote : "#47BEC4",
         dashboard_btn_notice : "#908998",
+        dashboard_btn_dividend : "#ED9C3E",
+
         
         dashboard_progressBar: "rgb(75, 91, 235)",
 

@@ -34,7 +34,7 @@ export const CreateVoteBtn = () => {
         </div>
         
         <div>
-            <p className="text-base font-medium tracking-tight text-white"> 투표 등록 </p>
+            <p className="text-sm font-medium tracking-tighter text-white"> 투표 등록 </p>
         </div>
         
     </Link>

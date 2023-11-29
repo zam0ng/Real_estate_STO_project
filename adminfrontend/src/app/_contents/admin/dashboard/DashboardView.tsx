@@ -16,6 +16,7 @@ import PublicOfferingStatus from "./PublicOfferingStatus";
 import LargeLineChart from "./LargeLineChart";
 import CriteriaToggle from "./CriteriaToggle";
 import { SearchParamsProps } from "@/app/_features/admin/dashboard";
+import { CreateDividendsBtn } from "../main/CreateDividendsBtn";
 
 
 export default async function DashboardView({searchParams} : SearchParamsProps) {
@@ -150,6 +151,8 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
                     
                     <CreateNoticeBtn />
 
+                    <CreateDividendsBtn />
+                    
                   </div>
                 
                 {/* 두 번째 줄 */}

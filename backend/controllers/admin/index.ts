@@ -664,6 +664,10 @@ export const realEstateSubmit = async (req: Request , res : Response) =>{
 
 export const noticeSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);
+
+  console.log("req.body noticeSubmit 🚀🚀" , req)
+  console.log("req.body noticeSubmit 🚀🚀" , req.body)
+
   const { category, title, content, real_estate_name } = req.body;
   const writer: string = "admin";
   // const htmlText = req.body.content.replace(/\n/g, '<br>');
@@ -686,6 +690,9 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   console.log(req.body);
+  
+  console.log("req.body✅✅" , req.body);  // ✅ DJ 테스트
+
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
   const month = paymentdate.slice(5, 7);
   try {

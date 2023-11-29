@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DashboardActionIcon from "../dashboard/DashboardActionIcon";
 
-export const CreateNoticeBtn = () => {
+export const CreateDividendsBtn = () => {
 const router = useRouter();
 
 // // 매물 등록 페이지로 이동
@@ -27,15 +27,15 @@ const router = useRouter();
 return (
     <>
     <Link
-        href="/admin/dashboard?noticeModal=true" 
-        className="w-5.375rem h-5.375rem bg-dashboard_btn_notice  rounded-md flex items-center justify-evenly flex-col">
+        href="/admin/dashboard?dividendsModal=true" 
+        className="w-5.375rem h-5.375rem bg-dashboard_btn_dividend  rounded-md flex items-center justify-evenly flex-col">
         
         <div>
             <DashboardActionIcon  />
         </div>
         
         <div>
-            <p className="text-sm font-medium tracking-tighter text-white"> 공지 등록 </p>
+            <p className="text-sm font-medium tracking-tighter text-white"> 배당금 등록 </p>
         </div>
         
     </Link>

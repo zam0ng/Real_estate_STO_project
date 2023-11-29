@@ -31,6 +31,7 @@ import {
 } from "@/app/_features/admin/main";
 import FormVote from "@/app/_contents/admin/dashboard/FormVote";
 import FormNotice from "@/app/_contents/admin/dashboard/FormNotice";
+import Formdividends from "@/app/_contents/admin/dashboard/FormDividends";
 
 export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const voteListData: VoteProps[] = await getVoteList();
@@ -48,6 +49,7 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
   const isEstateModalOpen = searchParams?.estateModal;
   const isVoteModalOpen = searchParams?.voteModal;
   const isNoticeModalOpen = searchParams?.noticeModal;
+  const isDividendsModalOpen = searchParams?.dividendsModal;
 
   return (
     <>
@@ -74,6 +76,9 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
       {isVoteModalOpen && <FormVote />}
       
       {isNoticeModalOpen && <FormNotice />}
+
+      {isDividendsModalOpen && <Formdividends />}
+
       {/* {isEstateTestModalOpen && <FormEstateTest />} */}
 
       {/* 매물 등록한 것 보여주기 */}
