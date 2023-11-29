@@ -1,8 +1,9 @@
 import React from "react";
 import BlacklistUser from "./BlacklistUser";
-import getBlackList from "@/app/api/getBlackList";
 
 import { IblackListUser } from "@/app/_features/admin/dashboard";
+import { getBlackList } from "@/app/api";
+
 
 const BlackList = async () => {
   const blackListUserData: IblackListUser = await getBlackList();

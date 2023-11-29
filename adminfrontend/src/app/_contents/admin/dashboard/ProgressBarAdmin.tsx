@@ -4,9 +4,6 @@ type ProgressbarType = {
 
 export default function ProgressBarAdmin ({percent} : ProgressbarType) {
 
-    
-
-
     return(
         <div className="h-2 m-3 mx-auto bg-gray-300 rounded-full ">
             <div 

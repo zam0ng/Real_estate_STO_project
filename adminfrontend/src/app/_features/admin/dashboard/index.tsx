@@ -54,3 +54,13 @@ export interface IPublicOfferingItem {
     subscription_order_totalprice: string;
     subscription_totalprice: string;
   }
+
+
+
+export interface ITransactionData {
+    subscription_img_1: string;
+    real_estate_name: string;
+    trade_price: number;
+    createdAt: string;
+    slice: Function;
+  }

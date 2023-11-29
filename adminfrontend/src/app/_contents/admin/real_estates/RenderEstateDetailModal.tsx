@@ -29,11 +29,7 @@ import { DetailData } from "@/app/_features/admin/real_estates";
 
 export default function RenderEstateDetailModal() {
   const [detailData, setDetailData] = useState<DetailData | null>(null);
-<<<<<<< HEAD
-  console.log("detailData", detailData);
-=======
   // console.log("detailData" , detailData)
->>>>>>> o
 
   const router = useRouter();
   const params = useParams();
