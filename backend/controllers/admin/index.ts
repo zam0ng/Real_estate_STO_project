@@ -146,6 +146,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       total_amount?: number;
     };
 
+    console.log("👉👉👉 @realEstatesList")
+
     const result = await db.Subscriptions.findAll({
       attributes: [
         "subscription_img_1",
@@ -162,6 +164,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       where: { subscription_status: "success" },
       raw: true,
     });
+
+    console.log("🤸‍♂️🤸‍♂️🤸‍♂️ @realEstatesList")
 
     const day_earlier = new Date();
     const week_ago = new Date();
@@ -184,6 +188,9 @@ export const realEstatesList = async (req: Request, res: Response) => {
       group: "real_estate_name",
       raw: true,
     });
+
+    console.log("✅ test weeklyDate @realEstatesList" , weeklyDate)
+
 
     const resultUnknown = result as [] as Subscription[];
 
@@ -463,6 +470,10 @@ export const tradeMonthList = async (req: Request, res: Response) => {
     // // console.log(result);
 
     const all_result = await setRealEstateAmount(result, "month");
+
+    console.log("all_result🚀🚀" , all_result)
+
+
 
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
@@ -765,6 +776,7 @@ export const realEstateSubmit = async (req: Request, res: Response) => {
   // publisher varchar // 발행인
 };
 
+
 export const noticeSubmit = async (req: Request, res: Response) => {
   // // console.log(req.body);
   const { category, title, content, real_estate_name } = req.body;
@@ -786,6 +798,23 @@ export const noticeSubmit = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 };
+
+
+// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
+export const noticesList = async (req : Request , res : Response) => {
+
+  try {
+    const noticeList = await Notices.findAll()
+    res.status(200).json(noticeList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500)
+  }
+}
+
+
+
+
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);

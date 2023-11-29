@@ -6,18 +6,17 @@ import BtnCreate from "@/app/_components/_ui/BtnCreate";
 import MessageBoxInfo from "@/app/_components/_ui/MessageBoxInfo";
 import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
-// import { postEstateData } from "@/app/_api/_archive/postEstateData.sample";
+// import { postEstateData } from "@/app/api/_archive/postEstateData.sample";
 import { useRouter } from "next/navigation";
 import InputFormItem from "../dashboard/InputFormItem";
 import { Console } from "console";
-import postFetchEstateForm from "@/app/_api/postFetchEstateForm";
+import postFetchEstateForm from "@/app/api/postFetchEstateForm";
 import RenderEstateInfo from "./RenderEstateInfo";
-
 
 import RenderSubscriptionInfo from "./RenderSubscriptionInfo";
 
 import { ReadProps } from "@/app/_features/admin/real_estates";
-import getEstateDetail from "@/app/_api/getEstateDetail";
+import getEstateDetail from "@/app/api/getEstateDetail";
 
 import { useParams } from "next/navigation";
 import { getEstateDetailProps } from "@/app/_features/admin/real_estates";
@@ -30,7 +29,11 @@ import { DetailData } from "@/app/_features/admin/real_estates";
 
 export default function RenderEstateDetailModal() {
   const [detailData, setDetailData] = useState<DetailData | null>(null);
+<<<<<<< HEAD
+  console.log("detailData", detailData);
+=======
   // console.log("detailData" , detailData)
+>>>>>>> o
 
   const router = useRouter();
   const params = useParams();
@@ -63,13 +66,14 @@ export default function RenderEstateDetailModal() {
               <div className="my-8 w-40rem mx-7 h-37.9rem ">
                 {/* 제목 : About your page */}
                 <h1 className="text-3xl font-bold tracking-tighter text-center w-40rem text-adminLayout_menubar_name">
-                  {detailData ? detailData.subscription_name : "loading"} 상세 정보
+                  {detailData ? detailData.subscription_name : "loading"} 상세
+                  정보
                 </h1>
 
                 {/* 임시 취소 */}
                 <Link
                   className="absolute right-1 top-2"
-                  href={"/admin/dashboard"}
+                  href={"/admin/real_estates"}
                 >
                   ❎
                 </Link>
@@ -142,7 +146,6 @@ export default function RenderEstateDetailModal() {
 
                   <BtnCreate /> */}
                 </div>
-                
               </div>
             </div>
           </div>

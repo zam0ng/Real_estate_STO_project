@@ -21,8 +21,9 @@ const FormSectionEstateInfo : React.FC<FormSectionProps> = ( {title, desc} ) => 
                 </div>
 
                 {/* 제목 */}
-                <h2 className="mt-2 text-lg font-bold tracking-tighter w-40rem text-adminLayout_menubar_name">
-                  건물 이미지
+                <h2 className="flex items-center mt-2 text-lg font-bold tracking-tighter w-40rem text-adminLayout_menubar_name ">
+                  <span>건물 이미지</span> 
+                  <span className='ml-2 text-base text-admin_modal_input' >(최대 5장)</span>
                 </h2>
                 
                 {/* Input 컴포넌트 */}
@@ -40,7 +41,7 @@ const FormSectionEstateInfo : React.FC<FormSectionProps> = ( {title, desc} ) => 
                 <InputFormItem _title={"연면적"} _type={"number"} _name = {"all_area"}  _placeholder={"999.5"} _step='0.1'/>
                 <InputFormItem _title={"건폐율"} _type={"number"} _name = {"build_area"}  _placeholder={"70.1"} _step='0.1'/>
                 <InputFormItem _title={"용적률"} _type={"number"} _name = {"floor_area"}  _placeholder={"265.1"} _step='0.1'/>
-                <InputFormItem _title={"준공일"} _type={"text"} _name = {"completion"}  _placeholder={"2005-07-26"} />
+                <InputFormItem _title={"준공일"} _type={"date"} _name = {"completion"}  _placeholder={"2005-07-26"} />
 
 
     </>

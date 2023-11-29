@@ -4,7 +4,8 @@ import { EnableButtonParam } from "@/app/_features/admin/real_estates";
 import {Contract, InvalidNonceOrChainIdError, Web3} from "web3";
 import { useEffect, useState } from 'react';
 import useAccount from "../hooks/useAccount";
-import { getSubscriptionList } from "@/app/_api/getSubscription_list";
+import { getSubscriptionsList } from "@/app/api";
+import { getSubscriptionList } from "@/app/api/getSubscription_list";
 
 // 💪
 const EnableButton = ({ text,id}: EnableButtonParam) => {

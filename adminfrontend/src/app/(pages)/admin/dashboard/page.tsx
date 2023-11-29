@@ -3,7 +3,7 @@ import {
   getSubscriptionsList,
   getBlackList,
   getNoticesList,
-} from "@/app/_api";
+} from "@/app/api";
 
 import { SearchParamsProps } from "@/app/_features/admin/dashboard";
 
@@ -29,8 +29,11 @@ import {
   BlackListData,
   NoticesListData,
 } from "@/app/_features/admin/main";
+import FormVote from "@/app/_contents/admin/dashboard/FormVote";
+import FormNotice from "@/app/_contents/admin/dashboard/FormNotice";
+import Formdividends from "@/app/_contents/admin/dashboard/FormDividends";
 
-export default async function Dashboard( { searchParams }: SearchParamsProps) {
+export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const voteListData: VoteProps[] = await getVoteList();
   // // console.log("voteListData", voteListData);
 
@@ -44,7 +47,9 @@ export default async function Dashboard( { searchParams }: SearchParamsProps) {
   // // console.log("noticesListData", noticesListData);
 
   const isEstateModalOpen = searchParams?.estateModal;
-  // const isEstateTestModalOpen = searchParams?.estateTestModal;
+  const isVoteModalOpen = searchParams?.voteModal;
+  const isNoticeModalOpen = searchParams?.noticeModal;
+  const isDividendsModalOpen = searchParams?.dividendsModal;
 
   return (
     <>
@@ -67,6 +72,13 @@ export default async function Dashboard( { searchParams }: SearchParamsProps) {
       {/* 매물 등록 팝업 */}
       {/* {isEstateModalOpen && <ModalFormRealestate />} */}
       {isEstateModalOpen && <FormEstate />}
+      
+      {isVoteModalOpen && <FormVote />}
+      
+      {isNoticeModalOpen && <FormNotice />}
+
+      {isDividendsModalOpen && <Formdividends />}
+
       {/* {isEstateTestModalOpen && <FormEstateTest />} */}
 
       {/* 매물 등록한 것 보여주기 */}
@@ -77,7 +89,7 @@ export default async function Dashboard( { searchParams }: SearchParamsProps) {
       {/* 투표 등록한거 보여주기 */}
       {/* <RenderVotes voteListData={voteListData} /> */}
 
-      <DashboardView />
+      <DashboardView searchParams={searchParams} />
     </>
   );
 }

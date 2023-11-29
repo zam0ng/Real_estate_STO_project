@@ -18,7 +18,7 @@ import {
   // tradeList,
   // realEstateOwnList,
   // blackList,
-  // noticesList,
+  noticesList,
   // realEstateTradeList,
 
   // 재영 어드민 부분
@@ -66,6 +66,9 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
 router.get("/contract_address_list", contractAddressList);
+
+// 공지사항 가져오기 | ✅ DJ TEST
+router.get("/notices", noticesList);
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////
