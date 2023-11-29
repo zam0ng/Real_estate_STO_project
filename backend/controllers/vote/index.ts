@@ -18,6 +18,22 @@ export const voteContractAddress = async (req: Request, res: Response) => {
   }
 };
 
+// 토큰 컨트랙트 주소 보내주기
+export const tokenContractAddress = async (req: Request, res: Response) => {
+  try {
+    const real_estate_name = req.query.real_estate_name as string;
+    const result = await db.Contract_address.findAll({
+      where: { ca_type: "token", real_estate_name: real_estate_name },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 전체 투표 기록 보여주기
 export const voteList = async (req: Request, res: Response) => {
   try {
@@ -59,7 +75,7 @@ export const voteInsert = async (req: Request, res: Response) => {
     const result = await db.Votes.create(
       {
         real_estate_name: real_estate_name,
-        vote_id: contract_id.id as number,
+        vote_id: contract_id!.id as number,
         vote_title: vote_title,
         vote_start_date: vote_start_date,
         vote_end_date: vote_end_date,

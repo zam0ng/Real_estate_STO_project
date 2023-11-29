@@ -199,6 +199,7 @@ export const logLatestBlockEvents = async () => {
             );
             // 우리꺼 symbol을 보통 두글자 이기떄문에 그것보다 긴 symbol이 들어 올 경우 걸러냄
             if (decodedLog.symbol.length > 5) continue;
+            // console.log("decodedLog : ", decodedLog);
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
             if (contracts.includes(address.toLowerCase())) {
@@ -214,6 +215,7 @@ export const logLatestBlockEvents = async () => {
               // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김
               // if (addressCheck == "") continue;
 
+              // console.log("decodedLog.symbol : ", decodedLog.symbol);
               const logData = {
                 ca: address,
                 tx_from: decodedLog.from,
