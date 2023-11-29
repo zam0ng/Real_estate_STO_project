@@ -679,60 +679,62 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                         console.log(el.buyerWallet)
                         console.log(el.conclusionAmount)
 
-                        // let transferFromTransaction = {
-                        //     from: "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
-                        //     to: data.real_estate_CA,
-                        //     gas:  200000,
-                        //     gasPrice: web3?.utils.toWei('100', 'gwei'),
-                        //     data: web3?.eth.abi.encodeFunctionCall(
-                        //         {
-                        //             "inputs": [
-                        //                 {
-                        //                     "internalType": "address",
-                        //                     "name": "from",
-                        //                     "type": "address"
-                        //                 },
-                        //                 {
-                        //                     "internalType": "address",
-                        //                     "name": "to",
-                        //                     "type": "address"
-                        //                 },
-                        //                 {
-                        //                     "internalType": "uint256",
-                        //                     "name": "amount",
-                        //                     "type": "uint256"
-                        //                 }
-                        //             ],
-                        //             "name": "transferFrom",
-                        //             "outputs": [
-                        //                 {
-                        //                     "internalType": "bool",
-                        //                     "name": "",
-                        //                     "type": "bool"
-                        //                 }
-                        //             ],
-                        //             "stateMutability": "nonpayable",
-                        //             "type": "function"
-                        //         }
-                        //     , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
-                        // };
+                        let transferFromTransaction = {
+                            from: "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
+                            to: data.real_estate_CA,
+                            gas:  200000,
+                            gasPrice: web3?.utils.toWei('100', 'gwei'),
+                            data: web3?.eth.abi.encodeFunctionCall(
+                                {
+                                    "inputs": [
+                                        {
+                                            "internalType": "address",
+                                            "name": "from",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "address",
+                                            "name": "to",
+                                            "type": "address"
+                                        },
+                                        {
+                                            "internalType": "uint256",
+                                            "name": "amount",
+                                            "type": "uint256"
+                                        }
+                                    ],
+                                    "name": "transferFrom",
+                                    "outputs": [
+                                        {
+                                            "internalType": "bool",
+                                            "name": "",
+                                            "type": "bool"
+                                        }
+                                    ],
+                                    "stateMutability": "nonpayable",
+                                    "type": "function"
+                                }
+                            , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
+                        };
       
-                        // let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, "6e31603120a0b4e9c4e42b2fdfbfd7f5609ccd6f79a3f56c573428f059dab017");
-                        // // console.log(signedTransaction);
+                        let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, "6e31603120a0b4e9c4e42b2fdfbfd7f5609ccd6f79a3f56c573428f059dab017");
+                        console.log(signedTransaction);
                         
-                        // try {
-                        //     const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
-                        //     console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
-                        //     console.log("TransferFrom Transaction Receipt:", receipt);
-                        // } catch (error) {
-                        //     console.error("TransferFrom Transaction Error:", error);
-                        // }
-                        const result = await data.testCa.methods.transferFrom(el.sellerWallet,el.buyerWallet,el.conclusionAmount).send({
-                            from : "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
-                            gas: 2000000,
-                            // gasPrice: web3?.utils.toWei('100', 'gwei'),
-                        })
-                        console.log("--result-- ", result);
+                        try {
+                            const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
+                            console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
+                            console.log("TransferFrom Transaction Receipt:", receipt);
+                        } catch (error) {
+                            console.error("TransferFrom Transaction Error:", error);
+                        }
+
+                        
+                        // const result = await data.testCa.methods.transferFrom(el.sellerWallet,el.buyerWallet,el.conclusionAmount).send({
+                        //     from : "0xF5649DC185fe16C22D3Ef5E43921f206A8cd2fD2",
+                        //     gas: 2000000,
+                        //     // gasPrice: web3?.utils.toWei('100', 'gwei'),
+                        // })
+                        // console.log("--result-- ", result);
     
                     });
                 }
