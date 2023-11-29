@@ -26,6 +26,11 @@ interface RealEstateAmount {
   };
 }
 
+interface UserCount {
+  date: Date;
+  userCount: number;
+}
+
 function getDayInfo(info: string) {
   const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
@@ -129,12 +134,18 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
   return all_result;
 }
 
-// function formatDate(date: Date): string {
-//   const year = date.getFullYear();
-//   const month = String(date.getMonth() + 1).padStart(2, "0");
-//   const day = String(date.getDate()).padStart(2, "0");
-//   return `${year}-${month}-${day}`;
-// }
+// 10일치 정보를 받아오는데
+function getTenDate(start_date: Date, end_date: Date) {
+  const dates = [];
+  const start = new Date(start_date);
+  const end = new Date(end_date);
+
+  for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
+    dates.push(new Date(day));
+  }
+
+  return dates;
+}
 
 // 매물 전체 정보
 export const realEstatesList = async (req: Request, res: Response) => {
@@ -655,6 +666,70 @@ export const contractAddressList = async (req: Request, res: Response) => {
 
     if (result) return res.status(200).send(result);
     else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 10일치 회원 가입 정보
+export const tenDateJoinList = async (req: Request, res: Response) => {
+  try {
+    const today = new Date();
+    const yesterday = today.setDate(today.getDate() - 1);
+    const ten_days_ago = new Date(yesterday);
+
+    ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
+    const ten_date = getTenDate(ten_days_ago, today);
+
+    const result = (await db.Users.findAll({
+      attributes: [
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.fn("date", db.sequelize.col("createdAt")),
+            "YYYY-MM-DD"
+          ),
+          "date",
+        ],
+        [db.sequelize.fn("count", db.sequelize.col("id")), "userCount"],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [ten_days_ago, yesterday],
+        },
+      },
+      group: ["date"],
+    })) as [] as UserCount[];
+
+    const userCounts = new Map(
+      result.map((item) => [item.date, item.userCount])
+    );
+
+    const ten_day_user_count = ten_date.map(
+      (date) => userCounts.get(date) || 0
+    );
+
+    if (ten_day_user_count) return res.status(200).json(ten_day_user_count);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 10일치 거래 대금 정보
+export const tenDateTransactionPrice = async (req: Request, res: Response) => {
+  try {
+    //
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 월 예상 수익
+export const monthlyIncome = async (req: Request, res: Response) => {
+  try {
+    //
   } catch (error) {
     console.error(error);
   }

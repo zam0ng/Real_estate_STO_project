@@ -8,6 +8,7 @@ interface UserAttributes {
   balance: number;
   using_balance: number;
   blacklist: boolean;
+  createdAt: Date;
 }
 
 class Users extends Model<UserAttributes> {
@@ -41,6 +42,9 @@ class Users extends Model<UserAttributes> {
         blacklist: {
           type: DataTypes.BOOLEAN,
           defaultValue: false,
+        },
+        createdAt: {
+          type: DataTypes.DATE,
         },
       },
       {
