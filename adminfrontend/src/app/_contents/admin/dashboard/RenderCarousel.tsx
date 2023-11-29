@@ -28,11 +28,12 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
 
 
     const nameArr = currentSituationData.map((item) => item.subscription_name)
+    const subscription_descriptionArr = currentSituationData.map((item) => item.subscription_description)
     const weekTradeArr = currentSituationData.map((item) => item.weekly_trade_amount)
     const tokenPriceArr = currentSituationData.map((item) => item.current_price)
     // console.log("tokenPriceArr" , tokenPriceArr)
 
-    
+
     // const changeSlide = (newIndex: number) => {
     //   setAnimation("fadeOut"); // 페이드 아웃으로 시작
     //   setTimeout(() => {
@@ -104,7 +105,6 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
       </div>
 
 
-
       {/* 오른쪽 */}
       <div className="h-11.5rem w-16.25rem   flex flex-col">
         
@@ -122,14 +122,13 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
             <div className="flex flex-col w-full h-full mt-1 ">
                   {/* describe | 설명 */}
                   <div>
-                    <p className="text-dashboard_carousel_black_800 text-0.9375rem">매출의 15% 이상 월 배당</p>
+                    <p className="text-dashboard_carousel_black_800 text-0.9375rem">{subscription_descriptionArr[currentIndex]}</p>
                   </div>
                   
                   {/* 매물명 */}
                   <div className="z-10 w-auto h-auto font-extrabold  text-1.687rem text-dashboard_carousel_black ">
                     <p>{nameArr[currentIndex]}</p>
                   </div>
-
             </div>
             
             {/* 아랫 부분 */}

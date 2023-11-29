@@ -13,8 +13,10 @@ const getBlackList = async () => {
         const resp = await fetch(`${url}` ,{ 
             cache: "no-store"
         });
-        
-        return resp.json();
+        if(resp.status === 201){
+            return resp.json();
+        }
+
     
     } catch (error) {
         console.log(error);

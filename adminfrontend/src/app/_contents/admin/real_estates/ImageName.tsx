@@ -10,11 +10,7 @@ const ImageName = ({ imageURL, name , id}: ImageNameProps) => {
   const finalDomain = `${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL}`
   // console.log("fileName🔥" , fileName)
 
-<<<<<<< HEAD
   const finalImageURL = `${finalDomain}/estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
-=======
-  const finalImageURL = `${finalDomain}estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
->>>>>>> o
   // console.log(finalImageURL, "finalImageURL@매물상세🔥🔥")
   
   return (

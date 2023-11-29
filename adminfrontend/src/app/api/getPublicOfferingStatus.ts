@@ -27,10 +27,11 @@ const getPublicOfferingStatus =  async ( ) => {
         const resp = await fetch(`${url}` ,{ 
             cache: "no-store"
         });
-
         // console.log("resp | getPublicOfferingStatus " , resp)
         
-        return resp.json();
+        if(resp.status === 200){
+            return resp.json();
+        }
     
     } catch (error) {
         console.log(error);

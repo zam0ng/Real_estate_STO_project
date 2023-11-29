@@ -23,9 +23,9 @@ interface ITransactionData {
 }
 
 const Transaction = async () => {
-  const transactionData: ITransactionData = await getTransaction();
+  // const transactionData: ITransactionData = await getTransaction();
 
-  console.log("transactionData💎", transactionData);
+  // console.log("transactionData💎", transactionData);
 
   return (
     <>
@@ -41,7 +41,7 @@ const Transaction = async () => {
           </Link>
         </div>
 
-        {transactionData
+        {/* {transactionData
           .slice(0, 3)
           .map((item: ITransactionData, index: number) => {
             console.log("item.subscription_img_1🚀🚀", item.subscription_img_1);
@@ -57,7 +57,7 @@ const Transaction = async () => {
                 />
               )
             );
-          })}
+          })} */}
       </div>
     </>
   );

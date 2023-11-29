@@ -45,3 +45,12 @@ export interface IblackListUser {
     user_email: string;
     slice : Function;
 }
+
+
+
+// 공모가격
+export interface IPublicOfferingItem {
+    subscription_name: string;
+    subscription_order_totalprice: string;
+    subscription_totalprice: string;
+  }

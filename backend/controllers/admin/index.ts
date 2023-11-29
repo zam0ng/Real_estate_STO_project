@@ -146,6 +146,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       total_amount?: number;
     };
 
+    console.log("👉👉👉 @realEstatesList")
+
     const result = await db.Subscriptions.findAll({
       attributes: [
         "subscription_img_1",
@@ -163,6 +165,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       raw: true,
     });
 
+    console.log("🤸‍♂️🤸‍♂️🤸‍♂️ @realEstatesList")
+
     const day_earlier = new Date();
     const week_ago = new Date();
 
@@ -178,12 +182,15 @@ export const realEstatesList = async (req: Request, res: Response) => {
       ],
       where: {
         createdAt: {
-          [Op.between]: [day_earlier, week_ago],
+          [Op.between]: [week_ago , day_earlier],
         },
       },
       group: "real_estate_name",
       raw: true,
     });
+
+    console.log("✅ test weeklyDate @realEstatesList" , weeklyDate)
+
 
     const resultUnknown = result as [] as Subscription[];
 

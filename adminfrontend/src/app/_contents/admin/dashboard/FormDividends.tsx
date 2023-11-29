@@ -84,15 +84,14 @@ export default function FormDividends() {
 
     // POST 요청시
     const response = await postFetchDividendsForm(formData);
-
     console.log("response" , response) // Created
-
+    
     if (response == 'Created') {
-      router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
+      // router.refresh(); // 새로고침기능
+      // const asd=process.env.NODE_ENV ⭐⭐⭐⭐⭐
       router.replace('http://localhost:3000/admin/dashboard');
     }
   };
-  
 
 
   return (

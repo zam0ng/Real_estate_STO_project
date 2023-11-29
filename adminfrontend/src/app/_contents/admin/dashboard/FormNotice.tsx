@@ -85,8 +85,7 @@ export default function FormNotice() {
     console.log("response👉👉" , response.status)
     
     if (response == 'Created') {
-      console.log("제출 성공👏👏");
-      router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
+      // router.refresh(); // 새로고침기능
       router.replace(`http://localhost:3000/admin/notices`);
     }
 

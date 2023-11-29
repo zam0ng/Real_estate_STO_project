@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 
-function generateUserTableRows(rowCount) {
+function generateDefaultTableRows(rowCount) {
   // 초기 행 (4px 48px)
   let rows = '4px 48px';
 
@@ -115,7 +115,7 @@ module.exports = {
 
         // userTable: '4px 48px 2px 56px 2px 56px 2px 56px 2px 56px 2px 56px 2px 56px auto', // 첫 번째 행 48px, 두 번째 행 38px, 그 외 행은 콘텐츠에 따라 자동 조절
         // 4px = 맨 윗 줄 | 48px = 목차 높이 | 2px = 아이템 상단선 | 56px 아이템 간격 
-        userTable: generateUserTableRows(7)
+        defaultTable: generateDefaultTableRows(7)
       },
 
       fontSize: {
