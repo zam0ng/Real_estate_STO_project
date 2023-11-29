@@ -20,8 +20,9 @@ export const voteContractAddress = async (req: Request, res: Response) => {
 // 토큰 컨트랙트 주소 보내주기
 export const tokenContractAddress = async (req: Request, res: Response) => {
   try {
+    const real_estate_name = req.query.real_estate_name as string;
     const result = await db.Contract_address.findAll({
-      where: { ca_type: "token" },
+      where: { ca_type: "token", real_estate_name: real_estate_name },
       raw: true,
     });
 
@@ -121,9 +122,6 @@ export const userAmounts = async (req: Request, res: Response) => {
     const real_estate_name = req.query.real_estate_name as string;
 
     const result = await db.Real_estates_own.findAll({
-      // attributes: [
-      //   [db.sequelize.fn("sum", db.sequelize.col("amount")), "amount"],
-      // ],
       attributes: ["amount"],
       where: { real_estate_name: real_estate_name },
       order: [["wallet", "DESC"]],

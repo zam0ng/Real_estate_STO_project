@@ -59,7 +59,7 @@ class Votes extends Model<voteAttribute> {
     return Votes;
   }
   static associate(db: DB) {
-    db.Votes.belongsTo(db.Vote_history, {
+    db.Votes.hasMany(db.Vote_history, {
       foreignKey: "vote_id",
     });
   }

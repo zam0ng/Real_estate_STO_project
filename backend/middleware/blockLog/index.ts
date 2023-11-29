@@ -133,8 +133,8 @@ export const logLatestBlockEvents = async () => {
     // 그렇기 때문에 블록 검사를 시작하게 되면 블록 번호를 업데이트 시켜 같은 블록을 검사하는것을 방지
     if (currentBlockNum == block_num) return; // 현재 블록 번호와 데이터베이스에 있는 마지막 블록 번호 비교
 
-    console.log("blockNumber : ", currentBlockNum, " 시작");
-    console.time("logLatestBlockEvents");
+    // console.log("blockNumber : ", currentBlockNum, " 시작");
+    // console.time("logLatestBlockEvents");
 
     // 이부분이 현재 블록과 마지막에 검사한 블록의 번호를 비교하는 조건문
     if (block_num >= currentBlockNum) return;
@@ -152,10 +152,10 @@ export const logLatestBlockEvents = async () => {
         // 같은 sol을 배포했을때 네트워크에 따라 0xa9059cbb000000000000000000000000 이 뒤에 부분은 달라졌지만 저부분은 어느 네트워크든 같았음(sepolia, ganache)
         // if (!tx.input.includes("0xa9059cbb")) continue;
         // console.log("tx : ", tx);
-        console.log("tx.from : ", tx.from);
-        console.log("tx.to : ", tx.to);
+        // console.log("tx.from : ", tx.from);
+        // console.log("tx.to : ", tx.to);
         if (tx.input.length > 300) continue;
-        console.log("tx.input : ", tx.input);
+        // console.log("tx.input : ", tx.input);
 
         // 트랜잭션에 hash 부분을 해싱하게 되면 영수증이 나오게 되는데 그 영수증 안에 logs 정보가 들어 있음
         const receipt: any = await web3.eth.getTransactionReceipt(tx.hash);
@@ -185,7 +185,7 @@ export const logLatestBlockEvents = async () => {
             );
             // 우리꺼 symbol을 보통 두글자 이기떄문에 그것보다 긴 symbol이 들어 올 경우 걸러냄
             if (decodedLog.symbol.length > 5) continue;
-            console.log("decodedLog : ", decodedLog);
+            // console.log("decodedLog : ", decodedLog);
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
             if (contracts.includes(address.toLowerCase())) {
@@ -198,7 +198,7 @@ export const logLatestBlockEvents = async () => {
               // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김
               // if (addressCheck == "") continue;
 
-              console.log("decodedLog.symbol : ", decodedLog.symbol);
+              // console.log("decodedLog.symbol : ", decodedLog.symbol);
               const logData = {
                 ca: address,
                 tx_from: decodedLog.from,
@@ -222,11 +222,11 @@ export const logLatestBlockEvents = async () => {
       // 트랜잭션을 데이터베이스에 저장
       await handleTransactions(transactionLogs);
     }
-    console.log("block_num : ", block_num, " 끝");
+    // console.log("block_num : ", block_num, " 끝");
   } catch (error) {
     // console.error(error);
   }
-  console.timeEnd("logLatestBlockEvents");
+  // console.timeEnd("logLatestBlockEvents");
 };
 
 // 나중에 매물 추가되는 곳에
