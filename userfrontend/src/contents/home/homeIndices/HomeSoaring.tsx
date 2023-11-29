@@ -1,6 +1,8 @@
 import axios from '../../../components/url';
 import { useQuery } from "@tanstack/react-query"
 import { HomeChartType } from '../../../features/HomeChart';
+import LoadingComponent from '../../../components/LoadingComponent';
+import ErrorComponent from '../../../components/ErrorComponent';
 
 
 export default function HomeSoaring(){
@@ -19,8 +21,17 @@ export default function HomeSoaring(){
         queryFn: fetchSoaring
     });
 
-    console.log(soaring);
-    
+    if (isLoading){
+        return(
+	<LoadingComponent />
+        )
+    }
+
+    if (error) {
+        return(
+	<ErrorComponent />
+        )
+    }
 
 
     // return(

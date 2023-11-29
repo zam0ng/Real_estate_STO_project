@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from '../../../components/url';
 import { HomeChartType } from '../../../features/HomeChart';
+import LoadingComponent from "../../../components/LoadingComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 
 
 // div 마지막 border-b 지우는 방법
@@ -26,11 +28,20 @@ export default function HomeVolume(){
         queryFn: fetchVolume
     });
 
-    // console.log(volume);
+    if (isLoading){
+        return(
+	<LoadingComponent />
+        )
+    }
 
+    if (error) {
+        return(
+	<ErrorComponent />
+        )
+    }
 
     return(
-        <div>
+    <div>
         { volume && volume.map((item: HomeChartType, index: number) => {
             return (
                 <div className={`border-b border-black-200 w-full h-14 flex`} key={index}>

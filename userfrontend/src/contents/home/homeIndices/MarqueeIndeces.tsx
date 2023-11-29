@@ -3,6 +3,8 @@ import axios from '../../../components/url';
 import { HomeMarqueeType } from "../../../features/HomeMarquee";
 import { HomeGraphType } from "../../../features/HomeGraph";
 import { difference } from "react-query/types/core/utils";
+import LoadingComponent from "../../../components/LoadingComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 
 type mergedDataType = {
     current_price : number;
@@ -52,18 +54,13 @@ export default function MarqueeIndeces (){
 
     if (isLoading){
         return(
-            <div className="w-full h-20 flex justify-center items-center">
-                <img src={process.env.PUBLIC_URL + '/images/loadingGif/lego.gif'} className="w-12 h-12"></img>    
-            </div>
+            <LoadingComponent />
         )
     }
 
     if (error) {
         return(
-            <div className="w-full h-20 flex justify-center items-center">
-            <img src={process.env.PUBLIC_URL + '/images/error/F5image.png'} className="w-28 h-28"></img>
-            <span className="font-extrabold text-xl text-gray-300 ">새로고침 F5</span> 
-            </div>
+            <ErrorComponent />
         )
     }
     

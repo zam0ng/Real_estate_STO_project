@@ -9,11 +9,7 @@ export default function Home() {
 
   const [isFirstRender,setIsFirstRender] = useState(true)
 
-  useEffect(()=>{
-    setTimeout(()=>{
-      setIsFirstRender(false)
-    },1000)
-  },[])
+
 
 
   return (

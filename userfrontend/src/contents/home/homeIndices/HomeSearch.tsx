@@ -88,7 +88,10 @@ export default function HomeSearch(){
                     </div>
                     )
                 : 
-                undefined
+                <div className="w-5/6 m-auto h-32 flex flex-col justify-center items-center">
+                    <img src={process.env.PUBLIC_URL + '/images/threeD/zoom.png'} className="w-20 h-20"></img>
+                    <span className="font-bold text-gray-300">검색 결과가 없습니다 </span>
+                </div>
                 }
             </div>
         </>
