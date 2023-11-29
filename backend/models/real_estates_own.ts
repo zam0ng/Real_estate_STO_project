@@ -2,6 +2,7 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface real_estates_ownAttribute {
+  id?: number;
   user_email: string;
   wallet?: string;
   real_estate_id: number;
@@ -9,9 +10,11 @@ interface real_estates_ownAttribute {
   price: number;
   amount: number;
   possible_quantity: number;
+  token_name?: string;
 }
 
 class Real_estates_own extends Model<real_estates_ownAttribute> {
+  declare id?: number;
   declare user_email: string;
   declare wallet: string;
   declare real_estate_id: number;
@@ -19,6 +22,7 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
   declare price: number;
   declare amount: number;
   declare possible_quantity: number;
+  declare token_name?: string;
   static initModel(sequelize: Sequelize): typeof Real_estates_own {
     Real_estates_own.init(
       {
@@ -48,6 +52,10 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
         },
         possible_quantity: {
           type: DataTypes.INTEGER,
+          allowNull: false,
+        },
+        token_name: {
+          type: DataTypes.STRING,
           allowNull: false,
         },
       },

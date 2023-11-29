@@ -97,7 +97,13 @@ export const handleWalletAddress = async () => {
 handleWalletAddress();
 
 // 지갑 주소를 검사
-const walletCheck = async (tx_from: string, tx_to: string) => {
+const walletCheck = async (
+  tx_from: string,
+  tx_to: string,
+  address: string,
+  amount: number,
+  symbol: string
+) => {
   try {
     const from_check = user_wallets.some(
       (userWallet) => userWallet.wallet === tx_from
@@ -191,7 +197,10 @@ export const logLatestBlockEvents = async () => {
               // 내부 전송인지 외부 전송인지 판단
               const addressCheck = await walletCheck(
                 decodedLog.from,
-                decodedLog.to
+                decodedLog.to,
+                address,
+                parseInt(decodedLog.value),
+                decodedLog.symbol
               );
 
               // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김

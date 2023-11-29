@@ -178,7 +178,7 @@ export const realEstatesList = async (req: Request, res: Response) => {
       ],
       where: {
         createdAt: {
-          [Op.between]: [day_earlier, week_ago],
+          [Op.between]: [week_ago, day_earlier],
         },
       },
       group: "real_estate_name",
@@ -949,7 +949,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
     email_list.forEach(async (element, index) => {
       await Real_estates_own.create({
         user_email: element,
-        real_estate_id: estateId!.id,
+        real_estate_id: estateId!.id as number,
         real_estate_name: data!.subscription_name,
         price: data!.subscription_offering_price,
         amount: amount_list[index],
