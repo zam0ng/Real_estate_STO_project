@@ -17,14 +17,13 @@ function TabButtons({ imgName, btnName, urlName }: TabBarType) {
   return (
     <div
       className="w-1/5 text-center text-xxs flex-col"
-      onClick={() => handleTabBtns(urlName)}
     >
       <img
         className="block m-auto h-6 pt-1 "
         alt={btnName}
         src={process.env.PUBLIC_URL + `/images/TabBar/${imgName}.png`}
       />
-      <div className="text-center text-xs ">{btnName}</div>
+      <div className="text-center text-xs "  onClick={() => handleTabBtns(urlName)} >{btnName}</div>
     </div>
   );
 }
@@ -36,7 +35,7 @@ function TabBar() {
       <TabButtons imgName="buy" btnName="청약" urlName="subscription" />
       <TabButtons imgName="cart" btnName="마켓" urlName="market" />
       <TabButtons imgName="user" btnName="My" urlName="mypage" />
-      <TabButtons imgName="more" btnName="더보기" urlName="more" />
+      <TabButtons imgName="more" btnName="더보기" urlName="vote-list" />
     </div>
   );
 }

@@ -13,6 +13,7 @@ interface real_estatesAttribute {
 }
 
 class Real_estates extends Model<real_estatesAttribute> {
+  declare id : number;
   static initModel(sequelize: Sequelize): typeof Real_estates {
     Real_estates.init(
       {

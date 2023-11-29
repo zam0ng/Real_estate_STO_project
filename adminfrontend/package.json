@@ -10,7 +10,12 @@
   },
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
+<<<<<<< HEAD
     "@types/gravatar": "^1.8.6",
+=======
+    "@metamask/providers": "^14.0.2",
+    "@openzeppelin/contracts": "^5.0.0",
+>>>>>>> o
     "@types/node": "20.8.10",
     "@types/react": "18.2.35",
     "@types/react-dom": "18.2.14",
@@ -23,12 +28,21 @@
     "react": "18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
+<<<<<<< HEAD
     "react-icons": "^4.12.0",
     "typescript": "5.2.2",
     "web3": "^4.2.2"
+=======
+    "typescript": "5.2.2",
+    "web3": "^4.2.2",
+    "web3-utils": "^4.0.7"
+>>>>>>> o
   },
   "devDependencies": {
+    "@babel/core": "^7.23.3",
+    "@babel/preset-env": "^7.23.3",
     "autoprefixer": "^10.4.16",
+    "babel-loader": "^9.1.3",
     "postcss": "^8.4.31",
     "prettier": "^3.0.3",
     "prettier-plugin-tailwindcss": "^0.5.7",

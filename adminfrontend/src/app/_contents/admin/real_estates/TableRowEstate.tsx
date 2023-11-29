@@ -60,7 +60,7 @@ return (
         resultDate={item.subscription_result_date} />
         
     {subscriptionProgress >= 0.8
-        ? <EnableButton  text="Enable" />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
+        ? <EnableButton  text="Enable"  id={item.id}  />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
         : <DisableButton  text="Disable" /> 
     }
 

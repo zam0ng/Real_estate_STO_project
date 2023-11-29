@@ -20,10 +20,10 @@ export default function ModalFormRealestate () {
 
   const handleUploadFile = (e: FormEvent<HTMLInputElement>) => {
     const input = e.target as HTMLInputElement;
-    console.log("input.files", input.files);
+    // console.log("input.files", input.files);
 
     if (input.files) {
-      console.log("input.files[0]", input.files[0]);
+      // console.log("input.files[0]", input.files[0]);
       setUploadFile(input.files[0]);
     }
   };
@@ -36,7 +36,7 @@ export default function ModalFormRealestate () {
     
     // if (uploadFile) {
     //   formData.append("upload", uploadFile);
-    //   console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
+    //   // console.log("uploadFile 이 formData 에 들어갔는지 보기" , uploadFile)
     // }
 
     // const keyList = [
@@ -101,7 +101,7 @@ export default function ModalFormRealestate () {
     })
       // .then((res) => res.json())
       .then((result) => {
-        console.log("result", result);
+        // console.log("result", result);
 
         if(result.status == 201){
           

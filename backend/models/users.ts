@@ -1,9 +1,9 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
+import { DB } from "../models";
 
 interface UserAttributes {
   user_profile_img: string;
   user_email: string;
-  user_pw: string;
   wallet: string;
   balance: number;
   using_balance: number;
@@ -11,7 +11,9 @@ interface UserAttributes {
 }
 
 class Users extends Model<UserAttributes> {
+  declare user_profile_img: string;
   declare user_email: string;
+  declare wallet: string;
   declare balance: number;
   declare using_balance: number;
   declare blacklist: boolean;
@@ -25,13 +27,8 @@ class Users extends Model<UserAttributes> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        user_pw: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
         wallet: {
           type: DataTypes.STRING,
-          allowNull: false,
         },
         balance: {
           type: DataTypes.INTEGER,
@@ -56,6 +53,11 @@ class Users extends Model<UserAttributes> {
       }
     );
     return Users;
+  }
+  static associate(db: DB) {
+    db.Users.hasMany(db.Vote_history, {
+      foreignKey: "user_id",
+    });
   }
 }
 

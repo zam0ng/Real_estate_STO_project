@@ -1,4 +1,4 @@
-import express, {Request , Response, Express} from "express";
+import express, { Request, Response, Express } from "express";
 import Orders from "../../models/orders";
 import Real_estates_own from "../../models/real_estates_own";
 import Real_estates from "../../models/real_estates";
@@ -6,36 +6,122 @@ import Users from "../../models/users";
 import { sequelize } from "../../models";
 import { Op, Sequelize } from "sequelize";
 import Trades from "../../models/trades";
+import Contract_address from "../../models/contract_address";
 
 interface AddRequest extends Request {
   userEmail?: string;
   wallet?: string;
 }
 
+async function mysellorders(_user_email : string,_name : string){
+  // 현재 내가 주문한 매도 주문들
+  const data = await Orders.findAll({
+    where: {
+      user_email: _user_email,
+      real_estate_name: _name,
+      order_type: 'sell',
+      order_status: '0',
+    },
+
+    attributes: [
+      [
+        sequelize.fn("SUM", sequelize.col("possible_amount")),
+        "total_possible_amount",
+      ],
+    ],
+    raw: true,
+  })
+  const data2 = await Contract_address.findOne({
+    where : {
+      real_estate_name : _name,
+    },
+    attributes :[
+      'address',
+    ],
+    raw : true,
+  })
+
+  // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
+  const data3: any = await Real_estates_own.findOne({
+    where: { 
+      user_email: _user_email, 
+      real_estate_name: _name 
+    },
+    attributes: [
+      "possible_quantity"
+    ],
+    raw: true,
+  });
+  console.log(data3);
+  const newObj = {...data[0],...data2,...data3};
+  console.log(newObj);
+  return newObj;
+}
+
+async function getSellerWallet(user_email:string) {
+  // 판매자 지갑 주소 가져오기
+  console.log("getSellerWallet 실행됨?");
+  const {wallet} :any = await Users.findOne({
+    where : {
+      user_email : user_email,
+    },
+    attributes :[
+      'wallet'
+    ],
+    raw : true,
+  })
+  return wallet;
+}
+
+async function getBuyerWallet(user_email:string) {
+  // 구매자 지갑 주소 가져오기
+  console.log("getBuyerWallet 실행됨?");
+  const {wallet} :any = await Users.findOne({
+    where : {
+      user_email : user_email,
+    },
+    attributes :[
+      'wallet'
+    ],
+    raw : true,
+  })
+  return wallet;
+}
+
 // 매도 주문
 export const orderSell = async (req: Request, res: Response) => {
   const { price, amount } = req.body;
-  const user_email = req.body.user_email;
+  const user_email = req.body.user_email; // 판매자
   const { name } = req.params;
   let restamount = amount;
-
+  const tradeArr = [];
+  
   // 유저 임시
   // const islogin = "test@naver.com"
   try {
-    // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
-    const holdings: any = await Real_estates_own.findAll({
-      where: { user_email: user_email, real_estate_name: name },
-      attributes: ["possible_quantity"],
-      raw: true,
-    });
+
+    const sellerWallet = await getSellerWallet(user_email);
+
+    // // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
+    // const holdings: any = await Real_estates_own.findAll({
+    //   where: { 
+    //     user_email: user_email, 
+    //     real_estate_name: name 
+    //   },
+    //   attributes: [
+    //     "possible_quantity"
+    //   ],
+    //   raw: true,
+    // });
     // console.log("holdings------", holdings);
     // 물량이 아예 없을 때 반환
-    if (holdings.length <= 0) {
-      res.send("보유 물량 없음");
-    }
+    // if (holdings.length <= 0 || holdings[0].possible_quantity == 0) {
+    //   res.send("보유 물량 없음");
+    // }
     // 물량은 있지만 주문수량 이상으로 있는지 확인
-    else {
-      if (holdings[0].possible_quantity >= amount) {
+    // else {
+      // if (holdings[0].possible_quantity >= amount) {
+
         // 매물의 현재가 가져오기
         const currentPrice: { current_price: number } | null =
           (await Real_estates.findOne({
@@ -73,8 +159,12 @@ export const orderSell = async (req: Request, res: Response) => {
             }
           );
           console.log("ㄷㅈㄱㄷㅈㄱㄷㅈ");
+          // const _mysellorders = await mysellorders(user_email,name);
+          // console.log(_mysellorders);
 
+          // res.send({ message: "매도 주문 완료", data : _mysellorders });
           res.send("매도 주문 완료");
+
         } else {
           // 현재가보다 매도 주문금액이 낮거나 같을 때
           // 먼저, 현재가로 buy 가 있는지 판단
@@ -95,7 +185,7 @@ export const orderSell = async (req: Request, res: Response) => {
             },
             order: [
               ["order_price", "DESC"],
-              ["createdAt", "ASC"],
+              ["createdAt", "DESC"],
             ],
             raw: true,
           });
@@ -125,10 +215,13 @@ export const orderSell = async (req: Request, res: Response) => {
                 },
               }
             );
-
+            // const _mysellorders = await mysellorders(user_email,name);
+            // console.log(_mysellorders);
+            // res.send({ message: "매도 주문 완료", data: _mysellorders });
             res.send("매도 주문 완료");
+
           } else {
-            console.log("buyOrders---", buyOrdes);
+            // // console.log("buyOrders---", buyOrdes);
 
             const result = buyOrdes.map(
               ({ id, possible_amount, user_email, order_price }) => ({
@@ -147,16 +240,18 @@ export const orderSell = async (req: Request, res: Response) => {
                 attributes: ["id"],
                 raw: true,
               })) as { id: number } | null;
-            console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
+            // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
 
             for (const el of result) {
               console.log(el);
-
+              
+              const buyerWallet = await getBuyerWallet(el.user_email);
+              console.log(buyerWallet);
               restamount = restamount - el.possible_amount;
-
+              
               if (restamount < 0) {
                 console.log("restamount 0아래임", restamount);
-
+                const conclusionAmount = el.possible_amount+ restamount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -192,8 +287,12 @@ export const orderSell = async (req: Request, res: Response) => {
                 // 판매자의 real_estates_own 테이블에서 possible_quantitiy, amount 체결량만큼 빼기,
                 await Real_estates_own.update(
                   {
-                    possible_quantity: sequelize.literal(`possible_quantity-${el.possible_amount + restamount}`),
-                    amount : sequelize.literal(`amount-${el.possible_amount + restamount}`),
+                    possible_quantity: sequelize.literal(
+                      `possible_quantity-${el.possible_amount + restamount}`
+                    ),
+                    amount: sequelize.literal(
+                      `amount-${el.possible_amount + restamount}`
+                    ),
                   },
                   {
                     where: {
@@ -249,7 +348,10 @@ export const orderSell = async (req: Request, res: Response) => {
                     user_email: el.user_email,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
-                    price: (el.order_price * (el.possible_amount + restamount)) / el.possible_amount + restamount, // 🔥
+                    price:
+                      (el.order_price * (el.possible_amount + restamount)) /
+                        el.possible_amount +
+                      restamount, // 🔥
                     amount: el.possible_amount + restamount,
                     possible_quantity: el.possible_amount + restamount,
                   });
@@ -259,24 +361,34 @@ export const orderSell = async (req: Request, res: Response) => {
                   await Real_estates_own.update(
                     {
                       // price : sequelize.literal(`price+${el.order_price * (el.possible_amount + restamount)}`),
-                      price : sequelize.literal(`((price * amount)+(${el.order_price * (el.possible_amount + restamount)})) / (amount + ${(el.possible_amount + restamount)})`), // 🔥
-                      amount : sequelize.literal(`amount+${ el.possible_amount + restamount}`),
-                      possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount + restamount}`),
-                  },
+                      price: sequelize.literal(
+                        `((price * amount)+(${
+                          el.order_price * (el.possible_amount + restamount)
+                        })) / (amount + ${el.possible_amount + restamount})`
+                      ), // 🔥
+                      amount: sequelize.literal(
+                        `amount+${el.possible_amount + restamount}`
+                      ),
+                      possible_quantity: sequelize.literal(
+                        `possible_quantity+${el.possible_amount + restamount}`
+                      ),
+                    },
                     {
                       where: {
                         user_email: el.user_email,
                         real_estate_name: name,
                       },
                     }
-              
                   );
                 }
+                // [판매자 지갑 , 구매자 지갑, 양]
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
+
 
                 break;
               } else if (restamount == 0) {
                 console.log("restamount 0임", restamount);
-
+                const conclusionAmount = el.possible_amount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -314,7 +426,7 @@ export const orderSell = async (req: Request, res: Response) => {
                     possible_quantity: sequelize.literal(
                       `possible_quantity-${el.possible_amount}`
                     ),
-                    amount : sequelize.literal(`amount-${el.possible_amount}`),
+                    amount: sequelize.literal(`amount-${el.possible_amount}`),
                   },
                   {
                     where: {
@@ -365,7 +477,9 @@ export const orderSell = async (req: Request, res: Response) => {
                     user_email: el.user_email,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
-                    price: (el.order_price * el.possible_amount) / el.possible_amount,// 🔥
+                    price:
+                      (el.order_price * el.possible_amount) /
+                      el.possible_amount, // 🔥
                     amount: el.possible_amount,
                     possible_quantity: el.possible_amount,
                   });
@@ -375,10 +489,16 @@ export const orderSell = async (req: Request, res: Response) => {
                   await Real_estates_own.update(
                     {
                       // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
-                      price : sequelize.literal(`((price * amount) + (${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
-                      amount : sequelize.literal(`amount+${ el.possible_amount}`),
-                      possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
-                  },
+                      price: sequelize.literal(
+                        `((price * amount) + (${
+                          el.order_price * el.possible_amount
+                        })) / (amount + ${el.possible_amount})`
+                      ), // 🔥
+                      amount: sequelize.literal(`amount+${el.possible_amount}`),
+                      possible_quantity: sequelize.literal(
+                        `possible_quantity+${el.possible_amount}`
+                      ),
+                    },
                     {
                       where: {
                         user_email: el.user_email,
@@ -387,11 +507,12 @@ export const orderSell = async (req: Request, res: Response) => {
                     }
                   );
                 }
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
 
                 break;
               } else {
                 console.log("restamount 0이상임", restamount);
-
+                const conclusionAmount = el.possible_amount;
                 // order 체결된 테이블생성
                 await Orders.create({
                   user_email: user_email,
@@ -426,9 +547,11 @@ export const orderSell = async (req: Request, res: Response) => {
                 // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
                 await Real_estates_own.update(
                   {
-                    possible_quantity : sequelize.literal(`possible_quantity-${el.possible_amount}`),
-                    amount : sequelize.literal(`amount-${el.possible_amount}`)
-                },
+                    possible_quantity: sequelize.literal(
+                      `possible_quantity-${el.possible_amount}`
+                    ),
+                    amount: sequelize.literal(`amount-${el.possible_amount}`),
+                  },
                   {
                     where: {
                       user_email: user_email,
@@ -478,7 +601,9 @@ export const orderSell = async (req: Request, res: Response) => {
                     user_email: el.user_email,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
-                    price:( el.order_price * el.possible_amount) / el.possible_amount, // 🔥
+                    price:
+                      (el.order_price * el.possible_amount) /
+                      el.possible_amount, // 🔥
                     amount: el.possible_amount,
                     possible_quantity: el.possible_amount,
                   });
@@ -488,10 +613,16 @@ export const orderSell = async (req: Request, res: Response) => {
                   await Real_estates_own.update(
                     {
                       // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
-                      price : sequelize.literal(`((price * amount) + (${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
-                      amount : sequelize.literal(`amount+${ el.possible_amount}`),
-                      possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
-                  },
+                      price: sequelize.literal(
+                        `((price * amount) + (${
+                          el.order_price * el.possible_amount
+                        })) / (amount + ${el.possible_amount})`
+                      ), // 🔥
+                      amount: sequelize.literal(`amount+${el.possible_amount}`),
+                      possible_quantity: sequelize.literal(
+                        `possible_quantity+${el.possible_amount}`
+                      ),
+                    },
                     {
                       where: {
                         user_email: el.user_email,
@@ -500,10 +631,11 @@ export const orderSell = async (req: Request, res: Response) => {
                     }
                   );
                 }
+                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
               }
             }
             console.log("최종 amount", restamount);
-
+            console.log(tradeArr);
             // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
             // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
             const lastTradePrice: { trade_price: number }[] | null =
@@ -520,7 +652,7 @@ export const orderSell = async (req: Request, res: Response) => {
                 raw: true,
               })) as { trade_price: number }[] | null;
 
-            console.log(lastTradePrice?.[0].trade_price);
+            // // console.log(lastTradePrice?.[0].trade_price);
 
             await Real_estates.update(
               {
@@ -580,13 +712,13 @@ export const orderSell = async (req: Request, res: Response) => {
               );
             }
 
-            res.send("매도 완료");
+            res.send({message:"매도 완료",data : tradeArr});
           }
         }
-      } else {
-        res.send("보유 수량 부족");
-      }
-    }
+      // } else {
+      //   res.send("보유 수량 부족");
+      // }
+    // }
   } catch (error) {
     console.log(error);
   }
@@ -618,7 +750,7 @@ export const orderBuy = async (req: Request, res: Response) => {
       raw: true,
     })) as { balance: number } | null; // as 키워드를 통해 반환값의 타입을 강제로 지정.
 
-    console.log("잔고 : ", balance?.balance);
+    // // console.log("잔고 : ", balance?.balance);
 
     // ! 의 의미는 이 변수는 항상 값을 가질 것으로 null 또는 undefined 를 걱정하지 말라는 뜻.
     if (balance!.balance >= price * amount) {
@@ -632,7 +764,7 @@ export const orderBuy = async (req: Request, res: Response) => {
           raw: true,
         })) as { current_price: number } | null;
 
-      console.log(currentPrice?.current_price);
+      // // console.log(currentPrice?.current_price);
 
       // 현재가 보다 주문금액이 낮으면 order 테이블 단순 등록(체결이 안됨)
       if (currentPrice!.current_price > price) {
@@ -684,7 +816,7 @@ export const orderBuy = async (req: Request, res: Response) => {
           raw: true,
         });
 
-        console.log("sellOrder----", sellOrders);
+        // // console.log("sellOrder----", sellOrders);
 
         // 현재가가 아래 호가에 있을 경우 현재가로 주문하면 파는 물량이 없기때문에 단순 주문이 된다.
         if (sellOrders.length <= 0) {
@@ -712,7 +844,7 @@ export const orderBuy = async (req: Request, res: Response) => {
           );
           res.send("매수 주문 완료");
         } else {
-          console.log("sellOrder+++++++++++++", sellOrders);
+          // // console.log("sellOrder+++++++++++++", sellOrders);
 
           const result = sellOrders.map(
             ({ id, possible_amount, user_email, order_price }) => ({
@@ -731,16 +863,16 @@ export const orderBuy = async (req: Request, res: Response) => {
               attributes: ["id"],
               raw: true,
             })) as { id: number } | null;
-          console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
+          // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
 
           for (const el of result) {
-            console.log(el);
+            // // console.log(el);
 
             restamount = restamount - el.possible_amount;
 
             if (restamount < 0) {
-              console.log("0볻 ㅏ작아음");
-              console.log(restamount); // -2
+              // // console.log("0볻 ㅏ작아음");
+              // // console.log(restamount); // -2
 
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
@@ -753,14 +885,19 @@ export const orderBuy = async (req: Request, res: Response) => {
                 possible_amount: 0,
               });
 
-                            // 해당 id 컬럼에서 possible_amount -amount를 해주고,
-                            // 물량이 남아있으니 미체결 0 으로 두기
+              // 해당 id 컬럼에서 possible_amount -amount를 해주고,
+              // 물량이 남아있으니 미체결 0 으로 두기
 
-                            await Orders.update({
-                                possible_amount : sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
-                            },{
-                                where : { id : el.id },
-                            })
+              await Orders.update(
+                {
+                  possible_amount: sequelize.literal(
+                    `possible_amount-${el.possible_amount + restamount}`
+                  ),
+                },
+                {
+                  where: { id: el.id },
+                }
+              );
 
               // 체결 테이블 생성
               await Trades.create({
@@ -785,15 +922,20 @@ export const orderBuy = async (req: Request, res: Response) => {
                 }
               );
 
-                            // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-                            await Real_estates_own.update({
-                                amount : sequelize.literal(`amount-${el.possible_amount + restamount}`)
-                            },{
-                                where :{
-                                    user_email : el.user_email,
-                                    real_estate_name : name,
-                                }
-                            })
+              // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
+              await Real_estates_own.update(
+                {
+                  amount: sequelize.literal(
+                    `amount-${el.possible_amount + restamount}`
+                  ),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
+                }
+              );
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -823,7 +965,9 @@ export const orderBuy = async (req: Request, res: Response) => {
                   user_email: user_email,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
-                  price: ((el.possible_amount + restamount) * el.order_price) / (el.possible_amount + restamount), // 🔥
+                  price:
+                    ((el.possible_amount + restamount) * el.order_price) /
+                    (el.possible_amount + restamount), // 🔥
                   amount: el.possible_amount + restamount,
                   possible_quantity: el.possible_amount + restamount,
                 });
@@ -833,11 +977,19 @@ export const orderBuy = async (req: Request, res: Response) => {
                 await Real_estates_own.update(
                   {
                     // price : sequelize.literal(`price+${(el.possible_amount + restamount) * el.order_price}`),
-                    price : sequelize.literal(`((price * amount)+(${el.order_price * (el.possible_amount + restamount)})) / (amount + ${(el.possible_amount + restamount)}) `), // 🔥
+                    price: sequelize.literal(
+                      `((price * amount)+(${
+                        el.order_price * (el.possible_amount + restamount)
+                      })) / (amount + ${el.possible_amount + restamount}) `
+                    ), // 🔥
 
-                    amount : sequelize.literal(`amount+${ el.possible_amount + restamount}`),
-                    possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount + restamount}`),
-                },
+                    amount: sequelize.literal(
+                      `amount+${el.possible_amount + restamount}`
+                    ),
+                    possible_quantity: sequelize.literal(
+                      `possible_quantity+${el.possible_amount + restamount}`
+                    ),
+                  },
                   {
                     where: {
                       user_email: user_email,
@@ -848,8 +1000,8 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
               break;
             } else if (restamount == 0) {
-              console.log("0임");
-              console.log(restamount);
+              // // console.log("0임");
+              // // console.log(restamount);
               // 해당 id 컬럼에서 possible_amount 를 0으로 해주고,
               // order_status 를 체결로 만들어주고,
 
@@ -894,14 +1046,17 @@ export const orderBuy = async (req: Request, res: Response) => {
                 }
               );
               // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-              await Real_estates_own.update({
-                amount : sequelize.literal(`amount-${el.possible_amount}`)
-            },{
-                where :{
-                    user_email : el.user_email,
-                    real_estate_name : name,
+              await Real_estates_own.update(
+                {
+                  amount: sequelize.literal(`amount-${el.possible_amount}`),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
                 }
-            })
+              );
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -929,7 +1084,8 @@ export const orderBuy = async (req: Request, res: Response) => {
                   user_email: user_email,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
-                  price : ((el.possible_amount) * el.order_price) / el.possible_amount , // 🔥
+                  price:
+                    (el.possible_amount * el.order_price) / el.possible_amount, // 🔥
                   amount: el.possible_amount,
                   possible_quantity: el.possible_amount,
                 });
@@ -939,11 +1095,17 @@ export const orderBuy = async (req: Request, res: Response) => {
                 await Real_estates_own.update(
                   {
                     // price : sequelize.literal(`price+${(el.possible_amount) * el.order_price}`),
-                    price : sequelize.literal(`((price * amount)+(${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
+                    price: sequelize.literal(
+                      `((price * amount)+(${
+                        el.order_price * el.possible_amount
+                      })) / (amount + ${el.possible_amount})`
+                    ), // 🔥
 
-                    amount : sequelize.literal(`amount+${ el.possible_amount}`),
-                    possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
-                },
+                    amount: sequelize.literal(`amount+${el.possible_amount}`),
+                    possible_quantity: sequelize.literal(
+                      `possible_quantity+${el.possible_amount}`
+                    ),
+                  },
                   {
                     where: {
                       user_email: user_email,
@@ -954,8 +1116,8 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
               break;
             } else {
-              console.log("0보다 큼");
-              console.log(restamount);
+              // // console.log("0보다 큼");
+              // // console.log(restamount);
 
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
@@ -1000,14 +1162,17 @@ export const orderBuy = async (req: Request, res: Response) => {
                 }
               );
               // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-              await Real_estates_own.update({
-                amount : sequelize.literal(`amount-${el.possible_amount}`)
-            },{
-                where :{
-                    user_email : el.user_email,
-                    real_estate_name : name,
+              await Real_estates_own.update(
+                {
+                  amount: sequelize.literal(`amount-${el.possible_amount}`),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
                 }
-            })
+              );
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -1035,7 +1200,8 @@ export const orderBuy = async (req: Request, res: Response) => {
                   user_email: user_email,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
-                  price : ((el.possible_amount) * el.order_price) / el.possible_amount, // 🔥
+                  price:
+                    (el.possible_amount * el.order_price) / el.possible_amount, // 🔥
                   amount: el.possible_amount,
                   possible_quantity: el.possible_amount,
                 });
@@ -1045,11 +1211,17 @@ export const orderBuy = async (req: Request, res: Response) => {
                 await Real_estates_own.update(
                   {
                     // price : sequelize.literal(`price+${(el.possible_amount) * el.order_price}`),
-                    price : sequelize.literal(`((price * amount)+(${el.order_price * el.possible_amount})) / (amount + ${el.possible_amount})`), // 🔥
+                    price: sequelize.literal(
+                      `((price * amount)+(${
+                        el.order_price * el.possible_amount
+                      })) / (amount + ${el.possible_amount})`
+                    ), // 🔥
 
-                    amount : sequelize.literal(`amount+${ el.possible_amount}`),
-                    possible_quantity : sequelize.literal(`possible_quantity+${el.possible_amount}`),
-                },
+                    amount: sequelize.literal(`amount+${el.possible_amount}`),
+                    possible_quantity: sequelize.literal(
+                      `possible_quantity+${el.possible_amount}`
+                    ),
+                  },
                   {
                     where: {
                       user_email: user_email,
@@ -1060,7 +1232,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
             }
           }
-          console.log("최종 amount", restamount);
+          // console.log("최종 amount", restamount);
 
           // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
           // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
@@ -1072,13 +1244,13 @@ export const orderBuy = async (req: Request, res: Response) => {
 
               attributes: ["trade_price"],
 
-              order: [["createdAt", "ASC"]],
+              order: [["createdAt", "DESC"]],
 
               limit: 1,
               raw: true,
             })) as { trade_price: number }[] | null;
 
-          console.log(lastTradePrice?.[0]?.trade_price);
+          // console.log("lastprice++",lastTradePrice?.[0]?.trade_price);
 
           await Real_estates.update(
             {
@@ -1145,7 +1317,7 @@ export const orderBuy = async (req: Request, res: Response) => {
 // 오더 메인 호가
 export const orderMain = async (req: Request, res: Response) => {
   const { name } = req.params;
-  console.log(name);
+  // console.log(name);
   try {
     const sellList = await Orders.findAll({
       where: {
@@ -1161,7 +1333,7 @@ export const orderMain = async (req: Request, res: Response) => {
       attributes: [
         "order_price",
         [
-          sequelize.fn("SUM", sequelize.col("order_amount")),
+          sequelize.fn("SUM", sequelize.col("possible_amount")),
           "total_order_amount",
         ],
       ],
@@ -1188,7 +1360,7 @@ export const orderMain = async (req: Request, res: Response) => {
         // order_price 같은 값인 컬럼의 order_amount 값을 더해서 total_order_amount 값으로 반환할건데,
         // 그럼 group 속성으로 묶어주는게 필요함
         [
-          sequelize.fn("SUM", sequelize.col("order_amount")),
+          sequelize.fn("SUM", sequelize.col("possible_amount")),
           "total_order_amount",
         ],
       ],
@@ -1214,7 +1386,7 @@ export const orderConclusion = async (req: Request, res: Response) => {
     if (!req.body?.user_email) return res.send("비로그인 유저");
     const { name } = req.params;
     const { user_email } = req.body;
-    console.log(name);
+    // console.log(name);
 
     //  임시 유저
     // const islogin = "test2@naver.com";
@@ -1249,7 +1421,7 @@ export const orderConclusion = async (req: Request, res: Response) => {
           { buyer_order_email: user_email },
           { seller_order_email: user_email },
         ],
-        real_estate_name : name,
+        real_estate_name: name,
       },
 
       attributes: [
@@ -1282,7 +1454,7 @@ export const notConclusion = async (req: Request, res: Response) => {
     if (!req.body?.user_email) return res.send("비로그인 유저");
     const { name } = req.params;
     const { user_email } = req.body;
-    console.log(name);
+    // console.log(name);
     // 임시 유저
     // const islogin = "test@naver.com";
     const result = await Orders.findAll({
@@ -1305,7 +1477,7 @@ export const notConclusion = async (req: Request, res: Response) => {
       order: [["createdAt", "DESC"]],
       raw: true,
     });
-    // console.log(result);
+    // // console.log(result);
     res.send(result);
   } catch (error) {
     console.log(error);
@@ -1316,7 +1488,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
   try {
     if (!req.body?.user_email) return res.send("비로그인 유저");
     const { id, name, user_email } = req.body;
-    console.log(name, id);
+    // console.log(name, id);
     // 임시 로그인
     // const islogin = "test@naver.com";
     // 해당 id로 orders 테이블의 order_type 을 가져와서,
@@ -1337,7 +1509,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
       possible_amount: number;
     } | null;
 
-    console.log(result?.order_type);
+    // console.log(result?.order_type);
 
     // orders 테이블의 해당 id를 order_status 를 2로 변경,  possible 0로 변경
     await Orders.update(
@@ -1396,3 +1568,40 @@ export const cancelOrder = async (req: Request, res: Response) => {
     console.log(error);
   }
 };
+
+export const headerInfo = async (req: Request, res: Response) => {
+  const { name } = req.params;
+
+  try {
+    const result = await Real_estates.findOne({
+      attributes: [
+        "current_price",
+        [
+          sequelize.literal("((current_price*100)/start_price)-100"),
+          "fluctuation_rate",
+        ],
+        [sequelize.literal("current_price-start_price"), "rating"],
+      ],
+      where: {
+        real_estate_name: name,
+      },
+      raw: true,
+    });
+    // // console.log(result);
+    res.json(result);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const getCaMysellorders = async (req: Request, res : Response)=>{
+  const {user_email} = req.body;
+  const {name} = req.params;
+  try {
+    const _mysellorders = await mysellorders(user_email,name);
+    // console.log(_mysellorders);
+    res.json(_mysellorders);
+  } catch (error) {
+    console.log("getCaMysellorders에서 오류남",getCaMysellorders);
+  }
+}

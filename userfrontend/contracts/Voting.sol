@@ -15,7 +15,7 @@ contract Voting is Ownable {
     struct Property {
         // 매물 이름
         string name;
-        // 매물 설명?
+        // 투표 주제
         string description;
         // 투표 마감 시간 (시작시간은 등록할때? 아니면 별도 입력 시간?)
         uint256 endtime; // duration?

@@ -15,7 +15,7 @@ const router = useRouter();
 
 // 매물 등록 페이지로 이동
 const handleEstateBtn = () => {
-    console.log("매물 등록 버튼 클릭");
+    // console.log("매물 등록 버튼 클릭");
 
     // 해당 페이지로 리디렉션
     router.push(`/admin/create/real_estates`);

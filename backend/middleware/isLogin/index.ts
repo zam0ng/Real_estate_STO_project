@@ -26,25 +26,26 @@ async function handleAccesstokenVerify(_token: string) {
 }
 
 // Access token 발급 후 didtoken을 생성하여 wallet 주소 가져오기
-async function handleWalletAddress(_token: string) {
-  const createDidtoken = await axios.post(
-    `https://bouns.io/api/create-did-token`,
-    {
-      token: _token,
-    }
-  );
+// async function handleWalletAddress(_token: string) {
+//   const createDidtoken = await axios.post(
+//     `https://bouns.io/api/create-did-token`,
+//     {
+//       token: _token,
+//     }
+//   );
 
-  const didtoken = createDidtoken.data;
+//   const didtoken = createDidtoken.data;
 
-  const verifyDidToken = await axios.post(
-    `https://bouns.io/api/verify-did-token`,
-    { token: didtoken }
-  );
+//   // 지갑주소를 얻기 위해 didtoken을 검증
+//   const verifyDidToken = await axios.post(
+//     `https://bouns.io/api/verify-did-token`,
+//     { token: didtoken }
+//   );
 
-  const wallet = verifyDidToken.data.iss.split(":")[2];
+//   const wallet = verifyDidToken.data.iss.split(":")[2];
 
-  return wallet;
-}
+//   return wallet;
+// }
 
 export const isLogin = async (
   req: Request,
@@ -72,22 +73,23 @@ export const isLogin = async (
     });
 
     if (!member_check) {
-      const wallet = await handleWalletAddress(token);
+      // const wallet = await handleWalletAddress(token);
+
       await db.Users.create({
         user_profile_img: gravatarUrl, // ✅ 추가
         user_email: user_email,
-        user_pw: "aa",
-        wallet: wallet,
+        wallet: "",
         balance: 0,
         using_balance: 0,
         blacklist: false,
       });
     }
-    console.log(verify.data.email);
-    console.log(req.route.path);
-    if (req.route.path != "/") next();
+    // console.log("+_+_",verify.data.email);
+    // console.log("+_+_",req.route.path);
+    if (req.route.path !== "/") return next();
     if (verify) {
-      return verify.data.email;
+      // console.log("여기들어옴>?");
+      return res.send(verify.data.email);
     } else return res.status(404).send("다시 로그인 하세요.");
   } catch (error) {
     console.error(error);

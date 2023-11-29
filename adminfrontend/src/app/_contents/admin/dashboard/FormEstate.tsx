@@ -24,10 +24,20 @@ export default function FormEstate() {
     const formData = new FormData(e.currentTarget); // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴
     const response = await postFetchEstateForm(formData);
 
+<<<<<<< HEAD
     if (response) {
       console.log("제출 성공👏👏");
       router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
       router.replace(`http://localhost:3000/admin/real_estates`);
+=======
+    const response = await postFetchEstateForm(formData)
+
+    if(response){
+      // console.log("제출 성공👏👏" , )
+      router.refresh();   // 새로고침기능 -> so, 게시글 등록 후 바로 보임.  
+      router.replace(`http://localhost:3000/admin/real_estates`);       
+
+>>>>>>> o
     }
   };
 

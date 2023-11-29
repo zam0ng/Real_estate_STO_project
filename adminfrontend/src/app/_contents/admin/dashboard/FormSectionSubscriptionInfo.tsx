@@ -20,9 +20,10 @@ const FormSectionSubscriptionInfo : React.FC<FormSectionProps> = ( {title, desc}
                 <div className="flex items-center justify-start h-12 -mt-1 text-admin_modal_input font-semiSemibold w-40rem">
                     <p className="" >발행정보 : 00000000000000000000000  </p>
                 </div>
-              
+
                 {/* 발행 정보 */}
                 <InputFormItem _title={"증권 종류"} _type={"text"} _name = {"stock_type"}  _placeholder={"수익증권"} />
+                <InputFormItem _title={"토큰 이름"} _type={"text"} _name = {"symbol"}  _placeholder={"MG"} />
                 <InputFormItem _title={"발행인"} _type={"text"} _name = {"publisher"}  _placeholder={"한국투자부동산신탁"} />
                 
                 {/* 최초 청약 이기 때문에 default 가 0 👇👇  */}
