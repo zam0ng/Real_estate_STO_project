@@ -9,6 +9,8 @@ import {
   txReceipt,
   blockNumberCheck,
   userWalletAddress,
+  tokenInTransfer,
+  tokenOutTransfer,
 } from "../../controllers/blocklog";
 
 // const rpcEndpoint = "http://localhost:8545";
@@ -97,7 +99,13 @@ export const handleWalletAddress = async () => {
 handleWalletAddress();
 
 // 지갑 주소를 검사
-const walletCheck = async (tx_from: string, tx_to: string) => {
+const walletCheck = async (
+  tx_from: string,
+  tx_to: string,
+  address: string,
+  amount: number,
+  symbol: string
+) => {
   try {
     const from_check = user_wallets.some(
       (userWallet) => userWallet.wallet === tx_from
@@ -108,9 +116,15 @@ const walletCheck = async (tx_from: string, tx_to: string) => {
     );
 
     // tx_from이 users 테이블에 있고 tx_to가 없으면 내부에서 외부로 나간것으로 판단
-    if (from_check && !to_check) return "out";
+    if (from_check && !to_check) {
+      await tokenOutTransfer(tx_from, address, amount, symbol);
+      return "out";
+    }
     // 반대로 tx_from이 users 테이블에 없고 tx_to가 있으면 외부에서 내부로 들어온것으로 판단
-    if (!from_check && to_check) return "in";
+    if (!from_check && to_check) {
+      await tokenInTransfer(tx_to, address, amount, symbol);
+      return "in";
+    }
     // tx_from, tx_to가 모두 있으면 내부거래로 판단 빈 문자열을 반환
     if (from_check && to_check) return "internal";
     return "external";
@@ -192,7 +206,10 @@ export const logLatestBlockEvents = async () => {
               // 내부 전송인지 외부 전송인지 판단
               const addressCheck = await walletCheck(
                 decodedLog.from,
-                decodedLog.to
+                decodedLog.to,
+                address,
+                parseInt(decodedLog.value),
+                decodedLog.symbol
               );
 
               // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김

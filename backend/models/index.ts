@@ -114,7 +114,7 @@ Real_estates.associate(db);
 Real_estates_own.associate(db);
 Subscriptions_own.associate(db);
 Subscription_application.associate(db);
-// Contract_address.associate(db);
+Contract_address.associate(db);
 // Tx_block.associate(db);
 // Tx_receipt.associate(db);
 Votes.associate(db);
