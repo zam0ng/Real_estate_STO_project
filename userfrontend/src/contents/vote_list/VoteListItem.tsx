@@ -10,7 +10,11 @@ const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_title,vo
     const navigation = useNavigate();
 
     const toVoteDetail = () => {
-        navigation(`/vote-detail/${real_estate_name}/${vote_title}`);
+        navigation(`/vote-detail/${real_estate_name}/${vote_title}`,{
+            state: {
+                real_estate_name: real_estate_name
+            }
+        });
     };
 
     return (
