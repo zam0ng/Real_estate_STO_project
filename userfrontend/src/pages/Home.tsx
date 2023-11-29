@@ -15,17 +15,11 @@ export default function Home() {
     },1000)
   },[])
 
-    let tab = [{
-      tabName : "오늘 뭐사지?",
-      content : <HomeIndices />
-  },{
-      tabName : "공시 자료",
-      content : <>공시자료 화면</>
-  }]
+
   return (
     <div className="mb-28 animate-swipe">
       <HomeAds/>
-      <LineTypeTabComponent data={tab}/>
+      <HomeIndices />
       <TabBar />
     </div>
   );

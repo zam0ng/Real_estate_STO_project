@@ -12,6 +12,11 @@ export default function HomeIndices(){
 
 
     return(
+    
+    <>
+        <div className="w-5/6 m-auto  text-2xl font-extrabold my-10 border-b-2 to-blue-600 ">
+            <span className=" w-5/6">오늘 뭐사지?</span>
+        </div>
         <div className="">
             <div className="w-5/6 m-auto text-xl font-bold ">주요 지수</div>
             <div className="m-auto h-48 mt-5">
@@ -26,5 +31,6 @@ export default function HomeIndices(){
                 <HomeSearch />
             </div>
         </div>
+    </>
     )
 }
