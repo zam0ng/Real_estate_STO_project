@@ -86,6 +86,7 @@ sequelize
     // console.log("err", err);
   });
 
+  //htt localhost:8080/estate_img/ACB01-min_1701256146291
 app.use("/estate_img", express.static(path.join(__dirname, "/imgs/estate")));
 
 app.use("/admin", adminRouter);
