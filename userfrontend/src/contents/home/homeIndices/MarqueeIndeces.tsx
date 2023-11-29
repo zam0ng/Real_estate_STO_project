@@ -22,9 +22,9 @@ export default function MarqueeIndeces (){
     }
 
     const {
-        isLoading,
-        error,
-        data : indices
+        isLoading : isLoadingIndices,
+        error : errorIndicies,
+        data : indicesData
     } = useQuery<HomeMarqueeType[]>({
         queryKey: ['indicies'],
         queryFn: fetchIndices
@@ -38,17 +38,43 @@ export default function MarqueeIndeces (){
     }
 
     const {
-        isLoading :graphLoading,
-        error :graphError,
+        isLoading : isLoadingGraph,
+        error : errorGraph,
         data : graphData 
     } = useQuery({
         queryKey : ['graphData'],
         queryFn : fetchgraph
     })
 
+    const isLoading = isLoadingIndices || isLoadingGraph;
+
+    const error = errorIndicies || errorGraph
+
+    if (isLoading){
+        return(
+            <div className="w-full h-20 flex justify-center items-center">
+                <img src={process.env.PUBLIC_URL + '/images/loadingGif/lego.gif'} className="w-12 h-12"></img>    
+            </div>
+        )
+    }
+
+    if (error) {
+        return(
+            <div className="w-full h-20 flex justify-center items-center">
+            <img src={process.env.PUBLIC_URL + '/images/error/F5image.png'} className="w-28 h-28"></img>
+            <span className="font-extrabold text-xl text-gray-300 ">새로고침 F5</span> 
+            </div>
+        )
+    }
+    
+
+    
     let mergedData: mergedDataType[] = [];
 
-    if(graphData !== undefined && indices !== undefined){
+
+
+
+    if(graphData !== undefined && indicesData !== undefined){
 
         const transformedData  = graphData.map((item : HomeGraphType)=>{
             // 이름 추출
@@ -60,7 +86,7 @@ export default function MarqueeIndeces (){
             }
         })
 
-        mergedData = indices.map(item=>{
+        mergedData = indicesData.map(item=>{
             const additionalData = transformedData.find((item2 : HomeMarqueeType)=>item2.real_estate_name === item.real_estate_name);
             return {...item,...additionalData} as mergedDataType;
         })
@@ -107,7 +133,8 @@ export default function MarqueeIndeces (){
             </div>
             </>
             : 
-            <div>안나옴</div>}
+            undefined
+            }
         </div>
     )
 }

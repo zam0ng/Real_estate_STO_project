@@ -48,7 +48,7 @@ export default function WalletConnect(){
              </div>
             : 
             <div className=" w-5/6 m-auto  ">
-                <div className="relative  w-52 py-2 text-white bg-blue-500 rounded-lg font-bold text-center text-xs ml-auto mt-6 z-40">
+                <div className="relative  w-52 py-2 text-white bg-blue-500 rounded-lg font-bold text-center text-xs ml-auto mt-6 z-40 animate-bounce">
                     <span className="block ">Bouns 지갑은 1분이면 충분해요!</span>
                     <div className="absolute top-6 left-24 -mr-2 w-3 h-3 bg-blue-500 transform rotate-45"></div>
                 </div>
