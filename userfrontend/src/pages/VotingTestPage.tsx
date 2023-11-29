@@ -80,10 +80,12 @@ const VotingTestPage: React.FC = () => {
     };
 
     // ca 테이블에 넣는거
-    const sendVoteCAinfo = async () => {
-        const {data} = await axios.post(`${serverurl}/vote`,{
-            
-        })
+    const sendVoteCAinfo = async (address: string) => {
+        const {data} = await axios.post(`${serverurl}/vote/insert_contract_address`,{
+            real_estate_name: selectedProperty,
+            address: address
+        });
+        return data;
     }
 
     // 투표 목록 페이지에서 사용할 부분
@@ -215,15 +217,26 @@ const VotingTestPage: React.FC = () => {
     };
 
     // 투표 테이블에 집어넣기
-    const mutation = useMutation({
+    const mutationVoteTable = useMutation({
         mutationFn: ()=>sendVoteInfo(selectedProperty,voteDescription,startDate,endDate),
         onSuccess: (data)=>{
-            console.log(data);
+            console.log("successfully inserted vote info into vote table",data);
         },
         onError: (error)=>{
-            console.log(error);
+            console.log("failed to insert vote info into vote table",error);
         }
     });
+
+    // ca 테이블에 집어넣기
+    const mutationCAtable = useMutation({
+        mutationFn: (address:string)=>sendVoteCAinfo(address),
+        onSuccess: (data)=>{
+            console.log("successfully inserted ca into ca table",data);
+        },
+        onError: (error)=>{
+            console.log("failed to insert ca into ca table",error);
+        }
+    })
 
     // deploy function - 투표 등록 (배포)
     const addVote = async ()=>{
@@ -273,7 +286,8 @@ const VotingTestPage: React.FC = () => {
             .then((newInstance: any)=>{
                 console.log(`CA : ${newInstance.options.address}`);
                 setVoteCA(newInstance.options.address);
-                mutation.mutate();
+                mutationVoteTable.mutate();
+                mutationCAtable.mutate(newInstance.options.address);
             })
             .catch((error: string)=>{
                 console.error("Error while deploying : ",error)
