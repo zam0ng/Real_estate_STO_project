@@ -58,3 +58,5 @@
 .indicator{
   transition : left .7s;
 }
+
+@import 'aos/dist/aos.css';

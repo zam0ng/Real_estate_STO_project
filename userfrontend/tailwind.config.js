@@ -42,13 +42,17 @@ module.exports = {
         },swipe: {
           '0%' : { transform : 'translateX(100%)'},
           '100%' : { transform : 'translateX(0)'},
+        },fadeIn : {
+          '0%' : { transform : 'translateY(100px)'},
+          '100%' : {transform : 'translateY(0)'}
         }
       },
       animation: {
         marquee: 'marquee 14s linear infinite',
         marquee2: 'marquee2 14s linear infinite',
         'slide-up': 'slideUp 0.4s ease-out',
-        swipe : 'swipe 0.2s ease-out'
+        swipe : 'swipe 0.2s ease-out',
+        fadeIn : 'fadeIn 5s ease'
       },
     },
   },
