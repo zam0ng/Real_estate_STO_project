@@ -50,11 +50,11 @@ class Contract_address extends Model<caAttribute> {
     );
     return Contract_address;
   }
-  // static associate(db: DB) {
-  //   db.Contract_address.hasMany(db.Tx_block, {
-  //     foreignKey: "contract_address_id",
-  //   });
-  // }
+  static associate(db: DB) {
+    db.Contract_address.hasMany(db.Votes, {
+      foreignKey: "vote_id",
+    });
+  }
 }
 
 export default Contract_address;
