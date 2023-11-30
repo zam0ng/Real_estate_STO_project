@@ -5,6 +5,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily : {
+        sans : ['EASTARJET-Medium']
+      },
       fontSize: {
         home: "62.5%",
         xxxs: "0.5rem",

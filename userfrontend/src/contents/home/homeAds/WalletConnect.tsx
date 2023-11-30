@@ -42,7 +42,7 @@ export default function WalletConnect(){
             </div>
             <div className="flex left-5 border w-full h-16 rounded-2xl m-auto px-4 -mt-3 items-center justify-around" onClick={()=>handleLogin()}>
                 <div>
-                    <span className="text-sm font-extrabold">{`${isLogin}님, 안녕하세요!`}</span>
+                    <span className="text-sm font-extrabold animate-bounce">{`${isLogin}님, 안녕하세요!`}</span>
                 </div>
             </div>
              </div>
