@@ -7,9 +7,13 @@ interface OwnerVoterProps {
   tokenOwners: string[];
   votedOwners: string[];
   voteCA: string;
+  startDate: number;
+  endDate: number;
 }
 
-const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA}) => {
+const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,startDate,endDate}) => {
+  const currentTime = new Date().getTime() / 1000;
+  // console.log(currentTime);
   const currentPage = useLocation();
   // console.log(tokenOwners);
   // console.log(votedOwners);
@@ -70,17 +74,45 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA}) =
   },[web3]);
 
   const agree = async ()=>{
-    await contract.methods.vote(true).send({from:currentAccount});
+    try {
+      await contract.methods.vote(true).send({
+        from:currentAccount,
+        gasPrice: web3?.utils.toWei('1','gwei')
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const disagree = async ()=>{
-    await contract.methods.vote(false).send({from:currentAccount});
+    try {
+      await contract.methods.vote(false).send({
+        from:currentAccount,
+        gasPrice: web3?.utils.toWei('1','gwei')
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <>
     <div className='w-full h-16 flex flex-row justify-evenly items-center'>
-      {newTokenOwners.includes(currentAccount) && !newVotedOwners.includes(currentAccount) && (
+      {currentTime < startDate && (
+        <>
+          <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
+            투표 오픈 예정
+          </div>
+        </>
+      )}
+      {currentTime > endDate && (
+        <>
+          <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
+            투표 종료
+          </div>
+        </>
+      )}
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && !newVotedOwners.includes(currentAccount) && (
         <>
           <button className='w-24 h-10 rounded-lg text-white bg-blue-500' onClick={agree}>
             찬성
@@ -90,14 +122,14 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA}) =
           </button>
         </>
       )}
-      {newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
         <>
           <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
             투표 완료
           </div>
         </>
       )}
-      {!newTokenOwners.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && !newTokenOwners.includes(currentAccount) && (
         <>
           <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
             투표 불가 : 보유한 토큰이 없음

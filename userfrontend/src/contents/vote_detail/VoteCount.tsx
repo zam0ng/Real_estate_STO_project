@@ -11,9 +11,13 @@ interface AgreeDisagreeProps {
   agreeVotes: number;
   disagreeVotes: number;
   totalVotes: number;
+  startDate: number;
+  endDate: number;
 }
 
-const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeVotes,disagreeVotes,totalVotes}) => {
+const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeVotes,disagreeVotes,totalVotes,startDate,endDate}) => {
+  const currentTime = new Date().getTime() / 1000;
+  
   const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
   const newVotedOwners = votedOwners.map(item=>item.toLowerCase());
 
@@ -33,8 +37,20 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
   },[agreeVotes,disagreeVotes,totalVotes]);
 
   useEffect(()=>{
-    console.log(user);
-    setCurrentAccount(user.account);
+    const fetchUserData = async () => {
+      const accounts = await window.ethereum.request({method:"eth_accounts"});
+      if(accounts.length > 0){
+        setCurrentAccount(accounts[0]);
+      }
+    };
+    fetchUserData();
+  },[]);
+
+  useEffect(()=>{
+    if(user){
+      console.log(user);
+      setCurrentAccount(user.account);
+    }
   },[user]);
 
   useEffect(()=>{
@@ -53,23 +69,32 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
     }
   },[user]);
 
-  useEffect(()=>{
-    console.log(currentAccount);
-    if(newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount)){
-      setVoteState("voted");
-    }
-  },[currentAccount]);
-
   return (
     <>
-      {voteState === "voted" &&
+      {currentTime > endDate && (
+        <div className='w-full h-32 border-t border-slate-200'>
+          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+        </div>
+      )}
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
           <div className='w-full h-32 border-t border-slate-200'>
             <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
             <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
             <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
             <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
           </div>
-      }
+      )}
+      {currentTime > startDate && currentTime < endDate && !newTokenOwners.includes(currentAccount) && (
+        <div className='w-full h-32 border-t border-slate-200'>
+          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+        </div>
+      )}
     </>
   )
 }

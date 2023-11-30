@@ -18,7 +18,7 @@ const VoteDisagreeNumber: React.FC<DisagreeVoteCountProps> = ({disagreeVotes,tot
             반대 투표권 {disagreeRate}%
         </div>
         <div className='w-1/2 h-full flex justify-end items-center'>
-            {totalVotes} TOK
+            {disagreeVotes} TOK
         </div>
     </div>
   )

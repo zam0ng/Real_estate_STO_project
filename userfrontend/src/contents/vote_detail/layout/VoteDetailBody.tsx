@@ -49,6 +49,9 @@ const VoteDetailBody: React.FC = () => {
       voteContract.events.Voted({fromBlock: 'latest'})
       .on("data", (event)=>{
         console.log(event.returnValues);
+        setAgreeVotes(Number(event.returnValues.agreeVotes));
+        setDisagreeVotes(Number(event.returnValues.disagreeVotes));
+        setUsedVotes(Number(event.returnValues.usedTokens));
       })
     };
   },[web3]);
@@ -92,8 +95,8 @@ const VoteDetailBody: React.FC = () => {
         <VotePeriod startDate={startDate} endDate={endDate} />
         <VotePropertyImg img={currentPage.state.img} />
         <VoteStatus totalVotes={totalVotes} usedVotes={usedVotes} />
-        <VoteBtns tokenOwners={tokenOwners} votedOwners={votedOwners} voteCA={currentPage.state.vote_ca} />
-        <VoteCount tokenOwners={tokenOwners} votedOwners={votedOwners} agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} />
+        <VoteBtns tokenOwners={tokenOwners} votedOwners={votedOwners} voteCA={currentPage.state.vote_ca} startDate={startDate} endDate={endDate} />
+        <VoteCount tokenOwners={tokenOwners} votedOwners={votedOwners} agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} startDate={startDate} endDate={endDate} />
     </div>
   )
 }
