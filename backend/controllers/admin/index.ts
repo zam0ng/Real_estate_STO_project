@@ -782,7 +782,6 @@ export const tenDateTransactionPrice = async (req: Request, res: Response) => {
 // 월 예상 수익
 export const monthlyIncome = async (req: Request, res: Response) => {
   try {
-    const today = new Date();
     const first_year_month = new Date(today.getFullYear(), today.getMonth(), 1);
     const last_year_month = new Date(
       today.getFullYear(),
