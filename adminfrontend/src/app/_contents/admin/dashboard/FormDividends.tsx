@@ -78,8 +78,8 @@ export default function FormDividends() {
     // formData.append('caAddress', getAddressFromNameObj[selectedValue].toString());
 
     for (let [key, value] of formData.entries()) {
-      console.log("formData 확인🐣🐣");
-      console.log(`${key}: ${value}`);
+      // console.log("formData 확인🐣🐣");
+      // console.log(`${key}: ${value}`);
     }
 
     // POST 요청시
@@ -87,7 +87,7 @@ export default function FormDividends() {
     console.log("response" , response) // Created
     
     if (response == 'Created') {
-      // router.refresh(); // 새로고침기능
+      router.refresh(); // 새로고침기능
       // const asd=process.env.NODE_ENV ⭐⭐⭐⭐⭐
       router.replace('http://localhost:3000/admin/dashboard');
     }

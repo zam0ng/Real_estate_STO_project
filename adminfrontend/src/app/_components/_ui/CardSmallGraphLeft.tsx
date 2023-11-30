@@ -11,7 +11,7 @@ const CardSmallGraphLeft = async (   ) => {
 
   const userList = await getUserList()
 
-  console.log("userList" , userList)
+  // console.log("userList" , userList)
 
 
 

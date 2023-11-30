@@ -10,7 +10,7 @@ const InputFormDateItem:React.FC<InputFormDateItemProps> = ( {_title, _type , _p
     const dateYMDFormat = e.target.value;    // 'YYYY-MM-DD' 형식의 문자열
     const dateMillisecondsFormat = new Date(dateYMDFormat).getTime()    // 밀리초 변환
     const dateSeconds = dateMillisecondsFormat/1000    // 밀리초에서 초로 변환
-    console.log("dateSeconds" , dateSeconds)
+    // console.log("dateSeconds" , dateSeconds)
     setDate(dateSeconds)
 
 

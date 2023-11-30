@@ -34,8 +34,8 @@ import FormNotice from "@/app/_contents/admin/dashboard/FormNotice";
 import Formdividends from "@/app/_contents/admin/dashboard/FormDividends";
 import getVoteableEstateData from "@/app/api/getVoteableEstateData";
 
-import { Suspense } from 'react'
-
+import { Suspense } from "react";
+import getOwnerList from "@/app/api/getTokenCA";
 
 export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const voteListData: VoteProps[] = await getVoteList();
@@ -50,16 +50,18 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const noticesListData: NoticesListData[] = await getNoticesList();
   // // console.log("noticesListData", noticesListData);
 
-  const voteableEstateData = await getVoteableEstateData();
-  console.log("voteableEstateData" , voteableEstateData)
+  // const [selectedValue, setSelectedValue] = useState<string>("");
 
+  const voteableEstateData = await getVoteableEstateData(); // 투표 대상이 되는 전체 매물
+
+  // if(selectedValue){
+  //   const ownerList = await getOwnerList(selectedValue)
+  // }
 
   const isEstateModalOpen = searchParams?.estateModal;
   const isVoteModalOpen = searchParams?.voteModal;
   const isNoticeModalOpen = searchParams?.noticeModal;
   const isDividendsModalOpen = searchParams?.dividendsModal;
-
-
 
   return (
     <>
@@ -82,9 +84,11 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
       {/* 매물 등록 팝업 */}
       {/* {isEstateModalOpen && <ModalFormRealestate />} */}
       {isEstateModalOpen && <FormEstate />}
-      
-      {isVoteModalOpen && voteableEstateData && <FormVote voteableEstateData={voteableEstateData} />}
-      
+
+      {isVoteModalOpen && voteableEstateData && (
+        <FormVote voteableEstateData={voteableEstateData} />
+      )}
+
       {isNoticeModalOpen && <FormNotice />}
 
       {isDividendsModalOpen && <Formdividends />}
@@ -98,12 +102,8 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
       {/* <CreateVoteBtn /> */}
       {/* 투표 등록한거 보여주기 */}
       {/* <RenderVotes voteListData={voteListData} /> */}
-      
-      <Suspense fallback={<p>Loading feed...⭐⭐⭐⭐⭐⭐⭐⭐ </p>}>
-        <DashboardView searchParams={searchParams} />
-      </Suspense>
 
-      
+      <DashboardView searchParams={searchParams} />
     </>
   );
 }

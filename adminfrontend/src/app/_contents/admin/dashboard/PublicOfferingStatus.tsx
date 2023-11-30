@@ -32,16 +32,16 @@ import { IPublicOfferingItem } from "@/app/_features/admin/dashboard";
 
 const PublicOfferingStatus = async () => {
   const publicOfferingData : IPublicOfferingItem[] = await getPublicOfferingStatus();
-  console.log("publicOfferingData🌴" , publicOfferingData)
+  // console.log("publicOfferingData🌴" , publicOfferingData)
   
 
   // calcRatio 에 publicOfferingData 넣기
     const ratioObj = calcRatio(publicOfferingData)
       
-      console.log(" ratioObj 확인 👉👉" ,
-        ratioObj.ratio,
-        ratioObj.totalOrderSum,
-        ratioObj.totalPriceSum)
+      // console.log(" ratioObj 확인 👉👉" ,
+      //   ratioObj.ratio,
+      //   ratioObj.totalOrderSum,
+      //   ratioObj.totalPriceSum)
 
 
       // const totalOrderArr = publicOfferingData.map((item: IPublicOfferingItem) =>

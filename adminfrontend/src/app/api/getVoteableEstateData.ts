@@ -11,7 +11,7 @@ const getVoteableEstateData = async () => {
             cache: "no-store"
         });
         
-        console.log("도착했니")
+        // console.log("도착했니")
 
         if(resp.status == 200){
             return resp.json();

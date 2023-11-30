@@ -7,11 +7,12 @@ const Dropdown = () => {
   const router = useRouter();
   const options = ["day" , "week" , "month"]
   const [selectedOption, setSelectedOption ] = useState(options[0])
-  console.log("selectedOption", selectedOption )
+  // console.log("selectedOption", selectedOption )
   
   const setOptionParams = (option : string) => {
     
     setSelectedOption(option)
+    router.refresh();
     router.replace(`http://localhost:3000/admin/dashboard?criteria=${option}`);   // 새로고침 하는 효과는 없음.     
 
   }

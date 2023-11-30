@@ -4,6 +4,7 @@ import { db } from "../../models";
 
 // 투표 컨트랙트 주소 보내주기
 export const voteContractAddress = async (req: Request, res: Response) => {
+    
   try {
     const real_estate_name = req.query.real_estate_name as string;
     const result = await db.Contract_address.findAll({
@@ -12,11 +13,12 @@ export const voteContractAddress = async (req: Request, res: Response) => {
     });
 
     if (result) return res.status(200).json(result);
-    else return res.status(404).send("empty");
+    else return res.status(407).send("empty");
   } catch (error) {
     console.error(error);
   }
 };
+
 
 // 전체 투표 기록 보여주기
 export const voteList = async (req: Request, res: Response) => {
@@ -166,9 +168,6 @@ export const userAmounts = async (req: Request, res: Response) => {
 
 // 투표 ca contract_address 테이블에 입력
 export const insertContractAddress = async (req: Request, res: Response) => {
-  
-  // console.log("req⭐⭐⭐⭐⭐⭐" , req)
-  console.log("req⭐⭐⭐⭐⭐⭐" , req.body)
 
   try {
     const { address, real_estate_name } = req.body;

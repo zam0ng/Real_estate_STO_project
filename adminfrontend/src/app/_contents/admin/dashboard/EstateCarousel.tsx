@@ -11,7 +11,7 @@ import RenderCarousel from "./RenderCarousel";
 
 const EstateCarousel = async () => {
   const currentSituationData = await getCurrentEstateSituation();
-  console.log("currentSituationData🔮🔮" , currentSituationData)
+  // console.log("currentSituationData🔮🔮" , currentSituationData)
 
   return (
     <>

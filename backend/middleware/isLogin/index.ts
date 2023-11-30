@@ -62,7 +62,7 @@ export const isLogin = async (
 
     // ✅ 추가
     const gravatarUrl = gravatar.url(user_email, {s: '68', d: 'robohash'});
-    console.log("gravatarUrl" , gravatarUrl)  // ✅ DJ 추가
+    // console.log("gravatarUrl" , gravatarUrl)  // ✅ DJ 추가
 
 
     req.body.user_email = user_email;

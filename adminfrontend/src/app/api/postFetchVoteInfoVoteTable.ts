@@ -36,7 +36,7 @@ const postFetchVoteInfoVoteTable = async (formData : FormData) => {
     vote_end_date: voteEndDate
   }
   
-  console.log("postData_postFetchVoteInfoVoteTable", postData)
+  // console.log("postData_postFetchVoteInfoVoteTable", postData)
 
   try {
     const response = await fetch(

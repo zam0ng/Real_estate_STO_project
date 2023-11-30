@@ -75,17 +75,17 @@ export default function FormNotice() {
     // formData.append('caAddress', getAddressFromNameObj[selectedValue].toString());
 
     for (let [key, value] of formData.entries()) {
-      console.log("formData 확인🐣🐣");
-      console.log(`${key}: ${value}`);
+      // console.log("formData 확인🐣🐣");
+      // console.log(`${key}: ${value}`);
     }
 
     const response = await postFetchNoticeForm(formData);
 
-    console.log("response👉👉" , response)
-    console.log("response👉👉" , response.status)
+    // console.log("response👉👉" , response)
+    // console.log("response👉👉" , response.status)
     
     if (response == 'Created') {
-      // router.refresh(); // 새로고침기능
+      router.refresh(); // 새로고침기능
       router.replace(`http://localhost:3000/admin/notices`);
     }
 

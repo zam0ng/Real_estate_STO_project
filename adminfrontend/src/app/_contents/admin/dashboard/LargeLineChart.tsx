@@ -14,9 +14,9 @@ const LargeLineChart = async ({ searchParams }: SearchParamsProps) => {
   // const criteria = searchParams == undefined? "day" : searchParams.criteria
   const getCriteria = searchParams?.criteria || 'day'
 
-  console.log("searchParams🐣🐣🐣🐣🐣🐣" , searchParams)
-  console.log("searchParams?.criteria" , searchParams?.criteria)
-  console.log("getCriteria🐣🐣" , getCriteria)
+  // console.log("searchParams🐣🐣🐣🐣🐣🐣" , searchParams)
+  // console.log("searchParams?.criteria" , searchParams?.criteria)
+  // console.log("getCriteria🐣🐣" , getCriteria)
 
   let calcResult;
 

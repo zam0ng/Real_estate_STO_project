@@ -10,7 +10,7 @@ const getCurrentEstateSituation =  async ( ) => {
             cache: "no-store"
         });
 
-        console.log("getCurrentEstateSituation📍" , resp)
+        // console.log("getCurrentEstateSituation📍" , resp)
         if(resp.status === 200){
             return resp.json();
         }

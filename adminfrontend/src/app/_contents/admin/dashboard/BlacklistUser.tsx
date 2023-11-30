@@ -11,7 +11,7 @@ interface BlacklistUserProps {
 
 const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
 
-  console.log("user_profile_img" , user_profile_img)
+  // console.log("user_profile_img" , user_profile_img)
 
   return (
     <>

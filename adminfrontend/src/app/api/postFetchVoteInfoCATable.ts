@@ -15,7 +15,7 @@ const postFetchVoteInfoCATable = async (formData : FormData) => {
     real_estate_name: realEstateName,
     address: caAddress
 }
-  console.log("postData_postFetchVoteInfoCATable" , postData)
+  // console.log("postData_postFetchVoteInfoCATable" , postData)
 
 
   try {    

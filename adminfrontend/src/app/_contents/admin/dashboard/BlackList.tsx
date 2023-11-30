@@ -13,7 +13,7 @@ const BlackList = async () => {
                 user_email,
             }
         */
-  console.log("blackListUserData" , blackListUserData)
+  // console.log("blackListUserData" , blackListUserData)
 
 
   return (
