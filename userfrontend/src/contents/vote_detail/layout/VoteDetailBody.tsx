@@ -49,6 +49,7 @@ const VoteDetailBody: React.FC = () => {
       voteContract.events.Voted({fromBlock: 'latest'})
       .on("data", (event)=>{
         console.log(event.returnValues);
+        console.log(typeof event.returnValues.voters);
         setAgreeVotes(Number(event.returnValues.agreeVotes));
         setDisagreeVotes(Number(event.returnValues.disagreeVotes));
         setUsedVotes(Number(event.returnValues.usedTokens));

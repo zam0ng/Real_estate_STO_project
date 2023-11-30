@@ -26,7 +26,7 @@ contract Voting {
     uint256 public totalUsedTokens = 0;
 
     event ProposalCreated(string name, string description);
-    event Voted(bool vote, address voter, uint256 usedTokens, uint256 agreeVotes, uint256 disagreeVotes);
+    event Voted(bool vote, address voter, uint256 usedTokens, uint256 agreeVotes, uint256 disagreeVotes, address[] voters);
     event Result(bool result);
 
     constructor(address _votingTokenAddress, address[] memory _owners, uint256[] memory _amount, string memory _name, string memory _description, uint256 _startDate, uint256 _endDate) {
@@ -68,7 +68,7 @@ contract Voting {
             usedTokens += tokenOwners[msg.sender];
         }
 
-        emit Voted(voteType,msg.sender,usedTokens,agreeVotes,disagreeVotes);
+        emit Voted(voteType,msg.sender,usedTokens,agreeVotes,disagreeVotes,voters);
     }
 
     function forceCompleteVote() public {

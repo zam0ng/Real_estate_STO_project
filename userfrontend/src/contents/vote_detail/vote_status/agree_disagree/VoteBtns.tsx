@@ -19,11 +19,14 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
   // console.log(votedOwners);
   const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
   const newVotedOwners = votedOwners.map(item=>item.toLowerCase());
+  const [whoVoted,setWhoVoted] = useState<string[]>([]);
+  useEffect(()=>{
+    setWhoVoted(newVotedOwners);
+  },[votedOwners]);
   
   const {user,web3} = useWeb3();
 
   const [currentAccount,setCurrentAccount] = useState<string>(currentPage.state.wallet);
-  const [voteState,setVoteState] = useState<string>("vote-check");
   const [contract,setContract] = useState<any>(undefined);
 
   useEffect(()=>{
@@ -112,7 +115,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
           </div>
         </>
       )}
-      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && !newVotedOwners.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && !whoVoted.includes(currentAccount) && (
         <>
           <button className='w-24 h-10 rounded-lg text-white bg-blue-500' onClick={agree}>
             찬성
@@ -122,7 +125,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
           </button>
         </>
       )}
-      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && whoVoted.includes(currentAccount) && (
         <>
           <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
             투표 완료

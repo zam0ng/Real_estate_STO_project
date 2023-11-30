@@ -20,11 +20,14 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
   
   const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
   const newVotedOwners = votedOwners.map(item=>item.toLowerCase());
+  const [whoVoted,setWhoVoted] = useState<string[]>([]);
+  useEffect(()=>{
+    setWhoVoted(newVotedOwners);
+  },[votedOwners]);
 
   const {user,web3} = useWeb3();
 
   const [currentAccount,setCurrentAccount] = useState<string>("");
-  const [voteState,setVoteState] = useState<string>("");
 
   const [agreeNumber,setAgreeNumber] = useState<number>(0);
   const [disagreeNumber,setDisagreeNumber] = useState<number>(0);
@@ -79,7 +82,7 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
           <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
         </div>
       )}
-      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && whoVoted.includes(currentAccount) && (
           <div className='w-full h-32 border-t border-slate-200'>
             <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
             <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
