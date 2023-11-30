@@ -46,7 +46,7 @@ export default function SubscriptionAd(){
     }
 
 return(
-        <div className="border w-5/6 h-40 mt-2 rounded-2xl m-auto bg-gradient-to-br from-blue-400 to to-blue-800">
+        <div className="border w-5/6 h-40 mt-2 rounded-2xl m-auto bg-gradient-to-br from-blue-400 to to-blue-800 shadow-neu2">
             <div className="grid grid-cols-3 h-full">
                 <div className="col-span-2 h-full pl-3 ">
                     <div className="border border-white rounded-lg text-white w-28  text-sm text-center m-2">청약 마감 D-3</div>

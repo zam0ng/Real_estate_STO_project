@@ -52,7 +52,7 @@ export default function WalletConnect(){
                     <span className="block ">Bouns 지갑은 1분이면 충분해요!</span>
                     <div className="absolute top-6 left-24 -mr-2 w-3 h-3 bg-blue-500 transform rotate-45"></div>
                 </div>
-                <div className="flex left-5 border w-full h-16 rounded-2xl m-auto px-4 -mt-3 items-center justify-around" onClick={()=>handleLogin()}>
+                <div className="flex shadow-neu2 left-5 border w-full h-16 rounded-2xl m-auto px-4 -mt-3 items-center justify-around" onClick={()=>handleLogin()}>
                     <IoIosWallet className="text-yellow-400" />
                     <div>
                         <span className="text-blue-500 font-extrabold">지갑 개설</span><span className="text-sm">하고 건물주 되기</span>

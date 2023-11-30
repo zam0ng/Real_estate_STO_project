@@ -25,7 +25,6 @@ export default function HomeSearch(){
         queryFn: fetchBuilding
     });
 
-    console.log('왜 이름이 없어',buildingName)
 
     useEffect(()=>{
         const timerId = setTimeout(()=>{
@@ -62,11 +61,11 @@ export default function HomeSearch(){
 
     return(
         <>        
-            <div className="w-5/6   mt-1 h-9 m-auto border ">
+            <div className="w-5/6   mt-1 h-9 m-auto  ">
                 <input 
                 type="text" 
                 placeholder="등록된 모든 건물을 검색할 수 있어요   🍳" 
-                className="text-xs w-full h-full caret-blue-400 focus:outline-none focus:border-transparent text-blue-500 font-bold text-center "
+                className="text-xs w-full h-full caret-blue-400 focus:outline-none focus:border-transparent text-blue-500 font-bold text-center bg-[#EDF0F4] rounded-xl shadow-innerneu2 "
                 onChange={handleInputChange}
                 />
             </div>
