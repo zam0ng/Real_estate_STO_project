@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import web3 from "web3";
+import Modal from "../../../components/Modal";
 
 interface UserWalletProps {
   wallet: string | undefined;
@@ -6,6 +8,10 @@ interface UserWalletProps {
 
 const MyWallet: React.FC<UserWalletProps> = ({ wallet }) => {
   const [shortWallet, setShortWallet] = useState<string>("");
+  const [user, setUser] = useState({ account: "", balance: "" });
+  const [web3, setWeb3] = useState(null);
+  const [walletregist, setWalletregist] = useState<string>("");
+  const [showModal, setShowModal] = useState(false);
 
   const shortenWalletAddress = (address: string, chars = 4) => {
     return `${address.substring(0, chars + 2)}...${address.substring(
@@ -36,12 +42,50 @@ const MyWallet: React.FC<UserWalletProps> = ({ wallet }) => {
     }
   };
 
+  // 메타마스크 연결
+  const connectWallet = () => {
+    // 메타마스크가 설치 되어 있는지 확인 있으면 연결된 지갑 주소를 저장
+    if (window.ethereum) {
+      window.ethereum
+        .request({
+          method: "eth_requestAccounts",
+        })
+        .then((data: string) => {
+          // console.log(data);
+          setWalletregist(data);
+        });
+      setShowModal(true);
+    } else {
+      alert("메타마스크 설치가 필요합니다.");
+    }
+  };
+
+  // 모달을 여닫는 함수
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
+      {showModal && (
+        <Modal
+          userwallet={walletregist[0]}
+          isOpen={showModal}
+          onClose={handleClose}
+        >
+          <p className="pl-5 text-base font-bold  mb-2">주의</p>
+          <p className="pl-5 text-sm">
+            현재 연결 되어 있는 메타마스크 지갑과 연동됩니다.
+          </p>
+          <p className="pl-5 text-sm">
+            한번 입력한 주소는 바꾸 실 수 없습니다.
+          </p>
+        </Modal>
+      )}
       {shortWallet === "" ? (
         <div
           className="w-full h-[10%] flex justify-center items-end"
-          onClick={copyUserWallet}
+          onClick={connectWallet}
         >
           Please connect your wallet
         </div>

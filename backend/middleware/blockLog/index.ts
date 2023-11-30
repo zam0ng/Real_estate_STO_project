@@ -9,8 +9,8 @@ import {
   txReceipt,
   blockNumberCheck,
   userWalletAddress,
-  tokenInTransfer,
-  tokenOutTransfer,
+  // tokenInTransfer,
+  // tokenOutTransfer,
 } from "../../controllers/blocklog";
 
 // const rpcEndpoint = "http://localhost:8545";
@@ -115,16 +115,18 @@ const walletCheck = async (
       (userWallet) => userWallet.wallet === tx_to
     );
 
-    // tx_from이 users 테이블에 있고 tx_to가 없으면 내부에서 외부로 나간것으로 판단
-    if (from_check && !to_check) {
-      await tokenOutTransfer(tx_from, address, amount, symbol);
-      return "out";
-    }
-    // 반대로 tx_from이 users 테이블에 없고 tx_to가 있으면 외부에서 내부로 들어온것으로 판단
-    if (!from_check && to_check) {
-      await tokenInTransfer(tx_to, address, amount, symbol);
-      return "in";
-    }
+    if (from_check && !to_check) return "out";
+    if (!from_check && to_check) return "in";
+    // // tx_from이 users 테이블에 있고 tx_to가 없으면 내부에서 외부로 나간것으로 판단
+    // if (from_check && !to_check) {
+    //   await tokenOutTransfer(tx_from, address, amount, symbol);
+    //   return "out";
+    // }
+    // // 반대로 tx_from이 users 테이블에 없고 tx_to가 있으면 외부에서 내부로 들어온것으로 판단
+    // if (!from_check && to_check) {
+    //   await tokenInTransfer(tx_to, address, amount, symbol);
+    //   return "in";
+    // }
     // tx_from, tx_to가 모두 있으면 내부거래로 판단 빈 문자열을 반환
     if (from_check && to_check) return "internal";
     return "external";
@@ -251,3 +253,5 @@ export const logLatestBlockEvents = async () => {
 // 이거 추가해야됨
 // myEmitter.on("symbolCheckEvent", handleSymbol);
 myEmitter.on("contractsCheckEvent", handleAddress);
+// 유저 지갑 추가하는곳에 이벤트 추가해주기
+myEmitter.on("userWalletCheckEvent", handleWalletAddress);
