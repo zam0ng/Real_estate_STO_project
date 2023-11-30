@@ -13,7 +13,7 @@ export default function Home() {
 
 
   return (
-    <div className="mb-28">
+    <div className="mb-28 animate-swipe">
       <HomeAds/>
       <HomeIndices />
       <TabBar />

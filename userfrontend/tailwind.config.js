@@ -48,14 +48,18 @@ module.exports = {
         },fadeIn : {
           '0%' : { transform : 'translateY(100px)'},
           '100%' : {transform : 'translateY(0)'}
+        },fade : {
+          '0%' : { transform : 'opacity(0)'},
+          '100%' : {transform : 'opacity(1)'}
         }
       },
       animation: {
         marquee: 'marquee 14s linear infinite',
         marquee2: 'marquee2 14s linear infinite',
         'slide-up': 'slideUp 0.4s ease-out',
-        swipe : 'swipe 0.2s ease-out',
-        fadeIn : 'fadeIn 5s ease'
+        swipe : 'swipe 0.4s ease-out',
+        fadeIn : 'fadeIn 5s ease',
+        fade : 'fade 5s ease'
       },boxShadow: {
         neu1: '-5px -5px 15px 2px rgb(0 0 0 / 0.1)',
         neu2: '-5px -5px 10px 2px rgb(0.9 0.9 0.9 / 0.1)',

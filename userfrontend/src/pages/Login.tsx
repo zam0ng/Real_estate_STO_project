@@ -12,21 +12,21 @@ export default function Login() {
   
   const Navigate = useNavigate();
   
+  useEffect(()=>{
+    setTimeout(()=>{
+
+      Navigate('/home')
+    },3000)
+  },[])
 
 
-  function handleSurfing(){
-    Navigate('/home')
-  }
 
-  function handleLogin(){
-    Navigate('/bounslogin', {state : "/home"})
-
-  }
 
   return (
-    <div className="animate-slide-up border-8 border-black w-full h-screen">
-      <button className="border border-black" onClick={handleLogin}>로그인하러가기</button>
-      <button className="border border-black" onClick={handleSurfing}>둘러보기</button>
+    <div className="animate-slide-up  w-full h-screen flex justify-center items-center flex-col">
+      <div className="text-center text-[#D7D7D7] text-bold bg-[#EDF0F4] rounded-xl border shadow-innerneu2 w-52 h-16 animate-fadeIn">
+        <div className=" text-3xl animate-fadeIn mt-2">BounSTO</div>
+      </div>
     </div>
   );
 }
