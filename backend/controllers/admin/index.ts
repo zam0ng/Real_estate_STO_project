@@ -177,8 +177,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       total_amount?: number;
     };
 
-    console.log("👉👉👉 @realEstatesList")
-
     const result = await db.Subscriptions.findAll({
       attributes: [
         "subscription_img_1",
@@ -195,8 +193,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       where: { subscription_status: "success" },
       raw: true,
     });
-
-    console.log("🤸‍♂️🤸‍♂️🤸‍♂️ @realEstatesList")
 
     const day_earlier = new Date();
     const week_ago = new Date();
@@ -219,9 +215,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       group: "real_estate_name",
       raw: true,
     });
-
-    console.log("✅ test weeklyDate @realEstatesList" , weeklyDate)
-
 
     const resultUnknown = result as [] as Subscription[];
 
@@ -263,7 +256,6 @@ export const subscriptionPending = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
-
 
 // 총 이용자 수
 export const usersList = async (req: Request, res: Response) => {
@@ -503,10 +495,6 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 
     const all_result = await setRealEstateAmount(result, "month");
 
-    console.log("all_result🚀🚀" , all_result)
-
-
-
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
   } catch (error) {
@@ -703,6 +691,131 @@ export const contractAddressList = async (req: Request, res: Response) => {
   }
 };
 
+// 10일치 회원 가입 정보
+export const tenDateJoinList = async (req: Request, res: Response) => {
+  try {
+    const result = (await db.Users.findAll({
+      attributes: [
+        [
+          db.sequelize.fn(
+            "to_char",
+            db.sequelize.fn("date", db.sequelize.col("createdAt")),
+            "YYYY-MM-DD"
+          ),
+          "date",
+        ],
+        [db.sequelize.fn("count", db.sequelize.col("id")), "userCount"],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [ten_days_ago, yesterday],
+        },
+      },
+      raw: true,
+      group: ["date"],
+    })) as [] as UserCount[];
+
+    const userCounts = new Map(
+      result.map((item) => [item.date, item.userCount])
+    );
+
+    const ten_day_user_count = ten_days.map(
+      (date) => date.toISOString().split("T")[0]
+    );
+
+    const _userCounts = ten_day_user_count.map((date) => {
+      return userCounts.get(date) || 0;
+    });
+
+    if (_userCounts) return res.status(200).json(_userCounts);
+    else return res.status(404).send(_userCounts);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 10일치 거래 대금 정보
+export const tenDateTransactionPrice = async (req: Request, res: Response) => {
+  try {
+    const result = (await db.Trades.findAll({
+      attributes: [
+        [db.sequelize.fn("date", db.sequelize.col("createdAt")), "date"],
+        [
+          db.sequelize.fn(
+            "sum",
+            db.sequelize.literal("trade_price * trade_amount")
+          ),
+          "total_price",
+        ],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [ten_days_ago, yesterday],
+        },
+      },
+      group: [db.sequelize.fn("date", db.sequelize.col("createdAt"))],
+      order: [[db.sequelize.fn("date", db.sequelize.col("createdAt")), "DESC"]],
+      raw: true,
+    })) as [] as TotalAmount[];
+
+    const total_amount = new Map(
+      result.map((item) => [item.date, item.total_price])
+    );
+
+    const ten_day_total_amount = ten_days.map(
+      (date) => date.toISOString().split("T")[0]
+    );
+
+    const _total_amount = ten_day_total_amount.map((date) => {
+      return total_amount.get(date) || 0;
+    });
+
+    if (_total_amount) return res.status(200).json(_total_amount);
+    else return res.status(404).send(_total_amount);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 월 예상 수익
+export const monthlyIncome = async (req: Request, res: Response) => {
+  try {
+    const first_year_month = new Date(today.getFullYear(), today.getMonth(), 1);
+    const last_year_month = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0
+    );
+
+    const result = (await db.Trades.findAll({
+      attributes: [
+        [
+          db.sequelize.literal("ROUND(sum(trade_price) * 0.0022, 2)"),
+          "monthly_income",
+        ],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [first_year_month, last_year_month],
+        },
+      },
+      group: [
+        db.sequelize.fn("date_trunc", "month", db.sequelize.col("createdAt")),
+      ],
+      raw: true,
+    })) as [] as MonthlyIncome[];
+
+    const monthly_incomes = result.map(
+      (item: MonthlyIncome) => item.monthly_income
+    );
+
+    if (result) return res.status(200).json(monthly_incomes[0]);
+    else return res.status(404).send(0);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request, res: Response) => {
@@ -809,7 +922,6 @@ export const realEstateSubmit = async (req: Request, res: Response) => {
   // publisher varchar // 발행인
 };
 
-
 export const noticeSubmit = async (req: Request, res: Response) => {
   // // console.log(req.body);
   const { category, title, content, real_estate_name } = req.body;
@@ -831,23 +943,6 @@ export const noticeSubmit = async (req: Request, res: Response) => {
     res.sendStatus(400);
   }
 };
-
-
-// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
-export const noticesList = async (req : Request , res : Response) => {
-
-  try {
-    const noticeList = await Notices.findAll()
-    res.status(200).json(noticeList);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500)
-  }
-}
-
-
-
-
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);
