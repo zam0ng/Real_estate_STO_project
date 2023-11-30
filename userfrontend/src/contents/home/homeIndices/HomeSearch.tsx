@@ -25,7 +25,6 @@ export default function HomeSearch(){
         queryFn: fetchBuilding
     });
 
-    console.log('빌딩네임 왜 안떠?',buildingName)
 
 
     useEffect(()=>{
