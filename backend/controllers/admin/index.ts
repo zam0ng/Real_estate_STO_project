@@ -27,12 +27,26 @@ interface RealEstateAmount {
 }
 
 interface UserCount {
-  date: Date;
+  date: string;
   userCount: number;
 }
 
+interface TotalAmount {
+  date: string;
+  total_price: number;
+}
+
+interface MonthlyIncome {
+  monthly_income: number;
+}
+
+const today = new Date();
+const yesterday = today.setDate(today.getDate() - 1);
+const ten_days_ago = new Date(yesterday);
+
+ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
 function getDayInfo(info: string) {
-  const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
   if (info === "week") {
@@ -51,8 +65,6 @@ function getDayInfo(info: string) {
 }
 
 function setRealEstateAmount(result: TradeDate[], info: string) {
-  const today = new Date();
-
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
 
@@ -88,8 +100,6 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
       ten_date[i] = `${year}-${create_month}-${create_day}`;
     }
   } else {
-    const today = new Date();
-
     today.setMonth(today.getMonth() + 1);
 
     for (let i = 0; i < 10; i++) {
@@ -134,11 +144,18 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
   return all_result;
 }
 
+// const today = new Date();
+// const yesterday = today.setDate(today.getDate() - 1);
+// const ten_days_ago = new Date(yesterday);
+
+// ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
 // 10일치 정보를 받아오는데
-function getTenDate(start_date: Date, end_date: Date) {
+function getTenDate() {
   const dates = [];
-  const start = new Date(start_date);
-  const end = new Date(end_date);
+
+  const start = new Date(ten_days_ago);
+  const end = new Date(yesterday);
 
   for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
     dates.push(new Date(day));
@@ -675,13 +692,7 @@ export const contractAddressList = async (req: Request, res: Response) => {
 // 10일치 회원 가입 정보
 export const tenDateJoinList = async (req: Request, res: Response) => {
   try {
-    const today = new Date();
-    const yesterday = today.setDate(today.getDate() - 1);
-    const ten_days_ago = new Date(yesterday);
-
-    ten_days_ago.setDate(ten_days_ago.getDate() - 10);
-
-    const ten_date = getTenDate(ten_days_ago, today);
+    const ten_date = getTenDate();
 
     const result = (await db.Users.findAll({
       attributes: [
@@ -700,6 +711,7 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
           [Op.between]: [ten_days_ago, yesterday],
         },
       },
+      raw: true,
       group: ["date"],
     })) as [] as UserCount[];
 
@@ -708,11 +720,15 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
     );
 
     const ten_day_user_count = ten_date.map(
-      (date) => userCounts.get(date) || 0
+      (date) => date.toISOString().split("T")[0]
     );
 
-    if (ten_day_user_count) return res.status(200).json(ten_day_user_count);
-    else return res.status(404).send("empty");
+    const _userCounts = ten_day_user_count.map((date) => {
+      return userCounts.get(date) || 0;
+    });
+
+    if (_userCounts) return res.status(200).json(_userCounts);
+    else return res.status(404).send(_userCounts);
   } catch (error) {
     console.error(error);
   }
@@ -721,7 +737,43 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
 // 10일치 거래 대금 정보
 export const tenDateTransactionPrice = async (req: Request, res: Response) => {
   try {
-    //
+    const ten_date = getTenDate();
+
+    const result = (await db.Trades.findAll({
+      attributes: [
+        [db.sequelize.fn("date", db.sequelize.col("createdAt")), "date"],
+        [
+          db.sequelize.fn(
+            "sum",
+            db.sequelize.literal("trade_price * trade_amount")
+          ),
+          "total_price",
+        ],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [ten_days_ago, yesterday],
+        },
+      },
+      group: [db.sequelize.fn("date", db.sequelize.col("createdAt"))],
+      order: [[db.sequelize.fn("date", db.sequelize.col("createdAt")), "DESC"]],
+      raw: true,
+    })) as [] as TotalAmount[];
+
+    const total_amount = new Map(
+      result.map((item) => [item.date, item.total_price])
+    );
+
+    const ten_day_total_amount = ten_date.map(
+      (date) => date.toISOString().split("T")[0]
+    );
+
+    const _total_amount = ten_day_total_amount.map((date) => {
+      return total_amount.get(date) || 0;
+    });
+
+    if (_total_amount) return res.status(200).json(_total_amount);
+    else return res.status(404).send(_total_amount);
   } catch (error) {
     console.error(error);
   }
@@ -730,7 +782,38 @@ export const tenDateTransactionPrice = async (req: Request, res: Response) => {
 // 월 예상 수익
 export const monthlyIncome = async (req: Request, res: Response) => {
   try {
-    //
+    const today = new Date();
+    const first_year_month = new Date(today.getFullYear(), today.getMonth(), 1);
+    const last_year_month = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0
+    );
+
+    const result = (await db.Trades.findAll({
+      attributes: [
+        [
+          db.sequelize.literal("ROUND(sum(trade_price) * 0.0022, 2)"),
+          "monthly_income",
+        ],
+      ],
+      where: {
+        createdAt: {
+          [Op.between]: [first_year_month, last_year_month],
+        },
+      },
+      group: [
+        db.sequelize.fn("date_trunc", "month", db.sequelize.col("createdAt")),
+      ],
+      raw: true,
+    })) as [] as MonthlyIncome[];
+
+    const monthly_incomes = result.map(
+      (item: MonthlyIncome) => item.monthly_income
+    );
+
+    if (result) return res.status(200).json(monthly_incomes[0]);
+    else return res.status(404).send(0);
   } catch (error) {
     console.error(error);
   }
