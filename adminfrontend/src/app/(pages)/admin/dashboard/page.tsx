@@ -32,6 +32,10 @@ import {
 import FormVote from "@/app/_contents/admin/dashboard/FormVote";
 import FormNotice from "@/app/_contents/admin/dashboard/FormNotice";
 import Formdividends from "@/app/_contents/admin/dashboard/FormDividends";
+import getVoteableEstateData from "@/app/api/getVoteableEstateData";
+
+import { Suspense } from 'react'
+
 
 export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const voteListData: VoteProps[] = await getVoteList();
@@ -46,10 +50,16 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const noticesListData: NoticesListData[] = await getNoticesList();
   // // console.log("noticesListData", noticesListData);
 
+  const voteableEstateData = await getVoteableEstateData();
+  console.log("voteableEstateData" , voteableEstateData)
+
+
   const isEstateModalOpen = searchParams?.estateModal;
   const isVoteModalOpen = searchParams?.voteModal;
   const isNoticeModalOpen = searchParams?.noticeModal;
   const isDividendsModalOpen = searchParams?.dividendsModal;
+
+
 
   return (
     <>
@@ -73,7 +83,7 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
       {/* {isEstateModalOpen && <ModalFormRealestate />} */}
       {isEstateModalOpen && <FormEstate />}
       
-      {isVoteModalOpen && <FormVote />}
+      {isVoteModalOpen && voteableEstateData && <FormVote voteableEstateData={voteableEstateData} />}
       
       {isNoticeModalOpen && <FormNotice />}
 
@@ -88,8 +98,12 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
       {/* <CreateVoteBtn /> */}
       {/* 투표 등록한거 보여주기 */}
       {/* <RenderVotes voteListData={voteListData} /> */}
+      
+      <Suspense fallback={<p>Loading feed...⭐⭐⭐⭐⭐⭐⭐⭐ </p>}>
+        <DashboardView searchParams={searchParams} />
+      </Suspense>
 
-      <DashboardView searchParams={searchParams} />
+      
     </>
   );
 }

@@ -11,7 +11,11 @@ const getVoteableEstateData = async () => {
             cache: "no-store"
         });
         
-        return resp.json();
+        console.log("도착했니")
+
+        if(resp.status == 200){
+            return resp.json();
+        }
     
     } catch (error) {
         console.log(error);

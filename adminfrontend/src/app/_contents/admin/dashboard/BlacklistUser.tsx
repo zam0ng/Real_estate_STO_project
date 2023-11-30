@@ -1,4 +1,4 @@
-// import gravatar from 'gravatar';
+import gravatar from 'gravatar';
 /*
   /admin/blacklist 경로에서, 'user_email,' 키로 이메일 값이 들어옴
 */
@@ -17,15 +17,16 @@ const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
     <>
       <div className="relative rounded-full w-4.5rem h-4.5rem bg-lime-100 overflow-hidden flex items-end		">
 
-      <Image
+      {/* <Image
         alt="매물 사진"
         src={user_profile_img}   // next.config.js 에 기재한 경로와 맞아야 함
         sizes="100vw"
         style={{objectFit: "cover"}}	
         fill={true}
-      />
+      /> */}
 
-        {/* <img 
+      
+        <img 
           src={gravatar.url( 
             user_profile_img,  // 사용자 이메일별로 다른 그림이 그려짐 
             {s:'68px' ,   // 사이즈 조절  
@@ -33,7 +34,7 @@ const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
                     }
           )}
           alt = "유저 gravatar 이미지"        
-        />   */}
+        />  
         
       </div>
     </>

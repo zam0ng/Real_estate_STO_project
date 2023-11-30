@@ -17,10 +17,12 @@ import LargeLineChart from "./LargeLineChart";
 import CriteriaToggle from "./CriteriaToggle";
 import { SearchParamsProps } from "@/app/_features/admin/dashboard";
 import { CreateDividendsBtn } from "../main/CreateDividendsBtn";
+import getVoteableEstateData from "@/app/api/getVoteableEstateData";
 
 
 export default async function DashboardView({searchParams} : SearchParamsProps) {
-
+  
+  
 
   return (
     <div className="flex items-center justify-center">

@@ -4,10 +4,13 @@ import BtnCancel from "@/app/_components/_ui/BtnCancel";
 import BtnCreate from "@/app/_components/_ui/BtnCreate";
 import MessageBoxInfo from "@/app/_components/_ui/MessageBoxInfo";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, Suspense, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FormSectionVoteInfo from "./FormSectionVoteInfo";
 import getVoteableEstateData from "@/app/api/getVoteableEstateData";
+import postFetchEstateForm from "@/app/api/postFetchEstateForm";
+import postFetchVoteInfoVoteTable from "@/app/api/postFetchVoteInfoVoteTable";
+import postFetchVoteInfoCATable from "@/app/api/postFetchVoteInfoCATable";
 
 interface VoteableEstate {
   id: number;
@@ -17,65 +20,85 @@ interface VoteableEstate {
   symbol: string;
 }
 
-// // ✅ 임시 데이터 받기
-// const voteableEstateData = [
-//   {
-//     id : 1,
-//     address : '0x112123123',
-//     real_estate_name : '문래 공차',
-//     cy_type : 'token',
-//     symbol : 'MR'
-//   },
-//   {
-//     id : 2,
-//     address : '0x112123',
-//     real_estate_name : '대전 뮤지엄',
-//     cy_type : 'token' ,
-//     symbol : 'MG'
-//   },
-// ]
-
-export default function FormVote() {
-  const router = useRouter();
-  
-  const [startDate, setStartDate] = useState(0);
-  const [endDate, setEndDate] = useState(0);
-  const [selectedValue, setSelectedValue] = useState("");
-
-  //  우선 임시로 꺼둠 ✅
-  // const voteableEstateData = await getVoteableEstateData()
-
-  
-  // ✅ 임시 데이터 받기
+/* API 데이터 형식 
 const voteableEstateData = [
   {
-    id : 1,
-    address : '0x112123123',
-    real_estate_name : '문래 공차',
-    cy_type : 'token',
-    symbol : 'MR'
-  },
+    "id": 1,
+    "address": "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427",
+    "real_estate_name": "문래 공차",
+    "symbol": "MG"
+},
   {
-    id : 2,
-    address : '0x112123',
-    real_estate_name : '대전 뮤지엄',
-    cy_type : 'token' ,
-    symbol : 'MG'
-  },
+    "id": 2,
+    "address": "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427",
+    "real_estate_name": "대전 창업스페이스",
+    "symbol": "MG"
+},
 ]
+*/
 
+export default function FormVote( {voteableEstateData }: {voteableEstateData : VoteableEstate[] }) {
+  const router = useRouter();
+  
+  const [startDate, setStartDate] = useState<number>(0);
+  const [endDate, setEndDate] = useState<number>(0);
+  const [selectedValue, setSelectedValue] = useState<string>("");
 
+  // const [voteableEstateData, setVoteableEstateData] = useState<VoteableEstate[]>([]);
+  // const [getAddressFromNameObj , setGetAddressFromNameObj] = useState<{ [key: string]: string }>({});
+
+  // console.log("voteableEstateData" , voteableEstateData)
+  
+  
+  // useEffect( () => {
+  //   fetchData()
+  // } , [] )
+    
+  // const fetchData = async () => {
+    // const voteableEstateData = await getVoteableEstateData();
+    // console.log("voteableEstateData 🔥🔥🔥" , voteableEstateData)
+  //   const nameAddressArr= voteableEstateData.map( (item : VoteableEstate) => {
+  //   return [item.real_estate_name, item.address]
+  // })
+  //   const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
+  //   setGetAddressFromNameObj(getAddressFromNameObj)
+  // }  
+  
+  console.log("voteableEstateData_formVote" , voteableEstateData)
+  
   const nameAddressArr= voteableEstateData.map( (item : VoteableEstate) => {
-      return [item.real_estate_name, item.address]
-  })
+  return [item.real_estate_name, item.address]
+})
+  console.log("nameAddressArr" , nameAddressArr)
+  /* 데이터 형식
+  [
+    [
+        "문래 공차",
+        "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427"
+    ],
+    [
+        "대전 창업스페이스",
+        "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427"
+    ]
+]
+  */
+ 
   const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
-
+  console.log("getAddressFromNameObj" , getAddressFromNameObj)
+  /* 데이터 형식
+    {
+        "문래 공차": "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427",
+        "대전 창업스페이스": "0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427"
+    }
+  */
+  
+  
   const postVoteForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // e.stopPropagation()
-
+    
     const formData = new FormData(e.currentTarget); // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴
-    const finalStartDate = startDate.toString();
+    console.log(typeof(startDate))  // number
+    const finalStartDate = startDate.toString();  // form 안으로 들어가려면, string 타입 불가피
     const finalEndDate = endDate.toString();
 
     formData.append("voteStartDate", finalStartDate); // 타임스탬프 추가 | form 데이터로 전송시, toString 필요
@@ -86,19 +109,21 @@ const voteableEstateData = [
       console.log("formData 확인🐣🐣");
       console.log(`${key}: ${value}`);
     }
-    router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
-    router.replace(`http://localhost:3000/admin/dashboard`);
 
-    // POST 요청시
-    // const response = await postFetchEstateForm(formData);
-    // if (response) {
-    //   console.log("제출 성공👏👏");
-    //   router.refresh(); // 새로고침기능 -> so, 게시글 등록 후 바로 보임.
-    //   router.replace(`http://localhost:3000/admin/real_estates`);
-    // }
+    const voteTableRes = await postFetchVoteInfoVoteTable(formData)
+    // ✅✅ 작업중
+    const caTableRes = await postFetchVoteInfoCATable(formData) 
+
+    alert("투표 DB 등록 완료 | 컨트랙트 배포는 아직")
+
+    router.replace(`http://localhost:3000/admin/real_estates`);
+
+    
+    
   };
 
   return (
+
     <div className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-full ">
       <form encType="multipart/form-data" onSubmit={postVoteForm}>
         {/* 여기부터 디자인 👇👇👇 */}
@@ -132,6 +157,7 @@ const voteableEstateData = [
                   <FormSectionVoteInfo
                     title="투표 상세 등록"
                     desc="발행 매물에 대한 투표 상세 등록"
+                    voteTarget = {nameAddressArr}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     selectedValue={selectedValue}
@@ -150,5 +176,6 @@ const voteableEstateData = [
         </div>
       </form>
     </div>
+
   );
 }
