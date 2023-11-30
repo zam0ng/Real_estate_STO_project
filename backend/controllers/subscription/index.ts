@@ -245,17 +245,18 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
 export const getBalance = async (req: Request, res: Response) => {
   try {
     const { user_email } = req.body;
+    console.log(user_email);
     // const user_email = req.query.user_email as string;
 
     const result = await db.Users.findOne({
-      attributes: ["using_balance"],
+      attributes: ["balance"],
       where: { user_email: user_email },
       raw: true,
     });
 
-    const using_balance = result?.using_balance;
+    const balance = result?.balance;
 
-    if (result) return res.status(200).json(using_balance);
+    if (result) return res.status(200).json(balance);
     else return res.status(404).send("not found");
   } catch (error) {
     console.error(error);

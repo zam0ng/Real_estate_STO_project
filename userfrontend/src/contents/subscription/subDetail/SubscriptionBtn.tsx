@@ -108,14 +108,17 @@ export default function SubscriptionBtn({props} : subdetailtype){
     }
 
         function handleQuantityInput(num : number){
-            if(num < 1){
+
+            const validNum = isNaN(num) ? 0 : num;
+
+            if(validNum < 1){
                 setQuantity(1)
             }
-            else if(num > Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )){
+            else if(validNum > Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )){
 
                 setQuantity(Math.floor(dataUserId / parseInt(detail.subscription_offering_price)));
             }else{
-                setQuantity(num)
+                setQuantity(validNum)
             }
         }
 
@@ -136,7 +139,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
     }
 
 
-
+    console.log(dataUserId);
 
 
     return(
