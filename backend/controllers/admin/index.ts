@@ -46,6 +46,8 @@ const ten_days_ago = new Date(yesterday);
 
 ten_days_ago.setDate(ten_days_ago.getDate() - 10);
 
+const ten_days = getTenDate();
+
 function getDayInfo(info: string) {
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
@@ -692,8 +694,6 @@ export const contractAddressList = async (req: Request, res: Response) => {
 // 10일치 회원 가입 정보
 export const tenDateJoinList = async (req: Request, res: Response) => {
   try {
-    const ten_date = getTenDate();
-
     const result = (await db.Users.findAll({
       attributes: [
         [
@@ -719,7 +719,7 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
       result.map((item) => [item.date, item.userCount])
     );
 
-    const ten_day_user_count = ten_date.map(
+    const ten_day_user_count = ten_days.map(
       (date) => date.toISOString().split("T")[0]
     );
 
@@ -737,8 +737,6 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
 // 10일치 거래 대금 정보
 export const tenDateTransactionPrice = async (req: Request, res: Response) => {
   try {
-    const ten_date = getTenDate();
-
     const result = (await db.Trades.findAll({
       attributes: [
         [db.sequelize.fn("date", db.sequelize.col("createdAt")), "date"],
@@ -764,7 +762,7 @@ export const tenDateTransactionPrice = async (req: Request, res: Response) => {
       result.map((item) => [item.date, item.total_price])
     );
 
-    const ten_day_total_amount = ten_date.map(
+    const ten_day_total_amount = ten_days.map(
       (date) => date.toISOString().split("T")[0]
     );
 
