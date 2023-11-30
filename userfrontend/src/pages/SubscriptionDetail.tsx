@@ -10,6 +10,8 @@ import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn"
 import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
 import MapDetail from "../contents/subscription/subDetail/MapDetail";
 import BackBtn from "../components/BackBtn";
+import LoadingComponent from "../components/LoadingComponent";
+import ErrorComponent from "../components/ErrorComponent";
 
 export default function SubscriptionDetail(){
 
@@ -25,9 +27,9 @@ export default function SubscriptionDetail(){
     queryFn: fetchData,
   });
 
-  if (isLoading) return <>Loading ...</>;
+  if (isLoading) return <LoadingComponent />
 
-  if (error) return <>접속이 원활하지 않습니다 ..</>;
+  if (error) return <ErrorComponent />;
 
     let [detail] = data
 
@@ -44,11 +46,11 @@ export default function SubscriptionDetail(){
     }]
 
     return(
-        <>  
+        <div className="animate-swipe">  
             <BackBtn />
             <DetailPictures detail={detail}/>
             <LineTypeTabComponent data={tab} />
             <SubscriptionBtn props={`${buildingId}`} />
-        </>
+        </div>
     )
 }

@@ -22,12 +22,12 @@ export default function HomeIndices(){
             <div className="m-auto h-48 mt-5">
                 <MarqueeIndeces/>
             </div>
-            <div className="w-5/6 m-auto text-xl font-bold mt-6 ">실시간 차트</div>
-            <div data-aos='fade-up'>
+            <div className="mt-6" data-aos='fade-up'>
+                <div className="w-5/6 m-auto text-xl font-bold mt-2 ">실시간 차트</div>
                 <HomeChart />
             </div>
-            <div className="w-5/6 m-auto text-xl font-bold mt-6 ">찾는 부동산이 있으세요?</div>
             <div className="w-full m-auto   mt-5" data-aos='fade-up'>
+                <div className="w-5/6 m-auto text-xl font-bold mt-6 ">찾는 부동산이 있으세요?</div>
                 <HomeSearch />
             </div>
         </div>

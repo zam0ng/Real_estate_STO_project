@@ -20,7 +20,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
     const [userBalance,setUserBalance] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [orderConfirm,setOrderConfirm] = useState(false);
-    const [scrollPosition, setScrollPosition] = useState(0);
 
 
 

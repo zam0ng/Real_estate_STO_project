@@ -25,7 +25,7 @@ export default function HomeSearch(){
         queryFn: fetchBuilding
     });
 
-
+    console.log('왜 이름이 없어',buildingName)
 
     useEffect(()=>{
         const timerId = setTimeout(()=>{

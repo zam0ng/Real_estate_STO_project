@@ -8,7 +8,6 @@ type DetailPicturesType = {
 
 export default function DetailPictures({detail} :DetailPicturesType){
 
-    console.log('여기 작업필요', detail)
 
     let slides = [];
 
