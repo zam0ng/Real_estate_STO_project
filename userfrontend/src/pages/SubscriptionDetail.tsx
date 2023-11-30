@@ -35,6 +35,7 @@ export default function SubscriptionDetail(){
 
     let [detail] = data
 
+    console.log(detail);
 
     let tab = [{
         tabName : "모집 현황",
@@ -52,7 +53,14 @@ export default function SubscriptionDetail(){
             <BackBtnUpdate props={'/subscription'} />
             <DetailPictures detail={detail}/>
             <LineTypeTabComponent data={tab} />
-            <SubscriptionBtn props={`${buildingId}`} />
+          {detail.subscription_status === 'start' 
+          
+          ?
+          <SubscriptionBtn props={`${buildingId}`} />
+            
+          :
+          undefined
+          }
         </div>
     )
 }

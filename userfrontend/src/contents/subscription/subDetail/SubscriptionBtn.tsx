@@ -139,7 +139,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
     }
 
 
-    console.log(dataUserId);
 
 
     return(

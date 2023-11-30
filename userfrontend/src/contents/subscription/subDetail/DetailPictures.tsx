@@ -19,7 +19,6 @@ export default function DetailPictures({detail} :DetailPicturesType){
         }
     }
 
-    console.log(slides)
 
     // const slides = [
     //     {url : images/sliderdummy/dummy1.jpg},
