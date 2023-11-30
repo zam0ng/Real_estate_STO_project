@@ -21,7 +21,22 @@ export const voteContractAddress = async (req: Request, res: Response) => {
 // 전체 투표 기록 보여주기
 export const voteList = async (req: Request, res: Response) => {
   try {
-    const result = await db.Votes.findAll({
+    interface SubscriptionVote {
+      subscription_img_1: string;
+      subscription_name?: string;
+      real_estate_name: string;
+      vote_title: string;
+      vote_start_date: Date;
+      vote_end_date: Date;
+    }
+    let result: SubscriptionVote[] = [];
+    // 이미지 가져오기
+    const subscriptions_imgs = (await db.Subscriptions.findAll({
+      attributes: ["subscription_img_1", "subscription_name"],
+      raw: true,
+    })) as [] as SubscriptionVote[];
+
+    const votes = (await db.Votes.findAll({
       attributes: [
         "real_estate_name",
         "vote_title",
@@ -29,6 +44,21 @@ export const voteList = async (req: Request, res: Response) => {
         "vote_end_date",
       ],
       raw: true,
+    })) as [] as SubscriptionVote[];
+
+    subscriptions_imgs.forEach((sub) => {
+      const real_estate_match = votes.map((item) => {
+        if (item.real_estate_name == sub.subscription_name) {
+          const match_result: SubscriptionVote = {
+            subscription_img_1: sub.subscription_img_1,
+            real_estate_name: item.real_estate_name,
+            vote_title: item.vote_title,
+            vote_start_date: item.vote_start_date,
+            vote_end_date: item.vote_end_date,
+          };
+          result.push(match_result);
+        }
+      });
     });
 
     if (result) return res.status(200).json(result);
