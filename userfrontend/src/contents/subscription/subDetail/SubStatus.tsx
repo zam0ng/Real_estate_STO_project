@@ -1,12 +1,18 @@
 import ProgressBar from "../../../components/ProgressBar"
 import { AiOutlineAlert } from "react-icons/ai";
 import { SubDetail } from "../../../features/SubDetail";
+import {useEffect } from 'react'
+import AOS from 'aos'
 
 type SubStatusType = {
     detail : SubDetail
 }
 
 export default function SubStatus({detail} : SubStatusType){
+
+    useEffect(()=>{
+        AOS.init({duration : 1200})
+    },[])
 
     let statusBox = [
         { number: 1, title: "청약 시작", date: detail.subscription_start_date },
@@ -40,7 +46,7 @@ export default function SubStatus({detail} : SubStatusType){
                     <ProgressBar percent={parseInt(detail.subscription_order_amount)/ parseInt(detail.subscription_totalsupply) * 100} />
                 </div>
             </div>
-            <div className="w-5/6 h-72 m-auto rounded-xl  mt-3 border bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2 ">
+            <div className="w-5/6 h-72 m-auto rounded-xl  mt-3 border bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2" data-aos='fade-up'>
                 <div className="w-full h-16 mt-1">
                     {statusBox.map((i,index)=>{
                         return (
@@ -59,7 +65,7 @@ export default function SubStatus({detail} : SubStatusType){
 
                 </div>
             </div>
-            <div className="w-5/6 h-20 rounded-xl m-auto px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2  ">
+            <div className="w-5/6 h-20 rounded-xl m-auto px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2" data-aos = 'fade-up'>
                 <AiOutlineAlert className="text-red-600 " />
                 <span className="text-xs text-gray-700">모집률 100% 달성 시 조기에 마감이 될 수 있습니다.<br/>모집이 마감되면 청약 및 청약 취소를 할 수 없어요
                 </span>

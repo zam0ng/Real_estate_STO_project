@@ -1,5 +1,7 @@
 import { SubDetail } from "../../../features/SubDetail";
 import KakaoMap from "../../../components/KakaoMap";
+import AOS from "aos";
+import { useEffect } from "react";
 
 type MapDetailType = {
     detail : SubDetail
@@ -8,7 +10,9 @@ type MapDetailType = {
 
 export default function MapDetail({detail} : MapDetailType){
 
-
+    useEffect(()=>{
+        AOS.init({duration : 1200})
+    },[])
 
     function formatCurrency(amount :string) {
         let newNum =parseInt(amount);
@@ -45,8 +49,8 @@ export default function MapDetail({detail} : MapDetailType){
         <div className="w-5/6  m-auto h-auto">
             <div className="text-xl font-bold ">{detail.subscription_name}</div>
             <div className="text-sm font-semibold text-gray-500 mb-3 ">📌{detail.subscription_address}</div>
-            <KakaoMap addressKor={detail.subscription_address} width="h-5/6" height="h-52"/>
-            <div className="border rounded-2xl mt-9 bg-[#EDF0F4] rounded-xl shadow-neu2">
+            <KakaoMap addressKor={detail.subscription_address} width="h-5/6" height="h-52" data-aos='fade-up'/>
+            <div className="border rounded-2xl mt-9 bg-[#EDF0F4] rounded-xl shadow-neu2" data-aos='fade-up'>
                 {BuildingInfo.map((i,index)=>{
                     return (
 
@@ -57,8 +61,8 @@ export default function MapDetail({detail} : MapDetailType){
                     )
                 })}
             </div>
-            <div className="text-xl font-bold mt-9">발행 정보</div>
-            <div className="border rounded-2xl mt-5 bg-[#EDF0F4] rounded-xl shadow-neu2">
+            <div className="text-xl font-bold mt-9" data-aos='fade-up'>발행 정보</div>
+            <div className="border rounded-2xl mt-5 bg-[#EDF0F4] rounded-xl shadow-neu2" data-aos='fade-up'>
                 {TokenInfo.map((i,index)=>{
                     return (
 

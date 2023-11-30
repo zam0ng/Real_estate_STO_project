@@ -13,7 +13,7 @@ import { serverurl } from "../components/serverurl";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import LoadingComponent from "../components/LoadingComponent";
+import FullLoadingComponent from "../components/FullLoadingComponent";
 
 const confirmLoginStatus = async (isCookie: string): Promise<string> => {
   const response = await axios.post(`${serverurl}/mypage`, {
@@ -68,7 +68,7 @@ export default function Mypage() {
   }
 
   if (isLoading) {
-    return <LoadingComponent />;
+    return <FullLoadingComponent />;
   }
 
   return (

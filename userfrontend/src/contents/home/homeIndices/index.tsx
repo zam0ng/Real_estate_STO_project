@@ -8,7 +8,7 @@ export default function HomeIndices(){
 
     useEffect(()=>{
         AOS.init({duration : 1200})
-    })
+    },[])
 
 
     return(
