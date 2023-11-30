@@ -257,7 +257,6 @@ export const tokenInTransfer = async (
           price: real_estates!.current_price,
           amount: amount,
           possible_quantity: amount,
-          token_name: symbol,
         },
         { transaction }
       );

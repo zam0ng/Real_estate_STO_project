@@ -1,7 +1,7 @@
 
 export const getSubscriptionList = async (id : number) => {
 
-    const path = `admin/subscription_list/${id}`;
+    const path = `/admin/subscription_list/${id}`;
     const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
     const url = `${domain}${path}`
 

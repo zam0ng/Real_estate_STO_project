@@ -1,3 +1,5 @@
+"use client"
+
 import ImageName from "./ImageName";
 import CurrentResult from "./CurrentResult";
 import Status from "./Status";
@@ -12,18 +14,22 @@ import { TableRowEstate } from "@/app/_features/admin/real_estates";
 import Link from "next/link";
 import EnableButton from "./EnableButton";
 import DisableButton from "./DisableButton";
+import Loading from "./Loading";
+import {useState} from 'react';
 
-const TableRowEstate = async ({ item }: TableRowEstate) => {
+const TableRowEstate =({ item }: TableRowEstate) => {
 
     // const subscriptionProgress = item.achievement_rate // ⭐⭐ api 에 따르면 진행률은 achievement_rate 
-    const subscriptionProgress = 0.2 // api 에 따르면 진행률은 achievement_rate 
-    console.log( "진행률👏" , subscriptionProgress)
+    // const subscriptionProgress = 0.8 // api 에 따르면 진행률은 achievement_rate 
+    const subscriptionProgress = item.achievement_rate / 100 ;// api 에 따르면 진행률은 achievement_rate 
+    // console.log( "진행률👏" , subscriptionProgress)
+    const [loading,setLoading] = useState(false);
 
 return (
     <>
     {/* 구분선 */}
     <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 "> </div>
-
+    {loading && <Loading/>}
     <ImageName
         id={item.id}
         imageURL={item.subscription_img_1}
@@ -60,10 +66,10 @@ return (
         resultDate={item.subscription_result_date} />
         
     {subscriptionProgress >= 0.8
-        ? <EnableButton  text="Enable"  id={item.id}  />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
+    // setLoading = {setLoading}
+        ? <EnableButton  text="Enable"  id={item.id} setLoading = {setLoading}  />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
         : <DisableButton  text="Disable" /> 
     }
-
     </>
 );
 };

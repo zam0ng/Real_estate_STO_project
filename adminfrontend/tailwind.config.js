@@ -62,6 +62,7 @@ module.exports = {
         "30rem": "30rem",
         "150rem": "150rem",
         "40rem": "40rem",
+        "76rem": "76rem",
         
         "5.6rem": "5.6rem",
         "37.9rem": "37.9rem",
@@ -199,10 +200,10 @@ module.exports = {
 
         state_pending_back: "#FFF0E2",
         state_pending_text: "#E7AB74",
+        state_loading_back : "rgba(0, 0, 0, 0.500)",
         
         blacklist_status_bgColor : "#4a4747",
         blacklist_status_textColor : "#febebe",
-        
         
         
         // 매물관리-enable 버튼

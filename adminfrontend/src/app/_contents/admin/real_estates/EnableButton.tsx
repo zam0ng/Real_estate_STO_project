@@ -8,7 +8,7 @@ import { getSubscriptionsList } from "@/app/api";
 import { getSubscriptionList } from "@/app/api/getSubscription_list";
 
 // 💪
-const EnableButton = ({ text,id}: EnableButtonParam) => {
+const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
   const factory_abi = [
     {
       "anonymous": false,
@@ -112,12 +112,13 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
       "type": "function"
     }
   ] as const;
-  const factory_CA = "0xDA6736253fa6f03E0a23298b6f596ae7F4C42524";
+  const factory_CA = "0x2D69100b20F30ef5A5D866d13E34dcb54dC3c2fa";
   
   const [web3, setWeb3] = useState<Web3 | null >(null);
   // const [CAList, setCAList] = useState<string[] | any>([]);
   const {account} = useAccount();
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
+
 
   useEffect(() => {
     // 클라이언트 환경에서만 실행
@@ -141,58 +142,67 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
     // 0xd9145CCE52D386f254917e481eB44e9943F39138 가나쉬
     // 0x4cAdAf68b3FE5F4e12B28616E0D74a5f86056937 세폴리아
     const factoryContract = web3 ? new web3.eth.Contract(factory_abi ,factory_CA,{data: ""}) : null;
-    console.log(factoryContract);
+    // console.log(factoryContract);
     const handleSTOBtn = async(id : number) => {
-        const list = await getSubscriptionList(id);
-        // // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
-        // // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
-        // // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
-        // // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
-        // // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
-        // // console.log(list.amount_list); // [5, 2, 10]
+        setLoading(true);
+        try {
+          const list = await getSubscriptionList(id);
+          console.log(list)
+          // // console.log(list.estateInfo[0]["Subscription.subscription_name"]); // 문래공차
+          // // console.log(list.estateInfo[0]["Subscription.subscription_totalsupply"]); // 578000
+          // // console.log(list.estateInfo[0]["Subscription.subscription_symbol"]); // MG
+          // // console.log(list.estateInfo[0]["Subscription.subscription_building_date"]); // 
+          // // console.log(list.wallet_list); // ['test@naver.com', 'test2@naver.com', 'test3@naver.com']
+          // // console.log(list.amount_list); // [5, 2, 10]
 
-        const estateName = list.estateInfo[0]["Subscription.subscription_name"];
-        const symbol = list.estateInfo[0]["Subscription.subscription_symbol"];
-        const totalsupply = list.estateInfo[0]["Subscription.subscription_totalsupply"];
-        const currentDate = new Date();
-        const buildingDate = new Date(list.estateInfo[0]["Subscription.subscription_building_date"]);
-        
-        // lockTime 설정 : 입고날짜 - 현재날짜 빼고 초로 환산
-        const seconds: number = Math.floor((Math.abs(buildingDate.getTime() - currentDate.getTime()))/1000);
-        console.log(account)
-        console.log(estateName)
-        console.log(symbol)
-        console.log(totalsupply)
-        console.log(list.wallet_list),
-        console.log(list.amount_list),
-        console.log(seconds); // 212471
-        // 버튼 누를 때 팩토리 ca가 실행되서 매물 토큰 발행 ca를 생성
-        factoryContract?.methods.createCA(
-        account,
-        estateName,
-        symbol,
-        totalsupply,
-        list.wallet_list,
-        list.amount_list,
-        0,
-      ).send({
-        from : account,
-        gas : "3000000",
-      }).then(async (data :any)=>{
-        // // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
+          const estateName = list.estateInfo[0]["Subscription.subscription_name"];
+          const symbol = list.estateInfo[0]["Subscription.subscription_symbol"];
+          const totalsupply = list.estateInfo[0]["Subscription.subscription_totalsupply"];
+          const currentDate = new Date();
+          const buildingDate = new Date(list.estateInfo[0]["Subscription.subscription_building_date"]);
+          
+          // lockTime 설정 : 입고날짜 - 현재날짜 빼고 초로 환산
+          const seconds: number = Math.floor((Math.abs(buildingDate.getTime() - currentDate.getTime()))/1000);
+          // console.log(account)
+          // console.log(estateName)
+          // console.log(symbol)
+          // console.log(totalsupply)
+          // console.log(list.wallet_list),
+          // console.log(list.amount_list),
+          // console.log(seconds); // 212471
+          // 버튼 누를 때 팩토리 ca가 실행되서 매물 토큰 발행 ca를 생성
+          factoryContract?.methods.createCA(
+          account,
+          estateName,
+          symbol,
+          totalsupply,
+          list.wallet_list,
+          list.amount_list,
+          0,
+          ).send({
+            from : account,
+            gas : "3000000",
+          }).then(async (data :any)=>{
+          // // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
 
-        await fetch(`${domain}admin/ca_register`,{
-          method : "POST",
-          headers: {
-            'Content-Type': 'application/json', 
-          },
-          body : JSON.stringify({
-            address : data.events?.EstateCreated.returnValues[0],
-            real_estate_name : estateName,
-            symbol : symbol,
-          }),
-        })
-      })
+          await fetch(`${domain}/admin/ca_register`,{
+            method : "POST",
+            headers: {
+              'Content-Type': 'application/json', 
+            },
+            body : JSON.stringify({
+              address : data.events?.EstateCreated.returnValues[0],
+              real_estate_name : estateName,
+              symbol : symbol,
+            }),
+          })
+
+          setLoading(false);
+
+          })
+        } catch (error) {
+          console.log(error);
+        }
     } 
   // useEffect(()=>{
   //   // console.log(CAList);

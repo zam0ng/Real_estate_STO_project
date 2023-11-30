@@ -3,7 +3,7 @@ import axios from "axios";
 import { db } from "../../models";
 
  // ✅ 추가 | npm i gravatar
-const gravatar = require('gravatar');
+// const gravatar = require('gravatar');
 
 
 // 들어온 요청이 GET 요청인지 POST 요청인지 판단
@@ -61,8 +61,8 @@ export const isLogin = async (
     const user_email = verify.data.email;
 
     // ✅ 추가
-    const gravatarUrl = gravatar.url(user_email, {s: '68', d: 'robohash'});
-    console.log("gravatarUrl" , gravatarUrl)  // ✅ DJ 추가
+    // const gravatarUrl = gravatar.url(user_email, {s: '68', d: 'robohash'});
+    // console.log("gravatarUrl" , gravatarUrl)  // ✅ DJ 추가
 
 
     req.body.user_email = user_email;
@@ -76,7 +76,7 @@ export const isLogin = async (
       // const wallet = await handleWalletAddress(token);
 
       await db.Users.create({
-        user_profile_img: gravatarUrl, // ✅ 추가
+        user_profile_img: 'img', // ✅ 추가
         user_email: user_email,
         wallet: "",
         balance: 0,

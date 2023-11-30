@@ -744,7 +744,6 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                             console.error("TransferFrom Transaction Error:", error);
                         }
                     }
-    
                 }
                 clearInputs2();
                 queryClient.refetchQueries({queryKey:["fetchCompleteDeal"]});

@@ -1,3 +1,5 @@
+import {Dispatch,SetStateAction} from 'react';
+
 // DB 에서 받은 데이터 ROW 당 타입
 export interface TableRow {
   item: EstateDataItem;
@@ -16,6 +18,7 @@ export interface TransactionTableRow {
 // DB 에서 받은 데이터 ROW 당 타입
 export interface TableRowEstate {
   item: EstateDataItem;
+  // setLoading : Dispatch<SetStateAction<boolean>>;
 }
 
 // DB 에서 받은 데이터 ROW 당 타입
@@ -176,6 +179,8 @@ export interface ActionButton {
 export interface EnableButtonParam {
     text : string
     id : number;
+    setLoading : Dispatch<SetStateAction<boolean>>;
+
   }
   
   export interface EnrollBlacklistButtonParams {
