@@ -46,7 +46,7 @@ export default function MapDetail({detail} : MapDetailType){
             <div className="text-xl font-bold ">{detail.subscription_name}</div>
             <div className="text-sm font-semibold text-gray-500 mb-3 ">📌{detail.subscription_address}</div>
             <KakaoMap addressKor={detail.subscription_address} width="h-5/6" height="h-52"/>
-            <div className="border rounded-2xl mt-9">
+            <div className="border rounded-2xl mt-9 bg-[#EDF0F4] rounded-xl shadow-neu2">
                 {BuildingInfo.map((i,index)=>{
                     return (
 
@@ -58,7 +58,7 @@ export default function MapDetail({detail} : MapDetailType){
                 })}
             </div>
             <div className="text-xl font-bold mt-9">발행 정보</div>
-            <div className="border rounded-2xl mt-5">
+            <div className="border rounded-2xl mt-5 bg-[#EDF0F4] rounded-xl shadow-neu2">
                 {TokenInfo.map((i,index)=>{
                     return (
 

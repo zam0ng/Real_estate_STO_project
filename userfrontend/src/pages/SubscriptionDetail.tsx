@@ -12,6 +12,8 @@ import MapDetail from "../contents/subscription/subDetail/MapDetail";
 import BackBtn from "../components/BackBtn";
 import LoadingComponent from "../components/LoadingComponent";
 import ErrorComponent from "../components/ErrorComponent";
+import InvestmentPoint from "../contents/subscription/subDetail/InvestmentPoint";
+
 
 export default function SubscriptionDetail(){
 
@@ -35,15 +37,15 @@ export default function SubscriptionDetail(){
 
 
     let tab = [{
-        tabName : "투자 포인트",
-        content : <>투자 포인트 화면입니다</> 
-    },{
         tabName : "모집 현황",
         content : <SubStatus detail={detail}/>
     },{
         tabName : "상세 정보",
         content : <MapDetail detail={detail} />
-    }]
+    },{
+      tabName : "투자 포인트",
+      content : <InvestmentPoint /> 
+  }]
 
     return(
         <div className="animate-swipe">  
@@ -54,3 +56,5 @@ export default function SubscriptionDetail(){
         </div>
     )
 }
+
+

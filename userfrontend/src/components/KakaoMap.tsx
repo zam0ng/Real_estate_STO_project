@@ -58,7 +58,7 @@ const KakaoMap: React.FC<MapProps> = ({addressKor,width,height}) => {
 
 
     return(
-        <div id="map" className={`${width} ${height} border-2 border-black rounded-md`}>
+        <div id="map" className={`${width} ${height} bg-[#EDF0F4] rounded-xl shadow-neu2`}>
             
         </div>
     )
