@@ -15,7 +15,10 @@ const getTransaction = async () => {
             cache: "no-store"
         });
         console.log("resp"  , resp)
-        return resp.json();
+
+        if(resp.status == 200){
+            return resp.json();
+        }
     
     } catch (error) {
         console.log(error);

@@ -6,7 +6,7 @@ export const getUserList = async () => {
         // 기존 DJ 테스트 주소 : http://localhost:8080/admin/subscription
         // 변경 주소 : /admin/management/real_estates_list
 
-    const path = `/admin/management/✅✅✅`;
+    const path = '/admin/users_list';
     const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
     const url = `${domain}${path}`
 
@@ -15,7 +15,9 @@ export const getUserList = async () => {
         cache: "no-store",
         })        
 
-        return res.json()
+        if(res.status == 200){
+            return res.json()
+        }
         
     } catch (error) {
         console.log(error)

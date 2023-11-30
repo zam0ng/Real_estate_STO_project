@@ -114,14 +114,6 @@ export default async function ReadEstateItem({
 
   // const resp = await getEstateDetail( params );
   // const detailData = await resp?.json()
-        // // console.log("isEstateDetailModalOpen" , isEstateDetailModalOpen)
-        // // console.log("params" , {params})
-        // // console.log("params" , params.id)/
-
-        // const router = useRouter();
-        // // console.log("router", router)
-        // const { id } = router.query; // 여기에서 id를 추출
-        
 
   return <>{isEstateDetailModalOpen && <RenderEstateDetailModal />}</>;
 }

@@ -38,7 +38,10 @@ const PublicOfferingStatus = async () => {
   // calcRatio 에 publicOfferingData 넣기
     const ratioObj = calcRatio(publicOfferingData)
       
-      console.log(" ratioObj 확인" , ratioObj.ratio, ratioObj.totalOrderSum , ratioObj.totalPriceSum)
+      console.log(" ratioObj 확인 👉👉" ,
+        ratioObj.ratio,
+        ratioObj.totalOrderSum,
+        ratioObj.totalPriceSum)
 
 
       // const totalOrderArr = publicOfferingData.map((item: IPublicOfferingItem) =>
@@ -80,15 +83,20 @@ const PublicOfferingStatus = async () => {
         <div className="z-20 text-xl font-medium">
           {/* {`${publicOfferingData.subscription_order_totalprice}`}/{`${publicOfferingData.subscription_totalprice}`}  */}
           {/* { totalOrderSum && totalPriceSum &&  `${totalOrderSum}`} / {`${totalPriceSum}`} */}
-          { ratioObj && ratioObj.totalOrderSum && ratioObj.totalPriceSum && `${ratioObj.totalOrderSum}`} / {`${ratioObj.totalPriceSum}`}
+          { ratioObj 
+              && ratioObj.totalOrderSum 
+              && ratioObj.totalPriceSum 
+              && `${ratioObj.totalOrderSum}`} / {`${ratioObj.totalPriceSum}`}
         </div>
       </div>
 
-      {/* 그래프 바 */}
       {/* <div className="h-2 bg-blue-500 x-full rounded-2xl">  */}
       <div className="relative x-30rem">
-        {ratioObj && ratioObj.ratio && <ProgressBarAdmin percent={ratioObj.ratio * 100} />}
+        {ratioObj 
+            && ratioObj.ratio 
+            && <ProgressBarAdmin percent={ratioObj.ratio * 100} />}
       </div>
+      
     </>
   );
 };

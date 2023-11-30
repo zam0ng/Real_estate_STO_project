@@ -21,6 +21,12 @@
 
     const RenderLargeLineChart = ( {finaldate , finalSum} : { finaldate : string[] , finalSum : number[]} ) => {
 
+
+    // 최대값과 최소값 계산
+    const maxValue = Math.max(...finalSum);
+    const minValue = Math.min(...finalSum);
+
+
     ChartJS.register(
     CategoryScale, 
     LineElement, 
@@ -101,6 +107,8 @@
         },
         
         y : {
+            min : 0, 
+            max : maxValue +1,
             grid : {
                 // backgroundColor : '#9ef59b',
                 // borderColor : '#1714c5',

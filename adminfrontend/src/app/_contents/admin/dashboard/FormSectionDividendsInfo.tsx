@@ -46,7 +46,7 @@ const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title,
                 <div className="flex flex-col items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
                   
                   <div>
-                      <label> 매물1 :문래 공차 (하드코딩)✅ 데이터 가져와야 함 </label>
+                      <label> 매물1 : 문래 공차 (하드코딩)✅ 데이터 가져와야 함 </label>
                       <input 
                         type="radio" 
                         name="real_estate_name"  

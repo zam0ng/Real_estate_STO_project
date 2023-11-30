@@ -2,29 +2,11 @@ import React from "react";
 import TransactionItem from "./TransactionItem";
 import getTransaction from "@/app/api/getTransaction";
 import Link from "next/link";
+import { ITransactionData } from "@/app/_features/admin/dashboard";
 
-/* [최근 거래 내역]
-    경로 : /admin/recent_trade_list
-    response data 타입 
-        {
-            subscription_img: "/images/test.png",  // Subscriptions 테이블
-            real_estate_name: "문래 오래",  // Subscriptions 테이블
-            trade_price: 1000,  // Trades 테이블 
-            createdAt: "2023-11-10T02:19:04.579Z",  // Trades 테이블
-        }
-        */
-
-interface ITransactionData {
-  subscription_img_1: string;
-  real_estate_name: string;
-  trade_price: number;
-  createdAt: string;
-  slice: Function;
-}
 
 const Transaction = async () => {
-  // const transactionData: ITransactionData = await getTransaction();
-
+  const transactionData: ITransactionData = await getTransaction();
   // console.log("transactionData💎", transactionData);
 
   return (
@@ -41,10 +23,10 @@ const Transaction = async () => {
           </Link>
         </div>
 
-        {/* {transactionData
+        {transactionData && transactionData
           .slice(0, 3)
           .map((item: ITransactionData, index: number) => {
-            console.log("item.subscription_img_1🚀🚀", item.subscription_img_1);
+            // console.log("item.subscription_img_1🚀🚀", item.subscription_img_1);
             return (
               item &&
               item.subscription_img_1 && (
@@ -57,7 +39,7 @@ const Transaction = async () => {
                 />
               )
             );
-          })} */}
+          })}
       </div>
     </>
   );
