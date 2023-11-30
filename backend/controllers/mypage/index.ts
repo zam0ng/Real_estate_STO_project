@@ -101,6 +101,23 @@ export const withDrawal = async (req: Request, res: Response) => {
   }
 };
 
+// 지갑 저장
+export const registWallet = async (req: Request, res: Response) => {
+  try {
+    const { user_email, wallet } = req.body;
+
+    const result = await db.Users.update(
+      { wallet: wallet },
+      { where: { user_email: user_email } }
+    );
+
+    if (result) return res.status(200).send(true);
+    else return res.send(false);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 유저 정보 보내주기
 export const userInfo = async (req: Request, res: Response) => {
   try {
