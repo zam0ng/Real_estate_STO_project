@@ -9,8 +9,9 @@ import axios from 'axios';
 import { serverurl } from '../../components/serverurl';
 import { useQuery } from '@tanstack/react-query';
 
-const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,vote_title,vote_start_date,vote_end_date}) => {
+const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,subscription_img_1,vote_title,vote_start_date,vote_end_date}) => {
     const [voteCA,setVoteCA] = useState<string>("");
+    const [currentUser,setCurrentUser] = useState<string>("");
 
     const fetchVoteCA = async () => {
         const response = await axios.get(`${serverurl}/vote/vote_contract_address`,{
@@ -34,13 +35,25 @@ const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,vote_
         }
     },[data]);
 
+    useEffect(()=>{
+        const getWalletAccount = async () => {
+            const accounts = await window.ethereum.request({method:"eth_accounts"});
+            if(accounts.length > 0){
+                setCurrentUser(accounts[0]);
+            }
+        };
+        getWalletAccount();
+    },[])
+
     const navigation = useNavigate();
 
     const toVoteDetail = () => {
         navigation(`/vote-detail/${real_estate_name}/${vote_title}`,{
             state: {
                 real_estate_name: real_estate_name,
-                vote_ca: voteCA
+                vote_ca: voteCA,
+                img: subscription_img_1,
+                wallet: currentUser
             }
         });
     };

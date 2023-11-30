@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 
 export interface VoteListRequest {
     real_estate_name: string;
+    subscription_img_1: string;
     vote_id: number;
     vote_title: string;
     vote_start_date: string;
@@ -19,7 +20,7 @@ export const VoteListContext = createContext<VoteListRequest[]|undefined>(undefi
 
 const VoteList: React.FC = () => {
 
-    const fetchVoteList = async () => {
+    const fetchVoteList = async (): Promise<VoteListRequest[]> => {
         const response = await axios.get(`${serverurl}/vote/vote_list`);
         return response.data;
     };
@@ -32,8 +33,6 @@ const VoteList: React.FC = () => {
     useEffect(()=>{
         console.log(data);
     },[data]);
-
-    
 
     return (
         <VoteListContext.Provider value={data}>

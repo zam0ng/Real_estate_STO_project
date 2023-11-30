@@ -3,14 +3,25 @@ import VoteAgreeNumber from './vote_status/agree_disagree/VoteAgreeNumber';
 import VoteAgreeStatus from './vote_status/agree_disagree/VoteAgreeStatus';
 import VoteDisagreeNumber from './vote_status/agree_disagree/VoteDisagreeNumber';
 import VoteDisagreeStatus from './vote_status/agree_disagree/VoteDisagreeStatus';
+import useWeb3 from '../../hooks/web3.hook';
 
 interface AgreeDisagreeProps {
+  tokenOwners: string[];
+  votedOwners: string[];
   agreeVotes: number;
   disagreeVotes: number;
   totalVotes: number;
 }
 
-const VoteCount: React.FC<AgreeDisagreeProps> = ({agreeVotes,disagreeVotes,totalVotes}) => {
+const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeVotes,disagreeVotes,totalVotes}) => {
+  const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
+  const newVotedOwners = votedOwners.map(item=>item.toLowerCase());
+
+  const {user,web3} = useWeb3();
+
+  const [currentAccount,setCurrentAccount] = useState<string>("");
+  const [voteState,setVoteState] = useState<string>("");
+
   const [agreeNumber,setAgreeNumber] = useState<number>(0);
   const [disagreeNumber,setDisagreeNumber] = useState<number>(0);
   const [totalNumber,setTotalNumber] = useState<number>(0);
@@ -21,13 +32,45 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({agreeVotes,disagreeVotes,total
     setTotalNumber(Number(totalVotes));
   },[agreeVotes,disagreeVotes,totalVotes]);
 
+  useEffect(()=>{
+    console.log(user);
+    setCurrentAccount(user.account);
+  },[user]);
+
+  useEffect(()=>{
+    if(window.ethereum){
+      window.ethereum.on("accountsChanged", (accounts: string[])=>{
+        if(accounts.length === 0){
+          console.log("no account connected: locked or not logged in");
+        }else{
+          const currentAccount = accounts[0];
+          setCurrentAccount(currentAccount);
+          // console.log("current account : ",currentAccount);
+        }
+      })
+    }else{
+      console.log("no metamask found");
+    }
+  },[user]);
+
+  useEffect(()=>{
+    console.log(currentAccount);
+    if(newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount)){
+      setVoteState("voted");
+    }
+  },[currentAccount]);
+
   return (
-    <div className='w-full h-32'>
-      <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
-      <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
-      <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
-      <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
-    </div>
+    <>
+      {voteState === "voted" &&
+          <div className='w-full h-32 border-t border-slate-200'>
+            <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
+            <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
+            <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+            <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+          </div>
+      }
+    </>
   )
 }
 

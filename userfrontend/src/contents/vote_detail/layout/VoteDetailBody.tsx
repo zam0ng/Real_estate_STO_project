@@ -38,13 +38,18 @@ const VoteDetailBody: React.FC = () => {
   useEffect(()=>{
     if(web3 !== null){
       if(contract) return;
-    
+
       const voteContract = new web3.eth.Contract(
         voteContractInfo.votingABI,
         currentPage.state.vote_ca,
         {data : ""}
       );
       setContract(voteContract);
+
+      voteContract.events.Voted({fromBlock: 'latest'})
+      .on("data", (event)=>{
+        console.log(event.returnValues);
+      })
     };
   },[web3]);
 
@@ -71,7 +76,7 @@ const VoteDetailBody: React.FC = () => {
     setUsedVotes(usedVotes);
     setAgreeVotes(agreeVotes);
     setDisagreeVotes(disagreeVotes);
-  }
+  };
 
   useEffect(()=>{
     console.log(contract);
@@ -85,10 +90,10 @@ const VoteDetailBody: React.FC = () => {
     <div className='w-full h-fit flex flex-col'>
         <VoteTitle real_estate_name={realEstateName} vote_title={voteTitle} />
         <VotePeriod startDate={startDate} endDate={endDate} />
-        <VotePropertyImg />
+        <VotePropertyImg img={currentPage.state.img} />
         <VoteStatus totalVotes={totalVotes} usedVotes={usedVotes} />
-        <VoteBtns />
-        <VoteCount agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} />
+        <VoteBtns tokenOwners={tokenOwners} votedOwners={votedOwners} voteCA={currentPage.state.vote_ca} />
+        <VoteCount tokenOwners={tokenOwners} votedOwners={votedOwners} agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} />
     </div>
   )
 }

@@ -18,7 +18,7 @@ const VoteStatus: React.FC<VoteStatusProps> = ({totalVotes,usedVotes}) => {
   },[totalVotes,usedVotes]);
 
   return (
-    <div className='w-full h-32 border-b border-slate-300'>
+    <div className='w-full h-32'>
       <VoteParticipationPercentage totalVotes={totalNumber} usedVotes={usedNumber} />
       <VoteStatusProgressBar totalVotes={totalNumber} usedVotes={usedNumber} />
       <VoteParticipationNumber totalVotes={totalNumber} usedVotes={usedNumber} />
