@@ -16,6 +16,7 @@ import {
   contractAddressList,
   tenDateJoinList,
   tenDateTransactionPrice,
+  monthlyIncome,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,

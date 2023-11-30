@@ -642,7 +642,8 @@ export const transferInOutList = async (req: Request, res: Response) => {
       END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
     from  tx_receipt tr
       join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
-      group by tx_wallet, tr.tx_symbol, tr.transmission;`;
+      group by tx_wallet, tr.tx_symbol, tr.transmission
+      having tr.transmission = 'in' or tr.transmission = 'out';`;
 
     const result = await db.sequelize.query(query, {
       type: QueryTypes.SELECT,

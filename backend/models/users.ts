@@ -8,7 +8,7 @@ interface UserAttributes {
   balance: number;
   using_balance: number;
   blacklist: boolean;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 class Users extends Model<UserAttributes> {
@@ -18,6 +18,7 @@ class Users extends Model<UserAttributes> {
   declare balance: number;
   declare using_balance: number;
   declare blacklist: boolean;
+  declare createdAt: Date;
   static initModel(sequelize: Sequelize): typeof Users {
     Users.init(
       {
