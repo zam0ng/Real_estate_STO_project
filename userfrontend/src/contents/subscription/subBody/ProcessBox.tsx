@@ -41,7 +41,7 @@ export default function ProcessBox() {
         {start.length !== 0 ? (
           <Dropdown props={start} />
         ) : (
-          <div className="bg-slate-100 shadow-2xl mt-2 rounded-lg h-16 text-center pt-5">
+          <div className="bg-[#EDF0F4] rounded-xl shadow-innerneu2 text-gray-300 font-bold  mt-2  h-16 text-center pt-5">
             진행중인 청약이 없어요
           </div>
         )}
@@ -56,7 +56,7 @@ export default function ProcessBox() {
         {pending.length !== 0 ? (
           <Dropdown props={pending} />
         ) : (
-          <div className="bg-slate-100 shadow-2xl mt-2 rounded-lg h-16 text-center pt-5">
+          <div className="bg-[#EDF0F4] rounded-xl shadow-innerneu2 text-gray-300 font-bold   mt-2  h-16 text-center pt-5">
             멋진 건물을 준비하고 있어요
           </div>
         )}

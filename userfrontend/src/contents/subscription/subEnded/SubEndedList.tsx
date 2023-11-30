@@ -39,9 +39,9 @@ export default function SubEndedList({ props }: SubAllListType) {
         
         {newData.map((building :SubAllList, index : number) => (
 
-        <div key={index} className='border-b-2  w-5/6 h-12 m-auto mt-1 flex justify-between'>
-        <div className=" mr-2 ml-2 w-10 h-10  rounded-xl bg-[url('http://newsteacher.chosun.com/site/data/img_dir/2023/04/03/2023040302645_0.jpg')] bg-cover"> </div>
-        <div className=" h-14 w-32 flex flex-col text-left  ">
+        <div key={index} className='border-b-2 mx-2 h-12 m-auto mt-1 flex justify-between'>
+        <div className=" w-14 h-10 mr-2 mt-1 rounded-full" style={{background : `url('http://localhost:8080/estate_img/${building.subscription_img_1}')`, backgroundSize : 'cover'}}> </div>
+        <div className=" h-14 w-32 flex flex-col text-left pt-1  ">
             <span className="text-xs">{building.subscription_name}</span>
             <span className="text-xs pt-1">현재가{building.start_price}</span>
           </div>
@@ -49,7 +49,7 @@ export default function SubEndedList({ props }: SubAllListType) {
             <div>{building.subscription_description}</div>
             <div>
               {building.start_price != null
-                ? (building.start_price - 5000) / 50 + "%"
+                ? <span>수익률  {(building.start_price - 5000) / 50 + "%"}</span>
                 : "청약 목표 미달성"}
             </div>
           </div>

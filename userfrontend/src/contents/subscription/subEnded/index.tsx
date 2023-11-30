@@ -22,7 +22,7 @@ export default function SubEnded(){
 
     ]
     return(
-        <div className=" mt-2 min-h-[50vh]">
+        <div className=" mt-10 min-h-[50vh]">
             <BoxTypeTabComponent data={subList}/>
         </div>
     )
