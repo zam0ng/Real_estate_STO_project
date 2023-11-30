@@ -13,10 +13,28 @@ export default function Home() {
 
 
   return (
-    <div className="mb-28 animate-swipe">
+    <div className="mb-28">
       <HomeAds/>
       <HomeIndices />
       <TabBar />
     </div>
   );
 }
+
+
+
+// 전체 배경색
+// bg-[#EDF0F4]
+
+// div 배경
+// bg-[#EDF0F4] rounded-xl shadow-new2 
+
+// 글씨
+// text-[#8F8F8F] text-bold
+
+// 들어간 div
+// bg-[#EDF0F4] rounded-xl shadow-innerneu
+// text-[#D7D7D7]
+
+// 튀어난온 div
+//bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2

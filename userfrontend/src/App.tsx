@@ -29,6 +29,7 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <div className="">
         <Routes>
           {/* <Route path="/" element={<Navigate replace to ="/home" />} /> */}
           <Route path="/home" element={<Home />} />
@@ -72,6 +73,7 @@ function App() {
           <Route path="/vote-detail/:name/:title" element={<VoteDetail />} />
           <Route path="/vote-list" element={<VoteList />} />
         </Routes>
+        </div>
       </QueryClientProvider>
     </BrowserRouter>
   );
