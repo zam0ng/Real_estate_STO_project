@@ -87,45 +87,29 @@ contract Voting {
         }
     }
 
-    function getVoteInfo() public view returns (string memory, string memory, uint256, uint256, bool, bool) {
+    function getVoteInfo() public view returns (string memory, string memory, uint256, uint256, address[] memory, address[] memory, bool, bool) {
         return (
             name,
             description,
             startDate,
             endDate,
+            owners,
+            voters,
             completed,
             result
         );
     }
 
-    function getBalanceOfVotingToken(address _voter) public view returns (uint256) {
-        return votingToken.balanceOf(_voter);
-    }
-
-    function getTotalSupplyVotingToken() public view returns (uint256) {
-        return votingToken.totalSupply();
-    }
-
-    function getTokenOwners() public view returns (address[] memory) {
-        return owners;
-    }
-
-    function getVoters() public view returns (address[] memory) {
-        return voters;
-    }
-
-    function getVoteCounts() public view returns (uint256, uint256) {
+    function getVoteCounts() public view returns (uint256, uint256, uint256, uint256) {
         return (
+            votingToken.totalSupply(),
+            usedTokens,
             agreeVotes,
             disagreeVotes
         );
     }
 
-    function getUsedTokens() public view returns (uint256) {
-        return usedTokens;
-    }
-
-    function getResult() public view returns (bool) {
-        return result;
+    function getBalanceOfVotingToken(address _voter) public view returns (uint256) {
+        return votingToken.balanceOf(_voter);
     }
 }

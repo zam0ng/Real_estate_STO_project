@@ -33,30 +33,7 @@ const VoteList: React.FC = () => {
         console.log(data);
     },[data]);
 
-    // useEffect(()=>{
-    //     if(web3 !== null){
-    //         if(contract) return;
     
-    //         const tokenContract = new web3.eth.Contract(
-    //             voteContractInfo.votingABI,
-    //             "0x2FCC105C8d9cf8285b1016a56bc5f9ADe88E5108",
-    //             {data : ""}
-    //         );
-    
-    //         setContract(tokenContract);
-    //     };
-    // },[web3]);
-
-    // const getVotingDetails = async () => {
-    //     const details = await contract.methods.getVoteInfo().call();
-    //     console.log(details);
-    // };
-
-    // useEffect(()=>{
-    //     if(web3 !== null){
-    //         getVotingDetails();
-    //     }
-    // },[web3]);
 
     return (
         <VoteListContext.Provider value={data}>

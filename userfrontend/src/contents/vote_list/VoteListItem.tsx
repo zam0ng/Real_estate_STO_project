@@ -1,19 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import VoteListItemProperty from './VoteListItemProperty';
 import VoteListItemName from './VoteListItemName';
 import VoteListItemPeriod from './VoteListItemPeriod';
 import VoteListItemProgress from './VoteListItemProgress';
 import { useNavigate } from 'react-router-dom';
 import { VoteListRequest } from '../../pages/VoteList';
+import axios from 'axios';
+import { serverurl } from '../../components/serverurl';
+import { useQuery } from '@tanstack/react-query';
 
 const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,vote_title,vote_start_date,vote_end_date}) => {
+    const [voteCA,setVoteCA] = useState<string>("");
+
+    const fetchVoteCA = async () => {
+        const response = await axios.get(`${serverurl}/vote/vote_contract_address`,{
+            params: {
+                vote_id: `${vote_id}`
+            }
+        });
+        return response.data;
+    };
+    
+    const {data,error,isLoading,isError} = useQuery({
+        queryKey: ["fetchVoteCA",vote_id],
+        queryFn: fetchVoteCA,
+        enabled: !!vote_id
+    });
+
+    useEffect(()=>{
+        console.log(data);
+        if(data){
+            setVoteCA(data[0].address);
+        }
+    },[data]);
+
     const navigation = useNavigate();
 
     const toVoteDetail = () => {
         navigation(`/vote-detail/${real_estate_name}/${vote_title}`,{
             state: {
                 real_estate_name: real_estate_name,
-                vote_id: vote_id
+                vote_ca: voteCA
             }
         });
     };

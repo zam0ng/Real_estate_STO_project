@@ -4,7 +4,7 @@ import { VoteListContext } from '../../../pages/VoteList';
 
 const VoteListItemBox: React.FC = () => {
   const data = useContext(VoteListContext);
-  // console.log(data);
+  console.log(data);
 
   const sortedData = data?.sort((a,b)=>{
     const dateA = new Date(a.vote_end_date);
