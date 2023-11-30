@@ -88,6 +88,7 @@ async function getBuyerWallet(user_email:string) {
   return wallet;
 }
 
+
 // 매도 주문
 export const orderSell = async (req: Request, res: Response) => {
   const { price, amount } = req.body;
@@ -347,6 +348,7 @@ export const orderSell = async (req: Request, res: Response) => {
                 if (!isHave) {
                   await Real_estates_own.create({
                     user_email: el.user_email,
+                    wallet : buyerWallet,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
                     price:
@@ -476,6 +478,7 @@ export const orderSell = async (req: Request, res: Response) => {
                 if (!isHave) {
                   await Real_estates_own.create({
                     user_email: el.user_email,
+                    wallet : buyerWallet,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
                     price:
@@ -600,6 +603,7 @@ export const orderSell = async (req: Request, res: Response) => {
                 if (!isHave) {
                   await Real_estates_own.create({
                     user_email: el.user_email,
+                    wallet : buyerWallet,
                     real_estate_id: real_estate_id!.id,
                     real_estate_name: name,
                     price:
@@ -958,6 +962,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
+                  wallet : buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:
@@ -1078,6 +1083,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
+                  wallet : buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:
@@ -1192,6 +1198,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
+                  wallet : buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:

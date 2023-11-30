@@ -975,6 +975,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
     email_list.forEach(async (element :any , index : number) => {
       await Real_estates_own.create({
         user_email: element,
+        wallet : wallet_list[index],
         real_estate_id: estateId!.id as number,
         real_estate_name: data!.subscription_name,
         price: data!.subscription_offering_price,
