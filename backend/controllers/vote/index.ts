@@ -166,6 +166,10 @@ export const userAmounts = async (req: Request, res: Response) => {
 
 // 투표 ca contract_address 테이블에 입력
 export const insertContractAddress = async (req: Request, res: Response) => {
+  
+  // console.log("req⭐⭐⭐⭐⭐⭐" , req)
+  console.log("req⭐⭐⭐⭐⭐⭐" , req.body)
+
   try {
     const { address, real_estate_name } = req.body;
 

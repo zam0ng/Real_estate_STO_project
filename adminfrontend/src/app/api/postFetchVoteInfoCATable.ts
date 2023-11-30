@@ -1,7 +1,7 @@
 
 const postFetchVoteInfoCATable = async (formData : FormData) => {
 
-  const address = formData.get('caAddress'); // 'addressFieldName'은 해당 필드의 이름입니다.
+  const caAddress = formData.get('caAddress'); // 'addressFieldName'은 해당 필드의 이름입니다.
   const realEstateName = formData.get('real_estate_name');
   // const voteTitle = formData.get('voteTitleFieldName');
   // const voteStartDate = formData.get('voteStartDateFieldName');
@@ -13,7 +13,7 @@ const postFetchVoteInfoCATable = async (formData : FormData) => {
 
   const postData = {
     real_estate_name: realEstateName,
-    address: address
+    address: caAddress
 }
   console.log("postData_postFetchVoteInfoCATable" , postData)
 
@@ -24,7 +24,8 @@ const postFetchVoteInfoCATable = async (formData : FormData) => {
       {
         method: "POST",
         headers : {
-          'Content-Type' : 'multipart/form-data', // form 데이터 인 경우  
+          // 'Content-Type' : 'multipart/form-data', // form 데이터 인 경우  
+          'Content-Type' : 'application/json', // json 인 경우 -> 백엔드에서는 req.body 로 받음
         },
         body: JSON.stringify(postData),
       }
