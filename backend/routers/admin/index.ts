@@ -14,6 +14,9 @@ import {
   blackListAdd,
   blackListDel,
   contractAddressList,
+  tenDateJoinList,
+  tenDateTransactionPrice,
+  monthlyIncome,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -26,16 +29,16 @@ import {
   noticeSubmit,
   dividendSubmit,
   caRegister,
-  subscriptionList
+  subscriptionList,
 } from "../../controllers/admin";
 
-import { Upload } from '../../middleware/imgUpload';
+import { Upload } from "../../middleware/imgUpload";
 
 const router: Router = express.Router();
 
-// router.post("/subscription_submit", realEstateSubmit); 
-  // ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
-  // [231122] 아마도 삭제가 된 듯? 
+// router.post("/subscription_submit", realEstateSubmit);
+// ✅✅✅ DJ (밑에 multer 적용된 미들웨어가 있을 때 realEstateSubmit 로 연결되는 것 같음 )
+// [231122] 아마도 삭제가 된 듯?
 
 /////////////////////////////////////////////////////
 // 매물 전체 정보
@@ -66,6 +69,12 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
 router.get("/contract_address_list", contractAddressList);
+// 10일치 유저 가입 정보 가져오기
+router.get("/ten_date_join_list", tenDateJoinList);
+// 10일치 거래 금액 가져오기
+router.get("/ten_date_transaction_price", tenDateTransactionPrice);
+// 월 예상 수입
+router.get("/monthly_income", monthlyIncome);
 
 // 공지사항 가져오기 | ✅ DJ TEST
 router.get("/notices", noticesList);
@@ -86,17 +95,14 @@ router.get("/notices", noticesList);
 // router.get("/real_estates_trade_list", realEstateTradeList);
 
 // 재영 어드민 부분
-router.post('/subscription_submit',Upload.array("upload"),realEstateSubmit);
-router.post('/notice_submit',noticeSubmit);
-router.post('/dividend_submit',dividendSubmit);
-router.post('/ca_register',caRegister);
-router.get('/subscription_list/:id',subscriptionList);
+router.post("/subscription_submit", Upload.array("upload"), realEstateSubmit);
+router.post("/notice_submit", noticeSubmit);
+router.post("/dividend_submit", dividendSubmit);
+router.post("/ca_register", caRegister);
+router.get("/subscription_list/:id", subscriptionList);
 
-
-
- // DJ 임시 테스트 ✅✅✅✅✅✅
+// DJ 임시 테스트 ✅✅✅✅✅✅
 // router.get('/subscription' , subscription) => [정현이가 추가한 버전] router.get("/management/real_estates_list", realEstateManagement); 로 변경
 // router.get('/subscription/detail/:id' , subscriptionDetail) => [정현이가 추가한 버전]  router.get("/management/real_estates_detail/:id", realEstateDetail); 로 변경
-
 
 export default router;

@@ -10,6 +10,7 @@ import Subscriptions_own from "../../models/subscriptions_own";
 import { group } from "console";
 import Real_estates from "../../models/real_estates";
 import Users from "../../models/users";
+import { myEmitter } from "../../middleware/eventEmitter";
 
 // 정현이형 어드민 부분
 type TradeDate = {
@@ -25,8 +26,29 @@ interface RealEstateAmount {
   };
 }
 
+interface UserCount {
+  date: string;
+  userCount: number;
+}
+
+interface TotalAmount {
+  date: string;
+  total_price: number;
+}
+
+interface MonthlyIncome {
+  monthly_income: number;
+}
+
+const today = new Date();
+const yesterday = today.setDate(today.getDate() - 1);
+const ten_days_ago = new Date(yesterday);
+
+ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
+const ten_days = getTenDate();
+
 function getDayInfo(info: string) {
-  const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
   if (info === "week") {
@@ -45,8 +67,6 @@ function getDayInfo(info: string) {
 }
 
 function setRealEstateAmount(result: TradeDate[], info: string) {
-  const today = new Date();
-
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
 
@@ -82,8 +102,6 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
       ten_date[i] = `${year}-${create_month}-${create_day}`;
     }
   } else {
-    const today = new Date();
-
     today.setMonth(today.getMonth() + 1);
 
     for (let i = 0; i < 10; i++) {
@@ -128,12 +146,25 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
   return all_result;
 }
 
-// function formatDate(date: Date): string {
-//   const year = date.getFullYear();
-//   const month = String(date.getMonth() + 1).padStart(2, "0");
-//   const day = String(date.getDate()).padStart(2, "0");
-//   return `${year}-${month}-${day}`;
-// }
+// const today = new Date();
+// const yesterday = today.setDate(today.getDate() - 1);
+// const ten_days_ago = new Date(yesterday);
+
+// ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
+// 10일치 정보를 받아오는데
+function getTenDate() {
+  const dates = [];
+
+  const start = new Date(ten_days_ago);
+  const end = new Date(yesterday);
+
+  for (let day = start; day <= end; day.setDate(day.getDate() + 1)) {
+    dates.push(new Date(day));
+  }
+
+  return dates;
+}
 
 // 매물 전체 정보
 export const realEstatesList = async (req: Request, res: Response) => {
@@ -182,7 +213,7 @@ export const realEstatesList = async (req: Request, res: Response) => {
       ],
       where: {
         createdAt: {
-          [Op.between]: [week_ago , day_earlier],
+          [Op.between]: [week_ago, day_earlier],
         },
       },
       group: "real_estate_name",
@@ -642,7 +673,8 @@ export const transferInOutList = async (req: Request, res: Response) => {
       END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
     from  tx_receipt tr
       join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
-      group by tx_wallet, tr.tx_symbol, tr.transmission;`;
+      group by tx_wallet, tr.tx_symbol, tr.transmission
+      having tr.transmission = 'in' or tr.transmission = 'out';`;
 
     const result = await db.sequelize.query(query, {
       type: QueryTypes.SELECT,
@@ -670,7 +702,6 @@ export const contractAddressList = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
-
 
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
@@ -875,6 +906,9 @@ export const caRegister = async (req: Request, res: Response) => {
       symbol: symbol,
       ca_type: "token",
     });
+
+    myEmitter.emit("contractAddressCheck");
+    myEmitter.emit("contractsCheckEvent");
     res.sendStatus(201);
   } catch (error) {
     res.sendStatus(400);
@@ -980,7 +1014,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
     email_list.forEach(async (element, index) => {
       await Real_estates_own.create({
         user_email: element,
-        real_estate_id: estateId!.id,
+        real_estate_id: estateId!.id as number,
         real_estate_name: data!.subscription_name,
         price: data!.subscription_offering_price,
         amount: amount_list[index],
