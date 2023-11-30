@@ -1125,3 +1125,16 @@ export const subscriptionList = async (req: Request, res: Response) => {
     // console.log("subscriptionList 에서 오류",error);
   }
 };
+
+
+// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
+export const noticesList = async (req : Request , res : Response) => {
+
+  try {
+    const noticeList = await Notices.findAll()
+    res.status(200).json(noticeList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500)
+  }
+}
