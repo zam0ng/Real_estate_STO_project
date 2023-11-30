@@ -14,9 +14,10 @@ import {
   blackListAdd,
   blackListDel,
   contractAddressList,
-  tenDateJoinList,
-  tenDateTransactionPrice,
-  monthlyIncome,
+  // tenDateJoinList,
+  // tenDateTransactionPrice,
+  // monthlyIncome,
+
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -69,12 +70,13 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
 router.get("/contract_address_list", contractAddressList);
+
 // 10일치 유저 가입 정보 가져오기
-router.get("/ten_date_join_list", tenDateJoinList);
-// 10일치 거래 금액 가져오기
-router.get("/ten_date_transaction_price", tenDateTransactionPrice);
-// 월 예상 수입
-router.get("/monthly_income", monthlyIncome);
+// router.get("/ten_date_join_list", tenDateJoinList);
+// // 10일치 거래 금액 가져오기
+// router.get("/ten_date_transaction_price", tenDateTransactionPrice);
+// // 월 예상 수입
+// router.get("/monthly_income", monthlyIncome);
 
 // 공지사항 가져오기 | ✅ DJ TEST
 router.get("/notices", noticesList);

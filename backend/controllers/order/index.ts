@@ -1601,6 +1601,7 @@ export const headerInfo = async (req: Request, res: Response) => {
 export const getCaMysellorders = async (req: Request, res : Response)=>{
   const {user_email} = req.body;
   const {name} = req.params;
+  console.log("+_+_+_+_",user_email,name);
   try {
     const _mysellorders = await mysellorders(user_email,name);
     // console.log(_mysellorders);

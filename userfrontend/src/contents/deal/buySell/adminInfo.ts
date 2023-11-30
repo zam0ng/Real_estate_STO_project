@@ -1,4 +1,4 @@
-const adminWallet = "0x3CEE9b26274448942D07E1C62a568Feec4bA2Fc6";
-const adminPrimarykey = "0xc2835a6bf63ea94365a6d569e21ba4aa118d6aa7120bc4a7a9afcd2b18a295e2";
+const adminWallet = "0xc1f8922D99F366EBA9C3d3e283B941FDe7c0c6BE";
+const adminPrimarykey = "0xe6370dc16bf274adb0c235b42ae339810fcfa738f759de113527d4ad698ff640";
 
 export {adminWallet,adminPrimarykey};

@@ -200,7 +200,7 @@ module.exports = {
 
         state_pending_back: "#FFF0E2",
         state_pending_text: "#E7AB74",
-        state_loading_back : "rgba(0, 0, 0, 0.500)",
+        state_black_opacity_4 : "rgba(0, 0, 0, 0.400)",
         
         blacklist_status_bgColor : "#4a4747",
         blacklist_status_textColor : "#febebe",

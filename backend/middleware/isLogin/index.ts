@@ -84,8 +84,8 @@ export const isLogin = async (
         blacklist: false,
       });
     }
-    // console.log("+_+_",verify.data.email);
-    // console.log("+_+_",req.route.path);
+    console.log("+_+_",verify.data.email);
+    console.log("+_+_",req.route.path);
     if (req.route.path !== "/") return next();
     if (verify) {
       // console.log("여기들어옴>?");

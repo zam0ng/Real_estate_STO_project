@@ -54,6 +54,9 @@ const IncompleteDeal: React.FC<socketProps> = ({ isSocket }) => {
 
   const [orderType, setOrderType] = useState<string>("");
   const [koreanTime, setKoreanTime] = useState<string[]>([]);
+  const [isOpen, setisOpen] =useState(false);
+  const [isContent, setContent] = useState("");
+  const [isTitle, setIsTitle] = useState("");
 
   const {
     data: incompleteDeals,
@@ -82,6 +85,9 @@ const IncompleteDeal: React.FC<socketProps> = ({ isSocket }) => {
 
   const handleCancel = (id: number) => {
     cancelMutation.mutate({ id });
+    setisOpen(true);
+    setIsTitle('주문 취소 접수')
+    setContent('주문 취소 신청이 접수되었습니다.')
   };
 
   const fromRecent =
@@ -96,6 +102,18 @@ const IncompleteDeal: React.FC<socketProps> = ({ isSocket }) => {
 
   return (
     <>
+      {/* 알림창 */}
+      {isOpen && 
+          <>
+          <div className='absolute border-2 top-0 left-0 w-full h-full bg-state_black_opacity_4 z-50'>
+              <div className='absolute top-1/2 left -1/2 border-2 custom-transform w-72 h-32 flex flex-col items-center bg-white z-10' >
+                  <span className='font-bold mt-3 text-blue-800'>{isTitle}</span> <br></br> <span className='-mt-3 text-sm'>{isContent}</span>
+                  <hr className='border-1 w-full mt-3'></hr>
+                  <button onClick={()=>setisOpen(false)} className='mt-2 text-blue-800'>확인</button>
+              </div>
+          </div>
+          </>
+      }
       {fromRecent &&
         fromRecent.map((item, index) => {
           return (

@@ -50,6 +50,9 @@ module.exports = {
         'slide-up': 'slideUp 0.4s ease-out',
         swipe : 'swipe 0.2s ease-out'
       },
+      colors :{
+        state_loading_back : "rgba(0, 0, 0, 0.500)",
+      }
     },
   },
   plugins: [

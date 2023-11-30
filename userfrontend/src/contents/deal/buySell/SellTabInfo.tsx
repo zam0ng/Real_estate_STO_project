@@ -574,7 +574,7 @@ const estate_abi = [
 // const [contract,setContract] = useState<any>("");
 
 const sellPost = async (propertyName: string,sellData:SellPost,token:string,user:any,web3:any): Promise<any> => {
-    
+    console.log("_)_)_)_)_");
     // ca, 내가 걸어 놓은 매도 주문, 내 판매가능 수량 3개 가져오기.
     const getCa_mysellorders : any = await axios.post<string>(`${serverurl}/order/getca_mysellorders/${propertyName}`,{
         token : token
@@ -636,6 +636,10 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
     const [sellAmount,setSellAmount] = useState<any>(0);
     const {user,web3} = useWeb3();
 
+    const [isOpen, setisOpen] =useState(false);
+    const [isContent, setContent] = useState("");
+    const [isTitle, setIsTitle] = useState("");
+
     const priceInputRef = useRef<HTMLInputElement>(null);
     const amountInputRef = useRef<HTMLInputElement>(null);
 
@@ -684,6 +688,12 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                 console.log(data);
                 console.log(data.real_estate_CA);  //CA 주소
                 console.log(data.data.data);
+
+                if(data.data == '매도 주문 완료' || data.data.mesaage =='매도 완료'){
+                    setisOpen(true);
+                    setIsTitle('매도 주문 접수');
+                    setContent("매도주문 정상 접수되었습니다.");
+                }
 
                 if(data.data.data){
                     console.log(adminWallet);
@@ -754,7 +764,10 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
             }, 
             onError: (error)=>{
                 console.log(error);
-                alert("매도 주문 오류 : 서명 처리 거부")
+                setisOpen(true);
+                setIsTitle('매도 주문 오류')
+                setContent('서명 처리 거부')
+                // alert("매도 주문 오류 : 서명 처리 거부")
             }
         }
     );
@@ -768,6 +781,19 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
   }, [sellPrice]);
 
     return (
+        <>
+        {/* 알림창 */}
+        {isOpen && 
+            <>
+            <div className='absolute border-2 top-0 left-0 w-full h-full bg-state_black_opacity_4 z-50'>
+                <div className='absolute top-1/2 left -1/2 border-2 custom-transform w-72 h-32 flex flex-col items-center bg-white z-10' >
+                    <span className='font-bold mt-3 text-blue-800'>{isTitle}</span> <br></br> <span className='-mt-3 text-sm'>{isContent}</span>
+                    <hr className='border-1 w-full mt-3'></hr>
+                    <button onClick={()=>setisOpen(false)} className='mt-2 text-blue-800'>확인</button>
+                </div>
+            </div>
+            </>
+        }
         <form onSubmit={(e:React.FormEvent<HTMLFormElement>)=>{
             e.preventDefault();
             const newData = {price: sellPrice,amount:sellAmount};
@@ -795,6 +821,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                 </div>
             </div>
         </form>
+        </>
     )
 }
 

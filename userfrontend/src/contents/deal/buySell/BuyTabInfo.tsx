@@ -617,6 +617,10 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
     const [buyAmount,setBuyAmount] = useState<any>(0);
     const {user,web3} = useWeb3();
 
+    const [isOpen, setisOpen] =useState(false);
+    const [isContent, setContent] = useState("");
+    const [isTitle, setIsTitle] = useState("");
+
   const priceInputRef = useRef<HTMLInputElement>(null);
   const amountInputRef = useRef<HTMLInputElement>(null);
 
@@ -666,6 +670,17 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                 console.log(data.data.data);
                 console.log(data.real_estate_CA);
 
+                if(data.data =='매수 주문 완료' || data.data.message =='매수 완료'){
+                    setisOpen(true);
+                    setIsTitle('매수 주문 접수')
+                    setContent('매수주문 정상 접수되었습니다.');
+                }
+
+                if(data.data == '보유 금액 부족'){
+                    setisOpen(true);
+                    setIsTitle('매수 주문 오류')
+                    setContent('보유 금액 부족');
+                }
                 if(data.data.data){
                     console.log(adminWallet);
 
@@ -749,6 +764,19 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
   }, [buyPrice]);
 
     return (
+        <>
+        {/* 알림창 */}
+        {isOpen && 
+            <>
+            <div className='absolute border-2 top-0 left-0 w-full h-full bg-state_black_opacity_4 z-50'>
+                <div className='absolute top-1/2 left -1/2 border-2 custom-transform w-72 h-32 flex flex-col items-center bg-white z-50' >
+                    <span className='font-bold mt-3 text-red-800'>{isTitle}</span> <br></br> <span className='-mt-3 text-sm'>{isContent}</span>
+                    <hr className='border-1 w-full mt-3'></hr>
+                    <button onClick={()=>setisOpen(false)} className='mt-2 text-red-800'>확인</button>
+                </div>
+            </div>
+            </>
+        }
         <form onSubmit={(e:React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
             const newData = {price:buyPrice,amount:buyAmount};
@@ -776,6 +804,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                 </div>
             </div>
         </form>
+        </>
     )
 }
 
