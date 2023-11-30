@@ -18,6 +18,7 @@ const postFetchVoteInfoVoteTable = async (formData : FormData) => {
   const _voteStartDate = formData.get('voteStartDate');
   const _voteEndDate = formData.get('voteEndDate');
 
+  
     // 'YYYY-MM-DD' 형식으로 변환
     const voteStartDate = convertSecondsToDate(_voteStartDate);
     const voteEndDate = convertSecondsToDate(_voteEndDate);

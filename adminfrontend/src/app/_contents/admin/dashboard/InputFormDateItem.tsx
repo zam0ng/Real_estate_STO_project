@@ -12,6 +12,8 @@ const InputFormDateItem:React.FC<InputFormDateItemProps> = ( {_title, _type , _p
     const dateSeconds = dateMillisecondsFormat/1000    // 밀리초에서 초로 변환
     console.log("dateSeconds" , dateSeconds)
     setDate(dateSeconds)
+
+
   }
 
 

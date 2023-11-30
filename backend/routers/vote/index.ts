@@ -6,7 +6,6 @@ import {
   userAmounts,
   voteInsert,
   voting,
-  insertContractAddress,
 } from "../../controllers/vote";
 
 const router = Router();
@@ -24,9 +23,6 @@ router.get("/vote_amounts", userAmounts);
 router.post("/vote_insert", voteInsert);
 // 투표 한사람 기록
 router.post("/voting", voting);
-// 투표 ca 등록
-router.post("/insert_contract_address", insertContractAddress);
-
 
 export default router;
 
