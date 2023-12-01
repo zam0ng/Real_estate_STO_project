@@ -823,6 +823,24 @@ export const monthlyIncome = async (req: Request, res: Response) => {
   }
 };
 
+// 등록된 매물 이름
+export const realEstateNameList = async (req: Request, res: Response) => {
+  try {
+    const result = await db.Subscriptions.findAll({
+      attributes: ["real_estate_name"],
+      where: {
+        subscription_status: "success",
+      },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request, res: Response) => {
