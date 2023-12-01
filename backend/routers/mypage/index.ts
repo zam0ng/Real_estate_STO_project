@@ -21,8 +21,8 @@ const router = Router();
 
 router.post("/", isLogin);
 
-router.post("/deposit_balance", depositBalance);
-router.post("/withdrawal", withDrawal);
+router.post("/deposit_balance", isLogin,depositBalance);
+router.post("/withdrawal", isLogin, withDrawal);
 
 router.post("/regist_wallet", isLogin, registWallet);
 
