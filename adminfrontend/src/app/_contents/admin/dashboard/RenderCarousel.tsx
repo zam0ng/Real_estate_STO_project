@@ -10,7 +10,7 @@ interface ICurrentSituationItem {
   subscription_img_1: string,
   subscription_name: string,
   subscription_description: string,
-  weekly_trade_amount : number ,  
+  total_amount : number ,  
   // 토큰 가격: ,
   // 누적 수익률: ,
   current_price: number,
@@ -29,7 +29,7 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
 
     const nameArr = currentSituationData.map((item) => item.subscription_name)
     const subscription_descriptionArr = currentSituationData.map((item) => item.subscription_description)
-    const weekTradeArr = currentSituationData.map((item) => item.weekly_trade_amount)
+    const weekTradeArr = currentSituationData.map((item) => item.total_amount)
     const tokenPriceArr = currentSituationData.map((item) => item.current_price)
     // console.log("tokenPriceArr" , tokenPriceArr)
 
@@ -43,7 +43,7 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
     // };
     // console.log("currentSituationData🔥🔥" , currentSituationData)
     const imagePathsArr = currentSituationData.map( (item) => item.subscription_img_1)
-    console.log("imagePathsArr👍" , imagePathsArr  )
+    // console.log("imagePathsArr👍" , imagePathsArr  )
     /* ['imgs\\estate\\black_1700801055146.png', 
         'imgs\\estate\\pattern_2_1700793512281.jpg', 
         'imgs\\estate\\black_1700801056004.png'
@@ -136,7 +136,7 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
                   {/* 최근 7일 거래 횟수 */}
                   <div className="z-10 flex flex-col items-center justify-end w-1/3 h-auto top-10 ">
                     <p className="text-dashboard_carousel_black text-1.687rem font-extrabold -ml-2 ">{weekTradeArr[currentIndex] != null? weekTradeArr[currentIndex] : 0} </p>
-                    <p className="text-dashboard_carousel_black_800 text-0.9375rem -ml-4">거래 횟수</p>
+                    <p className="text-dashboard_carousel_black_800 text-0.9375rem -ml-4"> 거래 횟수</p>
                   </div>
 
                   {/* 토큰 가격 */}
@@ -145,9 +145,9 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
                     <p className="text-dashboard_carousel_black_800 text-0.9375rem">토큰 가격</p>
                   </div>
 
-                  {/* 수익률 */}
+                  {/* 수익률 : 공모가 기준으로 현재 가격을 나눠서 계산 */}
                   <div className="flex flex-col items-center justify-end w-1/3 h-auto">
-                    <p className="text-dashboard_carousel_black text-1.687rem font-extrabold  ml-4"> 120% </p>
+                    <p className="text-dashboard_carousel_black text-1.687rem font-extrabold  ml-4"> {tokenPriceArr[currentIndex] != null? ( (tokenPriceArr[currentIndex] - 5000 ) / 5000) * 100  : 0}% </p>
                     <p className="text-dashboard_carousel_black_800 text-0.9375rem ml-4"> 수익률 </p>
                   </div>
 

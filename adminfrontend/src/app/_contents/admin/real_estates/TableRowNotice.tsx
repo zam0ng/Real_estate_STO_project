@@ -14,6 +14,7 @@ import EnableButton from "./EnableButton";
 import DisableButton from "./DisableButton";
 import CreatedDate from "./CreatedDate";
 import DateFormat from "./DateFormat";
+import DescriptionContent from "./DescriptionContent";
 
 const TableRowNotice = async ({ item }: TableRowNotice) => {
 
@@ -52,7 +53,7 @@ const TableRowNotice = async ({ item }: TableRowNotice) => {
         id={item.id}
         desc={item.notice_title } />
 
-    <Description 
+    <DescriptionContent 
         id={item.id}
         desc={item.notice_content  } />
 

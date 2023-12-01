@@ -780,17 +780,23 @@ export const tenDateTransactionPrice = async (req: Request, res: Response) => {
 // 월 예상 수익
 export const monthlyIncome = async (req: Request, res: Response) => {
   try {
-    const first_year_month = new Date(today.getFullYear(), today.getMonth(), 1);
-    const last_year_month = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      0
+    const first_year_month = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1)
     );
+
+    const last_year_month = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 2, 0)
+    );
+
+    console.log(first_year_month);
+    console.log(last_year_month);
 
     const result = (await db.Trades.findAll({
       attributes: [
         [
-          db.sequelize.literal("ROUND(sum(trade_price) * 0.0022, 2)"),
+          db.sequelize.literal(
+            "ROUND(sum((trade_price * trade_amount)) * 0.0022, 2)"
+          ),
           "monthly_income",
         ],
       ],
@@ -805,12 +811,16 @@ export const monthlyIncome = async (req: Request, res: Response) => {
       raw: true,
     })) as [] as MonthlyIncome[];
 
+    console.log(result);
+
     const monthly_incomes = result.map(
       (item: MonthlyIncome) => item.monthly_income
     );
 
+    console.log("monthly_incomes🚀", monthly_incomes);
+
     if (result) return res.status(200).json(monthly_incomes[0]);
-    else return res.status(404).send(0);
+    else return res.status(404).send([0]);
   } catch (error) {
     console.error(error);
   }
@@ -1126,15 +1136,13 @@ export const subscriptionList = async (req: Request, res: Response) => {
   }
 };
 
-
 // 게시글(공지/공시) 받아오기 by ✅DJ.테스트
-export const noticesList = async (req : Request , res : Response) => {
-
+export const noticesList = async (req: Request, res: Response) => {
   try {
-    const noticeList = await Notices.findAll()
+    const noticeList = await Notices.findAll();
     res.status(200).json(noticeList);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500)
+    res.sendStatus(500);
   }
-}
+};

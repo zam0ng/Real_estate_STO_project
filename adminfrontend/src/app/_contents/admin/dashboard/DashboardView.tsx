@@ -77,8 +77,6 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
             </div>
 
 
-
-
             {/* small card */}
             <div className="flex justify-between w-30rem ">
               {/* 유저 card */}

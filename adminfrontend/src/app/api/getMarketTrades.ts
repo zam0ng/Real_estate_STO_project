@@ -48,15 +48,17 @@ const getMarketTrades =  async ( criteria : string ) => {
 
     try {
         const resp = await fetch(`${url}` ,{ 
-            next : {tags : [`${criteria}`]}
+            cache: "no-store",
         });
 
         // 캐싱 하지 않는 경우
             // const resp = await fetch(`${url}` ,{ 
             //     cache: "no-store"
             // });
+        if(resp.status == 200){
+            return resp.json();
+        }
         
-        return resp.json();
     
     } catch (error) {
         console.log(error);

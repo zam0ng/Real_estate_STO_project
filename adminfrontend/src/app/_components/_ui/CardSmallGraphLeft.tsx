@@ -4,15 +4,15 @@ import LineChartLarge from "@/app/_contents/admin/dashboard/LineChartLarge";
 import { getUserList } from "@/app/api/getUserList";
 
 
-// /admin/users_list
-
 const CardSmallGraphLeft = async (   ) => {
-
 
   const userList = await getUserList()
 
-  // console.log("userList" , userList)
+  console.log("userList" , userList)
 
+  const totalUser = userList.reduce((acc: number, curr: number | string) => acc + Number(curr), 0);
+  console.log("totalUser" , totalUser)
+  const convertedTotal = totalUser.toLocaleString()
 
 
   return (
@@ -24,19 +24,17 @@ const CardSmallGraphLeft = async (   ) => {
         <div className="relative flex items-start w-20 h-20 bg-dashboard_card_bg ">
           <LineChartSmall 
             _lineColor = {'rgb(250, 146, 142)'}  
-            _data = {[2, 10, 5, 2, 3, 1, 3, 1, 8 , 7]}  
+            _data = {userList}  
             _label = {["Oct 10","17","Nov 3", "10", "17", "24", "Dec 3", "10", "17", "Nov", ]} />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center">
           <p className="text-base font-medium text-dashboard_card_text">
-            총 유저 
-            {/* 총 거래 금액 */}
+            회원가입 
           </p>
           <h3 className="text-xl font-bold tracking-0.015rem text-adminLayout_menubar_name">
             
-            {userList}명
-            {/* 5,700만원 */}
+            {convertedTotal}명
           </h3>
         </div>
       </div>

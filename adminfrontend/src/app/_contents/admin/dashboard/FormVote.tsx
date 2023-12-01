@@ -60,19 +60,7 @@ export default function FormVote({
 
   const [contract, setContract] = useState<any>(null);
 
-  // const [voteableEstateData, setVoteableEstateData] = useState<VoteableEstate[]>([]);
-  // const [getAddressFromNameObj , setGetAddressFromNameObj] = useState<{ [key: string]: string }>({});
-
   // console.log("voteableEstateData" , voteableEstateData)
-
-  // useEffect( () => {
-  //   getFetch()
-  // } , [selectedValue])
-
-  // const getFetch = async () => {
-  //   const getOwnerListData = await getOwnerList(selectedValue)
-  //   console.log("getOwnerListData" , getOwnerListData)
-  // }
 
   // console.log("voteableEstateData_formVote" , voteableEstateData)
 
@@ -229,7 +217,7 @@ export default function FormVote({
     const selectedProperty = formData.get("real_estate_name") as string | null;
     const voteDescription = formData.get("notice_title") as string | null;
 
-
+    
     // console.log("startDate | endDate", startDate, endDate);
     //   // startDate | endDate 1698969600 1701993600
     // console.log("amountList", amountList);
@@ -241,9 +229,8 @@ export default function FormVote({
     // console.log("voteDescription", voteDescription);
     //   // voteDescription 매각 여부 결정 투표
       
-      await postFetchVoteInfoCATable(formData); // CA 테이블 저장
-      
-      if (
+    
+    if (
       tokenCA &&
       ownerList &&
       amountList &&
@@ -259,22 +246,18 @@ export default function FormVote({
           );
         }
         
-      await postFetchVoteInfoVoteTable(formData); // 투표 테이블 저장 🔵    
-      
-      
         // await postFetchVoteInfoCATable(formData); // CA 테이블 저장
+        await postFetchVoteInfoVoteTable(formData); // 투표 테이블 저장 🔵 | 🟠 이것도 다시 오류 
+        
+        await postFetchVoteInfoCATable(formData); // CA 테이블 저장 | 🟠 살짝 오류 -> 이쪽으로 위치 변경하니, 우선 해결됨 -> 다시 안 됨 
+        
+      router.refresh();
+      router.replace(`http://localhost:3000/admin/real_estates`);
+        
+        
+      };
       
-
-    // console.log(voteTableRes,caTableRes )
-
-    
-    alert("vote, ca DB 완료 | 컨트랙트 진행중");
-
-    router.refresh();
-    router.replace(`http://localhost:3000/admin/real_estates`);
-  };
-
-  return (
+      return (
     <div className="absolute top-0 left-0 z-50 flex items-center justify-center w-full h-full ">
       <form encType="multipart/form-data" onSubmit={postVoteForm}>
         {/* 여기부터 디자인 👇👇👇 */}
