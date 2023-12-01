@@ -40,15 +40,8 @@ interface MonthlyIncome {
   monthly_income: number;
 }
 
-const today = new Date();
-const yesterday = today.setDate(today.getDate() - 1);
-const ten_days_ago = new Date(yesterday);
-
-ten_days_ago.setDate(ten_days_ago.getDate() - 10);
-
-const ten_days = getTenDate();
-
 function getDayInfo(info: string) {
+  const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
   if (info === "week") {
@@ -69,6 +62,7 @@ function getDayInfo(info: string) {
 function setRealEstateAmount(result: TradeDate[], info: string) {
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
+  let today = new Date();
 
   if (info === "day") {
     for (let i = 0; i < 10; i++) {
@@ -102,8 +96,7 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
       ten_date[i] = `${year}-${create_month}-${create_day}`;
     }
   } else {
-    today.setMonth(today.getMonth() + 1);
-
+    // today.setMonth(today.getMonth() + 1);
     for (let i = 0; i < 10; i++) {
       today.setMonth(today.getMonth() - 1);
       let year = today.getFullYear();
@@ -123,12 +116,8 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
     let ten_amount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    // // console.log("find_real_estate_names : ", find_real_estate_names);
     const insert_ten_days_amount = find_real_estate_names.map((item) => {
-      // // console.log("item : ", item);
-      // // console.log("ten_date : ", ten_date);
       const getIndexOf = ten_date.indexOf(item.trade_date);
-      // // console.log("getIndexOf : ", getIndexOf);
       if (getIndexOf < 0) return;
       else ten_amount[getIndexOf] = parseInt(item.trade_amount);
     });
@@ -141,20 +130,23 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     };
 
     all_result.push(real_estate_object);
+    today = new Date();
   });
 
   return all_result;
 }
 
-// const today = new Date();
-// const yesterday = today.setDate(today.getDate() - 1);
-// const ten_days_ago = new Date(yesterday);
-
-// ten_days_ago.setDate(ten_days_ago.getDate() - 10);
-
+const ten_days = getTenDate();
 // 10일치 정보를 받아오는데
 function getTenDate() {
   const dates = [];
+  const today = new Date();
+
+  const yesterday = today.setDate(today.getDate() - 1);
+
+  const ten_days_ago = new Date(yesterday);
+
+  ten_days_ago.setDate(ten_days_ago.getDate() - 10);
 
   const start = new Date(ten_days_ago);
   const end = new Date(yesterday);
@@ -694,6 +686,11 @@ export const contractAddressList = async (req: Request, res: Response) => {
 // 10일치 회원 가입 정보
 export const tenDateJoinList = async (req: Request, res: Response) => {
   try {
+    const today = new Date();
+    const yesterday = today.setDate(today.getDate() - 1);
+    const ten_days_ago = new Date(yesterday);
+    ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
     const result = (await db.Users.findAll({
       attributes: [
         [
@@ -737,6 +734,11 @@ export const tenDateJoinList = async (req: Request, res: Response) => {
 // 10일치 거래 대금 정보
 export const tenDateTransactionPrice = async (req: Request, res: Response) => {
   try {
+    const today = new Date();
+    const yesterday = today.setDate(today.getDate() - 1);
+    const ten_days_ago = new Date(yesterday);
+    ten_days_ago.setDate(ten_days_ago.getDate() - 10);
+
     const result = (await db.Trades.findAll({
       attributes: [
         [db.sequelize.fn("date", db.sequelize.col("createdAt")), "date"],
@@ -780,17 +782,22 @@ export const tenDateTransactionPrice = async (req: Request, res: Response) => {
 // 월 예상 수익
 export const monthlyIncome = async (req: Request, res: Response) => {
   try {
-    const first_year_month = new Date(today.getFullYear(), today.getMonth(), 1);
+    const today = new Date();
+
+    const first_year_month = new Date(
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 1, 1)
+    );
+
     const last_year_month = new Date(
-      today.getFullYear(),
-      today.getMonth() + 1,
-      0
+      Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 2, 0)
     );
 
     const result = (await db.Trades.findAll({
       attributes: [
         [
-          db.sequelize.literal("ROUND(sum(trade_price) * 0.0022, 2)"),
+          db.sequelize.literal(
+            "ROUND(sum((trade_price * trade_amount)) * 0.0022, 2)"
+          ),
           "monthly_income",
         ],
       ],
