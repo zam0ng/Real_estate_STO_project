@@ -111,10 +111,12 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
       const create_month = month < 10 ? `0${month}` : `${month}`;
       ten_date[i] = `${year}-${create_month}`;
     }
+    console.log("ten_date");
+    console.log(ten_date);
   }
 
-  const real_estate_names = result.map((item) => item.real_estate_name);
-  const new_real_estate_names = [...new Set(real_estate_names)];
+  let real_estate_names = result.map((item) => item.real_estate_name);
+  let new_real_estate_names = [...new Set(real_estate_names)];
 
   new_real_estate_names.forEach((real) => {
     const find_real_estate_names = result.filter(
@@ -141,6 +143,8 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     };
 
     all_result.push(real_estate_object);
+    real_estate_names = [];
+    new_real_estate_names = [];
   });
 
   return all_result;
@@ -392,6 +396,10 @@ export const tradeDayList = async (req: Request, res: Response) => {
     })) as [] as TradeDate[];
 
     const all_result = await setRealEstateAmount(result, "day");
+
+    console.log("all_result[0].ten_amount");
+
+    console.log(all_result[0]);
 
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
@@ -675,7 +683,8 @@ export const transferInOutList = async (req: Request, res: Response) => {
   }
 };
 
-// 컨트랙트 주소 가져오기
+
+// 컨트랙트 주소 가져오기 
 export const contractAddressList = async (req: Request, res: Response) => {
   try {
     const result = await db.Contract_address.findAll({

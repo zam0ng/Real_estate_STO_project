@@ -181,6 +181,7 @@ export default function FormVote({
     }
   };
 
+  
   const postVoteForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

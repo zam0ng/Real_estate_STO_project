@@ -18,10 +18,10 @@ const LargeLineChart = async ({ searchParams }: SearchParamsProps) => {
 
   const marketTradesDuringDays = await getMarketTrades(getCriteria);
 
-  // console.log("marketTradesDuringDays🐣🐣", marketTradesDuringDays);
-  // console.log("10일간의 10개 자료", marketTradesDuringDays[0]);
-  // console.log("10일간의 10개 자료", marketTradesDuringDays[1]);
-  // console.log("10일간의 10개 자료", marketTradesDuringDays[2]);
+  console.log("marketTradesDuringDays🐣🐣", marketTradesDuringDays);
+  console.log("10일간의 10개 자료", marketTradesDuringDays[0]);
+  console.log("10일간의 10개 자료", marketTradesDuringDays[1]);
+  console.log("10일간의 10개 자료", marketTradesDuringDays[2]);
   // // console.log("문래공차의 ten_date, ten_amount" , marketTradesDuringDays[0]['문래공차'])
   // // console.log("ten_date", marketTradesDuringDays[0]['문래공차']['ten_date'])
   // // console.log("문래공차의 ten_amount", marketTradesDuringDays[0]['문래공차']['ten_amount'])
