@@ -1,4 +1,5 @@
 import React from 'react';
+import { serverurl } from '../../../components/serverurl';
 
 interface UserProfileImgProps {
   img: string|undefined;
@@ -7,8 +8,8 @@ interface UserProfileImgProps {
 const MyProfileImg: React.FC<UserProfileImgProps> = ({img}) => {
   return (
     <div className='w-full h-[50%] flex justify-center items-end'>
-        <div className='w-28 h-28 border border-black rounded-full'>
-            <img src={img} />
+        <div className='w-28 h-28 rounded-full flex justify-center items-center'>
+            <img className='w-full h-full rounded-full' src={`${serverurl}/estate_img/${img}`} />
         </div>
     </div>
   )

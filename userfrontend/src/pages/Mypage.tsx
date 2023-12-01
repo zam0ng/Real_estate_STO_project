@@ -79,7 +79,6 @@ export default function Mypage() {
         <MyCash />
         <MyAsset email={userEmail} />
         <MyDividend email={userEmail} />
-        <MyVote />
         <MySubscription email={userEmail} />
       </div>
       <TabBar />

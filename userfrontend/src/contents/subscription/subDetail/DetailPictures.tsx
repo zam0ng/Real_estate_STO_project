@@ -8,6 +8,10 @@ type DetailPicturesType = {
 
 export default function DetailPictures({detail} :DetailPicturesType){
 
+    const slides: any[] = [
+
+    ]
+
     return(
         <>
         
@@ -17,7 +21,7 @@ export default function DetailPictures({detail} :DetailPicturesType){
                 <div className="text-sm font-semibold ml-3 mt-1">{detail.subscription_description}</div>
             </div>
             <div className="  pt-10">
-                <Slider width="w-[screen]" />
+                <Slider width="w-[screen]" slides={slides} />
             </div>
         </div>
         </>

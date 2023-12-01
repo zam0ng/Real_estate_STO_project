@@ -16,19 +16,22 @@ const SubscriptionAd: React.FC = () => {
     return data;
   };
 
-  const { data, error, isLoading, isError } = useQuery<
-    AdvertisementInfoRequest[]
-  >({ queryKey: ["fetchAdData"], queryFn: fetchAdData });
+  const { data, error, isLoading, isError } = useQuery<AdvertisementInfoRequest[]>({ 
+    queryKey: ["fetchAdData"], 
+    queryFn: fetchAdData 
+  });
 
-  // console.log(data);
+  useEffect(()=>{
+    console.log(data);
+  },[data]);
 
   return (
     <div className="w-[80%] h-20 rounded-lg flex flex-col justify-center bg-sky-700 mt-5">
-      <div className="w-full h-1/2 flex justify-center items-center text-white">
+      <div className="w-full h-1/2 flex justify-center items-center text-white text-sm">
         {data && data[0].subscription_name}
       </div>
       <div className="w-full h-1/2 flex justify-center items-center text-xs text-white">
-        {"시작 예정일"}
+        지금 구매하세요!!
       </div>
     </div>
   );

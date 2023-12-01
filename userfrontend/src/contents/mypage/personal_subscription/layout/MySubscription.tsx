@@ -5,14 +5,14 @@ import { serverurl } from "../../../../components/serverurl";
 import { UserEmailProps } from "../../personal_info/layout/MyInfo";
 import { useQuery } from "@tanstack/react-query";
 
-interface MySubscriptionListRequest {
+export interface MySubscriptionListRequest {
   subscription_name: string;
-  subscription_img: string;
+  subscription_img_1: string;
   application_date: string;
   subscription_end_date: string;
   subscription_my_amount: number;
-  subscription_offering_price: number;
-  refund_price: number;
+  subscription_offering_price: string;
+  refund_price: string;
   subscription_order_amount: number;
   subscription_totalsupply: number;
 }
@@ -52,7 +52,7 @@ const MySubscription: React.FC<UserEmailProps> = ({ email }) => {
         <div className="w-full h-[20%] flex justify-start items-center text-xl">
           내 청약 목록
         </div>
-        <div className="w-full h-[75%] overflow-y-scroll">
+        <div className="w-full h-[76%] overflow-y-scroll">
           <MySubscriptionList />
         </div>
       </div>

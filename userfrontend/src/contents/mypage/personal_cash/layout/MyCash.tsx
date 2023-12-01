@@ -15,11 +15,6 @@ const MyCash: React.FC = () => {
       </div>
       <div className='w-full h-[70%] border border-slate-200 rounded-lg shadow-lg'>
         <MyCashHistory />
-        <div className='w-full h-[30%] flex justify-center items-center'>
-          <div className='w-[50%] h-[50%] border border-black rounded-lg flex justify-center items-center bg-slate-100'>
-            더보기
-          </div>
-        </div>
       </div>
     </div>
   )

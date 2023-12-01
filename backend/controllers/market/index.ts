@@ -135,6 +135,10 @@ export const marketDetail = async (req: Request, res: Response) => {
           model: Subscriptions,
           attributes: [
             "subscription_img_1",
+            "subscription_img_2",
+            "subscription_img_3",
+            "subscription_img_4",
+            "subscription_img_5",
             "subscription_description",
             "subscription_name",
             "subscription_address",

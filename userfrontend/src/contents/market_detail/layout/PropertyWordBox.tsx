@@ -13,7 +13,7 @@ const PropertyWordBox: React.FC = () => {
   // // console.log("context data : ",data);
 
   return (
-    <div className="w-full h-auto rounded-tl-xl rounded-tr-xl flex flex-col items-center">
+    <div className="w-full h-auto rounded-tl-xl rounded-tr-xl flex flex-col items-center mb-16">
       <PropertyInfo />
       <div className="w-full border-2 border-slate-200 rounded-full"></div>
       <PropertyDetail />

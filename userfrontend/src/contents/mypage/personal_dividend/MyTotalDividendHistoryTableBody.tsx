@@ -27,7 +27,7 @@ const MyTotalDividendHistoryTableBody: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-1/4 rounded-lg flex flex-row text-xs">
+    <div className="w-full h-8 rounded-lg flex flex-row text-xs">
       <div className="w-1/6 h-full flex justify-center items-center">
         {myDividendHistory[0]?.real_estate_name}
       </div>

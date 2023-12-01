@@ -50,7 +50,7 @@ const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
 
   return (
     <div className="w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5">
-      <div className="w-full h-[15%] flex justify-start items-center text-xl">
+      <div className="w-full h-[15%] flex justify-start items-end pb-1 text-xl">
         총 자산
       </div>
       <MyAssetValueChange total_profit_loss={totalAssetValue?.total_profit_loss} profit_loss_ratio={totalAssetValue?.profit_loss_ratio} />
