@@ -18,10 +18,11 @@ import BoardDetailNotice from "./pages/BoardDetailNotice";
 import Login from "./pages/Login";
 import BounsLogin from "./pages/BounsLogin";
 import SubscriptionDetail from "./pages/SubscriptionDetail";
-import VoteDetail from "./pages/VoteDetail";
-import VoteList from "./pages/VoteList";
 import Web3 from "web3";
 import abi from "./abi/ERC20subscription.json";
+import VotingTestPage from "./pages/VotingTestPage";
+import VoteDetail from "./pages/VoteDetail";
+import VoteList from "./pages/VoteList";
 
 function App() {
   let queryClient = new QueryClient();
@@ -72,6 +73,8 @@ function App() {
           />
           <Route path="/vote-detail/:name/:title" element={<VoteDetail />} />
           <Route path="/vote-list" element={<VoteList />} />
+
+          <Route path="/vote-test" element={<VotingTestPage />} />
         </Routes>
         </div>
       </QueryClientProvider>

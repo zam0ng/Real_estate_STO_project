@@ -1,18 +1,18 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import { useQueries, useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query"
-import axios from '../../../components/url';
-import  jwt  from "jsonwebtoken";
-import { FaPlus,FaMinus } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
+import axios from "../../../components/url";
+import jwt from "jsonwebtoken";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 import OrderConfirm from "./Orderconfirm";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 type subdetailtype = {
-    props : string | undefined
-}
+  props: string | undefined;
+};
 
 export default function SubscriptionBtn({props} : subdetailtype){
 
@@ -21,91 +21,84 @@ export default function SubscriptionBtn({props} : subdetailtype){
     const [quantity, setQuantity] = useState(0);
     const [orderConfirm,setOrderConfirm] = useState(false);
 
+  const fetchData = async () => {
+    const { data } = await axios.get(`/subscription/detail/${buildingId}`);
+    return data;
+  };
 
+  const {
+    isLoading: isLoadingSubDetail,
+    error: errorSubDetail,
+    data: dataSubDetail,
+  } = useQuery({
+    queryKey: ["SubDetail", buildingId],
+    queryFn: fetchData,
+  });
 
-    const fetchData = async ()=>{
-        const { data } = await axios.get(`/subscription/detail/${buildingId}`);
-        return data;
-    }
+  let [detail] = dataSubDetail;
 
-    const {
-        isLoading: isLoadingSubDetail,
-        error: errorSubDetail,
-        data: dataSubDetail
-    } = useQuery({
-        queryKey: ['SubDetail', buildingId],
-        queryFn: fetchData
+  parseInt(detail.subscription_offering_price);
+
+  const [isCookie, setIsCookie] = useState(false);
+
+  const [cookies] = useCookies(["accessToken"]);
+
+  const accessToken = cookies.accessToken;
+
+  const fetchId = async () => {
+    const { data } = await axios.post(`/subscription/get_balance`, {
+      token: accessToken,
     });
+    return data;
+  };
 
-    let [detail] = dataSubDetail
+  const {
+    isLoading: isLoadingUserId,
+    error: errorUserId,
+    data: dataUserId,
+  } = useQuery({
+    queryKey: ["UserID"],
+    queryFn: fetchId,
+  });
 
-    
-    parseInt(detail.subscription_offering_price)
+  const Navigate = useNavigate();
 
-    
-    const [isCookie,setIsCookie] = useState(false);
-    
-    const [cookies] = useCookies(['accessToken'])
-
-        const accessToken = cookies.accessToken;
-
-
-        const fetchId = async()=>{
-            const {data}= await axios.post(`/subscription/get_balance`,{
-                   
-                        token: accessToken
-                    
-            })
-            return data;
-            
-        }
-
-        const {
-            isLoading: isLoadingUserId,
-            error: errorUserId,
-            data: dataUserId,
-        } = useQuery({
-            queryKey: ['UserID'],
-            queryFn: fetchId
-        });
-
-
-
-
-    const Navigate = useNavigate();
-
-    function handleSubscription(){
-        if(cookies.accessToken){
-
-
-
-            setIsCookie(true);
-
-        }else{
-            Navigate('/bounslogin', {state : `/subscription/detail/${props}`})
-        }
+  function handleSubscription() {
+    if (cookies.accessToken) {
+      setIsCookie(true);
+    } else {
+      Navigate("/bounslogin", { state: `/subscription/detail/${props}` });
     }
+  }
 
-    function handleQuantityBtn(num : number){
-        setQuantity((prev)=>{
-            
-            const newQuantity = prev + num;
-            if(dataUserId < parseInt(detail.subscription_offering_price)){
-                setQuantity(0);
-            }
+  function handleQuantityBtn(num: number) {
+    setQuantity((prev) => {
+      const newQuantity = prev + num;
+      if (dataUserId < parseInt(detail.subscription_offering_price)) {
+        setQuantity(0);
+      }
 
-            if (newQuantity < 1) return 0;
-            if (newQuantity > detail.subscription_totalsupply - detail.subscription_order_amount) {
-              return detail.subscription_totalsupply - detail.subscription_order_amount;
-            }
-    parseInt(detail.subscription_offering_price)
-            if (newQuantity > Math.floor( dataUserId / parseInt(detail.subscription_offering_price)  )){
-                return Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )
-            }
-            return newQuantity;
-
-        })
-    }
+      if (newQuantity < 1) return 0;
+      if (
+        newQuantity >
+        detail.subscription_totalsupply - detail.subscription_order_amount
+      ) {
+        return (
+          detail.subscription_totalsupply - detail.subscription_order_amount
+        );
+      }
+      parseInt(detail.subscription_offering_price);
+      if (
+        newQuantity >
+        Math.floor(dataUserId / parseInt(detail.subscription_offering_price))
+      ) {
+        return Math.floor(
+          dataUserId / parseInt(detail.subscription_offering_price)
+        );
+      }
+      return newQuantity;
+    });
+  }
 
         function handleQuantityInput(num : number){
 
@@ -122,21 +115,21 @@ export default function SubscriptionBtn({props} : subdetailtype){
             }
         }
 
-    function handleOrder(){
-        setOrderConfirm(true);
-        setIsCookie(false);
-    }
+  function handleOrder() {
+    setOrderConfirm(true);
+    setIsCookie(false);
+  }
 
-    useEffect(() => {
-        // "청약하기" 버튼을 클릭하면 스크롤을 맨 위로 올리고 새로운 <div>를 나타나게 함
-        if (isCookie) {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-    }, [isCookie]);
-
-    function formatCurrency(amount :number) {
-        return `${amount.toLocaleString('ko-KR')}`;
+  useEffect(() => {
+    // "청약하기" 버튼을 클릭하면 스크롤을 맨 위로 올리고 새로운 <div>를 나타나게 함
+    if (isCookie) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
+  }, [isCookie]);
+
+  function formatCurrency(amount: number) {
+    return `${amount.toLocaleString("ko-KR")}`;
+  }
 
 
 
@@ -184,19 +177,24 @@ export default function SubscriptionBtn({props} : subdetailtype){
                 <div className="text-blue-500">총 청약 금액</div>
                 <div className="w-25 text-blue-500 text-right">{formatCurrency((quantity) * parseInt(detail.subscription_offering_price)) }<span className="ml-1">원</span></div>
             </div>
-            <div className=  {` w-5/6 h-12 rounded-md ${quantity ? "bg-blue-950" : "bg-gray-400"} text-white m-auto flex justify-center items-center font-semibold my-4`}
-                onClick={quantity ? handleOrder : undefined}
-            >
+          </div>
+          <div
+            className={` w-5/6 h-12 rounded-md ${
+              quantity ? "bg-blue-950" : "bg-gray-400"
+            } text-white m-auto flex justify-center items-center font-semibold my-4`}
+            onClick={quantity ? handleOrder : undefined}
+          >
             주문하기
-            </div>
-
-           
-
-         </div> 
-        :
-         <div className= " w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
-         onClick={()=>handleSubscription()}>청약하기</div> 
-        }
-        </>
-    )
+          </div>
+        </div>
+      ) : (
+        <div
+          className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
+          onClick={() => handleSubscription()}
+        >
+          청약하기
+        </div>
+      )}
+    </>
+  );
 }

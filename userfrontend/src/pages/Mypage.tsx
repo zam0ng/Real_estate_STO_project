@@ -15,6 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import FullLoadingComponent from "../components/FullLoadingComponent";
 
+import web3 from "web3";
+
 const confirmLoginStatus = async (isCookie: string): Promise<string> => {
   const response = await axios.post(`${serverurl}/mypage`, {
     token: isCookie,

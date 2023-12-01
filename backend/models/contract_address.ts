@@ -6,7 +6,7 @@ interface caAttribute {
   address: string;
   real_estate_name: string;
   ca_type?: string;
-  symbol: string;
+  symbol?: string;
 }
 
 class Contract_address extends Model<caAttribute> {
@@ -50,11 +50,11 @@ class Contract_address extends Model<caAttribute> {
     );
     return Contract_address;
   }
-  // static associate(db: DB) {
-  //   db.Contract_address.hasMany(db.Tx_block, {
-  //     foreignKey: "contract_address_id",
-  //   });
-  // }
+  static associate(db: DB) {
+    db.Contract_address.hasMany(db.Votes, {
+      foreignKey: "vote_id",
+    });
+  }
 }
 
 export default Contract_address;

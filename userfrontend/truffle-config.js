@@ -15,8 +15,7 @@ module.exports = {
       gas: 4465030,
     },
     BNC: {
-      provider: () =>
-        new HDWalletProvider(MNEMONIC, "https://network.bouncecode.net"),
+      provider: () => new HDWalletProvider(MNEMONIC, "https://network.bouncecode.net"),
       network_id: "18328",
       gas: 29999999,
     },

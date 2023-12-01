@@ -3,16 +3,18 @@ import { DB } from "../models";
 
 interface voteAttribute {
   real_estate_name: string;
-  // subscription_totalsupply: number;
+  vote_id: number;
   vote_title: string;
-  // vote_content: string;
-  // vote_amount: number;
   vote_start_date: Date;
   vote_end_date: Date;
-  // vote_result: string;
 }
 
 class Votes extends Model<voteAttribute> {
+  declare real_estate_name: string;
+  declare vote_id: number;
+  declare vote_title: string;
+  declare vote_start_date: Date;
+  declare vote_end_date: Date;
   static initModel(sequelize: Sequelize): typeof Votes {
     Votes.init(
       {
@@ -20,32 +22,20 @@ class Votes extends Model<voteAttribute> {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        // subscription_totalsupply: {
-        //   type: DataTypes.INTEGER,
-        //   allowNull: false,
-        // },
+        vote_id: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
         vote_title: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        // vote_content: {
-        //   type: DataTypes.STRING,
-        //   allowNull: false,
-        // },
-        // vote_amount: {
-        //   type: DataTypes.INTEGER,
-        //   allowNull: false,
-        // },
         vote_start_date: {
           type: DataTypes.DATE,
         },
         vote_end_date: {
           type: DataTypes.DATE,
         },
-        // vote_result: {
-        //   type: DataTypes.STRING,
-        //   allowNull: false,
-        // },
       },
       {
         sequelize,
@@ -59,7 +49,10 @@ class Votes extends Model<voteAttribute> {
     return Votes;
   }
   static associate(db: DB) {
-    db.Votes.belongsTo(db.Vote_history, {
+    db.Votes.hasMany(db.Vote_history, {
+      foreignKey: "vote_id",
+    });
+    db.Votes.belongsTo(db.Contract_address, {
       foreignKey: "vote_id",
     });
   }
