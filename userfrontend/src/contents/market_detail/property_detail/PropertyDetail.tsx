@@ -25,10 +25,10 @@ const PropertyDetail: React.FC = () => {
 
   return (
     <div className='w-full h-72 flex flex-col items-center justify-evenly'>
-      <div className='w-full h-[20%] ml-14 flex justify-start items-center'>
+      <div className='w-full h-[20%] ml-14 flex justify-start items-center font-bold text-xl'>
         건물 알아보기
       </div>
-      <div className='w-full h-[80%] flex flex-col items-center justify-evenly'>
+      <div className='w-5/6 h-[70%] flex flex-col items-center justify-evenly bg-[#EDF0F4] rounded-xl shadow-innerneu2 text-sm '>
         {propertyDetail.map((item,index)=>(
           <Details key={index} detail={item} icon={propertyDetailIcon[index]} />
         ))}
