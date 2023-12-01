@@ -14,7 +14,7 @@ export default function HomeIndices(){
     return(
     
     <>
-        <div className="w-5/6 m-auto  text-2xl font-extrabold my-10  ">
+        <div className="w-5/6 m-auto  text-2xl font-extrabold my-10 animate-swipe ">
             <div className=" w-5/6 border-b-4 pb-2   ">오늘 뭐사지?</div>
         </div>
         <div className="">

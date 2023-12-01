@@ -74,7 +74,7 @@ export default function Mypage() {
   }
 
   return (
-    <div className="w-screen h-screen pb-16 overflow-y-scroll animate-swipe">
+    <div className="w-screen h-screen pb-16 overflow-y-scroll ">
       <MyInfo email={userEmail} />
       <div className="w-full h-auto flex flex-col justify-center items-center">
         <MyCash />

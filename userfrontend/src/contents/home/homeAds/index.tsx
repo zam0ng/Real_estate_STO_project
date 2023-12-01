@@ -9,7 +9,7 @@ export default function HomeAds(){
 
     
     return(
-        <div className="">
+        <div className="a">
             <WalletConnect />
             <SubscriptionAd />
         </div>

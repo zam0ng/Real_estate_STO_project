@@ -49,7 +49,7 @@ export default function SubscriptionDetail(){
   }]
 
     return(
-        <div className="animate-swipe">  
+        <div className="">  
             <BackBtnUpdate props={'/subscription'} />
             <DetailPictures detail={detail}/>
             <LineTypeTabComponent data={tab} />

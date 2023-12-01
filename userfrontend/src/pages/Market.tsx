@@ -8,7 +8,7 @@ const Market: React.FC = () => {
   return (
     <div
       className="w-screen h-screen flex flex-col items-center pb-16 
-    overflow-y-scroll animate-swipe"
+    overflow-y-scroll "
     >
       <SubscriptionAd />
       <Banner />
