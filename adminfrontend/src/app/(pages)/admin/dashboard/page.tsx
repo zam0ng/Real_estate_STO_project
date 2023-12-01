@@ -42,7 +42,9 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
         <FormNotice voteableEstateData={voteableEstateData} />
       ) }
 
-      {isDividendsModalOpen && <Formdividends />}
+      {isDividendsModalOpen &&  voteableEstateData &&  (
+        <Formdividends voteableEstateData={voteableEstateData}  />
+      ) }
 
       <DashboardView searchParams={searchParams} />
     </>

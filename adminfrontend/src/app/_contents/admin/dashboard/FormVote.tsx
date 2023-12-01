@@ -44,7 +44,6 @@ export default function FormVote({
 
   const [contract, setContract] = useState<any>(null);
 
-  
 
   // 컨트랙트 불러오기
   useEffect(() => {
@@ -230,7 +229,6 @@ export default function FormVote({
                   <FormSectionVoteInfo
                     title="투표 상세 등록"
                     desc="발행 매물에 대한 투표 상세 등록"
-                    // voteTarget={nameAddressArr}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     

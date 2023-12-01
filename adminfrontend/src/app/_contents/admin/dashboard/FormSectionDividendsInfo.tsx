@@ -8,10 +8,21 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 interface DividendsFormSectionProps {
     title : string 
     desc : string
+
+    selectedValue : string
+    setSelectedValue : Function
+    voteTarget : string[]
 }
 
 
-const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title, desc} ) => {
+const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {
+      title, 
+      desc,
+
+      selectedValue,
+      setSelectedValue,
+      voteTarget,
+    } ) => {
   
   // const [selectedCategory, setSelectedCategory] = useState("") 
   const [selectedEstateName, setSelectedEstateName] = useState("") 
@@ -24,6 +35,9 @@ const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title,
     setSelectedEstateName(e.target.value)
   }
 
+  const handleEstateNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedValue(e.target.value)
+  }
 
   return (
     <>
@@ -45,7 +59,21 @@ const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title,
                 {/* Input 컴포넌트 */}
                 <div className="flex flex-col items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
                   
-                  <div>
+                  { voteTarget.map( (item, index) => (
+                      <div key={index}>
+                      <label> {  `매물 ${index + 1} : ${item}`}   </label>
+                      <input 
+                        type="radio" 
+                        name="real_estate_name"  
+                        value={item}
+                        checked = {selectedValue === item}   // ✅ 체크된 화면 표시  
+                        onChange={handleEstateNameChange}
+                        />
+                  </div>
+                    
+                  ) )  }
+                  
+                  {/* <div>
                       <label> 매물1 : 문래 공차 (하드코딩)✅ 데이터 가져와야 함 </label>
                       <input 
                         type="radio" 
@@ -56,9 +84,9 @@ const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title,
                         onChange={handleChange}
                         />
                     
-                  </div>
+                  </div> */}
 
-                  <div>
+                  {/* <div>
                       <label> 매물2 : 대전 뮤지엄 </label>
                       <input 
                         type="radio" 
@@ -68,7 +96,8 @@ const FormSectionDividendsInfo : React.FC<DividendsFormSectionProps> = ( {title,
                         placeholder= "img"  
                         onChange={handleChange}
                         />
-                  </div>
+                  </div> */}
+
                 </div>
 
                 <InputFormItem 

@@ -53,36 +53,25 @@ import postFetchDividendsForm from "@/app/api/postFetchDividendsForm";
   */
 
   
-export default function FormDividends() {
+export default function FormDividends({
+  voteableEstateData,
+}: {
+  voteableEstateData: string[];
+}) {
   const router = useRouter();
-  // const [startDate, setStartDate] = useState(0)
-  // const [endDate, setEndDate] = useState(0)
-
-  // const noticableEstateData = await getVoteableEstateData()
-
-  // const nameAddressArr= voteableEstateData.map( (item : VoteableEstate) => {
-  //     return [item.real_estate_name, item.address]
-  // })
-  // const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
-
+  const [selectedValue, setSelectedValue] = useState<string>("");
+  
+  
   const postDividendsForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // e.stopPropagation()
-
+  
     const formData = new FormData(e.currentTarget); // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴
-    // const finalStartDate= startDate.toString()
-    // const finalEndDate= endDate.toString()
 
-    // formData.append("notice_writer ", "admin");
+    // for (let [key, value] of formData.entries()) {
+    //   // console.log("formData 확인🐣🐣");
+    //   // console.log(`${key}: ${value}`);
+    // }
 
-    // formData.append('caAddress', getAddressFromNameObj[selectedValue].toString());
-
-    for (let [key, value] of formData.entries()) {
-      // console.log("formData 확인🐣🐣");
-      // console.log(`${key}: ${value}`);
-    }
-
-    // POST 요청시
     const response = await postFetchDividendsForm(formData);
     console.log("response" , response) // Created
     
@@ -94,7 +83,6 @@ export default function FormDividends() {
       const url = `${domain}${path}`
       router.replace(`${url}`);
       
-      // router.replace('http://localhost:3000/admin/dashboard');   // keep    
     }
   };
 
@@ -132,6 +120,10 @@ export default function FormDividends() {
                   <FormSectionDividendsInfo
                     title="배당금 등록"
                     desc="상세 내용 등록"
+                    
+                    voteTarget={voteableEstateData}
+                    selectedValue={selectedValue}
+                    setSelectedValue={setSelectedValue}
                   />
                 </div>
 
