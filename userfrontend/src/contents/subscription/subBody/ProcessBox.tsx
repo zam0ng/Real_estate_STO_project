@@ -19,8 +19,6 @@ export default function ProcessBox() {
 
   if (error) return <Dropdown props={"접속이 원활하지 않습니다.."} />;
 
-  // console.log(data);
-
   const start = data.filter(
     (building: SubAllList) => building.subscription_status === "start"
   );

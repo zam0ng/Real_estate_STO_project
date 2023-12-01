@@ -91257,6 +91257,10 @@ video {
     left: 24rem;
   }
 
+  .lg\:left-120 {
+    left: 30rem;
+  }
+
   .lg\:left-auto {
     left: auto;
   }

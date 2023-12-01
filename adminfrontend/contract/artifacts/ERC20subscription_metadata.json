@@ -411,6 +411,19 @@
 			},
 			{
 				"inputs": [],
+				"name": "howBuy",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "name",
 				"outputs": [
 					{
@@ -727,11 +740,11 @@
 			]
 		},
 		"ERC20subscription.sol": {
-			"keccak256": "0x26918efbd2de0378f44507f36575a898db147017f6f2e40ef203975dbdac1232",
+			"keccak256": "0xa891fcbc100ba5a689e90c0031af0bde87feaa200124ec91613a18add23275a9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://3de91228acef801e9a4ceefdf73ddfc53a14c31106175dc37006b5d37c7e6a2a",
-				"dweb:/ipfs/QmU88pTne7Pptu6ekrnzEzhgcTYgnhdiztzCCrEqB5L8XU"
+				"bzz-raw://8f5fd0caca55308ecf3d1ec76dd9d2e97818f4cbb442c79ec184a5782d8c5f0e",
+				"dweb:/ipfs/QmXv6E1yhiAdxdbg62ihAfN3WoNnAPgjYTX2AbWtBaEExV"
 			]
 		}
 	},

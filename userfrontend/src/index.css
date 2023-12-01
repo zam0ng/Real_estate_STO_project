@@ -2,69 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: 'EASTARJET-Medium';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2') format('woff2');
+  font-family: "EASTARJET-Medium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2")
+    format("woff2");
   font-weight: 500;
   font-style: normal;
 }
 
-@layer components{
-  .nowNotActive{
+@layer components {
+  .nowNotActive {
     color: rgb(0 0 0);
     background-color: rgb(203 213 225);
     opacity: 0.5;
   }
 }
 
-@layer components{
-  .historyActive{
+@layer components {
+  .historyActive {
     background-color: rgb(255 255 255);
   }
 }
 
-@layer components{
-  .historyNotActive{
+@layer components {
+  .historyNotActive {
     border-bottom: none;
     background-color: rgb(203 213 225);
-    opacity: 0.5
+    opacity: 0.5;
   }
 }
 
-@layer components{
-  .buyActive{
+@layer components {
+  .buyActive {
     color: rgb(248 113 113);
   }
 }
 
-@layer components{
-  .sellActive{
+@layer components {
+  .sellActive {
     color: rgb(96 165 250);
   }
 }
 
-@layer components{
-  .buySellNotActive{
+@layer components {
+  .buySellNotActive {
     background-color: rgb(203 213 255);
     color: rgb(0 0 0);
   }
 }
 
-@layer components{
-  .redText{
+@layer components {
+  .redText {
     color: rgb(248 113 113);
   }
 }
 
-@layer components{
-  .blueText{
+@layer components {
+  .blueText {
     color: rgb(96 165 250);
   }
 }
 
-.indicator{
-  transition : left .7s;
+.indicator {
+  transition: left 0.7s;
 }
 
-@import 'aos/dist/aos.css';
+@import "aos/dist/aos.css";
+
+.custom-transform {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

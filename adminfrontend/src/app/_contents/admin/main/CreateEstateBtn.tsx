@@ -12,6 +12,7 @@ export const CreateEstateBtn = () => {
 
 const router = useRouter();
 
+
 // 매물 등록 페이지로 이동
 const handleEstateBtn = () => {
     // console.log("매물 등록 버튼 클릭");
@@ -46,7 +47,7 @@ return (
         </div>
         
         <div>
-            <p className="text-base font-medium tracking-tight text-white"> 매물 등록 </p>
+            <p className="text-sm font-medium tracking-tighter text-white"> 매물 등록 </p>
         </div>
         
     </Link>

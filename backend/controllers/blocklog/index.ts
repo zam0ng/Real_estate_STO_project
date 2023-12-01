@@ -49,7 +49,6 @@ async function contract_address() {
     console.error(error);
   }
 }
-
 contract_address();
 myEmitter.on("contractAddressCheck", contract_address);
 
@@ -239,7 +238,6 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               price: real_estates.current_price,
               amount: item.tx_value,
               possible_quantity: item.tx_value,
-              token_name: item.tx_symbol,
             },
             { transaction }
           );

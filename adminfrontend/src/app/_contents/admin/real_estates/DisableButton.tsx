@@ -9,7 +9,7 @@ const DisableButton = ({ text }: DisableButton) => {
         <div className="flex items-center w-5.6rem  rounded-lg h-9 justify-evenly border-text-action_btn_text bg-state_disable_bg">
           
           {/* <p className="text-sm text-action_btn_text">{text} </p> */}
-          <p className="text-sm text-gray-500">{text} </p>
+          <p className="text-sm text-gray-400">{text} </p>
   
           <div className="rounded-lg bg-state_disable_bg_check"> 
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">

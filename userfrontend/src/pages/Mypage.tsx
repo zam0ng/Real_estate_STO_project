@@ -23,7 +23,7 @@ const confirmLoginStatus = async (isCookie: string): Promise<string> => {
 
   const response = await axios.post(`${serverurl}/mypage`, {
     token: isCookie,
-  });
+  },{withCredentials: true, headers: {'Content-Type': 'application/json'}});
   return response.data;
 };
 

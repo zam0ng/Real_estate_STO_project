@@ -3,40 +3,45 @@ import { Op, QueryTypes } from "sequelize";
 import { db } from "../../models";
 
 interface AddRequest extends Request {
-  userEmail?: string;
+  user_email?: string;
   wallet?: string;
 }
 
 // 입금하기
 export const depositBalance = async (req: Request, res: Response) => {
+  console.log("hi??");
   const transaction = await db.sequelize.transaction();
   try {
-    const { userEmail } = req.body as AddRequest;
-    const get_deposit_info = req.body;
+    console.log(req.body);
+    const { user_email } = req.body as AddRequest;
+    const {price} = req.body;
 
     const user = await db.Users.findOne({
-      where: { user_email: userEmail },
+      where: { user_email: user_email },
       raw: true,
     });
 
     if (!user) return res.status(404).send("없는 유저 입니다.");
 
     if (user?.blacklist) return res.status(404).send("관리자에게 문의 하세요.");
-
+    // console.log(user.balance)
+    // console.log(typeof user.balance)
+    // console.log(price)
+    // console.log(typeof price)
     await db.Deposit_drawal.create(
       {
         user_email: user.user_email,
         status: "입금",
-        price: get_deposit_info.price,
-        balance: user.balance + get_deposit_info.price,
+        price: Number(price),
+        balance: user.balance + Number(price),
       },
       { transaction }
     );
 
     await db.Users.update(
       {
-        balance: user.balance + get_deposit_info.price,
-        using_balance: user.using_balance + get_deposit_info.price,
+        balance: user.balance + Number(price),
+        // using_balance: user.using_balance + price,
       },
       { where: { user_email: user.user_email }, transaction }
     );
@@ -53,12 +58,12 @@ export const depositBalance = async (req: Request, res: Response) => {
 export const withDrawal = async (req: Request, res: Response) => {
   const transaction = await db.sequelize.transaction();
   try {
-    const { userEmail } = req.body as AddRequest;
+    const { user_email } = req.body as AddRequest;
 
-    const get_drawal_info = req.body;
+    const {price}= req.body;
 
     const user = await db.Users.findOne({
-      where: { user_email: userEmail },
+      where: { user_email: user_email },
       raw: true,
     });
 
@@ -66,25 +71,25 @@ export const withDrawal = async (req: Request, res: Response) => {
 
     if (user?.blacklist) return res.status(404).send("관리자에게 문의 하세요.");
 
-    if (user.using_balance < get_drawal_info.price) {
-      await transaction.rollback();
-      return res.status(400).send("금액이 모자릅니다.");
-    }
+    // if (user.using_balance < price) {
+    //   await transaction.rollback();
+    //   return res.status(400).send("금액이 모자릅니다.");
+    // }
 
     await db.Deposit_drawal.create(
       {
         user_email: user.user_email,
         status: "출금",
-        price: get_drawal_info.price,
-        balance: user.balance - get_drawal_info.price,
+        price: Number(price),
+        balance: user.balance - Number(price),
       },
       { transaction }
     );
 
     await db.Users.update(
       {
-        balance: user.balance - get_drawal_info.price,
-        using_balance: user.using_balance - get_drawal_info.price,
+        balance: user.balance - Number(price),
+        // using_balance: user.using_balance - price,
       },
       {
         where: { user_email: user.user_email },
@@ -212,7 +217,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
 // 보류
 // export const transactionList = async (req: Request, res: Response) => {
 //   try {
-//     const userEmail = req.body.user_email as string;
+//     const user_email = req.body.user_email as string;
 //     const getSubscriptionImg = await db.Subscriptions.findAll({
 //       attributes: ["subscription_name", "subscription_img_1"],
 //     });

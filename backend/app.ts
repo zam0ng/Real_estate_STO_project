@@ -9,7 +9,7 @@ import { sequelize } from "./models";
 
 import adminRouter from "./routers/admin";
 import marketRouter from "./routers/market";
-// import orderRouter from "./routers/order";
+import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
 import subscriptionRouter from "./routers/subscription";
 import mypageRouter from "./routers/mypage";
@@ -63,7 +63,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000"],
     credentials: true,
   })
 );
@@ -76,6 +76,7 @@ app.use(
     cookie: { secure: true },
   })
 );
+
 
 sequelize
   .sync({ force: false })
@@ -91,7 +92,7 @@ app.use("/estate_img", express.static(path.join(__dirname, "/imgs/estate")));
 
 app.use("/admin", adminRouter);
 app.use("/market", marketRouter);
-// app.use("/order", orderRouter);
+app.use("/order", orderRouter);
 app.use("/main", mainRouter);
 app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);

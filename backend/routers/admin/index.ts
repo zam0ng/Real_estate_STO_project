@@ -22,7 +22,7 @@ import {
   // tradeList,
   // realEstateOwnList,
   // blackList,
-  // noticesList,
+  noticesList,
   // realEstateTradeList,
 
   // 재영 어드민 부분
@@ -70,6 +70,7 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
 router.get("/contract_address_list", contractAddressList);
+
 // 10일치 유저 가입 정보 가져오기
 router.get("/ten_date_join_list", tenDateJoinList);
 // 10일치 거래 금액 가져오기

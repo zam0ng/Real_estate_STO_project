@@ -80,35 +80,34 @@
         interaction: {
             // mode: 'x',      // x축으로 선 긋기 위해서
             intersect: true,        // x축으로 선 긋기 위해서
-          },
+        },
 
         scales : {        
         // x 축을 지칭할 때, 공식 문서는 xAxis 라고 나와 있는 경우도 있는데, xAxis 로 하면 안 됨. |]참고 : https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
         x : {
-            
             grid : {
-            // backgroundColor : '#9ef59b',
-            // borderColor : '#1714c5',
-            // color	 : '#1714c5',
-            // tickColor : '#1714c5', 
-            display : false // grid 격자 제거 
+                // backgroundColor : '#9ef59b',
+                // borderColor : '#1714c5',
+                // color	 : 'rgb(23, 20, 197)',
+                // tickColor : '#1714c5', 
+                display : false // grid 격자 제거 
             }, 
             ticks: {
-            color: '#a6a5a7', // x축 눈금의 글씨 색깔을 빨간색으로 설정
+                color: '#a6a5a7', // x축 눈금의 글씨 색깔 설정
             },
             
         },
         
         y : {
             grid : {
-            // backgroundColor : '#9ef59b',
-            // borderColor : '#1714c5',
-            // color	 : '#1714c5',
-            tickColor : '#1714c5', 
-            display : false // grid 격자 제거
+                // backgroundColor : '#9ef59b',
+                // borderColor : '#1714c5',
+                // color	 : '#1714c5',
+                tickColor : '#1714c5', 
+                display : false // grid 격자 제거
             }, 
             ticks: {
-            color: '#a6a5a7', // x축 눈금의 글씨 색깔을 빨간색으로 설정
+                color: '#a6a5a7', // x축 눈금의 글씨 색깔을 빨간색으로 설정
             },
         }
         
@@ -152,7 +151,7 @@
         // backgroundColor : 'rgba(30,30,30,0.3)',   // 점 위에 hover 되었을 때 
         
         fill : true,
-        tension : 0.5, 
+        tension : 0.3, 
     }
     ]
     }

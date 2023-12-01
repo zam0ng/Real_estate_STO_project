@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import AOS from 'aos'
 
 export default function Home() {
-
+ 
   const [isFirstRender,setIsFirstRender] = useState(true)
 
   useEffect(()=>{

@@ -10,7 +10,6 @@ import Subscriptions_own from "../../models/subscriptions_own";
 import { group } from "console";
 import Real_estates from "../../models/real_estates";
 import Users from "../../models/users";
-import { myEmitter } from "../../middleware/eventEmitter";
 
 // 정현이형 어드민 부분
 type TradeDate = {
@@ -42,6 +41,7 @@ interface MonthlyIncome {
 
 function getDayInfo(info: string) {
   const today = new Date();
+  const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
   if (info === "week") {
@@ -60,6 +60,8 @@ function getDayInfo(info: string) {
 }
 
 function setRealEstateAmount(result: TradeDate[], info: string) {
+  const today = new Date();
+
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
   let today = new Date();
@@ -169,6 +171,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       total_amount?: number;
     };
 
+    console.log("👉👉👉 @realEstatesList");
+
     const result = await db.Subscriptions.findAll({
       attributes: [
         "subscription_img_1",
@@ -185,6 +189,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       where: { subscription_status: "success" },
       raw: true,
     });
+
+    console.log("🤸‍♂️🤸‍♂️🤸‍♂️ @realEstatesList");
 
     const day_earlier = new Date();
     const week_ago = new Date();
@@ -207,6 +213,8 @@ export const realEstatesList = async (req: Request, res: Response) => {
       group: "real_estate_name",
       raw: true,
     });
+
+    console.log("✅ test weeklyDate @realEstatesList", weeklyDate);
 
     const resultUnknown = result as [] as Subscription[];
 
@@ -487,6 +495,8 @@ export const tradeMonthList = async (req: Request, res: Response) => {
 
     const all_result = await setRealEstateAmount(result, "month");
 
+    console.log("all_result🚀🚀", all_result);
+
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
   } catch (error) {
@@ -653,8 +663,7 @@ export const transferInOutList = async (req: Request, res: Response) => {
       END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
     from  tx_receipt tr
       join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
-      group by tx_wallet, tr.tx_symbol, tr.transmission
-      having tr.transmission = 'in' or tr.transmission = 'out';`;
+      group by tx_wallet, tr.tx_symbol, tr.transmission;`;
 
     const result = await db.sequelize.query(query, {
       type: QueryTypes.SELECT,
@@ -969,6 +978,17 @@ export const noticeSubmit = async (req: Request, res: Response) => {
   }
 };
 
+// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
+export const noticesList = async (req: Request, res: Response) => {
+  try {
+    const noticeList = await Notices.findAll();
+    res.status(200).json(noticeList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
+
 export const dividendSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
@@ -1026,9 +1046,6 @@ export const caRegister = async (req: Request, res: Response) => {
       symbol: symbol,
       ca_type: "token",
     });
-
-    myEmitter.emit("contractAddressCheck");
-    myEmitter.emit("contractsCheckEvent");
     res.sendStatus(201);
   } catch (error) {
     res.sendStatus(400);
@@ -1039,6 +1056,7 @@ export const caRegister = async (req: Request, res: Response) => {
 // 청약자 리스트
 export const subscriptionList = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log(id);
   try {
     const result = await Subscriptions_own.findAll({
       where: {
@@ -1075,23 +1093,23 @@ export const subscriptionList = async (req: Request, res: Response) => {
     const amount_list = result.map((el: any) => el.amount);
 
     // console.log(wallet_list);
-    const emails = await Users.findAll({
-      where: {
-        wallet: wallet_list,
-      },
-      attributes: ["user_email"],
-      raw: true,
-    });
-    // .then(users => {
-    //   const emails = users.map(user => user.user_email);
-    //   // console.log("이메일 배열:", emails);
-    // })
-    // .catch(error => {
-    //   console.error("에러 발생:", error);
-    // });
-    // // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
-    const email_list = emails.map((el) => el.user_email);
-    // // console.log(email_list);
+    // console.log(amount_list);
+
+    const email_list: any = [];
+
+    for (const element of wallet_list) {
+      const emails = await Users.findOne({
+        where: {
+          wallet: element,
+        },
+        attributes: ["user_email"],
+        raw: true,
+      });
+      email_list.push(emails?.user_email);
+    }
+
+    console.log("---------", email_list);
+    // const email_list = emails.map(el=>el.user_email);
 
     const data = await Subscriptions.findOne({
       where: {
@@ -1105,10 +1123,10 @@ export const subscriptionList = async (req: Request, res: Response) => {
       ],
       raw: true,
     });
-    // // console.log(data?.id);
-    // // console.log(data?.subscription_name);
-    // // console.log(data?.subscription_symbol);
-    // // console.log(data?.subscription_offering_price);
+    // console.log(data?.id);
+    // console.log(data?.subscription_name);
+    // console.log(data?.subscription_symbol);
+    // console.log(data?.subscription_offering_price);
 
     // real_estates 생성
     await Real_estates.create({
@@ -1131,9 +1149,10 @@ export const subscriptionList = async (req: Request, res: Response) => {
     // // console.log(estateId);
 
     // real_estates_own 에 넣어주기.
-    email_list.forEach(async (element, index) => {
+    email_list.forEach(async (element: any, index: number) => {
       await Real_estates_own.create({
         user_email: element,
+        wallet: wallet_list[index],
         real_estate_id: estateId!.id as number,
         real_estate_name: data!.subscription_name,
         price: data!.subscription_offering_price,
