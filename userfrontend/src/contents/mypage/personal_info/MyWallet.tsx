@@ -51,7 +51,7 @@ const MyWallet: React.FC<UserWalletProps> = ({ wallet }) => {
           method: "eth_requestAccounts",
         })
         .then((data: string) => {
-          console.log(data);
+          // console.log(data);
           setWalletregist(data);
         });
       setShowModal(true);
@@ -73,8 +73,13 @@ const MyWallet: React.FC<UserWalletProps> = ({ wallet }) => {
           isOpen={showModal}
           onClose={handleClose}
         >
-          <p>지갑 주소를 입력해주세요.</p>
-          <p>한번 입력한 주소는 바꾸 실 수 없습니다.</p>
+          <p className="pl-5 text-base font-bold  mb-2">주의</p>
+          <p className="pl-5 text-sm">
+            현재 연결 되어 있는 메타마스크 지갑과 연동됩니다.
+          </p>
+          <p className="pl-5 text-sm">
+            한번 입력한 주소는 바꾸 실 수 없습니다.
+          </p>
         </Modal>
       )}
       {shortWallet === "" ? (

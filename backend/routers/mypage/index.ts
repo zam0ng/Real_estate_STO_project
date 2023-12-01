@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   depositBalance,
   withDrawal,
+  registWallet,
   userInfo,
   myBalance,
   totalDeposit,
@@ -22,6 +23,8 @@ router.post("/", isLogin);
 
 router.post("/deposit_balance", depositBalance);
 router.post("/withdrawal", withDrawal);
+
+router.post("/regist_wallet", isLogin, registWallet);
 
 // 유저 정보 보여주기
 router.get("/user_info", userInfo);

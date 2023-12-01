@@ -17,6 +17,7 @@ import {
   tenDateJoinList,
   tenDateTransactionPrice,
   monthlyIncome,
+  realEstateNameList,
   // subscriptionsList,
   // tradeList,
   // realEstateOwnList,
@@ -75,6 +76,8 @@ router.get("/ten_date_join_list", tenDateJoinList);
 router.get("/ten_date_transaction_price", tenDateTransactionPrice);
 // 월 예상 수입
 router.get("/monthly_income", monthlyIncome);
+// 등록된 매물 이름
+router.get("/real_estate_name_list", realEstateNameList);
 
 // 공지사항 가져오기 | ✅ DJ TEST
 router.get("/notices", noticesList);
