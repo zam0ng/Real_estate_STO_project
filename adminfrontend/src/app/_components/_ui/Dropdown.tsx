@@ -12,9 +12,17 @@ const Dropdown = () => {
   const setOptionParams = (option : string) => {
     
     setSelectedOption(option)
-    router.refresh();
-    router.replace(`http://localhost:3000/admin/dashboard?criteria=${option}`);   // 새로고침 하는 효과는 없음.     
 
+    router.refresh();
+
+    const path = `/admin/dashboard?criteria=${option}`;
+    const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+    const url = `${domain}${path}`
+    router.replace(`${url}`);
+    
+    // router.replace(`http://localhost:3000`);   // 새로고침 하는 효과는 없음.     
+    // router.replace(`http://localhost:3000/admin/dashboard?criteria=${option}`);   // 새로고침 하는 효과는 없음.     
+    
   }
 
 

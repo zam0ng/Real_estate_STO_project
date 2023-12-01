@@ -186,7 +186,13 @@ export default function FormVote({
         await postFetchVoteInfoCATable(tokenCA , realEstateName); // CA 테이블 저장 🟠 
         
         router.refresh();
-        router.replace(`http://localhost:3000/admin/real_estates`);
+
+        const path = `/admin/dashboard`;
+        const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+        const url = `${domain}${path}`
+        router.replace(`${url}`);
+        
+        // router.replace(`http://localhost:3000/admin/real_estates`);  // keep
 
       };
       

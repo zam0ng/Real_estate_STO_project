@@ -88,8 +88,13 @@ export default function FormDividends() {
     
     if (response == 'Created') {
       router.refresh(); // 새로고침기능
-      // const asd=process.env.NODE_ENV ⭐⭐⭐⭐⭐
-      router.replace('http://localhost:3000/admin/dashboard');
+      
+      const path = `/admin/dashboard`;
+      const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+      const url = `${domain}${path}`
+      router.replace(`${url}`);
+      
+      // router.replace('http://localhost:3000/admin/dashboard');   // keep    
     }
   };
 

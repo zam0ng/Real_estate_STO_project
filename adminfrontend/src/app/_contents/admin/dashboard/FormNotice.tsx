@@ -86,7 +86,14 @@ export default function FormNotice() {
     
     if (response == 'Created') {
       router.refresh(); // 새로고침기능
-      router.replace(`http://localhost:3000/admin/notices`);
+      
+      const path = `/admin/notices`;
+      const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+      const url = `${domain}${path}`
+      router.replace(`${url}`);
+      
+      // router.replace(`http://localhost:3000/admin/notices`);  // keep 
+      
     }
 
   };
