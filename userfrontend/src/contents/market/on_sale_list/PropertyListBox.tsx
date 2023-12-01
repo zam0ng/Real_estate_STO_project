@@ -3,6 +3,7 @@ import PropertyBox from "./property/PropertyBox";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { serverurl } from "../../../components/serverurl";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 export interface PropertyInfo {
   start_price: number;
@@ -50,11 +51,11 @@ const PropertyListBox: React.FC = () => {
   return (
     <div className="w-[80%] h-auto mt-10 flex flex-col">
       <div className="w-[80%] h-20 flex flex-col justify-center items-start mb-5">
-        <div className="text-xl">거래중인 건물</div>
-        <div className="text-sm">지금 바로 소유주가 되어보세요</div>
+        <div className="text-2xl font-bold">거래중인 건물</div>
+        <div className="text-sm text-gray-400">지금 바로 소유주가 되어보세요</div>
       </div>
       {isLoading ? (
-        <div>Loading...</div>
+        <LoadingComponent />
       ) : (
         data &&
         data.map((item, index) => (

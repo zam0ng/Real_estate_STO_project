@@ -135,12 +135,13 @@ export default function SubscriptionBtn({props} : subdetailtype){
 
 
     return(
-        <>
+      <>
         {orderConfirm ? <OrderConfirm setOrderConfirm ={setOrderConfirm} dataUserId = {dataUserId} dataSubDetail = {dataSubDetail} quantity={quantity} />: null}
         
         {isCookie 
         ? 
-         <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl ">
+          <>
+          <div className=" w-full h-full border z-10  m-auto fixed top-96 shadow-lg bg-white bg-gradient-to-brounded-3xl animate-slide-up rounded-2xl ">
             <RiArrowDropDownLine  className="mt-4 ml-4 w-6 h-6 m-auto" onClick={()=>setIsCookie(false)}/>
             <div className="w-5/6  m-auto text-right  h-6 mb-5 text-sm">
                 <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
@@ -186,15 +187,15 @@ export default function SubscriptionBtn({props} : subdetailtype){
           >
             주문하기
           </div>
-        </div>
-      ) : (
+          </>
+       : 
         <div
           className=" w-5/6 h-12 rounded-md bg-blue-950 text-white m-auto flex justify-center items-center font-semibold my-4"
           onClick={() => handleSubscription()}
         >
           청약하기
         </div>
-      )}
-    </>
+        }
+      </>
   );
 }

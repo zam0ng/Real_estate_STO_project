@@ -29,7 +29,7 @@ const PropertyBox: React.FC<PropertyProps> = ({
 }) => {
   return (
     <div
-      className="w-full h-32 border border-gray-400 rounded-lg mb-5 flex flex-row"
+      className="w-full h-32 mb-5 flex flex-row bg-[#EDF0F4] rounded-xl shadow-innerneu2"
       onClick={() => navigator(subscription_name)}
     >
       <div className="w-1/2 h-full">

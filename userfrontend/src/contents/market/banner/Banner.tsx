@@ -4,6 +4,9 @@ import BuildingInfo from "./BuildingInfo";
 import BuyBtn from "./BuyBtn";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../../../components/serverurl";
+import LoadingComponent from "../../../components/LoadingComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
+
 
 interface SubscriptionInfo {
   id: number;
@@ -37,18 +40,17 @@ const Banner: React.FC = () => {
       data[0].subscription_totalprice;
 
   if (isError) {
-    return <div>Error : {error.message}</div>;
+    return <ErrorComponent />
   }
 
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <LoadingComponent/>
       ) : (
         dataRep && (
           <div
-            className="w-[80%] h-4/5 bg-slate-100 mt-10 rounded-lg flex flex-col items-center justify-around 
-      shadow-lg"
+            className="w-[80%] h-4/5  mt-10  flex flex-col items-center justify-around bg-[#EDF0F4] rounded-xl shadow-innerneu2"
           >
             <BuildingImg
               img={dataRep.subscription_img_1}
