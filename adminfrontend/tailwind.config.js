@@ -1,17 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 
-
 function generateDefaultTableRows(rowCount) {
   // 초기 행 (4px 48px)
-  let rows = '4px 48px';
+  let rows = "4px 48px";
 
   // 이후 행 반복 (2px 56px)
   for (let i = 0; i < rowCount; i++) {
-    rows += ' 2px 56px';
+    rows += " 2px 56px";
   }
 
   // 마지막 행에 auto 추가
-  return rows + ' auto';
+  return rows + " auto";
 }
 
 module.exports = {
@@ -25,54 +24,49 @@ module.exports = {
   ],
   theme: {
     extend: {
-
-      transitionDuration : {
-        '5000' : '5000ms'
+      transitionDuration: {
+        5000: "5000ms",
       },
 
-      keyframes : {
-        fadeIn : {
-          '0%' : {opacity : '0'}, 
-          '100%' : {opacity : '1'}, 
-        }, 
-        fadeOut : {
-          '0%' : {opacity : '1'}, 
-          '100%' : {opacity : '0'}, 
-        }, 
-
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
       },
 
-      animation : {
-        fadeIn: 'fadeIn 1s ease-in-out forwards', // 시간 조절 필요
-        fadeOut: 'fadeOut 1s ease-in-out forwards' // 시간 조절 필요
-        
+      animation: {
+        fadeIn: "fadeIn 1s ease-in-out forwards", // 시간 조절 필요
+        fadeOut: "fadeOut 1s ease-in-out forwards", // 시간 조절 필요
       },
-      
-      
+
       letterSpacing: {
         "0.015rem": "-0.015rem",
       },
-      
+
       width: {
         admin_modal: "43.5rem",
-        "16.25rem" : "16.25rem",
+        "16.25rem": "16.25rem",
         "40rem": "40rem",
         "36.75rem": "36.75rem",
         "31rem": "31rem",
         "30rem": "30rem",
         "150rem": "150rem",
         "40rem": "40rem",
-        
+
         "5.6rem": "5.6rem",
         "37.9rem": "37.9rem",
         backdrop_calc: "calc(100% - 4rem)",
         "4.5rem": "4.5rem",
         "5.375rem": "5.375rem",
-        "9.875rem" : "9.875rem",
+        "9.875rem": "9.875rem",
 
         "116rem": "116rem",
         "80rem": "80rem,",
-
       },
 
       padding: {
@@ -81,7 +75,7 @@ module.exports = {
 
       height: {
         line: "0.09375rem",
-        "11.5rem" : "11.5rem",
+        "11.5rem": "11.5rem",
         "15rem": "15rem",
         "37.9rem": "37.9rem",
         "36.75rem": "36.75rem",
@@ -93,9 +87,9 @@ module.exports = {
         "60rem": "60rem",
         "55.62rem": "55.62rem",
         "50rem": "50rem",
-        "45.625rem" : "45.625rem",
-        "36.5rem" : "36.5rem",
-        "32rem" : "32rem"
+        "45.625rem": "45.625rem",
+        "36.5rem": "36.5rem",
+        "32rem": "32rem",
       },
 
       gridTemplateColumns: {
@@ -107,22 +101,20 @@ module.exports = {
         // noticeTable: "5rem 5rem 15rem 15rem 5rem  ",
         noticeTable: "4rem 5rem 5rem repeat(5, minmax(5rem, auto))",
         // noticeTable: "5rem 5rem 5rem 15rem 15rem 5rem ",
-
       },
       gridTemplateRows: {
         // userTable : "auto",
         // userTable: "repeat(8, minmax(5rem, auto))",
 
         // userTable: '4px 48px 2px 56px 2px 56px 2px 56px 2px 56px 2px 56px 2px 56px auto', // 첫 번째 행 48px, 두 번째 행 38px, 그 외 행은 콘텐츠에 따라 자동 조절
-        // 4px = 맨 윗 줄 | 48px = 목차 높이 | 2px = 아이템 상단선 | 56px 아이템 간격 
-        defaultTable: generateDefaultTableRows(7)
+        // 4px = 맨 윗 줄 | 48px = 목차 높이 | 2px = 아이템 상단선 | 56px 아이템 간격
+        defaultTable: generateDefaultTableRows(7),
       },
 
       fontSize: {
         "1.65rem": "1.65rem",
         "1.687rem": "1.687rem",
         "0.9375rem": "0.9375rem",
-
       },
       spacing: {
         adminLayout_menubar_container: "27rem",
@@ -181,52 +173,53 @@ module.exports = {
         dashboard_card_transaction_title: "#2A2A2A",
         dashboard_card_transaction_date: "#666",
         dashboard_card_transaction_view: "#717171",
-        
-        dashboard_btn_estate: "#EF4464",
-        dashboard_btn_vote : "#47BEC4",
-        dashboard_btn_notice : "#908998",
-        dashboard_btn_dividend : "#ED9C3E",
 
-        
+        dashboard_btn_estate: "#EF4464",
+        dashboard_btn_vote: "#47BEC4",
+        dashboard_btn_notice: "#908998",
+        dashboard_btn_dividend: "#ED9C3E",
+
         dashboard_progressBar: "rgb(75, 91, 235)",
 
-        dashboard_carousel_black : "#18191F",
-        dashboard_carousel_black_800 : "#474A57",
-
+        dashboard_carousel_black: "#18191F",
+        dashboard_carousel_black_800: "#474A57",
 
         // backdrop_test : '#ffffff7d',
         backdrop_test: "#252526",
-
-        state_pending_back: "#FFF0E2",
+        
+        // 상태 버튼 
+        state_pending_back: "#FFF0E2",  // 주황 or
         state_pending_text: "#E7AB74",
+
+        state_green_back: "#E6F6F6",
+        state_green_text: "#4FA0A1",
         
-        blacklist_status_bgColor : "#4a4747",
-        blacklist_status_textColor : "#febebe",
-        
-        
-        
+        state_pink_back: "#f2d5da",
+        state_pink_text: "#4FA0A1",
+
+        blacklist_status_bgColor: "#4a4747",
+        blacklist_status_textColor: "#febebe",
+
         // 매물관리-enable 버튼
         state_enable_bg: "#befee0",
         state_enable_bg_check: "#4ea474",
         state_enable_bg_check_text: "#5aa984",
-        
-        state_disable_bg : "#e8e8e8",
-        state_disable_bg_check : "#c9c9c9",
-        state_disable_bg_test : "#e5e5e5",
+
+        state_disable_bg: "#e8e8e8",
+        state_disable_bg_check: "#c9c9c9",
+        state_disable_bg_test: "#e5e5e5",
         // state_disable_bg : "#da3055",
         // state_disable_bg_check : "#851d40",
         // state_disable_bg_test : "#e5e5e5",
-        
+
         // user-블랙리스트-enroll 버튼
         enable_blacklist_bg: "#febebe",
         enable_blacklist_bg_check: "#a4544e",
         enable_blacklist_bg_check_text: "#a9635a",
 
-
         action_btn_border: "#EDEDED",
         action_btn_text: "#8C8C8C",
         table_crieria_text: "#8f979d",
-
       },
     },
   },

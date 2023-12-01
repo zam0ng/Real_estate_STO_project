@@ -29,7 +29,7 @@ import TransactionStatus_ from "./TransactionStatus_";
 import TransactionCreatedDate from "./TransactionCreatedDate";
 
 const TableRowTransaction = async ({ item }: TransactionTableRow) => {
-  const transactionType = item.transmission === "inside" ? "inside" : "outside";
+  
 
   return (
     <>
@@ -52,8 +52,9 @@ const TableRowTransaction = async ({ item }: TransactionTableRow) => {
       <TransactionDescription id={item.id} desc={item.block_num} />
 
       <TransactionCreatedDate id={item.id} resultDate={item.createdAt} />
-    
-    <TransactionStatus_ id={item.id} status={transactionType}/>
+
+      
+    <TransactionStatus_ id={item.id} status={item.transmission}/>
 
     </>
   );

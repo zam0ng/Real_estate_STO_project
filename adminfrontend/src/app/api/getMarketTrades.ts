@@ -28,9 +28,6 @@
 */
 
 
-// ❓ 함수를 구분하는게 나을까? vs props 를 받아서 다르게 실행하는게 나을까? 
-
-
 const getMarketTrades =  async ( criteria : string ) => {
     
     // 변경전 샘플 주소
