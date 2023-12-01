@@ -18,9 +18,10 @@ interface VoteFormSectionProps {
     desc : string
     setStartDate : Function
     setEndDate : Function
+    
     selectedValue : string
-    voteTarget : string[]
     setSelectedValue : Function
+    voteTarget : string[]
 }
 
 
@@ -29,9 +30,10 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
     desc , 
     setStartDate , 
     setEndDate,
+    
     selectedValue,
+    setSelectedValue,
     voteTarget,
-    setSelectedValue
   }) => {
   
   const [selectedCategory, setSelectedCategory] = useState("") 

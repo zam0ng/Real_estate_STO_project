@@ -231,9 +231,10 @@ export default function FormVote({
                     title="투표 상세 등록"
                     desc="발행 매물에 대한 투표 상세 등록"
                     // voteTarget={nameAddressArr}
-                    voteTarget={voteableEstateData}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
+                    
+                    voteTarget={voteableEstateData}
                     selectedValue={selectedValue}
                     setSelectedValue={setSelectedValue}
                   />
