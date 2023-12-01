@@ -1,12 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}"
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily : {
-        sans : ['EASTARJET-Medium']
+      fontFamily: {
+        sans: ["EASTARJET-Medium"],
       },
       fontSize: {
         home: "62.5%",
@@ -26,52 +24,54 @@ module.exports = {
       },
       height: {
         over: "120%",
-        "112": "28rem",
-        "128": "32rem",
+        112: "28rem",
+        128: "32rem",
         // 필요에 따라 추가적인 높이 설정을 여기에 추가할 수 있습니다.
       },
       keyframes: {
         marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-100%)' },
+          "0%": { transform: "translateX(0%)" },
+          "100%": { transform: "translateX(-100%)" },
         },
         marquee2: {
-          '0%': { transform: 'translateX(100%)' },
-          '100%': { transform: 'translateX(0%)' },
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0%)" },
         },
         slideUp: {
-          '0%': { transform: 'translateY(100%)' },
-          '100%': { transform: 'translateY(0)' },
-        },swipe: {
-          '0%' : { transform : 'translateX(100%)'},
-          '100%' : { transform : 'translateX(0)'},
-        },fadeIn : {
-          '0%' : { transform : 'translateY(100px)'},
-          '100%' : {transform : 'translateY(0)'}
-        },fade : {
-          '0%' : { transform : 'opacity(0)'},
-          '100%' : {transform : 'opacity(1)'}
-        }
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        swipe: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        fadeIn: {
+          "0%": { transform: "translateY(100px)" },
+          "100%": { transform: "translateY(0)" },
+        },
+        fade: {
+          "0%": { transform: "opacity(0)" },
+          "100%": { transform: "opacity(1)" },
+        },
       },
       animation: {
-        marquee: 'marquee 14s linear infinite',
-        marquee2: 'marquee2 14s linear infinite',
-        'slide-up': 'slideUp 0.4s ease-out',
-        swipe : 'swipe 0.4s ease-out',
-        fadeIn : 'fadeIn 5s ease',
-        fade : 'fade 5s ease'
-      },boxShadow: {
-        neu1: '-5px -5px 15px 2px rgb(0 0 0 / 0.1)',
-        neu2: '-5px -5px 10px 2px rgb(0.9 0.9 0.9 / 0.1)',
-        innerneu1: 'inset -5px -5px 10px 2px rgb(0.9 0.9 0.9 / 1)',
-        innerneu2: 'inset -5px -5px 15px 2px rgb(0 0 0 / 0.1)'
-      }
-      colors :{
-        state_loading_back : "rgba(0, 0, 0, 0.500)",
-      }
+        marquee: "marquee 14s linear infinite",
+        marquee2: "marquee2 14s linear infinite",
+        "slide-up": "slideUp 0.4s ease-out",
+        swipe: "swipe 0.4s ease-out",
+        fadeIn: "fadeIn 5s ease",
+        fade: "fade 5s ease",
+      },
+      boxShadow: {
+        neu1: "-5px -5px 15px 2px rgb(0 0 0 / 0.1)",
+        neu2: "-5px -5px 10px 2px rgb(0.9 0.9 0.9 / 0.1)",
+        innerneu1: "inset -5px -5px 10px 2px rgb(0.9 0.9 0.9 / 1)",
+        innerneu2: "inset -5px -5px 15px 2px rgb(0 0 0 / 0.1)",
+      },
+      colors: {
+        state_loading_back: "rgba(0, 0, 0, 0.500)",
+      },
     },
   },
-  plugins: [
-    require("tailwind-scrollbar-hide"),
-  ],
-}
+  plugins: [require("tailwind-scrollbar-hide")],
+};

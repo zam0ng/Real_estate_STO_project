@@ -3,37 +3,31 @@ import HomeAds from "../contents/home/homeAds";
 import HomeIndices from "../contents/home/homeIndices";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import { useState, useEffect } from "react";
-import AOS from 'aos'
+import AOS from "aos";
 
 export default function Home() {
- 
-  const [isFirstRender,setIsFirstRender] = useState(true)
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-  },[])
-
-
-
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   return (
     <>
-    <div className="mb-28" data-aos='slide-right'>
-      <HomeAds/>
-      <HomeIndices />
-    </div>
-    <TabBar />
+      <div className="mb-28" data-aos="slide-right">
+        <HomeAds />
+        <HomeIndices />
+      </div>
+      <TabBar />
     </>
   );
 }
-
-
 
 // 전체 배경색
 // bg-[#EDF0F4]
 
 // div 배경
-// bg-[#EDF0F4] rounded-xl shadow-new2 
+// bg-[#EDF0F4] rounded-xl shadow-new2
 
 // 글씨
 // text-[#8F8F8F] text-bold

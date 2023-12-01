@@ -4,25 +4,26 @@ import Banner from "../contents/market/banner/Banner";
 import PropertyListBox from "../contents/market/on_sale_list/PropertyListBox";
 import TabBar from "../layouts/TabBar";
 import { useEffect } from "react";
-import AOS from 'aos'
+import AOS from "aos";
 
 const Market: React.FC = () => {
-
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-  },[])
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   return (
     <>
-    <div
-      className="w-screen h-screen flex flex-col items-center pb-16 
-     " data-aos ='slide-right'>
-      <SubscriptionAd />
-      <Banner />
-      <PropertyListBox />
-      <SubscriptionAd />
-    </div>
-    <TabBar />
+      <div
+        className="w-screen h-screen flex flex-col items-center pb-16 
+     "
+        data-aos="slide-right"
+      >
+        <SubscriptionAd />
+        <Banner />
+        <PropertyListBox />
+        <SubscriptionAd />
+      </div>
+      <TabBar />
     </>
   );
 };
