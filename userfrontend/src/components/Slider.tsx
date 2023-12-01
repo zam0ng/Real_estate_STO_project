@@ -49,7 +49,6 @@ const Slider: React.FC<WidthProps> = ({width,slides})=>{
                 </div>
             </div>
       </div>
-    </div>
   );
 };
 
