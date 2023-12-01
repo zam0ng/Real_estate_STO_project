@@ -3,21 +3,27 @@ import HomeAds from "../contents/home/homeAds";
 import HomeIndices from "../contents/home/homeIndices";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import { useState, useEffect } from "react";
-
+import AOS from 'aos'
 
 export default function Home() {
 
   const [isFirstRender,setIsFirstRender] = useState(true)
 
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  },[])
+
 
 
 
   return (
-    <div className="mb-28">
+    <>
+    <div className="mb-28" data-aos='slide-right'>
       <HomeAds/>
       <HomeIndices />
-      <TabBar />
     </div>
+    <TabBar />
+    </>
   );
 }
 
