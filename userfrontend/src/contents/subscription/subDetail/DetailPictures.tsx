@@ -8,6 +8,24 @@ type DetailPicturesType = {
 
 export default function DetailPictures({detail} :DetailPicturesType){
 
+
+    let slides = [];
+
+    for (let i = 1; i <= 5; i++) {
+        const key = `subscription_img_${i}` as keyof SubDetail;
+        const imgUrl = detail[key];
+        if (imgUrl) {
+            slides.push({ url: imgUrl });
+        }
+    }
+
+
+    // const slides = [
+    //     {url : images/sliderdummy/dummy1.jpg},
+    //     {url : images/sliderdummy/dummy2.jpg},
+    //     {url : images/sliderdummy/dummy3.jpg},
+    // ]
+
     return(
         <>
         
@@ -17,7 +35,7 @@ export default function DetailPictures({detail} :DetailPicturesType){
                 <div className="text-sm font-semibold ml-3 mt-1">{detail.subscription_description}</div>
             </div>
             <div className="  pt-10">
-                <Slider width="w-[screen]" />
+                <Slider width="w-[screen]" slides={slides}  />
             </div>
         </div>
         </>

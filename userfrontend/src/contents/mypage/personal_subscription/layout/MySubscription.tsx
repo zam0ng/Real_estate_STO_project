@@ -48,7 +48,7 @@ const MySubscription: React.FC<UserEmailProps> = ({ email }) => {
 
   return (
     <SubscriptionContext.Provider value={data}>
-      <div className="w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5">
+      <div className="w-[90%] h-96 mt-5  pr-5 pl-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2">
         <div className="w-full h-[20%] flex justify-start items-center text-xl">
           내 청약 목록
         </div>

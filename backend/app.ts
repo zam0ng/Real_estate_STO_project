@@ -15,7 +15,7 @@ import subscriptionRouter from "./routers/subscription";
 import mypageRouter from "./routers/mypage";
 import voteRouter from "./routers/vote";
 
-import { logLatestBlockEvents } from "./middleware/blockLog";
+// import { logLatestBlockEvents } from "./middleware/blockLog";
 
 import http from "http";
 
@@ -86,6 +86,7 @@ sequelize
     // console.log("err", err);
   });
 
+  //htt localhost:8080/estate_img/ACB01-min_1701256146291
 app.use("/estate_img", express.static(path.join(__dirname, "/imgs/estate")));
 
 app.use("/admin", adminRouter);
@@ -96,6 +97,7 @@ app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 app.use("/vote", voteRouter);
 
+import { logLatestBlockEvents } from "./middleware/blockLog";
 setInterval(logLatestBlockEvents, 4500);
 
 server.listen(8080, () => {

@@ -12,8 +12,8 @@ const ToDealPage: React.FC = () => {
   };
 
   return (
-    <div className='w-[85%] h-14 flex justify-center items-center border border-black rounded-lg mt-5 mb-5 
-    bg-black text-white' onClick={goToDeal}>
+    <div className='w-[85%] h-14 flex justify-center items-center   mt-5 mb-5 bg-blue-950 text-white font-bold rounded-lg shadow-neu1 shadow-neu2
+    ' onClick={goToDeal}>
       거래하기
     </div>
   )

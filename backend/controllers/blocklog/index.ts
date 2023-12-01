@@ -30,6 +30,12 @@ async function contract_address() {
       where: { ca_type: "token" },
       raw: true,
     });
+  try {
+    const result = await db.Contract_address.findAll({
+      attributes: ["address", "real_estate_name"],
+      where: { ca_type: "token" },
+      raw: true,
+    });
 
     contract_real_estate_name = result.reduce(
       (acc: ContractRealEstatesName, item) => {
@@ -75,11 +81,26 @@ export const blockNumberCheck = async () => {
 //       attributes: ["real_estate_name"],
 //       raw: true,
 //     });
+// export const symbolCheck = async () => {
+//   try {
+//     const result = await db.Contract_address.findAll({
+//       attributes: ["real_estate_name"],
+//       raw: true,
+//     });
 
+//     let symbols = [];
 //     let symbols = [];
 
 //     symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
+//     symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
 
+//     if (symbols) return symbols;
+//     else return [];
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
 //     if (symbols) return symbols;
 //     else return [];
 //   } catch (error) {

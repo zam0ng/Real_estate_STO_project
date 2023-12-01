@@ -6,8 +6,7 @@ const DividendAmount: React.FC = () => {
 
   return (
     <div className='w-full h-[45%] flex justify-center items-center border-t border-dashed'>
-      <div className='w-[70%] h-[75%] flex flex-col justify-center items-center border border-black rounded-lg 
-      bg-slate-200'>
+      <div className='w-[70%] h-[75%] flex flex-col justify-center items-center  bg-[#EDF0F4] rounded-xl shadow-innerneu2'>
         <div className='w-full flex justify-center items-center'>
           {data?.dividend_price}원
         </div>

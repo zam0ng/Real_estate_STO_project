@@ -49,17 +49,14 @@ const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
   }, [totalAsset]);
 
   return (
-    <div className="w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5">
+    <div className="w-[90%] h-96 mt-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2 pr-5 pl-5">
       <div className="w-full h-[15%] flex justify-start items-center text-xl">
         총 자산
       </div>
-      <MyAssetValueChange
-        total_profit_loss={totalAssetValue?.total_profit_loss}
-        profit_loss_ratio={totalAssetValue?.profit_loss_ratio}
-      />
-      <div className="w-full h-[10%] flex flex-row">
-        <MyTotalBuy />
-        <MyTotalValue />
+      <MyAssetValueChange total_profit_loss={totalAssetValue?.total_profit_loss} profit_loss_ratio={totalAssetValue?.profit_loss_ratio} />
+      <div className='w-full h-[10%] flex flex-row'>
+        <MyTotalBuy balance={totalAssetValue?.balance} />
+        <MyTotalValue appraise_balance={totalAssetValue?.appraise_balance} />
       </div>
       <MyAssetHistoryTable email={email} />
     </div>

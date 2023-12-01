@@ -20,6 +20,7 @@ export const mainBanner = async (req: Request, res: Response) => {
       limit: 1,
       order: [["createdAt", "DESC"]],
       attributes: [
+        "id",
         "subscription_img_1",
         "subscription_description",
         "subscription_name",
@@ -41,6 +42,7 @@ export const mainBanner = async (req: Request, res: Response) => {
         limit: 1,
         order: [["createdAt", "DESC"]],
         attributes: [
+          "id",
           "subscription_img_1",
           "subscription_description",
           "subscription_name",

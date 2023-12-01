@@ -7,7 +7,7 @@ interface CompletionProps {
 
 const ParticipationCircle: React.FC<CompletionProps> = ({completionRate}) => {
   return (
-    <div className='w-16 h-16 border border-black rounded-full flex flex-col justify-center items-center mt-2 mr-2'>
+    <div className='w-16 h-16  rounded-full flex flex-col justify-center items-center mt-2 mr-2 bg-[#EDF0F4]  shadow-neu1 shadow-neu2'>
         <ParticipationRate completionRate={completionRate} />
     </div>
   )

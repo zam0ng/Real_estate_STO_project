@@ -9,7 +9,11 @@ import SubStatus from "../contents/subscription/subDetail/SubStatus";
 import SubscriptionBtn from "../contents/subscription/subDetail/SubscriptionBtn";
 import DetailPictures from "../contents/subscription/subDetail/DetailPictures";
 import MapDetail from "../contents/subscription/subDetail/MapDetail";
-import BackBtn from "../components/BackBtn";
+import BackBtnUpdate from "../components/BackBtnUpdate";
+import LoadingComponent from "../components/LoadingComponent";
+import ErrorComponent from "../components/ErrorComponent";
+import InvestmentPoint from "../contents/subscription/subDetail/InvestmentPoint";
+
 
 export default function SubscriptionDetail(){
 
@@ -25,30 +29,40 @@ export default function SubscriptionDetail(){
     queryFn: fetchData,
   });
 
-  if (isLoading) return <>Loading ...</>;
+  if (isLoading) return <LoadingComponent />
 
-  if (error) return <>접속이 원활하지 않습니다 ..</>;
+  if (error) return <ErrorComponent />;
 
     let [detail] = data
 
+    console.log(detail);
 
     let tab = [{
-        tabName : "투자 포인트",
-        content : <>투자 포인트 화면입니다</> 
-    },{
         tabName : "모집 현황",
         content : <SubStatus detail={detail}/>
     },{
         tabName : "상세 정보",
         content : <MapDetail detail={detail} />
-    }]
+    },{
+      tabName : "투자 포인트",
+      content : <InvestmentPoint /> 
+  }]
 
     return(
-        <>  
-            <BackBtn />
+        <div className="">  
+            <BackBtnUpdate props={'/subscription'} />
             <DetailPictures detail={detail}/>
             <LineTypeTabComponent data={tab} />
-            <SubscriptionBtn props={`${buildingId}`} />
-        </>
+          {detail.subscription_status === 'start' 
+          
+          ?
+          <SubscriptionBtn props={`${buildingId}`} />
+            
+          :
+          undefined
+          }
+        </div>
     )
 }
+
+

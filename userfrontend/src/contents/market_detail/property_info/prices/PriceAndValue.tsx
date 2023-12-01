@@ -5,7 +5,7 @@ import PriceDifference from './PriceDifference';
 
 const PriceAndValue: React.FC = () => {
   return (
-    <div className='w-[90%] h-[35%] border border-black rounded-lg flex flex-row items-center justify-around'>
+    <div className='w-[90%] h-[35%]  flex flex-row items-center justify-around  bg-[#EDF0F4] rounded-xl shadow-innerneu2'>
         <BuildingValue />
         <div className='h-[55%] border border-slate-300'></div>
         <PropertyPrice />

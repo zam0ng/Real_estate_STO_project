@@ -3,6 +3,8 @@ import axios from '../../../components/url';
 import { HomeMarqueeType } from "../../../features/HomeMarquee";
 import { HomeGraphType } from "../../../features/HomeGraph";
 import { difference } from "react-query/types/core/utils";
+import LoadingComponent from "../../../components/LoadingComponent";
+import ErrorComponent from "../../../components/ErrorComponent";
 
 type mergedDataType = {
     current_price : number;
@@ -22,9 +24,9 @@ export default function MarqueeIndeces (){
     }
 
     const {
-        isLoading,
-        error,
-        data : indices
+        isLoading : isLoadingIndices,
+        error : errorIndicies,
+        data : indicesData
     } = useQuery<HomeMarqueeType[]>({
         queryKey: ['indicies'],
         queryFn: fetchIndices
@@ -38,17 +40,38 @@ export default function MarqueeIndeces (){
     }
 
     const {
-        isLoading :graphLoading,
-        error :graphError,
+        isLoading : isLoadingGraph,
+        error : errorGraph,
         data : graphData 
     } = useQuery({
         queryKey : ['graphData'],
         queryFn : fetchgraph
     })
 
+    const isLoading = isLoadingIndices || isLoadingGraph;
+
+    const error = errorIndicies || errorGraph
+
+    if (isLoading){
+        return(
+            <LoadingComponent />
+        )
+    }
+
+    if (error) {
+        return(
+            <ErrorComponent />
+        )
+    }
+    
+
+    
     let mergedData: mergedDataType[] = [];
 
-    if(graphData !== undefined && indices !== undefined){
+
+
+
+    if(graphData !== undefined && indicesData !== undefined){
 
         const transformedData  = graphData.map((item : HomeGraphType)=>{
             // 이름 추출
@@ -60,7 +83,7 @@ export default function MarqueeIndeces (){
             }
         })
 
-        mergedData = indices.map(item=>{
+        mergedData = indicesData.map(item=>{
             const additionalData = transformedData.find((item2 : HomeMarqueeType)=>item2.real_estate_name === item.real_estate_name);
             return {...item,...additionalData} as mergedDataType;
         })
@@ -107,7 +130,8 @@ export default function MarqueeIndeces (){
             </div>
             </>
             : 
-            <div>안나옴</div>}
+            undefined
+            }
         </div>
     )
 }

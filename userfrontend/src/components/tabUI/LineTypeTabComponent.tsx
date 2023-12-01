@@ -56,7 +56,7 @@ export default function LineTypeTabComponent ({data} : LineTypeTabComponentProps
 
     return(
         <div className="w-full m-auto mt-11">
-            <div className=" relative  text-center border-b-2 h-7 mb-9 "
+            <div className=" relative  text-center border-b-2 h-7 mb-9   "
             style={{ display: 'grid', gridTemplateColumns: `repeat(${data.length}, minmax(0, 1fr))` }}
             >
                 <div className="absolute  border-b-2 border-blue-500 h-7 indicator"

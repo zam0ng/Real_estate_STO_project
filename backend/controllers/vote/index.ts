@@ -5,9 +5,25 @@ import { db } from "../../models";
 // 투표 컨트랙트 주소 보내주기
 export const voteContractAddress = async (req: Request, res: Response) => {
   try {
+    const vote_id = req.query.vote_id as string;
+    const result = await db.Contract_address.findAll({
+      where: { ca_type: "vote", id: vote_id },
+      raw: true,
+    });
+
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("empty");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+// 토큰 컨트랙트 주소 보내주기
+export const tokenContractAddress = async (req: Request, res: Response) => {
+  try {
     const real_estate_name = req.query.real_estate_name as string;
     const result = await db.Contract_address.findAll({
-      where: { ca_type: "vote", real_estate_name: real_estate_name },
+      where: { ca_type: "token", real_estate_name: real_estate_name },
       raw: true,
     });
 
@@ -23,8 +39,9 @@ export const voteList = async (req: Request, res: Response) => {
   try {
     interface SubscriptionVote {
       subscription_img_1: string;
-      subscription_name?: string;
       real_estate_name: string;
+      subscription_name?: string;
+      vote_id: number;
       vote_title: string;
       vote_start_date: Date;
       vote_end_date: Date;
@@ -39,6 +56,7 @@ export const voteList = async (req: Request, res: Response) => {
     const votes = (await db.Votes.findAll({
       attributes: [
         "real_estate_name",
+        "vote_id",
         "vote_title",
         "vote_start_date",
         "vote_end_date",
@@ -52,6 +70,7 @@ export const voteList = async (req: Request, res: Response) => {
           const match_result: SubscriptionVote = {
             subscription_img_1: sub.subscription_img_1,
             real_estate_name: item.real_estate_name,
+            vote_id: item.vote_id,
             vote_title: item.vote_title,
             vote_start_date: item.vote_start_date,
             vote_end_date: item.vote_end_date,
@@ -89,6 +108,7 @@ export const voteInsert = async (req: Request, res: Response) => {
     const result = await db.Votes.create(
       {
         real_estate_name: real_estate_name,
+        vote_id: contract_id!.id as number,
         vote_id: contract_id!.id as number,
         vote_title: vote_title,
         vote_start_date: vote_start_date,

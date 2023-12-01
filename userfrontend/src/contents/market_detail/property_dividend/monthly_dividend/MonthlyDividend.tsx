@@ -4,7 +4,7 @@ import DividendAmount from './DividendAmount';
 
 const MonthlyDividend: React.FC = () => {
   return (
-    <div className='w-[80%] h-44 border border-black rounded-lg'>
+    <div className='w-[80%] h-44  bg-[#EDF0F4] rounded-xl shadow-innerneu2'>
       <DividendDate />
       <DividendAmount />
     </div>

@@ -13,10 +13,10 @@ const MyCash: React.FC = () => {
         <MyTotalDeposit />
         <MyTotalWithdrawal />
       </div>
-      <div className='w-full h-[70%] border border-slate-200 rounded-lg shadow-lg'>
+      <div className='w-full h-[70%] bg-[#EDF0F4] rounded-xl shadow-innerneu2'>
         <MyCashHistory />
         <div className='w-full h-[30%] flex justify-center items-center'>
-          <div className='w-[50%] h-[50%] border border-black rounded-lg flex justify-center items-center bg-slate-100'>
+          <div className='w-[50%] h-[50%]  flex justify-center items-center bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2'>
             더보기
           </div>
         </div>
