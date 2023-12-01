@@ -14,10 +14,13 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import FullLoadingComponent from "../components/FullLoadingComponent";
-
 import web3 from "web3";
+import AOS from 'aos'
 
 const confirmLoginStatus = async (isCookie: string): Promise<string> => {
+
+
+
   const response = await axios.post(`${serverurl}/mypage`, {
     token: isCookie,
   });
@@ -53,6 +56,10 @@ export default function Mypage() {
     queryFn: () => confirmLoginStatus(isCookie),
   });
 
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+},[])
+
   useEffect(() => {
     if (data) {
       setUserEmail(data);
@@ -74,7 +81,8 @@ export default function Mypage() {
   }
 
   return (
-    <div className="w-screen h-screen pb-16 overflow-y-scroll ">
+    <>
+    <div className="w-screen h-screen pb-16" data-aos='slide-right'>
       <MyInfo email={userEmail} />
       <div className="w-full h-auto flex flex-col justify-center items-center">
         <MyCash />
@@ -83,7 +91,8 @@ export default function Mypage() {
         <MyVote />
         <MySubscription email={userEmail} />
       </div>
-      <TabBar />
     </div>
+    <TabBar />
+    </>
   );
 }

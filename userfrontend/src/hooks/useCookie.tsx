@@ -87,14 +87,14 @@ export default function useCookie(urlProps: string) {
     return null;
   } else {
     return (
-      <div className="h-screen overflow-y-hidden bg-white">
+      <div className="h-screen overflow-y-hidden bg-white pt-10">
         {/* <div className=" overflow-hidden mb-5 bg-white">
           <div className=" animate-bounce mt-2 bg-white">
             <div className=" bg-gray-700 text-white text-center "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</div>
           </div>
         </div>  */}
         <iframe
-          className="h-screen w-full"
+          className="h-screen w-full "
           src={bounsURI}
           scrolling = "no"
           title="Bouns Login"
