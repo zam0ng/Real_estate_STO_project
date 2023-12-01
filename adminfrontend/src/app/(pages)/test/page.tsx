@@ -38,7 +38,7 @@ const VotingTestPage: React.FC = () => {
 
     // 매물 이름 선택하면 해당 매물의 토큰 CA 가져오는거
     const fetchTokenCA = async (property: string): Promise<ContractAddressRequest[]> => {
-        const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
+        const response = await axios.get(`${serverurl}/vote/vote_contract_address`,{
             params: {
                 real_estate_name: property
             }

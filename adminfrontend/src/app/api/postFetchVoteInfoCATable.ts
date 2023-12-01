@@ -1,8 +1,9 @@
 
-const postFetchVoteInfoCATable = async (formData : FormData) => {
+// const postFetchVoteInfoCATable = async (formData : FormData) => {
+const postFetchVoteInfoCATable = async (tokenCA : string , realEstateName : string) => {
 
-  const caAddress = formData.get('caAddress'); // 'addressFieldName'은 해당 필드의 이름입니다.
-  const realEstateName = formData.get('real_estate_name');
+  // const caAddress = formData.get('caAddress'); // 'addressFieldName'은 해당 필드의 이름입니다.
+  // const realEstateName = formData.get('real_estate_name');
   // const voteTitle = formData.get('voteTitleFieldName');
   // const voteStartDate = formData.get('voteStartDateFieldName');
   // const voteEndDate = formData.get('voteEndDateFieldName');
@@ -13,7 +14,7 @@ const postFetchVoteInfoCATable = async (formData : FormData) => {
 
   const postData = {
     real_estate_name: realEstateName,
-    address: caAddress
+    address: tokenCA
 }
   // console.log("postData_postFetchVoteInfoCATable" , postData)
 

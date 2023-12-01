@@ -3,7 +3,15 @@
 import InputFormDateItem from './InputFormDateItem'
 import InputFormItem from './InputFormItem'
 
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+
+interface VoteableEstate {
+  id: number;
+  address: string;
+  real_estate_name: string;
+  cy_type: string;
+  symbol: string;
+}
 
 interface VoteFormSectionProps {
     title : string 
@@ -11,7 +19,7 @@ interface VoteFormSectionProps {
     setStartDate : Function
     setEndDate : Function
     selectedValue : string
-    voteTarget : string[][]
+    voteTarget : string[]
     setSelectedValue : Function
 }
 
@@ -37,6 +45,12 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
     setSelectedValue(e.target.value)
   }
 
+  useEffect(() => {
+    console.log("Updated voteTarget", voteTarget);
+  }, [voteTarget]);
+  
+  console.log("votetarget")
+  console.log(voteTarget)
 
   return (
     <>
@@ -56,14 +70,16 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
                 
                   <div className="flex flex-col items-center justify-start mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
                     
-                    {voteTarget.map( ([estateName, CA], index) => (
+              
+
+                    {voteTarget.map( (item, index) => (
                       <div key={index}>
-                          <label> {  `매물 ${index + 1} : ${estateName}`}   </label>
+                          <label> {  `매물 ${index + 1} : ${item}`}   </label>
                           <input 
                             type="radio" 
                             name="real_estate_name"  
-                            value={estateName}
-                            checked = {selectedValue === estateName}   // ✅ 체크된 화면 표시  
+                            value={item}
+                            checked = {selectedValue === item}   // ✅ 체크된 화면 표시  
                             onChange={handleEstateNameChange}
                             />
                       </div>

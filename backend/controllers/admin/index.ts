@@ -104,8 +104,6 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
       const create_month = month < 10 ? `0${month}` : `${month}`;
       ten_date[i] = `${year}-${create_month}`;
     }
-    console.log("ten_date");
-    console.log(ten_date);
   }
 
   let real_estate_names = result.map((item) => item.real_estate_name);
@@ -132,7 +130,7 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     };
 
     all_result.push(real_estate_object);
-    
+
     // real_estate_names = [];
     // new_real_estate_names = [];
     // today = new Date();
@@ -389,10 +387,6 @@ export const tradeDayList = async (req: Request, res: Response) => {
     })) as [] as TradeDate[];
 
     const all_result = await setRealEstateAmount(result, "day");
-
-    console.log("all_result[0].ten_amount");
-
-    console.log(all_result[0]);
 
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
@@ -676,8 +670,7 @@ export const transferInOutList = async (req: Request, res: Response) => {
   }
 };
 
-
-// 컨트랙트 주소 가져오기 
+// 컨트랙트 주소 가져오기
 export const contractAddressList = async (req: Request, res: Response) => {
   try {
     const result = await db.Contract_address.findAll({
@@ -802,7 +795,6 @@ export const monthlyIncome = async (req: Request, res: Response) => {
       Date.UTC(today.getUTCFullYear(), today.getUTCMonth() + 2, 0)
     );
 
-
     const result = (await db.Trades.findAll({
       attributes: [
         [
@@ -823,13 +815,9 @@ export const monthlyIncome = async (req: Request, res: Response) => {
       raw: true,
     })) as [] as MonthlyIncome[];
 
-    console.log(result);
-
     const monthly_incomes = result.map(
       (item: MonthlyIncome) => item.monthly_income
     );
-
-    console.log("monthly_incomes🚀", monthly_incomes);
 
     if (result) return res.status(200).json(monthly_incomes[0]);
     else return res.status(404).send([0]);
@@ -842,14 +830,16 @@ export const monthlyIncome = async (req: Request, res: Response) => {
 export const realEstateNameList = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
-      attributes: ["real_estate_name"],
+      attributes: ["subscription_name"],
       where: {
         subscription_status: "success",
       },
       raw: true,
     });
 
-    if (result) return res.status(200).json(result);
+    const names = result.map((item) => item.subscription_name);
+
+    if (names) return res.status(200).json(names);
     else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);

@@ -53,6 +53,7 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
   // const [selectedValue, setSelectedValue] = useState<string>("");
 
   const voteableEstateData = await getVoteableEstateData(); // 투표 대상이 되는 전체 매물
+  console.log("voteableEstateData" , voteableEstateData)
 
   // if(selectedValue){
   //   const ownerList = await getOwnerList(selectedValue)

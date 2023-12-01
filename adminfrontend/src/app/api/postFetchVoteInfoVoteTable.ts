@@ -1,5 +1,9 @@
 // interface postFetchVoteInfoVoteTableProps {}
 
+// import { DataFormParams, dataFormParams, dataFromFormParams } from "../_features/admin/dashboard";
+
+
+
 const convertSecondsToDate = (seconds : any) => {
   const milliseconds = seconds * 1000;
   const date = new Date(milliseconds);
@@ -11,17 +15,40 @@ const convertSecondsToDate = (seconds : any) => {
 };
 
 
-const postFetchVoteInfoVoteTable = async (formData : FormData) => {
-  const caAddress = formData.get('caAddress'); 
-  const realEstateName = formData.get('real_estate_name');
-  const voteTitle = formData.get('notice_title');
-  const _voteStartDate = formData.get('voteStartDate');
-  const _voteEndDate = formData.get('voteEndDate');
+interface DataFormParams {
+  realEstateName: string;
+  voteTitle: string;
+  voteStartDate: string;
+  voteEndDate: string;
+}
 
+// const postFetchVoteInfoVoteTable = async (dataForm  : DataFormParams , tokenCA : string) => {
+const postFetchVoteInfoVoteTable = async (realEstateName : string, voteTitle : string, voteStartDate : string, voteEndDate : string, tokenCA : string) => {
+  // const caAddress = formData.get('caAddress'); 
+
+  // const { realEstateName, voteTitle, voteStartDate, voteEndDate } = dataForm;
+
+  // const tempvoteStartDate = voteStartDate
+  // const tempvoteEndDate = voteEndDate
+
+  const caAddress = tokenCA; 
+
+  // const realEstateName = formData.get('real_estate_name') as string | null;
+  // const voteTitle = formData.get('notice_title') as string | null;
+  // const _voteStartDate = formData.get('voteStartDate')
+  // const _voteEndDate = formData.get('voteEndDate');
+
+  console.log("postFetchVoteInfoVoteTable")
+  console.log(caAddress , 
+    realEstateName ,
+    voteTitle, 
+    voteStartDate, 
+    voteEndDate, 
+    )
   
     // 'YYYY-MM-DD' 형식으로 변환
-    const voteStartDate = convertSecondsToDate(_voteStartDate);
-    const voteEndDate = convertSecondsToDate(_voteEndDate);
+    const convertVoteStartDate = convertSecondsToDate(voteStartDate);
+    const convertVoteEndDate = convertSecondsToDate(voteEndDate);
 
 
   const path = `/vote/vote_insert`;
@@ -32,8 +59,8 @@ const postFetchVoteInfoVoteTable = async (formData : FormData) => {
     address: caAddress,
     real_estate_name: realEstateName,
     vote_title: voteTitle,
-    vote_start_date: voteStartDate,
-    vote_end_date: voteEndDate
+    vote_start_date: convertVoteStartDate,
+    vote_end_date: convertVoteEndDate
   }
   
   // console.log("postData_postFetchVoteInfoVoteTable", postData)

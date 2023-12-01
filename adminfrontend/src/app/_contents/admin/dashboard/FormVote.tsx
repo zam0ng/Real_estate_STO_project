@@ -48,7 +48,7 @@ const voteableEstateData = [
 export default function FormVote({
   voteableEstateData,
 }: {
-  voteableEstateData: VoteableEstate[];
+  voteableEstateData: string[];
 }) {
   const router = useRouter();
 
@@ -60,14 +60,21 @@ export default function FormVote({
 
   const [contract, setContract] = useState<any>(null);
 
-  // console.log("voteableEstateData" , voteableEstateData)
+  useEffect(() => {
+    console.log("Updated voteableEstateData", voteableEstateData);
+  }, [voteableEstateData]);
+  
+  
+  console.log("voteableEstateDatavoteableEstateData" , voteableEstateData)
 
   // console.log("voteableEstateData_formVote" , voteableEstateData)
 
-  const nameAddressArr = voteableEstateData.map((item: VoteableEstate) => {
-    return [item.real_estate_name, item.address];
-  });
-
+  
+  // const nameAddressArr = voteableEstateData.map((item: VoteableEstate) => {
+  //   return [item.real_estate_name, item.address];
+  // });
+  // ⭐⭐ voteableEstateData  = [ '문래 공차', '전주 시화연풍' ]
+  
   // console.log("nameAddressArr" , nameAddressArr)
   /* 데이터 형식
   [
@@ -82,7 +89,7 @@ export default function FormVote({
 ]
   */
 
-  const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
+  // const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
   // console.log("getAddressFromNameObj" , getAddressFromNameObj)
   /* 데이터 형식
     {
@@ -192,17 +199,21 @@ export default function FormVote({
 
     formData.append("voteStartDate", finalStartDate); // 타임스탬프 추가 | form 데이터로 전송시, toString 필요
     formData.append("voteEndDate", finalEndDate);
-    formData.append(
-      "caAddress",
-      getAddressFromNameObj[selectedValue].toString()
-    );
+    // formData.append(
+    //   "caAddress",
+    //   getAddressFromNameObj[selectedValue].toString()
+    // );
 
     // for (let [key, value] of formData.entries()) {
     //   console.log("formData 확인🐣🐣");
     //   console.log(`${key}: ${value}`);
     // }
 
-    // const tokenCA = await getTokenCA(selectedValue); // vote_contract_address
+      
+    const tempCA = await getTokenCA(selectedValue); // vote_contract_address
+    const tokenCA = tempCA[0].address
+    console.log("tokenCA🚀🚀")
+    console.log(tokenCA)
     // console.log("💎💎 ownerList" , ownerList)
 
     const ownerList = await getVotableUsers(selectedValue); // vote_wallets
@@ -214,22 +225,22 @@ export default function FormVote({
     // const voteTableRes = await postFetchVoteInfoVoteTable(formData); // 투표 테이블 저장
     // const caTableRes = await postFetchVoteInfoCATable(formData); // CA 테이블 저장
 
-    const tokenCA = formData.get("caAddress") as string | null;
+    // const tokenCA = formData.get("caAddress") as string | null;
     const selectedProperty = formData.get("real_estate_name") as string | null;
     const voteDescription = formData.get("notice_title") as string | null;
 
     
-    // console.log("startDate | endDate", startDate, endDate);
-    //   // startDate | endDate 1698969600 1701993600
-    // console.log("amountList", amountList);
-    //   // [500]
-    // console.log("tokenCA", tokenCA);
-    //   // tokenCA 0x2MRF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427
-    // console.log("selectedProperty", selectedProperty);
-    //   // selectedProperty 문래 공차
-    // console.log("voteDescription", voteDescription);
-    //   // voteDescription 매각 여부 결정 투표
-      
+    console.log("startDate | endDate", startDate, endDate);
+      // startDate | endDate 1698969600 1701993600
+    console.log("amountList", amountList);
+      // [500]
+    console.log("tokenCA", tokenCA);
+      // tokenCA 0x2MRF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427
+    console.log("selectedProperty", selectedProperty);
+      // selectedProperty 문래 공차
+    console.log("voteDescription", voteDescription);
+      // voteDescription 매각 여부 결정 투표
+    
     
     if (
       tokenCA &&
@@ -247,15 +258,34 @@ export default function FormVote({
           );
         }
         
+        
+        const realEstateName = formData.get('real_estate_name') as string;
+        const voteTitle = formData.get('notice_title') as string;
+        const voteStartDate = formData.get('voteStartDate') as string;
+        const voteEndDate = formData.get('voteEndDate') as string;
+
+        // const dataForm = {
+        //   realEstateName,
+        //   voteTitle,
+        //   voteStartDate,
+        //   voteEndDate
+        // };
+        
+        
         // await postFetchVoteInfoCATable(formData); // CA 테이블 저장
-        await postFetchVoteInfoVoteTable(formData); // 투표 테이블 저장 🔵 | 🟠 이것도 다시 오류 
+        // await postFetchVoteInfoVoteTable(tokenCA , dataForm); // 투표 테이블 저장 🔵 | 🟠 이것도 다시 오류 
+        await postFetchVoteInfoVoteTable(realEstateName , voteTitle , voteStartDate, voteEndDate , tokenCA ); // 투표 테이블 저장 🔵 | 🟠 이것도 다시 오류 
         
-        await postFetchVoteInfoCATable(formData); // CA 테이블 저장 | 🟠 살짝 오류 -> 이쪽으로 위치 변경하니, 우선 해결됨 -> 다시 안 됨 
+        // await postFetchVoteInfoCATable(formData); // CA 테이블 저장 | 🟠 살짝 오류 -> 이쪽으로 위치 변경하니, 우선 해결됨 -> 다시 안 됨 
+        await postFetchVoteInfoCATable(tokenCA , realEstateName); // CA 테이블 저장 | 🟠 살짝 오류 -> 이쪽으로 위치 변경하니, 우선 해결됨 -> 다시 안 됨 
         
-      router.refresh();
-      router.replace(`http://localhost:3000/admin/real_estates`);
-        
-        
+        router.refresh();
+        router.replace(`http://localhost:3000/admin/real_estates`);
+
+
+        console.log("voteableEstateData_voteableEstateData" )
+        console.log(voteableEstateData)
+
       };
       
       return (
@@ -292,7 +322,8 @@ export default function FormVote({
                   <FormSectionVoteInfo
                     title="투표 상세 등록"
                     desc="발행 매물에 대한 투표 상세 등록"
-                    voteTarget={nameAddressArr}
+                    // voteTarget={nameAddressArr}
+                    voteTarget={voteableEstateData}
                     setStartDate={setStartDate}
                     setEndDate={setEndDate}
                     selectedValue={selectedValue}

@@ -5,6 +5,8 @@ import { db } from "../../models";
 // 투표 컨트랙트 주소 보내주기
 export const voteContractAddress = async (req: Request, res: Response) => {
     
+  console.log("voteContractAddress_req.query" , req.query)
+
   try {
     const real_estate_name = req.query.real_estate_name as string;
     const result = await db.Contract_address.findAll({
