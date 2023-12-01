@@ -6,6 +6,10 @@ interface AddRequest extends Request {
   wallet?: string;
 }
 
+interface Subscription_rate {
+  subscription_rate? : number;
+}
+
 // 청약 리스트 보여주기
 export const allList = async (req: Request, res: Response) => {
   try {
@@ -158,35 +162,24 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     const { id, amount, user_email } = req.body;
     const application_amount = 5000 * amount;
 
+
     const subscription_rate_check =
       (await db.Subscriptions.findOne({
         attributes: [
           [
-            db.sequelize.literal(`"subscription_totalsupply" * 0.3`),
+            db.sequelize.literal(`"subscription_totalsupply" * 0.2`),
             "subscription_rate",
           ],
         ],
         where: { id: id },
         raw: true,
-      })) ?? 0;
+      })) as Subscription_rate;
 
-    if (subscription_rate_check < amount)
-      return res.send("전체 공급량의 30% 이상 구매 할 수 없습니다.");
+      if(subscription_rate_check.subscription_rate === undefined) subscription_rate_check.subscription_rate = 0
 
-    const get_user_application = await db.Subscription_application.findAll({
-      attributes: [
-        [
-          db.sequelize.fn("sum", db.sequelize.col("subscription_my_amount")),
-          "application",
-        ],
-      ],
-      where: { subscription_user_email: user_email },
-      group: "user_email",
-      raw: true,
-    });
-
-    if (get_user_application + amount > subscription_rate_check)
-      return res.send("전체 공급량의 30% 이상 구매 할 수 없습니다.");
+      if (typeof subscription_rate_check === 'object' && subscription_rate_check.subscription_rate < amount) {
+        return res.send("전체 공급량의 20% 이상 구매 할 수 없습니다.");
+      }
 
     const get_user_info = (await db.Users.findOne({
       attributes: [
@@ -201,17 +194,32 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     })) as Object as GetUserInfo;
 
     if (get_user_info.blacklist) return res.send("관리자에게 문의하세요.");
-    if (get_user_info.using_balance < application_amount)
+    if (get_user_info.balance < application_amount)
       return res.send("금액이 모자랍니다.");
 
-    const user_balance_update = await db.Users.update(
-      {
-        using_balance: get_user_info.using_balance - application_amount,
-      },
-      { where: { user_email: user_email }, transaction }
-    );
+    const application_check = await db.Subscription_application.findOne({
+      where: {
+        subscription_user_email : get_user_info.user_email , subscription_id: id
+      },raw: true
+    });
 
-    const insert_subscription_application =
+    if(application_check) {
+      if(application_check.subscription_my_amount > subscription_rate_check.subscription_rate) {
+        return res.send("전체 공급량의 20% 이상 구매 할 수 없습니다.");
+      };
+      
+    const update_subscription_application =
+    await db.Subscription_application.update(
+      {
+        subscription_my_amount: application_check.subscription_my_amount + amount,
+      },
+      { where :{
+        subscription_id: id, subscription_user_email: user_email
+      },transaction }
+    );
+      
+    } else {
+      const insert_subscription_application =
       await db.Subscription_application.create(
         {
           subscription_id: id,
@@ -220,6 +228,16 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
         },
         { transaction }
       );
+
+    };
+
+    const user_balance_update = await db.Users.update(
+      {
+        balance: get_user_info.balance - application_amount,
+      },
+      { where: { user_email: user_email }, transaction }
+    );
+
 
     const update_subscription_order_amount = await db.Subscriptions.update(
       {

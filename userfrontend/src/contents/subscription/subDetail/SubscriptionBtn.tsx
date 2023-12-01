@@ -72,7 +72,13 @@ export default function SubscriptionBtn({props} : subdetailtype){
   }
 
   function handleQuantityBtn(num: number) {
+    
     setQuantity((prev) => {
+
+      console.log('이전값',prev)
+      console.log(typeof dataUserId)
+      console.log("dataUserId")
+      console.log(dataUserId)
       const newQuantity = prev + num;
       if (dataUserId < parseInt(detail.subscription_offering_price)) {
         setQuantity(0);
@@ -87,7 +93,6 @@ export default function SubscriptionBtn({props} : subdetailtype){
           detail.subscription_totalsupply - detail.subscription_order_amount
         );
       }
-      parseInt(detail.subscription_offering_price);
       if (
         newQuantity >
         Math.floor(dataUserId / parseInt(detail.subscription_offering_price))
@@ -96,7 +101,10 @@ export default function SubscriptionBtn({props} : subdetailtype){
           dataUserId / parseInt(detail.subscription_offering_price)
         );
       }
+      console.log("newQuantity");
+      console.log(newQuantity);
       return newQuantity;
+      
     });
   }
 
@@ -178,14 +186,14 @@ export default function SubscriptionBtn({props} : subdetailtype){
                 <div className="text-blue-500">총 청약 금액</div>
                 <div className="w-25 text-blue-500 text-right">{formatCurrency((quantity) * parseInt(detail.subscription_offering_price)) }<span className="ml-1">원</span></div>
             </div>
-          </div>
-          <div
-            className={` w-5/6 h-12 rounded-md ${
-              quantity ? "bg-blue-950" : "bg-gray-400"
-            } text-white m-auto flex justify-center items-center font-semibold my-4`}
-            onClick={quantity ? handleOrder : undefined}
-          >
-            주문하기
+            <div
+              className={` w-5/6 h-12 rounded-md ${
+                quantity ? "bg-blue-950" : "bg-gray-400"
+              } text-white m-auto flex justify-center items-center font-semibold my-4`}
+              onClick={quantity ? handleOrder : undefined}
+            >
+              주문하기
+            </div>
           </div>
           </>
        : 
