@@ -7,7 +7,7 @@ interface UserProfileImgProps {
 const MyProfileImg: React.FC<UserProfileImgProps> = ({img}) => {
   return (
     <div className='w-full h-[50%] flex justify-center items-end'>
-        <div className='w-28 h-28 border border-black rounded-full'>
+        <div className='w-28 h-28  rounded-full bg-[#EDF0F4]  shadow-innerneu2'>
             <img src={img} />
         </div>
     </div>
