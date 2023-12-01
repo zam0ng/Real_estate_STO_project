@@ -38,8 +38,6 @@ import { Suspense } from "react";
 import getOwnerList from "@/app/api/getTokenCA";
 
 export default async function Dashboard({ searchParams }: SearchParamsProps) {
-  // const voteListData: VoteProps[] = await getVoteList();
-  // // console.log("voteListData", voteListData);
 
   // const subscriptionData: SubscriptionData[] = await getSubscriptionsList();
   // // console.log("subscriptionData", subscriptionData); // ⭐⭐서버 컴포넌트니까, 터미널에 찍힘

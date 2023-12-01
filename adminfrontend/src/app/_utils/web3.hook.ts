@@ -6,11 +6,11 @@ interface User {
     balance: string;
 }
 
-declare global {
-    interface Window {
-        ethereum: any;
-    }
-}
+// declare global {
+//     interface Window {
+//         ethereum?: MetaMaskInpageProvider;
+//     }
+// }
 
 const useWeb3 = ()=>{
     const [user,setUser] = useState<User>({
@@ -23,7 +23,7 @@ const useWeb3 = ()=>{
     useEffect(()=>{
         if(window.ethereum){
             window.ethereum.request({method:"eth_requestAccounts"})
-            .then(async ([data]: string[]) => {
+            .then(async ([data]: any) => {
                 const web3Provider = new Web3(window.ethereum);
                 setUser({
                     account : data,
