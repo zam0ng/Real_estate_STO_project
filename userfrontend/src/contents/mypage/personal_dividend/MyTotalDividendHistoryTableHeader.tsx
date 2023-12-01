@@ -2,7 +2,7 @@ import React from 'react';
 
 const MyTotalDividendHistoryTableHeader: React.FC = () => {
   return (
-    <div className='w-full h-1/4 rounded-lg flex flex-row text-xs bg-slate-200'>
+    <div className='w-full h-8 rounded-lg flex flex-row text-xs bg-slate-200'>
         <div className='w-1/6 h-full flex justify-center items-center border-r border-white'>
             부동산
         </div>

@@ -1,56 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SubscriptionContext } from "./layout/MySubscription";
+import { MySubscriptionListRequest, SubscriptionContext } from "./layout/MySubscription";
 import MySubscriptionListItemTitle from "./MySubscriptionListItemTitle";
 import MySubscriptionListItemImg from "./MySubscriptionListItemImg";
 import MySubscriptionListItemHeader from "./MySubscriptionListItemHeader";
 import MySubscriptionListitemInfo from "./MySubscriptionListitemInfo";
 
-const MySubscriptionListItem: React.FC = () => {
-  const mySubscriptions = useContext(SubscriptionContext);
-
-  const [textColor, setTextColor] = useState<string>("");
-  const [bgColor, setBgColor] = useState<string>("");
-  const [completionText, setCompletionText] = useState<string>("");
-
-  useEffect(() => {
-    // console.log(mySubscriptions);
-    if (mySubscriptions !== undefined) {
-      // console.log(mySubscriptions[0]?.subscription_end_date);
-      // console.log(new Date(mySubscriptions[0]?.subscription_end_date));
-      // console.log(new Date());
-      if (
-        mySubscriptions[0]?.subscription_order_amount ===
-        mySubscriptions[0]?.subscription_totalsupply
-      ) {
-        setCompletionText("입고");
-        setTextColor("text-blue-500");
-        setBgColor("bg-blue-200");
-      } else if (
-        new Date() < new Date(mySubscriptions[0]?.subscription_end_date)
-      ) {
-        setCompletionText("진행중");
-        setTextColor("text-yellow-500");
-        setBgColor("bg-yellow-200");
-      } else if (
-        new Date() > new Date(mySubscriptions[0]?.subscription_end_date) &&
-        mySubscriptions[0]?.subscription_order_amount <
-          mySubscriptions[0]?.subscription_totalsupply
-      ) {
-        setCompletionText("미입고");
-        setTextColor("text-red-500");
-        setBgColor("bg-red-200");
-      }
-    }
-  }, [mySubscriptions]);
+const MySubscriptionListItem: React.FC<MySubscriptionListRequest> = ({
+  subscription_name,
+  subscription_img_1,
+  application_date,
+  subscription_end_date,
+  subscription_my_amount,
+  subscription_offering_price,
+  refund_price,
+  subscription_order_amount,
+  subscription_totalsupply
+}) => {
 
   return (
     <>
-      <MySubscriptionListItemTitle />
-      <div className="w-full h-28 flex flex-row">
-        <MySubscriptionListItemImg />
-        <div className="w-[75%] h-full flex flex-col">
+      <MySubscriptionListItemTitle 
+        subscription_end_date={subscription_end_date} 
+        subscription_name={subscription_name} 
+        subscription_order_amount={subscription_order_amount} 
+        subscription_totalsupply={subscription_totalsupply} 
+      />
+      <div className="w-full h-28 flex flex-row items-center">
+        <MySubscriptionListItemImg subscription_img_1={subscription_img_1} />
+        <div className="w-[75%] h-[75%] flex flex-col">
           <MySubscriptionListItemHeader />
-          <MySubscriptionListitemInfo />
+          <MySubscriptionListitemInfo 
+            application_date={application_date} 
+            subscription_end_date={subscription_end_date} 
+            subscription_my_amount={subscription_my_amount} 
+            subscription_offering_price={subscription_offering_price} 
+          />
         </div>
       </div>
     </>

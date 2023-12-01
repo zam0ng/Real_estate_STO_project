@@ -13,6 +13,10 @@ interface MarketDetailRequest {
   fluctuation_rate: number;
   rating: number;
   "Subscription.subscription_img_1": string;
+  "Subscription.subscription_img_2": string;
+  "Subscription.subscription_img_3": string;
+  "Subscription.subscription_img_4": string;
+  "Subscription.subscription_img_5": string;
   "Subscription.subscription_description": string;
   "Subscription.subscription_name": string;
   "Subscription.subscription_address": string;

@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SubscriptionContext } from "./layout/MySubscription";
 
-const MySubscriptionListItemTitle: React.FC = () => {
+interface SubscriptionTitleProps {
+  subscription_end_date: string;
+  subscription_order_amount: number;
+  subscription_totalsupply: number;
+  subscription_name: string;
+}
+
+const MySubscriptionListItemTitle: React.FC<SubscriptionTitleProps> = ({subscription_end_date,subscription_name,subscription_order_amount,subscription_totalsupply}) => {
   const mySubscriptions = useContext(SubscriptionContext);
 
   const [textColor, setTextColor] = useState<string>("");
@@ -9,16 +16,11 @@ const MySubscriptionListItemTitle: React.FC = () => {
   const [completionText, setCompletionText] = useState<string>("");
 
   useEffect(() => {
-    // console.log(mySubscriptions);
-    if (mySubscriptions !== undefined) {
       const currentDate = new Date();
-      const endDate = new Date(mySubscriptions[0]?.subscription_end_date);
+      const endDate = new Date(subscription_end_date);
       // console.log(currentDate.getTime());
       // console.log(endDate.getTime());
-      if (
-        mySubscriptions[0]?.subscription_order_amount ===
-        mySubscriptions[0]?.subscription_totalsupply
-      ) {
+      if (subscription_order_amount === subscription_totalsupply) {
         setCompletionText("입고");
         setTextColor("text-blue-500");
         setBgColor("bg-blue-200");
@@ -31,13 +33,12 @@ const MySubscriptionListItemTitle: React.FC = () => {
         setTextColor("text-red-500");
         setBgColor("bg-red-200");
       }
-    }
   }, [mySubscriptions]);
 
   return (
     <div className="w-full h-8 flex flex-row">
       <div className="w-1/2 h-full flex justify-start items-center text-lg">
-        여의도 자이 1차
+        {subscription_name}
       </div>
       <div className="w-1/2 h-full flex justify-end items-center">
         <div

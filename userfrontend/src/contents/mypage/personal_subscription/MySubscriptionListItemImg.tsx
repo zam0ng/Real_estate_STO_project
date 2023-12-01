@@ -1,20 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { SubscriptionContext } from './layout/MySubscription';
+import React from 'react';
+import { serverurl } from '../../../components/serverurl';
 
-const MySubscriptionListItemImg: React.FC = () => {
-    const mySubscriptions = useContext(SubscriptionContext);
+interface SubscriptionImgProps {
+    subscription_img_1: string;
+}
 
-    const [imgLink,setImgLink] = useState<string>("");
-
-    useEffect(()=>{
-        if(mySubscriptions !== undefined){
-            setImgLink(mySubscriptions[0]?.subscription_img);
-        }
-    },[mySubscriptions]);
+const MySubscriptionListItemImg: React.FC<SubscriptionImgProps> = ({subscription_img_1}) => {
 
     return (
         <div className='w-[25%] h-full flex justify-center items-center mr-2'>
-            <img className='w-20 h-20 border border-black rounded-lg' src={imgLink} />
+            <img className='w-20 h-20 rounded-lg' 
+                 src={`${serverurl}/estate_img/${subscription_img_1}`} />
         </div>
     )
 }

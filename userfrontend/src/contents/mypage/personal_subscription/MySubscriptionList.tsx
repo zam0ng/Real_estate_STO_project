@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import MySubscriptionListItem from './MySubscriptionListItem';
+import { SubscriptionContext } from './layout/MySubscription';
 
 const MySubscriptionList: React.FC = () => {
+  const mySubscriptions = useContext(SubscriptionContext);
+  console.log(mySubscriptions);
+
   return (
     <div className='w-full h-full'>
-      <MySubscriptionListItem />
-      <MySubscriptionListItem />
-      <MySubscriptionListItem />
-      <MySubscriptionListItem />
+      {mySubscriptions && mySubscriptions.map((item,index)=>(
+        <MySubscriptionListItem key={index} 
+          subscription_name={item.subscription_name}
+          subscription_img_1={item.subscription_img_1}
+          subscription_end_date={item.subscription_end_date}
+          subscription_my_amount={item.subscription_my_amount}
+          subscription_offering_price={item.subscription_offering_price}
+          subscription_order_amount={item.subscription_order_amount}
+          subscription_totalsupply={item.subscription_totalsupply}
+          refund_price={item.refund_price}
+          application_date={item.application_date} />
+      ))}
     </div>
   )
 }
