@@ -109,7 +109,7 @@ const Menubar = async () => {
                 <div className="relative w-6 h-6 rounded-2xl "> 
                   <Image
                     alt="바운스 로고"
-                    src={"https://i.imgur.com/T0JneaZ.png"}   // next.config.js 에 기재한 경로와 맞아야 함
+                    src={"https://i.imgur.com/k1w4FdU.png"}   // next.config.js 에 기재한 경로와 맞아야 함
                     sizes="100vw"
                     style={{objectFit: "contain"}}	
                     fill={true}
@@ -147,7 +147,7 @@ const Menubar = async () => {
                 <div className="relative w-6 h-6 rounded-2xl"> 
                 <Image
                   alt="바운스 로고"
-                  src={"https://i.imgur.com/D8FlSE3.png"}   // next.config.js 에 기재한 경로와 맞아야 함
+                  src={"https://i.imgur.com/lL6j9gY.png"}   // next.config.js 에 기재한 경로와 맞아야 함
                   sizes="100vw"
                   style={{objectFit: "contain"}}	
                   fill={true}

@@ -18,7 +18,7 @@ const EnrollBlacklistButton = ({ text, user_email }: EnrollBlacklistButtonParams
         const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
         const url = `${domain}${path}`
         router.refresh();                
-        router.replace(`${url}`);
+        // router.replace(`${url}`);
       
     } )
     // revalidateTag('adminUsers')
