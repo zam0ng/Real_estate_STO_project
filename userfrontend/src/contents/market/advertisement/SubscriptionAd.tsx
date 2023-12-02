@@ -32,7 +32,7 @@ const SubscriptionAd: React.FC = () => {
       <div className="w-full h-1/2 flex justify-center items-center font-bold ">
         {data && data[0].subscription_name}
       </div>
-      <div className="w-full h-1/2 flex justify-center items-center text-xs text-white">
+      <div className="w-full h-1/2 flex justify-center items-center text-xs text-gray-400">
         지금 구매하세요!!
       </div>
     </div>
