@@ -16,6 +16,12 @@ type mergedDataType = {
     ten_date : string[]
 }
 
+interface newGraph {
+    real_estate_name : string;
+    ten_date : number[];
+    ten_amount : number[];
+}
+
 
 export default function MarqueeIndeces (){
 
@@ -49,7 +55,7 @@ export default function MarqueeIndeces (){
         queryFn : fetchgraph
     })
 
-    console.log(graphData);
+    // console.log(graphData);
 
     const isLoading = isLoadingIndices || isLoadingGraph;
 
@@ -86,9 +92,12 @@ export default function MarqueeIndeces (){
             }
         })
 
+        console.log('다시해보자',transformedData);
+
         mergedData = indicesData.map(item=>{
-            const additionalData = transformedData.find((item2 : HomeMarqueeType)=>item2.real_estate_name === item.real_estate_name);
-            return {...item,...additionalData} as mergedDataType;
+            console.log(transformedData)
+            const additionalData = transformedData.find((item2 : newGraph)=> item2.real_estate_name == item.real_estate_name);
+            return { ...item, ...additionalData} as mergedDataType;
         })
 
     }
@@ -113,7 +122,14 @@ export default function MarqueeIndeces (){
                         <div className=" w-full h-8 font-bold text-center pt-1 text-sm">{item.real_estate_name}</div>
                         <div className={` w-full h-5 text-center font-bold ${item. difference > 0 ? 'text-blue-500' : 'text-red-500'} `}>{item.difference}원<span className="text-sm pl-2">({item.fluctuation_rate})%</span></div>
                         <div className=" w-full h-5 text-xs mt-2 text-center ">최근 10일간 거래량</div>
-                        <div className="border w-full h-16 mt-1 "></div>
+                        <div className=" w-3/4 m-auto h-16   ">
+                            <LineChartSmall 
+                                _lineColor = {'rgb(142, 153, 250)'}  
+                                _data = {item.ten_amount}  
+                                _label = {["Oct 10","17","Nov 3", "10", "17", "24", "Dec 3", "10", "17", "24", ]}
+                            
+                            />
+                        </div>
                     </div>
                 )
             })}
@@ -129,7 +145,7 @@ export default function MarqueeIndeces (){
                         <div className=" w-3/4 m-auto h-16   ">
                             <LineChartSmall 
                                 _lineColor = {'rgb(142, 153, 250)'}  
-                                _data = {[310, 133, 260, 50, 70, 120, 120, 520, 20 , 300]}  
+                                _data = {item.ten_amount}  
                                 _label = {["Oct 10","17","Nov 3", "10", "17", "24", "Dec 3", "10", "17", "24", ]}
                             
                             />
