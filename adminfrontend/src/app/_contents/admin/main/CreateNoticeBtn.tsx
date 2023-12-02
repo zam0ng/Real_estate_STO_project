@@ -28,7 +28,7 @@ return (
     <>
     <Link
         href="/admin/dashboard?noticeModal=true" 
-        className="w-5.375rem h-5.375rem bg-dashboard_btn_notice  rounded-md flex items-center justify-evenly flex-col">
+        className="w-5.375rem h-5.375rem bg-dashboard_btn_notice  rounded-md flex items-center justify-evenly flex-col shadow-2xl">
         
         <div>
             <DashboardActionIcon  />

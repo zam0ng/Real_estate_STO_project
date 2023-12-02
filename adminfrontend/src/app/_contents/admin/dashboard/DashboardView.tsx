@@ -86,7 +86,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
               </div>
 
               {/* <div className="flex items-center justify-center bg-neutral-300 w-30rem h-15rem"> */}
-              <div className="flex items-center justify-center h-80 bg-neutral-300 w-30rem">
+              <div className="flex items-center justify-center h-72 bg-neutral-300 w-30rem">
                 <LargeLineChart  searchParams={searchParams}  />
               </div>
             </div>
@@ -124,14 +124,14 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
 
 
             {/* 등록 버튼 */}
-            <div className="flex flex-col justify-between bg-blue-300 h-36">
+            <div className="flex flex-col justify-between mb-8 h-36">
               <h3 className="text-xl font-bold">등록 버튼</h3>
 
               <div className="flex flex-col justify-end h-52 w-30rem ">
                 
                 {/* 첫 줄 */}
                   <div className="flex justify-between ">
-                    <CreateEstateBtn />
+                    <CreateEstateBtn   />
                     
                     <CreateVoteBtn />
                     
