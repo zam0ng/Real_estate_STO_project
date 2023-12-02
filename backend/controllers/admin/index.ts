@@ -41,7 +41,6 @@ interface MonthlyIncome {
 
 function getDayInfo(info: string) {
   const today = new Date();
-  const today = new Date();
   const yearStart = new Date(today.getFullYear(), 0, 1).getTime();
 
   if (info === "week") {
@@ -64,7 +63,6 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
 
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
-  let today = new Date();
 
   if (info === "day") {
     for (let i = 0; i < 10; i++) {
@@ -132,7 +130,6 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     };
 
     all_result.push(real_estate_object);
-    today = new Date();
   });
 
   return all_result;
@@ -1038,6 +1035,7 @@ export const subscriptionDetail = async (req: Request, res: Response) => {
 
 export const caRegister = async (req: Request, res: Response) => {
   // console.log(req.body);
+  console.log("caRegister 들어ㅗㅇㅁ>");
   const { address, real_estate_name, symbol } = req.body;
   try {
     await Contract_address.create({

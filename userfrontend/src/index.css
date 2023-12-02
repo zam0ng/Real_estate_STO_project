@@ -67,7 +67,7 @@
   transition: left 0.7s;
 }
 
-@import "aos/dist/aos.css";
+@import "~aos/dist/aos.css";
 
 .custom-transform {
   position: absolute;

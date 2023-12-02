@@ -59,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/jsonwebtoken": "^9.0.5",
     "assert": "^2.1.0",
     "autoprefixer": "^10.4.16",
