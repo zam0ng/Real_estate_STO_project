@@ -47,12 +47,12 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
     setSelectedValue(e.target.value)
   }
 
-  useEffect(() => {
-    console.log("Updated voteTarget", voteTarget);
-  }, [voteTarget]);
+  // useEffect(() => {
+  //   console.log("Updated voteTarget", voteTarget);
+  // }, [voteTarget]);
   
-  console.log("votetarget")
-  console.log(voteTarget)
+  // console.log("votetarget")
+  // console.log(voteTarget)
 
   return (
     <>

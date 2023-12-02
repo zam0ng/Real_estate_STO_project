@@ -222,8 +222,7 @@ const EnableButton = ({ text,id}: EnableButtonParam) => {
               <path  d="M20.269 6.66309L9.26904 17.6631L4.26904 12.6631" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-
-
+          
         </div>
       </button>
       {/* <button>{id}</button> */}

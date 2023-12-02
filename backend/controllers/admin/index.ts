@@ -322,9 +322,12 @@ export const blackList = async (req: Request, res: Response) => {
     console.error(error);
   }
 };
-
+  
 // 블랙리스트 등록
 export const blackListAdd = async (req: Request, res: Response) => {
+
+  console.log("req.body" , req.body)
+
   try {
     const { user_email } = req.body;
 
@@ -1161,6 +1164,17 @@ export const noticesList = async (req: Request, res: Response) => {
   try {
     const noticeList = await Notices.findAll();
     res.status(200).json(noticeList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+};
+
+// users 테이블에서 모든 속성 받아오기 by DJ 임시 (1202)
+export const allUsers = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await Users.findAll();
+    res.status(200).json(allUsers);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);

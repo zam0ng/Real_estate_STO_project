@@ -25,6 +25,10 @@ import {
   noticesList,
   // realEstateTradeList,
 
+  // DJ 임시 테스트 
+  allUsers,
+
+
   // 재영 어드민 부분
   realEstateSubmit,
   noticeSubmit,
@@ -81,6 +85,9 @@ router.get("/real_estate_name_list", realEstateNameList);
 
 // 공지사항 가져오기 | ✅ DJ TEST
 router.get("/notices", noticesList);
+// 사용자 테이블에서 전체 속성 가져오기
+router.get("/allUsers", allUsers )
+
 
 // 메인 페이지 레이아웃 변경
 /////////////////////////////////////////////////////
