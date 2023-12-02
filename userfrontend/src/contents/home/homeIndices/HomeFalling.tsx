@@ -20,7 +20,7 @@ export default function HomeFalling(){
         queryFn: fetchFalling
     });
 
-    console.log(falling);
+    // console.log(falling);
 
     if (isLoading){
         return(
