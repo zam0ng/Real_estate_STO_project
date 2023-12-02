@@ -30,13 +30,6 @@ async function contract_address() {
       where: { ca_type: "token" },
       raw: true,
     });
-  try {
-    const result = await db.Contract_address.findAll({
-      attributes: ["address", "real_estate_name"],
-      where: { ca_type: "token" },
-      raw: true,
-    });
-
     contract_real_estate_name = result.reduce(
       (acc: ContractRealEstatesName, item) => {
         acc[item.address] = item.real_estate_name;

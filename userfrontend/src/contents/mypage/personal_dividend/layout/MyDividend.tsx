@@ -49,8 +49,8 @@ const MyDividend: React.FC<UserEmailProps> = ({ email }) => {
 
   return (
     <TotalDividendHistoryContext.Provider value={data}>
-      <div className="w-[90%] h-96 mt-5  pl-5 pr-5  bg-[#EDF0F4] rounded-xl shadow-innerneu2">
-        <div className="w-full h-[30%] flex justify-start items-center text-xl">
+      <div className="w-[90%] h-60 mt-5 pt-3 pl-5 pr-5  bg-[#EDF0F4] rounded-xl shadow-innerneu2">
+        <div className="w-full h-[15%] flex justify-start items-end text-xl">
           배당금 상세
         </div>
         <MyTotalDividend />

@@ -49,7 +49,7 @@ const PropertyListBox: React.FC = () => {
   }
 
   return (
-    <div className="w-[80%] h-auto mt-10 flex flex-col">
+    <div className="w-[80%] h-auto mt-10 pb-16 flex flex-col">
       <div className="w-[80%] h-20 flex flex-col justify-center items-start mb-5">
         <div className="text-2xl font-bold">거래중인 건물</div>
         <div className="text-sm text-gray-400">지금 바로 소유주가 되어보세요</div>

@@ -53,9 +53,6 @@ const MyInfo: React.FC<UserEmailProps> = ({ email }) => {
 
   return (
     <div className="relative w-full h-128 border-b-2 border-slate-200 bg-gradient-to-b from-blue-300 via-white">
-      <div className="absolute top-0 left-0">
-        <BackBtn />
-      </div>
       <MyProfileImg img={data?.user_profile_img} />
       <MyEmail email={data?.user_email} />
       <MyWallet wallet={data?.wallet} />

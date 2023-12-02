@@ -10,6 +10,7 @@ const MySubscriptionList: React.FC = () => {
     <div className='w-full h-full'>
       {mySubscriptions && mySubscriptions.map((item,index)=>(
         <MySubscriptionListItem key={index} 
+          id={item.id}
           subscription_name={item.subscription_name}
           subscription_img_1={item.subscription_img_1}
           subscription_end_date={item.subscription_end_date}

@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.9;
 
-pragma solidity ^0.8.20;
-
-import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 // import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
 // import "../node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol";

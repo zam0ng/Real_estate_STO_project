@@ -1,15 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SubscriptionContext } from "./layout/MySubscription";
+import { useNavigate } from "react-router-dom";
 
 interface SubscriptionTitleProps {
+  id: number | undefined;
   subscription_end_date: string;
   subscription_order_amount: number;
   subscription_totalsupply: number;
   subscription_name: string;
 }
 
-const MySubscriptionListItemTitle: React.FC<SubscriptionTitleProps> = ({subscription_end_date,subscription_name,subscription_order_amount,subscription_totalsupply}) => {
+const MySubscriptionListItemTitle: React.FC<SubscriptionTitleProps> = ({id,subscription_end_date,subscription_name,subscription_order_amount,subscription_totalsupply}) => {
   const mySubscriptions = useContext(SubscriptionContext);
+
+  const navigation = useNavigate();
+
+  const toSubscriptionDetail = (id: number) => {
+    navigation(`/subscription/detail/${id}`);
+  };
 
   const [textColor, setTextColor] = useState<string>("");
   const [bgColor, setBgColor] = useState<string>("");
@@ -37,8 +45,11 @@ const MySubscriptionListItemTitle: React.FC<SubscriptionTitleProps> = ({subscrip
 
   return (
     <div className="w-full h-8 flex flex-row">
-      <div className="w-1/2 h-full flex justify-start items-center text-lg">
+      <div className="w-1/2 h-full flex justify-start items-center text-lg" onClick={()=>toSubscriptionDetail(id!)}>
         {subscription_name}
+        <svg className="ml-3" xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none">
+          <path d="M1.80554 13.244L7.80554 7.24399L1.80554 1.24399" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </div>
       <div className="w-1/2 h-full flex justify-end items-center">
         <div
