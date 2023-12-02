@@ -25,6 +25,7 @@ import VoteDetail from "./pages/VoteDetail";
 import VoteList from "./pages/VoteList";
 import Deposit from "./pages/Deposit";
 import Withdraw from "./pages/Withdraw";
+import ScrollTest from "./pages/ScrollTest";
 
 function App() {
   let queryClient = new QueryClient();
@@ -79,6 +80,7 @@ function App() {
           <Route path="/vote-test" element={<VotingTestPage />} />
           <Route path="/mypage/deposit" element ={<Deposit />} />
           <Route path="/mypage/withdraw" element ={<Withdraw />} />
+          <Route path="/scroll-test" element={<ScrollTest />} />
         </Routes>
         </div>
       </QueryClientProvider>
