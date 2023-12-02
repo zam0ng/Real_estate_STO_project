@@ -49,7 +49,12 @@ export default function SubEndedList({ props }: SubAllListType) {
             <div>{building.subscription_description}</div>
             <div>
               {building.start_price != null
-                ? <div className="mt-1">수익률  {(building.start_price - 5000) / 50 + "%"}</div>
+                ? <div className={`mt-1 ${        
+                  building.start_price > 5000
+                  ? "text-red-500"
+                  : building.start_price < 5000
+                  ? "text-blue-500"
+                  : "text-black"}`}>수익률  {(building.start_price - 5000) / 50 + "%"}</div>
                 : "청약 목표 미달성"}
             </div>
           </div>
