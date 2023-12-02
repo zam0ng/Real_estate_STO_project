@@ -18,7 +18,7 @@ const ToDealPage: React.FC = () => {
     <div className="fixed w-full bottom-0 left-0 h-16 border-t border-slate-200 flex justify-center items-center bg-white z-10">
       <div
         className="w-[85%] h-10 flex justify-center items-center border border-black rounded-lg mt-5 mb-5 
-      bg-black text-white z-20 shadow-neu1 shadow-neu2"
+      bg-black text-white z-20 shadow-neu2"
         onClick={goToDeal}
       >
         거래하기

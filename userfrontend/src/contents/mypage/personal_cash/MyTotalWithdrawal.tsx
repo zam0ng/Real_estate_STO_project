@@ -27,7 +27,7 @@ const MyTotalWithdrawal: React.FC<UserEmailProps> = ({email}) => {
   });
 
   useEffect(()=>{
-    console.log(data);
+    // console.log(data);
     if(data){
       if(data.length > 0){
         setTotalWithdrawal(data[0].price);

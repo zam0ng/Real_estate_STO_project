@@ -57,7 +57,7 @@ const PropertyBox: React.FC<PropertyProps> = ({
   });
 
   useEffect(()=>{
-    console.log(data);
+    // console.log(data);
     if(data){
       if(data.length !== 0){
         setTokenSymbol(data[0].symbol);

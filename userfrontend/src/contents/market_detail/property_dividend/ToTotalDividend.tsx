@@ -12,7 +12,7 @@ const ToTotalDividend: React.FC = () => {
   };
 
   return (
-    <div className='w-[50%] h-10  flex justify-center items-center  text-sm bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2'
+    <div className='w-[50%] h-10  flex justify-center items-center  text-sm bg-[#EDF0F4] rounded-lg shadow-neu2'
     onClick={goToTotalDividend}>
       전체 수익 보러 가기
     </div>

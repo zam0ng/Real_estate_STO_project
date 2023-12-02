@@ -4,7 +4,7 @@ import { SubscriptionContext } from './layout/MySubscription';
 
 const MySubscriptionList: React.FC = () => {
   const mySubscriptions = useContext(SubscriptionContext);
-  console.log(mySubscriptions);
+  // console.log(mySubscriptions);
 
   return (
     <div className='w-full h-full'>
