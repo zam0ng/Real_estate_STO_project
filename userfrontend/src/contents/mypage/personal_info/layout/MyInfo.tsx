@@ -10,6 +10,7 @@ import { serverurl } from "../../../../components/serverurl";
 import { useQuery } from "@tanstack/react-query";
 import { Cookies } from "react-cookie";
 import jwt from "jsonwebtoken";
+import AOS from 'aos'
 
 interface UserInfoRequest {
   user_profile_img: string;
@@ -48,11 +49,13 @@ const MyInfo: React.FC<UserEmailProps> = ({ email }) => {
   });
 
   useEffect(() => {
-    // console.log(data);
-  }, [data]);
+    AOS.init({duration : 1300})
+  }, []);
+
+
 
   return (
-    <div className="relative w-full h-128 border-b-2 border-slate-200 bg-gradient-to-b from-blue-300 via-white">
+    <div className="relative w-full h-128 border-b-2 border-slate-200 bg-gradient-to-b from-blue-300 via-white" data-aos='slide-right'>
       <div className="absolute top-0 left-0">
         <BackBtn />
       </div>

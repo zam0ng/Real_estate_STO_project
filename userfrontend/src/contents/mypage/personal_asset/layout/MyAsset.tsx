@@ -7,6 +7,8 @@ import { UserEmailProps } from "../../personal_info/layout/MyInfo";
 import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { useQuery } from "@tanstack/react-query";
+import AOS from 'aos'
+
 
 interface UserTotalAssetRequest {
   total_profit_loss: number;
@@ -48,8 +50,12 @@ const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
     }
   }, [totalAsset]);
 
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  })
+
   return (
-    <div className="w-[90%] h-96 mt-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2 pr-5 pl-5">
+    <div className="w-[90%] h-96 mt-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2 pr-5 pl-5" data-aos='fade-up'>
       <div className="w-full h-[15%] flex justify-start items-center text-xl">
         총 자산
       </div>

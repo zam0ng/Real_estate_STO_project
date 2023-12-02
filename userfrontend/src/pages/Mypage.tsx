@@ -82,7 +82,7 @@ export default function Mypage() {
 
   return (
     <>
-    <div className="w-screen h-screen pb-16" data-aos='slide-right'>
+    <div className="w-screen h-screen pb-16">
       <MyInfo email={userEmail} />
       <div className="w-full h-auto flex flex-col justify-center items-center">
         <MyCash />
