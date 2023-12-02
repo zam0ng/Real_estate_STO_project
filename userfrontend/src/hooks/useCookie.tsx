@@ -70,7 +70,7 @@ export default function useCookie(urlProps: string) {
           "//" +
           window.location.host +
           "/" +
-          urlProps;
+          'loading';
 
         const loginUrl = `https://bouns.io/_login/?client_id=${projectId}&redirect_uri=${redirectUri}`;
         setBounsURI(loginUrl);
