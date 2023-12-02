@@ -23,9 +23,9 @@ const MyAssetValueChange: React.FC<TotalValueChangeProps> = ({total_profit_loss,
         총 손익
       </div>
       <div className='w-[80%] h-full flex justify-center items-center'>
-        {total_profit_loss && total_profit_loss > 0 ? `+${moneyForm}원` : `${moneyForm}원`}
+        {total_profit_loss ? total_profit_loss > 0 ? `+${moneyForm}원` : `${moneyForm}원` : `0 원`}
         <span className={`text-xs-sm ml-5 w-[20%] h-full flex justify-center items-center ${textColor}`}>
-          {profit_loss_ratio && profit_loss_ratio > 0 ? `+${profit_loss_ratio}%` : `${profit_loss_ratio}%`}
+          {profit_loss_ratio ? profit_loss_ratio > 0 ? `+${profit_loss_ratio}%` : `${profit_loss_ratio}%` : `0 %`}
         </span>
       </div>
     </div>

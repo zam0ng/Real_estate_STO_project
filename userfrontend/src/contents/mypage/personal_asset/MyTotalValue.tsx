@@ -11,7 +11,7 @@ const MyTotalValue: React.FC<MyTotalValueProps> = ({appraise_balance}) => {
         총 평가
       </div>
       <div className='w-[65%] h-full flex justify-end items-center pr-2 text-xs-sm'>
-        {appraise_balance?.toLocaleString()} 원
+        {appraise_balance ? appraise_balance.toLocaleString() : "0"} 원
       </div>
     </div>
   )

@@ -60,7 +60,9 @@ const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
         <MyTotalBuy total_buy={totalAssetValue?.total_buy} />
         <MyTotalValue appraise_balance={totalAssetValue?.appraise_balance} />
       </div>
-      <MyAssetHistoryTable email={email} />
+      {totalAsset && totalAsset.length > 0 && (
+        <MyAssetHistoryTable email={email} />
+      )}
     </div>
   );
 };
