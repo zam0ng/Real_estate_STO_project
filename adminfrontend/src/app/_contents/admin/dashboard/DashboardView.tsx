@@ -86,7 +86,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
               </div>
 
               {/* <div className="flex items-center justify-center bg-neutral-300 w-30rem h-15rem"> */}
-              <div className="flex items-center justify-center h-72 bg-neutral-300 w-30rem">
+              <div className="flex items-center justify-center h-72 w-30rem">
                 <LargeLineChart  searchParams={searchParams}  />
               </div>
             </div>

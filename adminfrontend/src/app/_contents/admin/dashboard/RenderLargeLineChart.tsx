@@ -162,7 +162,7 @@
     return (
     <>
     <Line 
-        className="bg-stone-100"  // 배경색 
+        className=" bg-admin_content_bg"  // 배경색 
         data={data} 
         options={options}
     />

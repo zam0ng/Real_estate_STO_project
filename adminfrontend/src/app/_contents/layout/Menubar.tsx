@@ -1,4 +1,5 @@
 import { getMonthlyIncome } from "@/app/api/getMonthlyIncome";
+import Image from "next/image";
 import Link from "next/link";
 
 const Menubar = async () => {
@@ -21,8 +22,19 @@ const Menubar = async () => {
 
           {/* wrapper */}
           <div className="flex flex-col items-center ">
+            
             {/* 로고 ✅✅ */}
-            <div className="w-24 h-10 mt-6 bg-blue-900 rounded-full"></div>
+            <div className="relative flex w-24 h-10 mt-6 bg-blue-100 rounded-full">
+
+              <Image
+                alt="매물 사진"
+                src={"https://i.imgur.com/IDZ3bg2.png"}   // next.config.js 에 기재한 경로와 맞아야 함
+                sizes="100vw"
+                style={{objectFit: "contain"}}	
+                fill={true}
+              />            
+
+            </div>
 
             {/* 프로필 이미지 */}
             <div className="w-24 h-24 rounded-full mt-14 bg-blue-950"></div>

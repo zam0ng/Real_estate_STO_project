@@ -46,7 +46,7 @@ const PublicOfferingStatus = async () => {
   return (
     <>
       {/* 금액현황 */}
-      <div className="z-20 flex justify-between w-full bg-admin_content_bg">
+      <div className="z-20 flex items-center justify-between w-full bg-admin_content_bg ">
         <p className="z-20 text-base tracking-tight text-gray-500 ">
           공모 금액 현황
         </p>
