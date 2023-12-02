@@ -176,8 +176,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     });
 
     logData.forEach(async (item) => {
-      if (item.transmission === "external" || item.transmission === "internal")
-        return;
+      // if (item.transmission === "external" || item.transmission === "internal")
+      //   return;
 
       if (item.transmission === "in") {
         // 해당 유저가 토큰을 보유하고 있는지 확인
