@@ -15,15 +15,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import FullLoadingComponent from "../components/FullLoadingComponent";
 import web3 from "web3";
-import AOS from 'aos'
+import AOS from "aos";
 
 const confirmLoginStatus = async (isCookie: string): Promise<string> => {
-
-
-
-  const response = await axios.post(`${serverurl}/mypage`, {
-    token: isCookie,
-  },{withCredentials: true, headers: {'Content-Type': 'application/json'}});
+  const response = await axios.post(
+    `${serverurl}/mypage`,
+    {
+      token: isCookie,
+    },
+    { withCredentials: true, headers: { "Content-Type": "application/json" } }
+  );
   return response.data;
 };
 
@@ -56,9 +57,9 @@ export default function Mypage() {
     queryFn: () => confirmLoginStatus(isCookie),
   });
 
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-},[])
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   useEffect(() => {
     if (data) {

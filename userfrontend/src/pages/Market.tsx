@@ -7,10 +7,9 @@ import { useEffect } from "react";
 import AOS from 'aos';
 
 const Market: React.FC = () => {
-
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-  },[])
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   return (
     <>

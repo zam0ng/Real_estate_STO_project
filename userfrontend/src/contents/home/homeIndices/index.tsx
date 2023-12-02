@@ -1,8 +1,8 @@
-import MarqueeIndeces from "./MarqueeIndeces"
-import HomeChart from "./HomeChart"
-import HomeSearch from "./HomeSearch"
+import MarqueeIndeces from "./MarqueeIndeces";
+import HomeChart from "./HomeChart";
+import HomeSearch from "./HomeSearch";
 import AOS from "aos"
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 export default function HomeIndices(){
 
@@ -37,5 +37,5 @@ export default function HomeIndices(){
             </div>
         </div>
     </>
-    )
+  );
 }

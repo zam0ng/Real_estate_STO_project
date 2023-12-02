@@ -1,27 +1,27 @@
 import React from "react";
 import { useState } from "react";
 
-import {BiCaretLeftCircle,BiCaretRightCircle, } from "react-icons/bi";
+import { BiCaretLeftCircle, BiCaretRightCircle } from "react-icons/bi";
 import { serverurl } from "./serverurl";
 
 interface WidthProps {
-    width: string;
-    slides: {
-        url: string | number
-    }[]
+  width: string;
+  slides: {
+    url: string | number;
+  }[];
 }
 
-const Slider: React.FC<WidthProps> = ({width,slides})=>{
-    // console.log(width);
-    console.log(slides);
+const Slider: React.FC<WidthProps> = ({ width, slides }) => {
+  // console.log(width);
+  console.log(slides);
 
-    const [currentIndex,setCurrentIndex] = useState<number>(0)
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-    const prevSlide = ()=>{
-        const isFirstSlide = currentIndex === 0;
-        const newIndex = isFirstSlide? slides.length - 1 : currentIndex - 1 ;
-        setCurrentIndex(newIndex)
-    }
+  const prevSlide = () => {
+    const isFirstSlide = currentIndex === 0;
+    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
 
   const nextSlide = () => {
     const isLastSlide = currentIndex === slides.length - 1;

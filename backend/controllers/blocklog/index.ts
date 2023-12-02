@@ -31,6 +31,7 @@ async function contract_address() {
       where: { ca_type: "token" },
       raw: true,
     });
+
     contract_real_estate_name = result.reduce(
       (acc: ContractRealEstatesName, item) => {
         acc[item.address] = item.real_estate_name;
@@ -204,6 +205,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
                 wallet: item.tx_to,
                 real_estate_name: contract_real_estate_name[item.ca],
               },
+              transaction,
             }
           );
         } else {
@@ -252,6 +254,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               wallet: item.tx_from,
               real_estate_name: contract_real_estate_name[item.ca],
             },
+            transaction,
           }
         );
       }
