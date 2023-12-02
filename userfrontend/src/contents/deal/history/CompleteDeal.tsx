@@ -45,9 +45,7 @@ const CompleteDeal: React.FC = () => {
   }, [data]);
 
   useEffect(() => {
-    if (data === undefined) {
-      return;
-    } else {
+    if(Array.isArray(data)){
       const sortedByDate = data.sort((a, b) => {
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
@@ -56,6 +54,8 @@ const CompleteDeal: React.FC = () => {
       });
 
       setFromRecent(sortedByDate);
+    }else{
+      setFromRecent([]);
     }
   }, [data]);
 

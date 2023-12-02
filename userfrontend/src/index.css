@@ -19,12 +19,6 @@
 }
 
 @layer components {
-  .historyActive {
-    background-color: rgb(255 255 255);
-  }
-}
-
-@layer components {
   .historyNotActive {
     border-bottom: none;
     background-color: rgb(203 213 225);

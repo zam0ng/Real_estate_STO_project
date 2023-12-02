@@ -58,6 +58,8 @@ const IncompleteDeal: React.FC<socketProps> = ({ isSocket }) => {
   const [isContent, setContent] = useState("");
   const [isTitle, setIsTitle] = useState("");
 
+  const [fromRecent,setFromRecent] = useState<IncompleteDealRequest[]>([]);
+
   const {
     data: incompleteDeals,
     isLoading,
@@ -90,15 +92,20 @@ const IncompleteDeal: React.FC<socketProps> = ({ isSocket }) => {
     setContent('주문 취소 신청이 접수되었습니다.')
   };
 
-  const fromRecent =
-    incompleteDeals &&
-    incompleteDeals?.sort((a, b) => {
-      const dateA = new Date(a.createdAt);
-      const dateB = new Date(b.createdAt);
+  useEffect(()=>{
+    if(Array.isArray(incompleteDeals)){
+      const sortedByDate = incompleteDeals.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
 
-      return dateB.getTime() - dateA.getTime();
-    });
-  // // console.log(fromRecent);
+        return dateB.getTime() - dateA.getTime();
+      });
+
+      setFromRecent(sortedByDate);
+    }else{
+      setFromRecent([]);
+    }
+  },[incompleteDeals]);
 
   return (
     <>
