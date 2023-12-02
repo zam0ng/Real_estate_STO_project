@@ -31,7 +31,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
         {/* 상단 제목 
             [참고] 사용자 페이지 제목 수치 : text-2xl font-semibold */}
         <div className=" items-center h-14 mt-2 text-1.75rem font-bold tracking-tight text-adminLayout_menubar_name flex ">
-          <h1 className="ml-10 text-3xl tracking-tight "> Dashboard </h1>
+          <h1 className="ml-1 text-3xl tracking-tight "> Dashboard </h1>
         </div>
 
         {/* 중간 부분 */}

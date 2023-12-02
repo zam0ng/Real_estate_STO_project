@@ -8,7 +8,7 @@ export default function DashboardLayout({
 }) {
   return (
     <section>
-      <div className="relative z-10 grid h-screen overflow-hidden bg-yellow-200 grid-cols-layout">
+      <div className="relative z-10 grid h-screen overflow-hidden bg-admin_content_bg grid-cols-layout">
         
         {/* 상단 header */}
         <div className="relative z-20 w-auto h-20 col-span-2 overflow-hidden bg-blue-100 rounded-adminLayout_header">
@@ -28,7 +28,7 @@ export default function DashboardLayout({
 
         {/* 메뉴바 가이드 라인 */}
         {/* <div className="bg-green-300 min-h-[89vh] w-96"> */}
-        <div className="bg-admin_content_bg min-h-[92vh] w-96 z-50">
+        <div className="bg-admin_content_bg min-h-[92vh] w-80 z-50">
           {/* 왼쪽 menu bar | 메뉴바 */}
           <Menubar />
         </div>
