@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropertyBox from "./property/PropertyBox";
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { serverurl } from "../../../components/serverurl";
 import LoadingComponent from "../../../components/LoadingComponent";
+import AOS from 'aos'
+
+
 
 export interface PropertyInfo {
   start_price: number;
@@ -24,6 +27,11 @@ const queryPropertyList = async (): Promise<PropertyInfo[]> => {
 };
 
 const PropertyListBox: React.FC = () => {
+
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  },[])
+
   const navigation = useNavigate();
 
   const { data, error, isLoading, isError } = useQuery<PropertyInfo[], Error>({
@@ -47,6 +55,8 @@ const PropertyListBox: React.FC = () => {
   if (isError) {
     return <div>Error : {error.message}</div>;
   }
+
+
 
   return (
     <div className="w-[80%] h-auto mt-10 flex flex-col">

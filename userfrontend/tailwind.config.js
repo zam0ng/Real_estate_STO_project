@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily : {
-        sans : ['EASTARJET-Medium']
+        sans : ['Pretendard-Regular',]
       },
       fontSize: {
         home: "62.5%",
