@@ -32,7 +32,7 @@ const TransactionItem:React.FC<TransactionItemProps> = ( {imageURL , estateName 
 return (
 <>
     <div className="flex items-center justify-between h-14 w-30rem ">
-    <div className="relative flex items-center justify-center w-14 h-14 bg-slate-200 rounded-xl ">  
+    <div className="relative flex items-center justify-center w-14 h-14 bg-slate-200 rounded-xl grayscale-10 ">  
         {/* Image 태그의 부모 컨테이너에 relative 가 있어야 -> 부모 컨테이너가 기준이 되어서, Image 태그가 박힘  */}
         <Image
             alt="매물 사진"
@@ -40,6 +40,7 @@ return (
             sizes="100vw"
             style={{objectFit: "cover"}}	
             fill={true}
+            className='shadow-lg'
         />
     </div>
 

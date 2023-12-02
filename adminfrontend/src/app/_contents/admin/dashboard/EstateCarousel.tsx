@@ -27,7 +27,7 @@ const EstateCarousel = async () => {
   return (
     <>
       {/* 기존 너비 | width 480, height 256 */}
-      <div className="flex flex-col items-center justify-center rounded-xl bg-stone-200 w-30rem ">
+      <div className="flex flex-col items-center justify-center rounded-xl bg-stone-50 w-30rem ">
         {/* 변경 너비 */}
         {/* <div className="flex flex-col items-center justify-center rounded-xl bg-stone-200 w-30rem h-32rem"> */}
 

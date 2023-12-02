@@ -15,7 +15,7 @@ const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
 
   return (
     <>
-      <div className="relative rounded-full w-4.5rem h-4.5rem bg-lime-100 overflow-hidden flex items-end		">
+      <div className="relative rounded-full w-4.5rem h-4.5rem bg-lime-300 overflow-hidden flex items-end	grayscale-80	">
 
       {/* <Image
         alt="매물 사진"

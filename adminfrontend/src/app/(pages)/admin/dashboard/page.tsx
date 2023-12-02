@@ -28,25 +28,26 @@ export default async function Dashboard({ searchParams }: SearchParamsProps) {
   const isNoticeModalOpen = searchParams?.noticeModal;
   const isDividendsModalOpen = searchParams?.dividendsModal;
 
+
   return (
     <>
+      <div className="z-30">
+        {isEstateModalOpen && <FormEstate />}
 
+        {isVoteModalOpen && voteableEstateData && (
+          <FormVote voteableEstateData={voteableEstateData} />
+          )}
 
-      {isEstateModalOpen && <FormEstate />}
+        {isNoticeModalOpen &&  voteableEstateData && (
+          <FormNotice voteableEstateData={voteableEstateData} />
+        ) }
 
-      {isVoteModalOpen && voteableEstateData && (
-        <FormVote voteableEstateData={voteableEstateData} />
-      )}
+        {isDividendsModalOpen &&  voteableEstateData &&  (
+          <Formdividends voteableEstateData={voteableEstateData}  />
+          ) }
 
-      {isNoticeModalOpen &&  voteableEstateData && (
-        <FormNotice voteableEstateData={voteableEstateData} />
-      ) }
-
-      {isDividendsModalOpen &&  voteableEstateData &&  (
-        <Formdividends voteableEstateData={voteableEstateData}  />
-      ) }
-
-      <DashboardView searchParams={searchParams} />
+        <DashboardView searchParams={searchParams} />
+      </div>
     </>
   );
 }

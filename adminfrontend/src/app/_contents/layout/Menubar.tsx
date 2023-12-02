@@ -16,7 +16,7 @@ const Menubar = async () => {
     <>
       {/* 왼쪽 menu bar | 메뉴바 */}
       
-        <div className="absolute h-[95vh] bg-neutral-200 left-4 top-4 w-72 rounded-3xl">
+        <div className="absolute h-[95vh] bg-admin_modal_mainBG left-4 top-4 w-72 rounded-3xl  shadow-lg ">
           {/* height 가 890px 정도 되면!?  */}
 
           {/* wrapper */}

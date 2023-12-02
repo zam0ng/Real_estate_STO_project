@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {BiCaretLeftCircle,BiCaretRightCircle, } from "react-icons/bi";
+import {BiCaretLeft, BiCaretLeftCircle,BiCaretRight,BiCaretRightCircle, BiCaretRightSquare, } from "react-icons/bi";
 import { useState } from "react"
 
 
@@ -89,13 +89,13 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
   
   return (
     <>
-    <div className="relative flex items-center h-64 rounded-2xl w-30rem justify-evenly ">
+    <div className="relative flex items-center h-64 shadow-lg rounded-2xl w-30rem justify-evenly ">
       
       {/* 왼쪽 */}
       <div className="relative h-11.5rem w-9.875rem  ">
           
         <Image
-          className = {`rounded-2xl  duration-500 ${animation}`} // 'bg-center bg-cover' 은 안 함 | duration-500 은 사진이 지연되게 넘어가면서, 슬라이더 효과
+          className = {`rounded-2xl grayscale-20 duration-500 ${animation}`} // 'bg-center bg-cover' 은 안 함 | duration-500 은 사진이 지연되게 넘어가면서, 슬라이더 효과
           alt="매물 사진"
           src={finalImageURLArr[currentIndex]} // [✅체크 할 것] next.config.js 에 기재한 경로와 맞아야 함
           sizes="100vm"
@@ -107,22 +107,13 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
 
       {/* 오른쪽 */}
       <div className="h-11.5rem w-16.25rem   flex flex-col">
-        
-            {/* 매물현황 */}
-            {/* <div className="absolute z-10 bg-indigo-300 top-36 ">
-              <h3>매물현황</h3>
-            </div> */}
-            
-            {/* 금일 10시 기준 */}
-            {/* <div className="absolute z-10 bg-lime-300 top-32 ">
-              <h3>금일 10:00 기준</h3>
-            </div> */}
             
             {/* 윗 부분 */}
             <div className="flex flex-col w-full h-full mt-1 ">
                   {/* describe | 설명 */}
                   <div>
-                    <p className="text-dashboard_carousel_black_800 text-0.9375rem">{subscription_descriptionArr[currentIndex]}</p>
+                    {/* <p className="text-dashboard_carousel_black_800 text-0.9375rem">{subscription_descriptionArr[currentIndex]}</p> */}
+                    <p className="text-gray-500 text-0.9375rem">{subscription_descriptionArr[currentIndex]}</p>
                   </div>
                   
                   {/* 매물명 */}
@@ -153,21 +144,16 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ( {currentSituationD
 
             </div>
 
-        
       </div>
-
-
-
-      
-
 
       {/* 버튼 */}
       <div className=" group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-small rounded-full p-2 bg-black/10 text-white cursor-pointer">
-        <BiCaretLeftCircle onClick={prevSlide} size={30} />
+        {/* <BiCaretLeftCircle onClick={prevSlide} size={30} /> */}
+        <BiCaretLeft onClick={prevSlide} size={25} />
       </div>
 
       <div className=" group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-small rounded-full p-2 bg-black/10 text-white cursor-pointer">
-        <BiCaretRightCircle onClick={nextSlide} size={30} />
+        <BiCaretRight onClick={nextSlide} size={25} />
       </div>
       
       {/* 진행률 */}

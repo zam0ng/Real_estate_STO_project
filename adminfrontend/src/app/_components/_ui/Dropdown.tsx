@@ -30,7 +30,7 @@ const Dropdown = () => {
   return (
     <>
     <select
-      className="border border-gray-300 border-solid rounded-md shadow-sm outline-none focus:ring" 
+      className="rounded-md shadow-sm outline-none border-admin_content_bg bg-admin_content_bg focus:ring" 
         /* outline-none : 테두리 같은 검은색 없어지게 함 
 
         */

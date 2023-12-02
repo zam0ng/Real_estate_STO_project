@@ -18,63 +18,44 @@ import CriteriaToggle from "./CriteriaToggle";
 import { SearchParamsProps } from "@/app/_features/admin/dashboard";
 import { CreateDividendsBtn } from "../main/CreateDividendsBtn";
 import getVoteableEstateData from "@/app/api/getVoteableEstateData";
+import Link from "next/link";
 
 
 export default async function DashboardView({searchParams} : SearchParamsProps) {
   
-  
 
   return (
     <div className="flex items-center justify-center">
+      
       <div className="flex flex-col w-full h-full ">
         {/* 상단 제목 
             [참고] 사용자 페이지 제목 수치 : text-2xl font-semibold */}
-        <div className=" items-center h-8 text-1.75rem font-bold tracking-tight text-adminLayout_menubar_name flex ">
-          <h1 className="ml-10 tracking-tight"> Dashboard </h1>
+        <div className=" items-center h-14 mt-2 text-1.75rem font-bold tracking-tight text-adminLayout_menubar_name flex ">
+          <h1 className="ml-10 text-3xl tracking-tight "> Dashboard </h1>
         </div>
 
         {/* 중간 부분 */}
         {/* <div className="flex flex-row h-45.625rem bg-stone-100 justify-evenly"> */}
-        <div className="flex flex-row bg-stone-100 justify-evenly h-[78vh]">
+        <div className="flex flex-row bg-admin_content_bg justify-evenly h-[80vh]">
 
           {/* 왼쪽 영역 */}
-          <div className="flex flex-col h-full justify-evenly">
+          {/* <div className="flex flex-col h-full justify-evenly"> */}
+          <div className="flex flex-col justify-between h-full">
+        
           
-          
-          
-            {/* 매물 현황 card */}
-            
+            {/* 매물 현황 card */}            
             <EstateCarousel />
-
-            {/* <div className="flex flex-col items-center justify-center rounded-xl bg-stone-200 w-30rem"> */}
-              {/* 상단 제목 */}
-              {/* <div className="flex flex-col w-full ml-24">
-                <h3 className="text-lg font-semibold ">매물현황</h3>
-                <p className="text-sm ">금일 10:00 기준</p>
-              </div> */}
-
-              {/* 아래 사진 */}
-              {/* <div className="flex flex-col justify-end bg-center bg-no-repeat bg-cover w-96 h-52 bg-slate-300 bg-pattern_2 ">
-                <p className="text-sm">매출의 월 15% 이상 배당 </p>
-
-                <h3 className="text-lg font-semibold tracking-tight">
-                  {" "}
-                  수원 행궁 뉴스 뮤지엄{" "}
-                </h3>
-
-                <p className="text-sm"> 최근 7일 거래횟수 : 1000</p>
-                <p className="text-sm"> 토큰 가격 : 5000</p>
-                <p className="text-sm"> 누적 수익률 : 120%</p>
-              </div>
-            </div> */}
-
 
 
             {/* 공모현황 card */}
             <div className="relative z-20 flex flex-col justify-between h-14 w-30rem bg-slate-50 ">
-              
               <PublicOfferingStatus />
             </div>
+
+            {/* 공모현황 card */}
+            {/* <div className="relative z-20 flex flex-col justify-between h-14 w-30rem bg-slate-50 ">
+              <PublicOfferingStatus />
+            </div> */}
 
 
             {/* small card */}
@@ -88,26 +69,13 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
 
             {/* Latest transaction */}
             <Transaction />
-                {/* <div className="flex flex-col justify-around w-30rem h-60"> */}
-                  {/* 제목 */}
-                  {/* <div className="flex justify-between w-30rem ">
-                    <h3 className="text-xl font-bold">Latest transaction</h3>
-                    <p className="flex items-center text-sm font-normal text-dashboard_card_transaction_view">
-                      View all
-                    </p>
-                  </div> */}
-
-                  {/* item */}
-                  {/* <TransactionItem  imageURL={} />
-                  <TransactionItem imageURL={} />
-                  <TransactionItem imageURL={} /> */}
-
-                {/* </div> */}
+            
 
           </div>
 
           {/* 오른쪽 영역 */}
-          <div className="flex flex-col h-full justify-evenly">
+          {/* <div className="flex flex-col h-full justify-evenly"> */}
+          <div className="flex flex-col justify-between h-full">
             {/* 그래프, 일별, 주별, 월별 통계 */}
             <div className="flex flex-col w-30rem ">
               <div className="flex items-center justify-between">
@@ -117,34 +85,52 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
                 </p>
               </div>
 
-              <div className="flex items-center justify-center bg-neutral-300 w-30rem h-15rem">
+              {/* <div className="flex items-center justify-center bg-neutral-300 w-30rem h-15rem"> */}
+              <div className="flex items-center justify-center h-80 bg-neutral-300 w-30rem">
                 <LargeLineChart  searchParams={searchParams}  />
               </div>
             </div>
 
-            {/* 블랙 리스트 유저 */}
-            <div className="flex flex-col justify-around w-30rem h-36 ">
-              <h3 className="text-xl font-bold">Blacklist Users</h3>
+            {/* 공모현황 card */}
+            {/* <div className="relative z-20 flex flex-col justify-between h-14 w-30rem bg-slate-50 ">
+              <PublicOfferingStatus />
+            </div> */}
 
+            {/* 블랙 리스트 유저 */}
+            <Link 
+                href={"/admin/users"}
+                className="flex flex-col justify-around w-30rem h-36">
+              
+              <div className="flex items-center justify-between border-b-2" >
+                  <h3 className="mb-4 text-xl font-bold" >Blacklist Users</h3>
+                  <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                          <path d="M9 18L15 12L9 6" stroke="#848484" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                  </div>
+              </div>
+                
               {/* 구분선 */}
-              <div className="w-full border-2 border-borderLine " />
+              {/* <div className="w-full border-b-2 border-borderLine " /> */}
+
+
 
               {/* 유저 사진 */}
               <div>
                 <BlackList />
               </div>
               
-            </div>
+            </Link>
 
 
             {/* 등록 버튼 */}
-            <div className="">
+            <div className="flex flex-col justify-between bg-blue-300 h-36">
               <h3 className="text-xl font-bold">등록 버튼</h3>
 
-              <div className="flex flex-col h-52 w-30rem justify-evenly ">
+              <div className="flex flex-col justify-end h-52 w-30rem ">
                 
                 {/* 첫 줄 */}
-                  <div className="flex justify-evenly ">
+                  <div className="flex justify-between ">
                     <CreateEstateBtn />
                     
                     <CreateVoteBtn />
@@ -156,7 +142,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
                   </div>
                 
                 {/* 두 번째 줄 */}
-                  <div className="flex justify-evenly ">
+                  <div className="flex justify-between ">
                     {/* <CreateEstateBtn />
                     <CreateEstateBtn />
                     <CreateEstateBtn /> */}
