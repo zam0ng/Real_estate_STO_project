@@ -76,9 +76,9 @@ export default function Mypage() {
     );
   }
 
-  if (isLoading) {
-    return <FullLoadingComponent />;
-  }
+  // if (isLoading) {
+  //   return <FullLoadingComponent />;
+  // }
 
   return (
     <>
