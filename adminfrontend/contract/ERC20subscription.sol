@@ -12,7 +12,7 @@ contract ERC20subscription is ERC20, Ownable {
 
     uint256 public _adminLockTime;
     string private _documentURI;
-    string private _tokenSymbol;
+    string public _tokenSymbol;
 
     modifier lockTimeCheck() {
         if (msg.sender == owner()) {
@@ -37,6 +37,7 @@ contract ERC20subscription is ERC20, Ownable {
     )
         ERC20(_name,_symbol) Ownable(){
         require(subscribers.length == amounts.length, "subscribers and their amounts do not match");
+        _tokenSymbol = _symbol;
         _totalSupply = __totalSupply;
         _lockTime = block.timestamp + __lockTime;
 
@@ -127,6 +128,10 @@ contract ERC20subscription is ERC20, Ownable {
         uint256 myAmount = balanceOf(msg.sender);
         uint256 howBuyAmount = ((20 * totalSupply()) / 100) - myAmount;
         return howBuyAmount;
+    }
+
+    function whatTokenSymbol() public view returns(string memory){
+        return _tokenSymbol;
     }
 }
 
