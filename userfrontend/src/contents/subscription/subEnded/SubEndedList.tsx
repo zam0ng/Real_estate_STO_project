@@ -43,7 +43,7 @@ export default function SubEndedList({ props }: SubAllListType) {
         <div className=" w-16 h-9 mr-2 mt-3 rounded-full" style={{background : `url('http://localhost:8080/estate_img/${building.subscription_img_1}')`, backgroundSize : 'cover'}}> </div>
         <div className=" h-14 w-40 flex flex-col text-left pt-3 mx-3  ">
             <span className="text-xs">{building.subscription_name}</span>
-            <span className="text-xs pt-1">현재가{building.start_price}</span>
+            <span className="text-xs pt-1">현재가 {building.start_price}</span>
           </div>
           <div className=" h-12 w-4/5 text-xxs  pt-3 flex-col  text-right whitespace-nowrap overflow-hidden ">
             <div>{building.subscription_description}</div>

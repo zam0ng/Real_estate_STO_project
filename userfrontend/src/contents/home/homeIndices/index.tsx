@@ -20,7 +20,7 @@ export default function HomeIndices(){
     
     <>
         <div className="w-5/6 m-auto  text-2xl font-extrabold my-10 text-sm" data-aos='slide-right' >
-            <div className=" w-5/6 border-b-4 pb-2   ">{year}년 {month}월 {date}일</div>
+            <div className=" w-full border-b-4 pb-2   ">{year}년 {month}월 {date}일</div>
         </div>
         <div className="">
             <div className="w-5/6 m-auto text-xl font-bold ">주요 지수</div>

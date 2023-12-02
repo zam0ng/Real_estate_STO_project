@@ -38,7 +38,7 @@ export const allList = async (req: Request, res: Response) => {
         ],
         "subscription_description",
         "subscription_status",
-        [db.sequelize.col("start_price"), "start_price"],
+        "current_price",
       ],
       include: {
         model: db.Real_estates,
