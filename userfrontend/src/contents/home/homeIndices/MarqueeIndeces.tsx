@@ -106,7 +106,7 @@ export default function MarqueeIndeces (){
             <div className="flex whitespace-nowrap flex-nowrap animate-marquee">
             {mergedData.map((item,index)=>{
                 return(
-                    <div className="w-36 h-40 rounded-2xl mx-2  border border-black flex-shrink-0" key={index}>
+                    <div className="w-36 h-40 rounded-2xl mx-2 bg-[#EDF0F4]  shadow-innerneu2 flex-shrink-0" key={index}>
                         <div className=" w-full h-8 font-bold text-center pt-1 text-sm">{item.real_estate_name}</div>
                         <div className={` w-full h-5 text-center font-bold ${item. difference > 0 ? 'text-blue-500' : 'text-red-500'} `}>{item.difference}원<span className="text-sm pl-2">({item.fluctuation_rate})%</span></div>
                         <div className=" w-full h-5 text-xs mt-2 text-center ">최근 10일간 거래량</div>

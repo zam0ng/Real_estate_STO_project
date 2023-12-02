@@ -8,6 +8,8 @@ import PropertyPrice from "./PropertyPrice";
 import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { useQuery } from "@tanstack/react-query";
+import AOS from 'aos'
+
 
 interface PropertyProps {
   start_price: number;
@@ -31,6 +33,10 @@ interface TokenSymbolRequest {
 }
 
 const fetchTokenSymbol = async (propertyName: string): Promise<TokenSymbolRequest[]> => {
+
+
+
+
   const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
     params: {
       real_estate_name: propertyName
@@ -67,10 +73,15 @@ const PropertyBox: React.FC<PropertyProps> = ({
     }
   },[data])
 
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  },[])
+
   return (
     <div
       className="w-full h-32 mb-5 flex flex-row bg-[#EDF0F4] rounded-xl shadow-innerneu2"
       onClick={() => navigator(subscription_name)}
+      data-aos= 'fade-up'
     >
       <div className="w-1/2 h-full">
         <div className="w-full h-1/2">

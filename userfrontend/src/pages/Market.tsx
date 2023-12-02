@@ -8,12 +8,15 @@ import AOS from 'aos'
 
 const Market: React.FC = () => {
 
-
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  },[])
 
   return (
     <>
     <div
-      className="w-screen h-screen flex flex-col items-center pb-16 " >
+      className="w-screen h-screen flex flex-col items-center pb-16 
+     " data-aos ='slide-right'>
       <SubscriptionAd />
       <Banner />
       <PropertyListBox />
