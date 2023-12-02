@@ -62,7 +62,7 @@ const Banner: React.FC = () => {
               completionRate={completionRate}
               restdate={dataRep.subscription_restdate}
             />
-            <BuyBtn id={dataRep.id} />
+            <BuyBtn id={dataRep.id} restdate={dataRep.subscription_restdate} />
           </div>
         )
       )}

@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface CompletionProps {
   completionRate: number | undefined;
 }
 
 const ParticipationRate: React.FC<CompletionProps> = ({completionRate}) => {
-  const rate = Math.ceil(completionRate!);
+  const [rate,setRate] = useState<string>("0");
+
+  useEffect(()=>{
+    // console.log(completionRate);
+    if(completionRate === 0){
+      setRate("0");
+    }else{
+      setRate(completionRate!.toFixed(1));
+    };
+  },[completionRate]);
 
   return (
     <>

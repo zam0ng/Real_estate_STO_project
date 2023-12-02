@@ -51,7 +51,7 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
 
   useEffect(()=>{
     if(user){
-      console.log(user);
+      // console.log(user);
       setCurrentAccount(user.account);
     }
   },[user]);

@@ -14,7 +14,7 @@ const DepositWithdrawalBtn: React.FC = () => {
     <div className="w-full h-[20%] flex justify-evenly items-start">
       <button
         onClick={depositBtn}
-        className="w-[40%] h-[50%] border border-black rounded-lg flex flex-row justify-center items-center text-blue-500 bg-slate-100"
+        className="w-[40%] h-[50%] border border-slate-300 shadow-neu2 rounded-lg flex flex-row justify-center items-center text-blue-500 bg-slate-100"
       >
         <svg
           className="mr-2"
@@ -50,7 +50,7 @@ const DepositWithdrawalBtn: React.FC = () => {
       </button>
       <button
         onClick={withdrawBtn}
-        className="w-[40%] h-[50%] border border-black rounded-lg flex flex-row justify-center items-center text-white bg-blue-500"
+        className="w-[40%] h-[50%] border border-slate-300 shadow-neu2 rounded-lg flex flex-row justify-center items-center text-white bg-blue-500"
       >
         <svg
           className="mr-2"

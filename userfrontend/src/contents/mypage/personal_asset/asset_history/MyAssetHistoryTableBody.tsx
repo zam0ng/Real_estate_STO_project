@@ -1,4 +1,8 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { serverurl } from '../../../../components/serverurl';
+import { TokenSymbolRequest } from '../../../market/on_sale_list/property/PropertyBox';
+import { useQuery } from '@tanstack/react-query';
 
 interface AssetTableBodyProps {
     name: string;
@@ -10,8 +14,39 @@ interface AssetTableBodyProps {
     rate_of_return: number;
 }
 
+const fetchTokenSymbol = async (propertyName: string): Promise<TokenSymbolRequest[]> => {
+    const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
+      params: {
+        real_estate_name: propertyName
+      }
+    });
+    return response.data;
+  }
+
 const MyAssetHistoryTableBody: React.FC<AssetTableBodyProps> = ({name,price,amount,valuation,present_price,possible_quantity,rate_of_return}) => {
     const [textColor,setTextColor] = useState<string>("");
+
+    const {data,error,isLoading,isError} = useQuery<TokenSymbolRequest[]>({
+        queryKey: ["fetchTokenSymbol",name],
+        queryFn: ()=>fetchTokenSymbol(name)
+    });
+
+    // 클립보드에 복사하기
+    const copyPropertyToken = () => {
+        if (data && data.length > 0) {
+            navigator.clipboard.writeText(data[0].address)
+            .then(() => {
+                alert(`${name} 토큰 CA가 클립보드에 저장되었습니다.`);
+            })
+            .catch((err) => {
+                console.error(
+                    `${name} 토큰 CA가 복사되지 않았습니다. 다시 한번 눌러주세요.`
+                );
+            });
+        }else{
+            alert("잘못된 접근 방법입니다.");
+        }
+    };
 
     useEffect(()=>{
         if(price > present_price){
@@ -23,7 +58,7 @@ const MyAssetHistoryTableBody: React.FC<AssetTableBodyProps> = ({name,price,amou
 
     return (
         <div className='w-full h-20 border-b border-slate-200 flex flex-row text-sm'>
-            <div className='w-[30%] h-full border-r border-slate-200 flex justify-center items-center'>
+            <div className='w-[30%] h-full border-r border-slate-200 flex justify-center items-center' onClick={copyPropertyToken}>
                 {name}
             </div>
             <div className='w-1/5 h-full flex flex-col'>

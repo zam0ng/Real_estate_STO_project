@@ -40,7 +40,7 @@ const MyAssetHistoryTable: React.FC<UserEmailProps> = ({ email }) => {
   }, [data]);
 
   return (
-    <div className="w-full h-[65%] flex flex-col justify-center items-center rounded-lg">
+    <div className="w-full h-[60%] flex flex-col justify-start items-center rounded-lg">
       <MyAssetHistoryTableHeader />
       <div className="w-full h-[70%] border-b border-slate-200 flex flex-col text-sm overflow-y-scroll">
         {data &&

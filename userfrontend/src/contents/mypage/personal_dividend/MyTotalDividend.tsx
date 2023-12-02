@@ -3,7 +3,7 @@ import { TotalDividendHistoryContext } from './layout/MyDividend';
 
 const MyTotalDividend: React.FC = () => {
   const myDividendHistory = useContext(TotalDividendHistoryContext);
-  console.log(myDividendHistory);
+  // console.log(myDividendHistory);
   
   const [totalExpectedDividend,setTotalExpectedDividend] = useState<number>(0);
 

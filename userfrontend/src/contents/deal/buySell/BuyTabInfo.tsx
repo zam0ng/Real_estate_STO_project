@@ -580,14 +580,14 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:a
         token : token
     })
     const real_estate_CA = getCa.data.address;
-    console.log(real_estate_CA);
+    // console.log(real_estate_CA);
     const testCa = web3 ? new web3.eth.Contract(estate_abi,real_estate_CA,{data:""}) : null;
-    console.log(testCa);
-    console.log(user.account);
+    // console.log(testCa);
+    // console.log(user.account);
     const howBuyAmount = await testCa.methods.howBuy().call({
         from : user.account,
     })
-    console.log(Number(howBuyAmount));
+    // console.log(Number(howBuyAmount));
 
     if(buyData.amount > Number(howBuyAmount)){
         alert(`매수 주문 오류 : 전체 물량의 20% 초과 보유 불가 ${Number(howBuyAmount)} 개만 주문 가능 `);
@@ -597,7 +597,7 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:a
         ...buyData,
         token: token
     });
-    console.log(data);
+    // console.log(data);
     return {data,real_estate_CA};
 }
 
@@ -666,9 +666,9 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
         {
             mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie,user,web3),
             onSuccess: async (data: any) => {
-                console.log(data);
-                console.log(data.data.data);
-                console.log(data.real_estate_CA);
+                // console.log(data);
+                // console.log(data.data.data);
+                // console.log(data.real_estate_CA);
 
                 if(data.data =='매수 주문 완료' || data.data.message =='매수 완료'){
                     setisOpen(true);
@@ -682,11 +682,11 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                     setContent('보유 금액 부족');
                 }
                 if(data.data.data){
-                    console.log(adminWallet);
+                    // console.log(adminWallet);
 
                     for (const el of data.data.data) {
                         
-                        console.log(el);
+                        // console.log(el);
                         // console.log(el.sellerWalelt)
                         // console.log(el.buyerWallet)
                         // console.log(el.conclusionAmount)
@@ -728,7 +728,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                                 }
                             , [el.sellerWallet, el.buyerWallet, el.conclusionAmount]),
                         };
-                        console.log(adminPrimarykey);
+                        // console.log(adminPrimarykey);
                         let signedTransaction = await web3?.eth.accounts.signTransaction(transferFromTransaction, adminPrimarykey);
                         // console.log(signedTransaction);
                         

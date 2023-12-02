@@ -527,8 +527,7 @@ const sellPost = async (
       token: token,
     }
   );
-  console.log(getCa_mysellorders.data);
-  console.log(getCa_mysellorders.data.possible_quantity);
+  // console.log(getCa_mysellorders.data);
 
   if (getCa_mysellorders.data.possible_quantity == undefined || getCa_mysellorders.data.possible_quantity == 0) {
     // alert("보유 수량 없음");
@@ -559,9 +558,9 @@ const sellPost = async (
     ? new web3.eth.Contract(estate_abi, real_estate_CA, { data: "" })
     : null;
 
-  console.log(user.account);
+  // console.log(user.account);
   const balanceOf = await testCa?.methods.balanceOf(user.account).call();
-  console.log("balance ----", balanceOf);
+  // console.log("balance ----", balanceOf);
 
   const approve = await testCa?.methods
     .approve(adminWallet, approveAmount)
@@ -570,7 +569,7 @@ const sellPost = async (
       gas : "3000000",
       gasPrice : web3?.utils.toWei(20, 'gwei'),
     });
-  console.log(approve);
+  // console.log(approve);
 
   if (approve) {
     const { data } = await axios.post<string>(
@@ -580,7 +579,7 @@ const sellPost = async (
         token: token,
       }
     );
-    console.log(data);
+    // console.log(data);
     return { data, real_estate_CA, testCa };
   }
 };
@@ -666,10 +665,10 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
       }
 
       if (data.data.data) {
-        console.log(adminWallet);
+        // console.log(adminWallet);
 
         for (const el of data.data.data) {
-          console.log(el);
+          // console.log(el);
           // console.log(el.sellerWalelt)
           // console.log(el.buyerWallet)
           // console.log(el.conclusionAmount)
@@ -712,7 +711,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
               [el.sellerWallet, el.buyerWallet, el.conclusionAmount]
             ),
           };
-          console.log(adminPrimarykey);
+          // console.log(adminPrimarykey);
           let signedTransaction = await web3?.eth.accounts.signTransaction(
             transferFromTransaction,
             adminPrimarykey

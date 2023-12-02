@@ -14,7 +14,7 @@ const VoteDetailBody: React.FC = () => {
   const [contract,setContract] = useState<any>();
 
   const currentPage = useLocation();
-  console.log(currentPage.state);
+  // console.log(currentPage.state);
 
   const [realEstateName, setRealEstateName] = useState<string>("");
   const [voteTitle,setVoteTitle] = useState<string>("");
@@ -31,7 +31,7 @@ const VoteDetailBody: React.FC = () => {
   const [disagreeVotes,setDisagreeVotes] = useState<number>(0);
 
   useEffect(()=>{
-    console.log(user);
+    // console.log(user);
   },[user]);
 
   // 컨트랙트 불러오기
@@ -83,7 +83,7 @@ const VoteDetailBody: React.FC = () => {
   };
 
   useEffect(()=>{
-    console.log(contract);
+    // console.log(contract);
     if(contract){
       getVoteInfo();
       getVoteCounts();

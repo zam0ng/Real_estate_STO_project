@@ -27,7 +27,7 @@ const MyTotalDeposit: React.FC<UserEmailProps> = ({email}) => {
   });
 
   useEffect(()=>{
-    console.log(data);
+    // console.log(data);
     if(data){
       if(data.length > 0){
         setTotalDeposit(data[0].price);

@@ -8,7 +8,6 @@ interface NameProps {
 const VoteTitle: React.FC<NameProps> = ({real_estate_name,vote_title}) => {
   return (
     <div className='w-full h-10 flex justify-start items-end text-2xl'>
-      {/* vote title */}
       {real_estate_name} - {vote_title}
     </div>
   )
