@@ -65,7 +65,7 @@ const PropertyBox: React.FC<PropertyProps> = ({
         setTokenSymbol("TOK");
       }
     }
-  },[data])
+  },[data]);
 
   return (
     <div

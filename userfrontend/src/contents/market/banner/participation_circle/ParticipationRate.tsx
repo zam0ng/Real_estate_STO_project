@@ -5,7 +5,7 @@ interface CompletionProps {
 }
 
 const ParticipationRate: React.FC<CompletionProps> = ({completionRate}) => {
-  const rate = Math.ceil(completionRate!);
+  const rate = Math.round(completionRate!);
 
   return (
     <>
