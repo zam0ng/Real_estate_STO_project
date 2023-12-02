@@ -113,7 +113,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
             const validNum = isNaN(num) ? 0 : num;
 
             if(validNum < 1){
-                setQuantity(1)
+                setQuantity(0)
             }
             else if(validNum > Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )){
 
