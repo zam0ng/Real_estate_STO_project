@@ -5,10 +5,11 @@ const CreatedDate = ({ resultDate , id }: ResultDateProps) => {
   const resultDateYearMonthDay = resultDate.split(' ')[0]
 
   return (
-    <Link href= {`/admin/real_estates/detail/${id}?estateDetailModal=true`} 
+    <div 
+    // href= {`/admin/real_estates/detail/${id}?estateDetailModal=true`} 
     className="flex items-center justify-center col-span-1 text-sm font-medium tracking-tight text-neutral-700">
       {resultDateYearMonthDay}
-    </Link>
+    </div>
   );
 };
 

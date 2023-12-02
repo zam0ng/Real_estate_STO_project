@@ -7,8 +7,8 @@ const ImageEmail = ({ imageURL, name , id}: ImageEmailPrpos) => {
 
   return (
     <>
-      <Link 
-        href= {`/admin/real_estates/detail/${id}?estateDetailModal=true`} 
+      <div 
+        // href= {`/admin/real_estates/detail/${id}?estateDetailModal=true`} 
         className="flex items-center w-48 col-span-1 -mr-8 cursor-pointer h-14 justify-self-start ">
         
         {/* 사진 */}
@@ -27,7 +27,7 @@ const ImageEmail = ({ imageURL, name , id}: ImageEmailPrpos) => {
           {/* Emma Ryan | 기본 폰트 확인용 */}
           {name}
         </p>
-      </Link>
+      </div>
     </>
   );
 };
