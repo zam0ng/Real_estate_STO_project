@@ -82,10 +82,10 @@ export default function Mypage() {
 
   return (
     <>
-    <div className="w-screen h-screen pb-16">
+    <div className="w-screen h-screen mb-16">
       <MyInfo email={userEmail} />
       <div className="w-full h-auto flex flex-col justify-center items-center">
-        <MyCash />
+        <MyCash email={userEmail} />
         <MyAsset email={userEmail} />
         <MyDividend email={userEmail} />
         <MySubscription email={userEmail} />

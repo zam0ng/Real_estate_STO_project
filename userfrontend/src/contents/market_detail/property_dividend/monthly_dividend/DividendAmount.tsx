@@ -3,6 +3,7 @@ import { MarketDetailContext } from '../../../../pages/MarketDetail';
 
 const DividendAmount: React.FC = () => {
   const data = useContext(MarketDetailContext);
+  // console.log(data);
 
   return (
     <div className='w-full h-[45%] flex justify-center items-center border-t border-dashed'>
@@ -11,7 +12,7 @@ const DividendAmount: React.FC = () => {
           {data?.dividend_price}원
         </div>
         <div className='w-full flex justify-center items-center text-xs-sm'>
-          1TOK당 배당금(세전)
+          1당 배당금(세전)
         </div>
       </div>
     </div>

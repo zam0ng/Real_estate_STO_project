@@ -59,10 +59,9 @@ function getDayInfo(info: string) {
 }
 
 function setRealEstateAmount(result: TradeDate[], info: string) {
-  const today = new Date();
-
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
+  let today = new Date();
 
   if (info === "day") {
     for (let i = 0; i < 10; i++) {

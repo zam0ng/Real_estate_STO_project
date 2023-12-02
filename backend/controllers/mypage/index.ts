@@ -175,7 +175,7 @@ export const totalDeposit = async (req: Request, res: Response) => {
     const result = await db.Deposit_drawal.findAll({
       attributes: [
         "user_email",
-        [db.sequelize.fn("sum", db.sequelize.col("balance")), "balance"],
+        [db.sequelize.fn("sum", db.sequelize.col("price")), "price"],
       ],
       where: { [Op.and]: [{ user_email: user_email }, { status: "입금" }] },
       group: "user_email",
@@ -198,7 +198,7 @@ export const totalDrawal = async (req: Request, res: Response) => {
     const result = await db.Deposit_drawal.findAll({
       attributes: [
         "user_email",
-        [db.sequelize.fn("sum", db.sequelize.col("balance")), "balance"],
+        [db.sequelize.fn("sum", db.sequelize.col("price")), "price"],
       ],
       where: { [Op.and]: [{ user_email: user_email }, { status: "출금" }] },
       group: "user_email",
@@ -215,19 +215,27 @@ export const totalDrawal = async (req: Request, res: Response) => {
 
 // 입출금 내역 보여주기
 // 보류
-// export const transactionList = async (req: Request, res: Response) => {
-//   try {
-//     const user_email = req.body.user_email as string;
-//     const getSubscriptionImg = await db.Subscriptions.findAll({
-//       attributes: ["subscription_name", "subscription_img_1"],
-//     });
+export const transactionList = async (req: Request, res: Response) => {
+  try {
+    const user_email = req.query.user_email as string;
 
-//     const getDepositWithdrawal = await db.Deposit_drawal.findAll({});
+    const result = await db.Deposit_drawal.findAll({
+      attributes: [
+        "status",
+        "price",
+        "balance",
+        "createdAt"
+      ],
+      where: { user_email: user_email},
+      raw: true
+    });
 
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
+    if (result) return res.status(200).json(result);
+    else return res.status(404).send("Not found");
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 // 총 손익 보여주기
 export const sumProfitLost = async (req: Request, res: Response) => {
@@ -249,12 +257,20 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 
     if (!user) return res.status(404).send("empty");
 
+    const total_buy: any = await db.Real_estates_own.findAll({
+      attributes: [
+        [db.sequelize.fn("sum", db.sequelize.literal("price * amount")), "total_buy"],
+      ],
+      where: {user_email: user_email},
+      raw: true
+    });
+
     const profit_loss_amount = (await db.Real_estates_own.findAll({
       attributes: [
         [
           db.sequelize.fn(
             "SUM",
-            db.sequelize.literal(`(price * amount - current_price * amount)`)
+            db.sequelize.literal(`(current_price * amount - price * amount)`)
           ),
           "total_profit_loss",
         ],
@@ -275,16 +291,17 @@ export const sumProfitLost = async (req: Request, res: Response) => {
     const result = profit_loss_amount.map((item) => {
       const profit_loss_float = parseFloat(
         (
-          ((user.balance + item.total_profit_loss) / user.balance) * 100 -
+          ((Number(total_buy[0].total_buy) + item.total_profit_loss) / Number(total_buy[0].total_buy)) * 100 -
           100
         ).toFixed(2)
       );
 
       return {
         total_profit_loss: item.total_profit_loss,
-        appraise_balance: user.balance + item.total_profit_loss,
+        appraise_balance: Number(total_buy[0].total_buy) + item.total_profit_loss,
         profit_loss_ratio: profit_loss_float,
         balance: user.balance,
+        total_buy: total_buy[0]
       };
     });
 
@@ -303,14 +320,14 @@ export const assetInformation = async (req: Request, res: Response) => {
     const result = await db.Real_estates_own.findAll({
       attributes: [
         "real_estate_name",
-        [db.sequelize.literal(`(price * amount)`), "price"],
+        [db.sequelize.literal("price"), "price"],
         "amount",
         [
           // db.sequelize.literal(`(current_price * amount - price * amount - current_price * amount)`),
           db.sequelize.literal(`(current_price * amount - price * amount)`),
           "valuation",
         ],
-        [db.sequelize.literal(`(current_price * amount)`), "present_price"],
+        [db.sequelize.literal(`(current_price)`), "present_price"],
         // [db.sequelize.literal(`(current_price * amount)`), "present_price"],
 
         "possible_quantity",
@@ -424,7 +441,8 @@ export const subscriptionList = async (req: Request, res: Response) => {
     const user_email = req.query.user_email as string;
 
     const query = `
-      select a.subscription_name,
+      select a.id,
+        a.subscription_name,
         a.subscription_img_1,
         a.subscription_totalsupply,
         a.subscription_order_amount,

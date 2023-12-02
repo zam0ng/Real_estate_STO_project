@@ -1,11 +1,12 @@
 import React from "react";
 import MyTotalDeposit from "../MyTotalDeposit";
 import MyTotalWithdrawal from "../MyTotalWithdrawal";
-import MyCashHistory from "../MyCashHistory";
+import MyCashHistory from "../cash_history/MyCashHistory";
 import AOS from 'aos'
 import { useEffect } from "react";
+import { UserEmailProps } from "../../personal_info/layout/MyInfo";
 
-const MyCash: React.FC = () => {
+const MyCash: React.FC<UserEmailProps> = ({email}) => {
 
   useEffect(()=>{
     AOS.init({duration : 1200})
@@ -16,11 +17,11 @@ const MyCash: React.FC = () => {
         총 입출금액
       </div>
       <div className="w-full h-[20%] flex flex-row justify-evenly items-center">
-        <MyTotalDeposit />
-        <MyTotalWithdrawal />
+        <MyTotalDeposit email={email} />
+        <MyTotalWithdrawal email={email} />
       </div>
       <div className="w-full h-[70%] bg-[#EDF0F4] rounded-xl shadow-innerneu2">
-        <MyCashHistory />
+        <MyCashHistory email={email} />
       </div>
     </div>
   );

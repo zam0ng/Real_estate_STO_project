@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import AOS from 'aos'
 
 export interface MySubscriptionListRequest {
+  id?: number;
   subscription_name: string;
   subscription_img_1: string;
   application_date: string;
@@ -49,11 +50,11 @@ const MySubscription: React.FC<UserEmailProps> = ({ email }) => {
 
   return (
     <SubscriptionContext.Provider value={data}>
-      <div className="w-[90%] h-96 mt-5  pr-5 pl-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2" data-aos='fade-up'>
-        <div className="w-full h-[20%] flex justify-start items-center text-xl">
+      <div className="w-[90%] h-96 mt-5 mb-16 pt-5 pr-5 pl-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2" data-aos='fade-up'>
+        <div className="w-full h-[10%] flex justify-start items-start text-xl">
           내 청약 목록
         </div>
-        <div className="w-full h-[76%] overflow-y-scroll">
+        <div className="w-full h-[80%] overflow-y-scroll">
           <MySubscriptionList />
         </div>
       </div>

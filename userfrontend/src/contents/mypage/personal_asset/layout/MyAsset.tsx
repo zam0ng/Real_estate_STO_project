@@ -15,6 +15,9 @@ interface UserTotalAssetRequest {
   profit_loss_ratio: number;
   balance: number;
   appraise_balance: number;
+  total_buy: {
+    total_buy: string;
+  }
 }
 
 const fetchUserTotalAsset = async (
@@ -30,21 +33,17 @@ const fetchUserTotalAsset = async (
 
 // component
 const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
-  const [totalAssetValue, setTotalAssetValue] =
-    useState<UserTotalAssetRequest>();
+  const [totalAssetValue, setTotalAssetValue] = useState<UserTotalAssetRequest>();
 
-  const {
-    data: totalAsset,
-    isLoading: totalAssetLoading,
-    error: totalAssetError,
-  } = useQuery<UserTotalAssetRequest[], Error>({
+  const {data: totalAsset, isLoading: totalAssetLoading, error: totalAssetError} = 
+  useQuery<UserTotalAssetRequest[], Error>({
     queryKey: ["fetchUserTotalAsset", email],
     queryFn: () => fetchUserTotalAsset(email),
     enabled: !!email,
   });
 
   useEffect(() => {
-    // console.log("total : ",totalAsset);
+    console.log("total : ",totalAsset);
     if (totalAsset) {
       setTotalAssetValue(totalAsset[0]);
     }
@@ -64,10 +63,12 @@ const MyAsset: React.FC<UserEmailProps> = ({ email }) => {
         profit_loss_ratio={totalAssetValue?.profit_loss_ratio}
       />
       <div className="w-full h-[10%] flex flex-row">
-        <MyTotalBuy balance={totalAssetValue?.balance} />
+        <MyTotalBuy total_buy={totalAssetValue?.total_buy} />
         <MyTotalValue appraise_balance={totalAssetValue?.appraise_balance} />
       </div>
-      <MyAssetHistoryTable email={email} />
+      {totalAsset && totalAsset.length > 0 && (
+        <MyAssetHistoryTable email={email} />
+      )}
     </div>
   );
 };

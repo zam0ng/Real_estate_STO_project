@@ -23,7 +23,7 @@ const PropertyPrice: React.FC = () => {
 
   return (
     <div className='w-[20%] h-[80%]'>
-      <div className='w-full h-[30%] flex justify-center items-end text-xxs'>TOK 가격</div>
+      <div className='w-full h-[30%] flex justify-center items-end text-xxs'>토큰 가격</div>
       <div className='w-full h-[40%] flex justify-center items-center'>
         {data?.current_price + "원"}
       </div>

@@ -18,11 +18,11 @@ const MyTotalDividend: React.FC = () => {
   },[totalExpectedDividend]);
 
   return (
-    <div className='w-full h-24'>
-      <div className='w-full h-[40%] flex justify-center items-center'>
+    <div className='w-full h-[40%]'>
+      <div className='w-full h-[50%] flex justify-center items-end'>
         총 누적 배당금
       </div>
-      <div className='w-full h-[60%] flex justify-center items-start text-2xl font-medium'>
+      <div className='w-full h-[50%] flex justify-center items-center text-2xl font-medium'>
         {totalExpectedDividend} 원
       </div>
     </div>
