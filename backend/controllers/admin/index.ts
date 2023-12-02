@@ -106,8 +106,8 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     }
   }
 
-  const real_estate_names = result.map((item) => item.real_estate_name);
-  const new_real_estate_names = [...new Set(real_estate_names)];
+  let real_estate_names = result.map((item) => item.real_estate_name);
+  let new_real_estate_names = [...new Set(real_estate_names)];
 
   new_real_estate_names.forEach((real) => {
     const find_real_estate_names = result.filter(
@@ -130,6 +130,10 @@ function setRealEstateAmount(result: TradeDate[], info: string) {
     };
 
     all_result.push(real_estate_object);
+
+    // real_estate_names = [];
+    // new_real_estate_names = [];
+    // today = new Date();
   });
 
   return all_result;
@@ -168,8 +172,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       total_amount?: number;
     };
 
-    console.log("👉👉👉 @realEstatesList");
-
     const result = await db.Subscriptions.findAll({
       attributes: [
         "subscription_img_1",
@@ -186,8 +188,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       where: { subscription_status: "success" },
       raw: true,
     });
-
-    console.log("🤸‍♂️🤸‍♂️🤸‍♂️ @realEstatesList");
 
     const day_earlier = new Date();
     const week_ago = new Date();
@@ -210,8 +210,6 @@ export const realEstatesList = async (req: Request, res: Response) => {
       group: "real_estate_name",
       raw: true,
     });
-
-    console.log("✅ test weeklyDate @realEstatesList", weeklyDate);
 
     const resultUnknown = result as [] as Subscription[];
 
@@ -327,6 +325,8 @@ export const blackList = async (req: Request, res: Response) => {
 
 // 블랙리스트 등록
 export const blackListAdd = async (req: Request, res: Response) => {
+  console.log("req.body", req.body);
+
   try {
     const { user_email } = req.body;
 
@@ -491,8 +491,6 @@ export const tradeMonthList = async (req: Request, res: Response) => {
     // // console.log(result);
 
     const all_result = await setRealEstateAmount(result, "month");
-
-    console.log("all_result🚀🚀", all_result);
 
     if (result?.length) return res.status(200).json(all_result);
     else return res.status(404).send("empty");
@@ -823,7 +821,7 @@ export const monthlyIncome = async (req: Request, res: Response) => {
     );
 
     if (result) return res.status(200).json(monthly_incomes[0]);
-    else return res.status(404).send(0);
+    else return res.status(404).send([0]);
   } catch (error) {
     console.error(error);
   }
@@ -833,14 +831,16 @@ export const monthlyIncome = async (req: Request, res: Response) => {
 export const realEstateNameList = async (req: Request, res: Response) => {
   try {
     const result = await db.Subscriptions.findAll({
-      attributes: ["real_estate_name"],
+      attributes: ["subscription_name"],
       where: {
         subscription_status: "success",
       },
       raw: true,
     });
 
-    if (result) return res.status(200).json(result);
+    const names = result.map((item) => item.subscription_name);
+
+    if (names) return res.status(200).json(names);
     else return res.status(404).send("empty");
   } catch (error) {
     console.error(error);
@@ -975,16 +975,17 @@ export const noticeSubmit = async (req: Request, res: Response) => {
   }
 };
 
+
 // 게시글(공지/공시) 받아오기 by ✅DJ.테스트
-export const noticesList = async (req: Request, res: Response) => {
+export const noticesList = async (req : Request , res : Response) => {
   try {
-    const noticeList = await Notices.findAll();
+    const noticeList = await Notices.findAll()
     res.status(200).json(noticeList);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.sendStatus(500)
   }
-};
+}
 
 export const dividendSubmit = async (req: Request, res: Response) => {
   // console.log(req.body);
@@ -1167,5 +1168,21 @@ export const subscriptionList = async (req: Request, res: Response) => {
   } catch (error) {
     res.sendStatus(400);
     // console.log("subscriptionList 에서 오류",error);
+  }
+};
+
+
+
+// users 테이블에서 모든 속성 받아오기 by DJ 임시 (1202)
+export const allUsers = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await Users.findAll({
+      raw: true,
+      order: [["id", "ASC"]],
+    });
+    res.status(200).json(allUsers);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
   }
 };

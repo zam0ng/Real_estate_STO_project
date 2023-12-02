@@ -1,17 +1,19 @@
 
-
-
 export const getVoteList = async () => {
 
-    const res : Response = await fetch(`http://localhost:8080/votes`, {
-    cache: "no-store",
-    })
-    // console.log("res" , res)
+    const path = `/votes`;
+    const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
+    const url = `${domain}${path}`
 
-    if(!res.ok) {
-        throw new Error('Failed to fetch data')
+    try {
+        const resp : Response = await fetch(`${url}`, {
+        cache: "no-store",
+        })
+
+        return resp.json();
+
+    } catch (error) {
+        console.log(error)
     }
-
-    return res.json()
 
 };

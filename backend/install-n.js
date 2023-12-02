@@ -8,3 +8,5 @@ if (os.platform() === 'linux' || os.platform() === 'darwin') {
   console.log('Installing n...');
   execSync('npm install n');
 }
+
+console.log('Current platform:', os.platform())

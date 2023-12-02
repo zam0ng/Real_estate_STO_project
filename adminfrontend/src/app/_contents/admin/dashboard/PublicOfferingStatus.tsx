@@ -32,18 +32,49 @@ import { IPublicOfferingItem } from "@/app/_features/admin/dashboard";
 
 const PublicOfferingStatus = async () => {
   const publicOfferingData : IPublicOfferingItem[] = await getPublicOfferingStatus();
-  console.log("publicOfferingData🌴" , publicOfferingData)
+  // console.log("publicOfferingData🌴" , publicOfferingData)
   
 
   // calcRatio 에 publicOfferingData 넣기
     const ratioObj = calcRatio(publicOfferingData)
+
+    const localedTotalOrderSum = (ratioObj.totalOrderSum/1000).toLocaleString()
+    const localedTotalPriceSum = (ratioObj.totalPriceSum/1000).toLocaleString()
+
+    
+
+  return (
+    <>
+      {/* 금액현황 */}
+      <div className="z-20 flex items-center justify-between w-full bg-admin_content_bg ">
+        <p className="z-20 text-base tracking-tight text-gray-500 ">
+          공모 금액 현황
+        </p>
+        <div className="z-20 text-xl font-medium">
+          {/* {`${publicOfferingData.subscription_order_totalprice}`}/{`${publicOfferingData.subscription_totalprice}`}  */}
+          {/* { totalOrderSum && totalPriceSum &&  `${totalOrderSum}`} / {`${totalPriceSum}`} */}
+          { ratioObj 
+              && ratioObj.totalOrderSum 
+              && ratioObj.totalPriceSum 
+              && <span className="text-base font-semibold text-gray-700" > {localedTotalOrderSum} </span> }   <span className="text-base text-gray-500"> / {localedTotalPriceSum} </span>  <span className="text-base tracking-tight text-gray-500 ">(만원)</span>
+        </div>
+      </div>
+
+      {/* <div className="h-2 bg-blue-500 x-full rounded-2xl">  */}
+      <div className="relative x-30rem bg-admin_content_bg ">
+        {ratioObj 
+            && ratioObj.ratio 
+            && <ProgressBarAdmin percent={ratioObj.ratio * 100} />}
+      </div>
       
-      console.log(" ratioObj 확인 👉👉" ,
-        ratioObj.ratio,
-        ratioObj.totalOrderSum,
-        ratioObj.totalPriceSum)
+    </>
+  );
+};
+
+export default PublicOfferingStatus;
 
 
+    
       // const totalOrderArr = publicOfferingData.map((item: IPublicOfferingItem) =>
       //   Number(item.subscription_order_totalprice)
       // );
@@ -72,33 +103,3 @@ const PublicOfferingStatus = async () => {
 
       // // const progressPercent = (Number(publicOfferingData.subscription_order_totalprice) / Number(publicOfferingData.subscription_totalprice)) *100
       // // console.log("progressPercent" , progressPercent)
-
-  return (
-    <>
-      {/* 금액현황 */}
-      <div className="z-20 flex justify-between w-full ">
-        <h3 className="z-20 text-lg font-semibold ">
-          {/* {publicOfferingData.subscription_name} 공모 금액 현황 */}
-        </h3>
-        <div className="z-20 text-xl font-medium">
-          {/* {`${publicOfferingData.subscription_order_totalprice}`}/{`${publicOfferingData.subscription_totalprice}`}  */}
-          {/* { totalOrderSum && totalPriceSum &&  `${totalOrderSum}`} / {`${totalPriceSum}`} */}
-          { ratioObj 
-              && ratioObj.totalOrderSum 
-              && ratioObj.totalPriceSum 
-              && `${ratioObj.totalOrderSum}`} / {`${ratioObj.totalPriceSum}`}
-        </div>
-      </div>
-
-      {/* <div className="h-2 bg-blue-500 x-full rounded-2xl">  */}
-      <div className="relative x-30rem">
-        {ratioObj 
-            && ratioObj.ratio 
-            && <ProgressBarAdmin percent={ratioObj.ratio * 100} />}
-      </div>
-      
-    </>
-  );
-};
-
-export default PublicOfferingStatus;

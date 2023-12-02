@@ -38,8 +38,7 @@ const TableContentEstate = async () => {
           return <TableRowEstate key={item.id} item={item}  />;
         })}
 
-        {/* 종료 구분선 : 조금 짧게 나와서, 임시 주석 처리*/}
-        {/* <div className="w-full col-span-6 border-t-2 border-collapse border-neutral-100 "> </div> */}
+
       </div>
     </>
   );

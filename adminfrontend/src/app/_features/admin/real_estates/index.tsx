@@ -34,6 +34,7 @@ export interface EstateDataItem {
   subscription_description: string;
   subscription_status: string;
   achievement_rate : number;
+  subscription_order_amount : number;
   subscription_totalprice: number;
   subscription_start_date: string;
   subscription_end_date: string;
@@ -148,7 +149,7 @@ export interface BalanceProps {
 
 // 테이블 ROW > TotalpriceProps
 export interface TotalpriceProps {
-  totalPrice: number;
+  totalPrice: string;
   id : number;
 }
 

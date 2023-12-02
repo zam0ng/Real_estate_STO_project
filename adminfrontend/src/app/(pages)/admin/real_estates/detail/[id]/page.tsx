@@ -4,35 +4,7 @@ import { ReadProps } from "@/app/_features/admin/real_estates";
 import { useRouter } from "next/navigation";
 
 import RenderEstateDetailModal from "@/app/_contents/admin/real_estates/RenderEstateDetailModal";
-// // props가 { params: { id: string } } 형태의 객체라고 가정
-// interface ReadProps {
-// params: {
-//     id: string;
-// };
-// }
 
-// interface getEstateDetailProps {
-// params: {
-//     id: string;
-// };
-// }
-
-// const getEstateDetail = async (props: getEstateDetailProps ) => {
-//     const path = `admin/subscription/detail/${props.params.id}`;
-//     const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
-//     const url = `${domain}${path}`
-
-//     try {
-//         const resp = await fetch(`${url}` ,{
-//             cache: "no-store"
-//         });
-
-//         return resp;
-
-//     } catch (error) {
-//         console.log(error);
-//     }
-// };
 
 interface RenderEstateDetailModalProps {
   detailData: EstateDetailData;

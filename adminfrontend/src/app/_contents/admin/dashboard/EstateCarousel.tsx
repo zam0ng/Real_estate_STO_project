@@ -11,12 +11,23 @@ import RenderCarousel from "./RenderCarousel";
 
 const EstateCarousel = async () => {
   const currentSituationData = await getCurrentEstateSituation();
-  console.log("currentSituationData🔮🔮" , currentSituationData)
+  // console.log("currentSituationData🔮🔮" , currentSituationData)
+
+  /*
+  currentSituationData🔮🔮 [
+    {
+      subscription_img_1: 'imgs\\estate\\tomhardy_1701242390350.jpg',
+      subscription_name: '문래 공차',
+      subscription_description: '매출의 15% 이상 월 ',
+      current_price: 100,
+      total_amount: '10'
+    },
+  */
 
   return (
     <>
       {/* 기존 너비 | width 480, height 256 */}
-      <div className="flex flex-col items-center justify-center rounded-xl bg-stone-200 w-30rem ">
+      <div className="flex flex-col items-center justify-center rounded-xl bg-stone-50 w-30rem ">
         {/* 변경 너비 */}
         {/* <div className="flex flex-col items-center justify-center rounded-xl bg-stone-200 w-30rem h-32rem"> */}
 

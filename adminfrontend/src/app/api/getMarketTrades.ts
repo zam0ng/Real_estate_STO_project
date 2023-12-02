@@ -28,9 +28,6 @@
 */
 
 
-// ❓ 함수를 구분하는게 나을까? vs props 를 받아서 다르게 실행하는게 나을까? 
-
-
 const getMarketTrades =  async ( criteria : string ) => {
     
     // 변경전 샘플 주소
@@ -48,15 +45,17 @@ const getMarketTrades =  async ( criteria : string ) => {
 
     try {
         const resp = await fetch(`${url}` ,{ 
-            next : {tags : [`${criteria}`]}
+            cache: "no-store",
         });
 
         // 캐싱 하지 않는 경우
             // const resp = await fetch(`${url}` ,{ 
             //     cache: "no-store"
             // });
+        if(resp.status == 200){
+            return resp.json();
+        }
         
-        return resp.json();
     
     } catch (error) {
         console.log(error);

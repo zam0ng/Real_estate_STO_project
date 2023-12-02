@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* width */
 ::-webkit-scrollbar {
   border-radius: 8px; /* 둥근 모서리의 크기 조정 */
@@ -27,9 +25,31 @@
   background: #f0eded;
 }
 
-
-
 /* .admin_modal_bg: {
   backgroundColor: rgba(61, 61, 61, 0.5),
   backdropFilter: "blur(10px)", 
 }, */
+
+@font-face {
+  font-family: "Pretendard-Regular-400";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-300";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Pretendard-800";
+  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
+    format("woff");
+  font-weight: 800;
+  font-style: normal;
+}

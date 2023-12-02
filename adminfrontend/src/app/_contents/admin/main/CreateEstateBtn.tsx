@@ -38,9 +38,10 @@ return (
     <>
     {/* <button onClick={handleEstateBtn}> 매물 등록 </button> */}
     
+
     <Link 
         href="/admin/dashboard?estateModal=true" 
-        className="w-5.375rem h-5.375rem bg-dashboard_btn_estate  rounded-md flex items-center justify-evenly flex-col">
+        className="w-5.375rem h-5.375rem bg-dashboard_btn_estate  rounded-md flex items-center justify-evenly flex-col shadow-2xl">
         
         <div>
             <DashboardActionIcon/>
@@ -51,6 +52,7 @@ return (
         </div>
         
     </Link>
+
 
     </>
 );

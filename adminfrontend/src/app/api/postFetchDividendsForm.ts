@@ -6,10 +6,10 @@ const postFetchDividendsForm = async (formData : FormData) => {
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
   const url = `${domain}${path}`
 
-  for (let [key, value] of formData.entries()) {
-    console.log("formData 확인 @postFetchDividendsForm 🐣🐣");
-    console.log(`${key}: ${value}`);
-  }
+  // for (let [key, value] of formData.entries()) {
+  //   console.log("formData 확인 @postFetchDividendsForm 🐣🐣");
+  //   console.log(`${key}: ${value}`);
+  // }
 
 
   // formData 를 json 으로 변환

@@ -8,10 +8,22 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 interface NoticeFormSectionProps {
     title : string 
     desc : string
+    
+    selectedValue : string
+    setSelectedValue : Function
+    voteTarget : string[]
 }
 
 
-const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {title, desc} ) => {
+const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {
+        title, 
+        desc , 
+        
+        selectedValue,
+        setSelectedValue,
+        voteTarget, 
+      
+      } ) => {
   
   const [selectedCategory, setSelectedCategory] = useState("") 
   const [selectedEstateName, setSelectedEstateName] = useState("") 
@@ -20,8 +32,13 @@ const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {title, desc
     setSelectedCategory(e.target.value)
   }
   
+  // const handleEstateNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
+  //   setSelectedEstateName(e.target.value)
+  // }
+
+
   const handleEstateNameChange = (e : React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedEstateName(e.target.value)
+    setSelectedValue(e.target.value)
   }
 
 
@@ -79,7 +96,23 @@ const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {title, desc
                 {/* Input 컴포넌트 */}
                 <div className="flex flex-col items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
                   
-                  <div>
+
+                  { voteTarget.map( (item, index) => (
+                      <div key={index}>
+                        <label> {  `매물 ${index + 1} : ${item}`}   </label>
+                        <input 
+                          type="radio" 
+                          name="real_estate_name"  
+                          value={item}
+                          checked = {selectedValue === item}   // ✅ 체크된 화면 표시  
+                          onChange={handleEstateNameChange}
+                          />
+                    </div>
+                  ) ) }
+
+
+                  
+                  {/* <div>
                       <label> 매물1 : 문래 공차 (하드코딩)✅ 데이터 가져와야 함 </label>
                       <input 
                         type="radio" 
@@ -102,7 +135,9 @@ const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {title, desc
                         placeholder= "ex) img"  
                         onChange={handleEstateNameChange}
                         />
-                  </div>
+                  </div> */}
+
+                  
                 </div>
 
                 {/* 공지 정보 */}

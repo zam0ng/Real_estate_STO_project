@@ -27,7 +27,7 @@ export const CreateVoteBtn = () => {
     <>
     <Link
         href="/admin/dashboard?voteModal=true" 
-        className="w-5.375rem h-5.375rem bg-dashboard_btn_vote  rounded-md flex items-center justify-evenly flex-col">
+        className="w-5.375rem h-5.375rem bg-dashboard_btn_vote  rounded-md flex items-center justify-evenly flex-col shadow-2xl">
         
         <div>
             <DashboardActionIcon  />

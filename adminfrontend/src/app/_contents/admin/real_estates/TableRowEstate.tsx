@@ -2,7 +2,7 @@
 
 import ImageName from "./ImageName";
 import CurrentResult from "./CurrentResult";
-import Status from "./Status";
+import Status from "./StatusSuccess";
 import Progress from "./Progress";
 import Totalprice from "./Totalprice";
 import Duration from "./Duration";
@@ -16,46 +16,56 @@ import EnableButton from "./EnableButton";
 import DisableButton from "./DisableButton";
 import Loading from "./Loading";
 import {useState} from 'react';
+import StatusSuccess from "./StatusSuccess";
+import StatusPending from "./StatusPending";
 
 const TableRowEstate =({ item }: TableRowEstate) => {
 
     // const subscriptionProgress = item.achievement_rate // ⭐⭐ api 에 따르면 진행률은 achievement_rate 
     // const subscriptionProgress = 0.8 // api 에 따르면 진행률은 achievement_rate 
-    const subscriptionProgress = item.achievement_rate / 100 ;// api 에 따르면 진행률은 achievement_rate 
+     
     // console.log( "진행률👏" , subscriptionProgress)
     const [loading,setLoading] = useState(false);
+    const subscriptionProgress = item.achievement_rate; // ⭐⭐ api 에 따르면 진행률은 achievement_rate | 현재 아직 안 들어옴 
+    // const subscriptionProgress_ver2 = (item.subscription_order_amount / item.subscription_totalsupply)
 
-return (
+    console.log("진행률👏", subscriptionProgress);
+
+    const status = item.subscription_status;
+
+    console.log("subscription_order_amount" , item.subscription_order_amount * 5000)
+
+    const localScale = Number(item.subscription_totalprice).toLocaleString()
+    console.log("localScale" , localScale)
+
+
+  return (
     <>
-    {/* 구분선 */}
-    <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 "> </div>
+      {/* 구분선 */}
+      <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 ">
+        {" "}
+      </div>
     {loading && <Loading/>}
-    <ImageName
+      <ImageName
         id={item.id}
         imageURL={item.subscription_img_1}
         name={item.subscription_name}
-    />
-    <Description 
-        id={item.id}
-        desc={item.subscription_description} />
-        
-    <Status 
-        id={item.id}
-        status={item.subscription_status} />
-        
-    <Progress 
-        id={item.id}
-        progress={item.achievement_rate} />
-        
-    <Totalprice 
-        id={item.id}
-        totalPrice={item.subscription_totalprice} />
-        
-    <CurrentResult 
-        id={item.id}
-        current={700} />
-        
-    <Duration
+      />
+      <Description id={item.id} desc={item.subscription_description} />
+
+        {status == 'pending'
+        ? <StatusPending />
+        : <StatusSuccess />
+        }
+      {/* <Status id={item.id} status={item.subscription_status} /> */}
+
+      <Progress id={item.id} progress={item.achievement_rate} />
+
+      <Totalprice id={item.id} totalPrice={localScale} />
+
+      <CurrentResult id={item.id} current={item.subscription_order_amount * 5000} />
+
+      <Duration
         id={item.id}
         startDate={item.subscription_start_date}
         endDate={item.subscription_end_date}
@@ -71,7 +81,7 @@ return (
         : <DisableButton  text="Disable" /> 
     }
     </>
-);
+  );
 };
 
 export default TableRowEstate;

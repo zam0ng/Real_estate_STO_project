@@ -3,15 +3,25 @@
 import InputFormDateItem from './InputFormDateItem'
 import InputFormItem from './InputFormItem'
 
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+
+interface VoteableEstate {
+  id: number;
+  address: string;
+  real_estate_name: string;
+  cy_type: string;
+  symbol: string;
+}
 
 interface VoteFormSectionProps {
     title : string 
     desc : string
     setStartDate : Function
     setEndDate : Function
+    
     selectedValue : string
     setSelectedValue : Function
+    voteTarget : string[]
 }
 
 
@@ -20,8 +30,10 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
     desc , 
     setStartDate , 
     setEndDate,
+    
     selectedValue,
-    setSelectedValue
+    setSelectedValue,
+    voteTarget,
   }) => {
   
   const [selectedCategory, setSelectedCategory] = useState("") 
@@ -35,6 +47,12 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
     setSelectedValue(e.target.value)
   }
 
+  // useEffect(() => {
+  //   console.log("Updated voteTarget", voteTarget);
+  // }, [voteTarget]);
+  
+  // console.log("votetarget")
+  // console.log(voteTarget)
 
   return (
     <>
@@ -52,33 +70,25 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
                   {/* <span className='ml-2 text-base text-admin_modal_input' >(택 1)</span> */}
                 </h2>
                 
-                <div className="flex flex-col items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
-                  
-                  <div>
-                      <label> 매물1 : 문래 공차 (하드코딩)✅ 데이터 가져와야 함 </label>
-                      <input 
-                        type="radio" 
-                        name="real_estate_name"  
-                        value="문래 공차"
-                        checked = {selectedValue === '문래 공차'}   // ✅ 체크된 화면 표시
-                        placeholder= "ex) img"  
-                        onChange={handleEstateNameChange}
-                        />
+                  <div className="flex flex-col items-center justify-start mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
+                    
+              
+
+                    {voteTarget.map( (item, index) => (
+                      <div key={index}>
+                          <label> {  `매물 ${index + 1} : ${item}`}   </label>
+                          <input 
+                            type="radio" 
+                            name="real_estate_name"  
+                            value={item}
+                            checked = {selectedValue === item}   // ✅ 체크된 화면 표시  
+                            onChange={handleEstateNameChange}
+                            />
+                      </div>
+                    )
+                      )}
                     
                   </div>
-
-                  <div>
-                      <label> 매물2 : 대전 뮤지엄 </label>
-                      <input 
-                        type="radio" 
-                        name="real_estate_name"  
-                        value="대전 뮤지엄"
-                        checked = {selectedValue === '대전 뮤지엄'}   // ✅ 체크된 화면 표시
-                        placeholder= "ex) img"  
-                        onChange={handleEstateNameChange}
-                        />
-                  </div>
-                </div>
 
                 <InputFormItem 
                     _title={"투표 주제"} 

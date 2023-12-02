@@ -26,9 +26,14 @@ export default function FormEstate() {
     const response = await postFetchEstateForm(formData)
 
     if(response){
-      // console.log("제출 성공👏👏" , )
-      router.refresh();   // 새로고침기능 -> so, 게시글 등록 후 바로 보임.  
-      router.replace(`http://localhost:3000/admin/real_estates`);       
+      router.refresh();   // 새로고침기능 
+      
+      const path = `/admin/real_estates`;
+      const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+      const url = `${domain}${path}`
+      router.replace(`${url}`);
+      
+      // router.replace(`http://localhost:3000/admin/real_estates`);  // keep       
 
     }
   };

@@ -21,72 +21,39 @@ interface NoticableEstate {
   symbol: string;
 }
 
-// ✅ 임시 데이터 받기
-// const voteableEstateData = [
-//   {
-//     id : 1,
-//     address : '0x112123123',
-//     real_estate_name : '문래 공차',
-//     cy_type : 'token',
-//     symbol : 'MR'
-//   },
-//   {
-//     id : 2,
-//     address : '0x112123',
-//     real_estate_name : '대전 뮤지엄',
-//     cy_type : 'token' ,
-//     symbol : 'MG'
-//   },
-// ]
 
-/* api 상 데이터 예시
-  {
-      category : "공지사항",
-      title : "대체공휴일 지정에 따른 휴장 안내",
-      content : "안녕하세요. 카사입니다.\n 
-                      정부의 대체공휴일 지정에 따라 아래와 같이 휴장을 안내드립니다.\n
-                        -휴장일 : 2023년 10월 02일(월)",
-      real_estate_name : "문래 공차"
-  }
-  */
-
-export default function FormNotice() {
+export default function FormNotice({
+  voteableEstateData,
+}: {
+  voteableEstateData: string[];
+}) {
   const router = useRouter();
-  // const [startDate, setStartDate] = useState(0)
-  // const [endDate, setEndDate] = useState(0)
 
-  // const noticableEstateData = await getVoteableEstateData()
+  const [selectedValue, setSelectedValue] = useState<string>("");
 
-  // const nameAddressArr= voteableEstateData.map( (item : VoteableEstate) => {
-  //     return [item.real_estate_name, item.address]
-  // })
-  // const getAddressFromNameObj = Object.fromEntries(nameAddressArr);
 
   const postNoticeForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // e.stopPropagation()
 
     const formData = new FormData(e.currentTarget); // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴
-    // const finalStartDate= startDate.toString()
-    // const finalEndDate= endDate.toString()
-
-    // formData.append("notice_writer ", "admin");
-
-    // formData.append('caAddress', getAddressFromNameObj[selectedValue].toString());
 
     for (let [key, value] of formData.entries()) {
-      console.log("formData 확인🐣🐣");
-      console.log(`${key}: ${value}`);
+      // console.log("formData 확인🐣🐣");
+      // console.log(`${key}: ${value}`);
     }
 
     const response = await postFetchNoticeForm(formData);
-
-    console.log("response👉👉" , response)
-    console.log("response👉👉" , response.status)
     
     if (response == 'Created') {
-      // router.refresh(); // 새로고침기능
-      router.replace(`http://localhost:3000/admin/notices`);
+      router.refresh(); // 새로고침기능
+
+
+      const path = `/admin/notices`;
+      const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+      const url = `${domain}${path}`
+      router.replace(`${url}`);
+      
     }
 
   };
@@ -126,6 +93,11 @@ export default function FormNotice() {
                   <FormSectionNoticeInfo_
                     title="공시/공지 상세 등록"
                     desc="상세 내용 등록"
+
+                    voteTarget={voteableEstateData}
+                    selectedValue={selectedValue}
+                    setSelectedValue={setSelectedValue}
+                    
                   />
                 </div>
 

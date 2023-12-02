@@ -77,7 +77,6 @@ app.use(
   })
 );
 
-
 sequelize
   .sync({ force: false })
   .then(() => {

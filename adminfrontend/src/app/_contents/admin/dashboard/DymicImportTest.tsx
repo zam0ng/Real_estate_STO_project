@@ -1,24 +1,24 @@
 
-"use client"
+// "use client"
 
-import React from 'react'
-import Web3 from 'web3';
+// import React from 'react'
+// import Web3 from 'web3';
 
-const DymicImportTest = () => {
+// const DymicImportTest = () => {
     
 
-    console.log("💎💎💎💎💎💎💎")
+//     console.log("💎💎💎💎💎💎💎")/
 
-    const web3 = new Web3(window.ethereum);
-    console.log("💎💎💎" , web3)
-
-
-  return (
-    <>
+//     const web3 = new Web3(window.ethereum);
+//     console.log("💎💎💎" , web3)
 
 
-    </>
-  )
-}
+//   return (
+//     <>
 
-export default DymicImportTest
+
+//     </>
+//   )
+// }
+
+// export default DymicImportTest
