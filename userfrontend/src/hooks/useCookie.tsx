@@ -39,6 +39,7 @@ export default function useCookie(urlProps: string) {
         //     if (status == 200) setLoginCheck(true);
         //   })
         //   .catch(console.error);
+        return;
       } catch (error) {
         console.error(error);
       }

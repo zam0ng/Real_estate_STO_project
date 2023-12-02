@@ -105,7 +105,6 @@ export default function MarqueeIndeces (){
 
 
 
-    console.log('병합 데이타',mergedData)
 
 
 
