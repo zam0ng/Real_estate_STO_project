@@ -22,7 +22,7 @@ interface PropertyProps {
   navigator: (arg: string) => void;
 }
 
-interface TokenSymbolRequest {
+export interface TokenSymbolRequest {
   id: number;
   address: string;
   real_estate_name: string;
