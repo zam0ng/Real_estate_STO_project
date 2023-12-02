@@ -204,6 +204,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
                 wallet: item.tx_to,
                 real_estate_name: contract_real_estate_name[item.ca],
               },
+              transaction,
             }
           );
         } else {
@@ -252,6 +253,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               wallet: item.tx_from,
               real_estate_name: contract_real_estate_name[item.ca],
             },
+            transaction,
           }
         );
       }
