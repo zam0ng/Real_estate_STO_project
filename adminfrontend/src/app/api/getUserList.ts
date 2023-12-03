@@ -16,14 +16,14 @@ export const getUserList = async () => {
 
     try {
         // no-store | 캐시 없음 🔵 정상작동 (1203)
-            const res = await fetch(`${url}`, {
-            cache: 'no-store',
-            })        
+            // const res = await fetch(`${url}`, {
+            // cache: 'no-store',
+            // })        
 
         // onDemand 방식 | post 로 요청 다시 보내야 작동 | 🔵 정상 작동(1203)
-        // const res = await fetch(`${url}`, {
-        // next: {tags : ['userList']},
-        // })        
+            const res = await fetch(`${url}`, {
+            next: {tags : ['userList']},
+            })        
 
         
         // timebased 방식 | 서버에서의 변화를 포착할 수 있는지 확인
