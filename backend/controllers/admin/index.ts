@@ -1182,3 +1182,6 @@ export const allUsers = async (req: Request, res: Response) => {
     res.sendStatus(500);
   }
 };
+
+
+
