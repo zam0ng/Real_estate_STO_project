@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import TableHeader from "./TableHeader";
 import TodayHistoryTableInfo from "./TodayHistoryTableInfo";
 import { serverurl } from "../../../components/serverurl";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 export interface TodayHistoryRequest {
   createdAt: string;
@@ -36,11 +37,13 @@ const TodayHistoryTable: React.FC = () => {
   });
 
   useEffect(() => {
-    // console.log(data);
+    console.log(data);
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return(
+      <LoadingComponent/>
+  );
   }
 
   if (isError) {

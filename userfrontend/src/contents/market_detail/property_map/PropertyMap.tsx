@@ -5,6 +5,7 @@ import PropertyAddress from './PropertyAddress';
 
 const PropertyMap: React.FC = () => {
   const data = useContext(MarketDetailContext);
+  console.log(data);
 
   return (
     <div className='w-full h-auto flex flex-col items-center'>

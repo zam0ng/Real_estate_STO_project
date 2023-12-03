@@ -28,15 +28,9 @@ const TableRowEstate =({ item }: TableRowEstate) => {
     const [loading,setLoading] = useState(false);
     const subscriptionProgress = item.achievement_rate; // ⭐⭐ api 에 따르면 진행률은 achievement_rate | 현재 아직 안 들어옴 
     // const subscriptionProgress_ver2 = (item.subscription_order_amount / item.subscription_totalsupply)
-
-    console.log("진행률👏", subscriptionProgress);
-
     const status = item.subscription_status;
-
-    console.log("subscription_order_amount" , item.subscription_order_amount * 5000)
-
     const localScale = Number(item.subscription_totalprice).toLocaleString()
-    console.log("localScale" , localScale)
+    // console.log(item);
 
 
   return (
@@ -63,7 +57,7 @@ const TableRowEstate =({ item }: TableRowEstate) => {
 
       <Totalprice id={item.id} totalPrice={localScale} />
 
-      <CurrentResult id={item.id} current={item.subscription_order_amount * 5000} />
+      <CurrentResult id={item.id} current={item.contest_totalprice} />
 
       <Duration
         id={item.id}

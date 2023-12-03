@@ -60,7 +60,7 @@ const PropertyPrice: React.FC = () => {
         {data?.current_price + "원"}
       </div>
       <div className={`w-full h-[30%] flex justify-center items-center ${textColor} text-xxs`}>
-        {priceChangeRate}
+        {priceChangeRate}%
       </div>
     </div>
   )

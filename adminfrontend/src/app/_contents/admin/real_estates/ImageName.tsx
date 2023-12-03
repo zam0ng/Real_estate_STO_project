@@ -3,8 +3,9 @@ import { ImageNameProps } from "@/app/_features/admin/real_estates";
 import Link from "next/link";
 
 const ImageName = ({ imageURL, name , id}: ImageNameProps) => {
-  // console.log(imageURL, "imageURL");
   
+  const slicedName = name.length > 7 ? name.slice(0, 7) + "..." : name;
+
   const path = imageURL.replace(/\\/g, '/');   // 정규표현식활용, 백슬래시를 슬래시로 교체
   const fileName = path.split('/')[2]
   const finalDomain = `${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL}`
@@ -32,8 +33,7 @@ const ImageName = ({ imageURL, name , id}: ImageNameProps) => {
         
         {/* 이름 */}
         <p className="ml-3 text-base font-medium tracking-tight text-neutral-700 ">
-          {/* Emma Ryan | 기본 폰트 확인용 */}
-          {name}
+          {slicedName}
         </p>
       </Link>
     </>

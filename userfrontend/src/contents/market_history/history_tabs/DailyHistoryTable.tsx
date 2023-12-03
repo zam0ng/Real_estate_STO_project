@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import TableHeader from "./TableHeader";
 import DailyHistoryTableInfo from "./DailyHistoryTableInfo";
 import { serverurl } from "../../../components/serverurl";
-
+import LoadingComponent from "../../../components/LoadingComponent";
 interface DailyHistoryRequest {
   real_estate_name: string;
   trade_price: number;
@@ -42,7 +42,9 @@ const DailyHistoryTable: React.FC = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return(
+      <LoadingComponent/>
+  );
   }
 
   if (isError) {

@@ -29,18 +29,21 @@ const VoteListItemBox: React.FC = () => {
           endedVote.push(item);
         }
       });
-
-      if(data.length === endedVote.length){
-        setDone(true);
-      }
     }
   },[data]);
 
   return (
     <div className='w-full h-full'>
-      {sortedData && sortedData.length == 0 && (
-        <div className='w-full h-auto flex justify-center items-center'>
-          <div className='w-[50%] h-[50%] flex justify-center items-center'>
+      {sortedData === undefined && (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className='w-[50%] h-[50%] flex justify-center items-center text-center'>
+            현재 진행중이거나 <br/>예정된 투표가 없습니다.
+          </div>
+        </div>
+      )}
+      {(sortedData && (sortedData.length === 0 || sortedData.length === endedVote.length)) && (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className='w-[50%] h-[50%] flex justify-center items-center text-center'>
             현재 진행중이거나 예정된 투표가 없습니다.
           </div>
         </div>
@@ -54,13 +57,6 @@ const VoteListItemBox: React.FC = () => {
           vote_start_date={item.vote_start_date} vote_end_date={item.vote_end_date} />
         )
       })}
-      {sortedData && done === true && (
-        <div className='w-full h-full flex justify-center items-center'>
-          <div className='w-[50%] h-[50%] flex justify-center items-center text-center'>
-            현재 진행중이거나 <br/>예정된 투표가 없습니다.
-          </div>
-        </div>
-      )}
     </div>
   )
 }

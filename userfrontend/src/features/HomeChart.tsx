@@ -5,6 +5,7 @@ export type HomeChartType = {
     current_price : number;
     fluctuation_rate : number;
     dividend_price? : number;
+    subscription_img_1 : string;
     'Real_estates.current_price'? : number;
     'Subscription.subscription_img_1' : string;
 }

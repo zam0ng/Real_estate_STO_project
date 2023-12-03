@@ -33,7 +33,7 @@ const DailyHistoryTableInfo: React.FC<DailyHistoryProps> = ({date,next_trade_pri
                 {changeType}
             </div>
             <div className='w-[25%] h-full flex justify-center items-center text-sm'>
-                {total_price}
+                {(Number(total_price)).toLocaleString()}
             </div>
         </div>
     )

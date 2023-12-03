@@ -7,7 +7,6 @@ interface BoardTypeDateProps {
 
 const BoardTypeDate: React.FC<BoardTypeDateProps> = ({createdAt,category}) => {
     const justDate = createdAt.slice(0,10);
-
     return (
         <div className='w-full h-2/5 text-xs-sm flex items-center'>
             <div>{justDate}</div>

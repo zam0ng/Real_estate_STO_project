@@ -8,13 +8,13 @@ import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import { getUserList } from "@/app/api/getUserList";
 import TableRowTransaction from "./TableRowTransaction";
-import { getTransactionHistory } from "@/app/api/getTransactionHistory";
+import { getTransactionReceipt } from "@/app/api/getTransactionReceipt";
 
 const TableContentTransaction = async () => {
 
 
   // api 연결 완료 | 데이터가 없어서 빈 게 나옴 | 
-  // const transactionData = await getTransactionHistory()
+  const transactionData = await getTransactionReceipt()
     // 25초? 가 맞다면, 25초 간격으로 신호 보내기 
 
   /*
@@ -31,58 +31,19 @@ const TableContentTransaction = async () => {
 
 
   // 임시 데이터 
-  const transactionData = [
-    {
-      id : 1,
-      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_value : 3,
-      tx_symbol : 'MG',
-      block_num : 2,
-      transmission : 'in',
-      createdAt : '2023-11-25 16:20:39.326913+09',
-    },
-    {
-      id : 2,
-      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_value : 5,
-      tx_symbol : 'MG',
-      block_num : 2,
-      transmission : 'out',
-      createdAt : '2023-11-25 16:20:39.326913+09',
-    },
-    {
-      id : 3,
-      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_value : 2,
-      tx_symbol : 'MG',
-      block_num : 2,
-      transmission : 'internal',
-      createdAt : '2023-11-25 16:20:39.326913+09',
-    },
-    {
-      id : 4,
-      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_value : 2,
-      tx_symbol : 'MG',
-      block_num : 2,
-      transmission : 'external',
-      createdAt : '2023-11-25 16:20:39.326913+09',
-    },
-    {
-      id : 5,
-      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
-      tx_value : 2,
-      tx_symbol : 'MG',
-      block_num : 2,
-      transmission : 'internal',
-      createdAt : '2023-11-25 16:20:39.326913+09',
-    },
-  ]
+  // const transactionData = [
+    // {
+    //   id : 1,
+    //   ca : 0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427,
+    //   tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+    //   tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+    //   tx_value : 3,
+    //   tx_symbol : 'MG',
+    //   block_num : 2,
+    //   transmission : 'in',
+    //   createdAt : '2023-11-25 16:20:39.326913+09',
+    // },
+
 
   return (
     <>    

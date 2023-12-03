@@ -33,7 +33,7 @@ const VoteList: React.FC = () => {
     });
 
     useEffect(()=>{
-        console.log(data);
+        // console.log(data);
     },[data]);
 
     return (

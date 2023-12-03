@@ -5,24 +5,42 @@ import postBlacklistUser from "@/app/api/postBlacklistUser";
 import { revalidateTag } from 'next/cache'
 import { useRouter } from "next/navigation";
 
+
+type Props = {
+  tag : string
+}
+
 const EnrollBlacklistButton = ({ text, user_email }: EnrollBlacklistButtonParams) => {
+
 
   const router = useRouter();
   
-  const handleBlacklistEnrollBtn = () => {
+  // const handleBlacklistEnrollBtn = async (  {tag} : Props )   => {   // ⭐⭐ props 를 받는 경우
+  const handleBlacklistEnrollBtn = async ( )   => {
 
-    postBlacklistUser(user_email)
-    .then( () => {
-      
-        const path = `/admin/users`;
-        const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
-        const url = `${domain}${path}`
-        router.refresh();                
-        // router.replace(`${url}`);
-      
-    } )
-    // revalidateTag('adminUsers')
-    
+    // 정상작동 🔵🔵 
+        // postBlacklistUser(user_email)
+        // .then( () => {
+          
+        //     const path = `/admin/users`;
+        //     const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+        //     const url = `${domain}${path}`
+        //     router.refresh();                
+        //     // router.replace(`${url}`);
+          
+        // } )
+
+    // revalidate onDemand 🔵🔵 정상 작동
+      await postBlacklistUser(user_email)
+
+      // const res = await fetch('api/revalidate?tag=' + tag)   // ⭐⭐ props 를 받는 경우
+      const res = await fetch('api/revalidate?tag=userList' , {
+        method : 'POST'
+      })
+      console.log(res)
+
+      // 새로고침 ⭐⭐⭐
+      if(res) router.refresh()
 
   }
 

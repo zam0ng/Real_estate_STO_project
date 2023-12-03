@@ -24,7 +24,7 @@ const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
       priceKr = `총 ${uk}억 ${man}만원 모집`;
     }
   }
-
+  console.log(img);
   return (
     <div className="w-[85%] h-80 rounded-lg mt-4 relative">
       <div
@@ -35,7 +35,7 @@ const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
       </div>
       <img
         className="w-full h-full rounded-lg"
-        src={`${serverurl}/estate_img/${img}`}
+        src={`${serverurl}/estate_img/${(img).split("\\")[2]}`}
       />
     </div>
   );
