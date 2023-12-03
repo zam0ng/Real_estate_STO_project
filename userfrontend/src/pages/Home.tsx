@@ -4,8 +4,10 @@ import HomeIndices from "../contents/home/homeIndices";
 import LineTypeTabComponent from "../components/tabUI/LineTypeTabComponent";
 import { useState, useEffect } from "react";
 import AOS from "aos";
+import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function Home() {
+  useScrollToTop();
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {

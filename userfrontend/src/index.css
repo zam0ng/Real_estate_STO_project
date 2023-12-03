@@ -20,12 +20,6 @@
 }
 
 @layer components {
-  .historyActive {
-    background-color: rgb(255 255 255);
-  }
-}
-
-@layer components {
   .historyNotActive {
     border-bottom: none;
     background-color: rgb(203 213 225);
@@ -61,6 +55,24 @@
 @layer components {
   .blueText {
     color: rgb(96 165 250);
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(1.25rem);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-1.25rem);
   }
 }
 

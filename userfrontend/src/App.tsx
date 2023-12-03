@@ -25,6 +25,8 @@ import VoteDetail from "./pages/VoteDetail";
 import VoteList from "./pages/VoteList";
 import Deposit from "./pages/Deposit";
 import Withdraw from "./pages/Withdraw";
+import ScrollTest from "./pages/ScrollTest";
+import DarkModeTest from "./pages/DarkModeTest";
 import IframePage from "./pages/IframePage";
 
 function App() {
@@ -80,6 +82,8 @@ function App() {
           <Route path="/vote-test" element={<VotingTestPage />} />
           <Route path="/mypage/deposit" element ={<Deposit />} />
           <Route path="/mypage/withdraw" element ={<Withdraw />} />
+          {/* <Route path="/scroll-test" element={<ScrollTest />} />
+          <Route path="/darkmode-test" element={<DarkModeTest />} /> */}
           <Route path='/loading' element={<IframePage /> }/>
         </Routes>
         </div>
