@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@openzeppelin/contracts": "^4.9.3",
-    "@tanstack/react-query": "^5.7.2",
+    "@tanstack/react-query": "^5.12.2",
     "@tanstack/react-query-devtools": "^5.7.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -18,10 +18,12 @@
     "@types/react-router-dom": "^5.3.3",
     "aos": "^2.3.4",
     "axios": "^1.6.0",
+    "chart.js": "^4.4.0",
     "customize-cra": "^1.0.0",
     "dotenv": "^16.3.1",
     "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-cookie": "^6.1.1",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
@@ -61,6 +63,7 @@
     ]
   },
   "devDependencies": {
+    "@types/aos": "^3.0.7",
     "@types/jsonwebtoken": "^9.0.5",
     "assert": "^2.1.0",
     "autoprefixer": "^10.4.16",

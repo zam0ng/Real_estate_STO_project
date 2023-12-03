@@ -6,7 +6,7 @@ interface DescriptionProps {
 
 const PropertyDescription: React.FC<DescriptionProps> = ({description}) => {
   return (
-    <div className='w-full h-1/3 flex justify-start items-center text-xs-sm pl-3'>
+    <div className='w-[120%] h-1/3 flex justify-start items-center text-xs-sm pl-3'>
       {description}
     </div>
   )

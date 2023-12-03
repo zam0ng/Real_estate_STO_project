@@ -89,7 +89,7 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
       const tradeAmountArr = marketTradesDuringDays.map((item : TradeData) => {
           return Object.values(item)[0].ten_amount
       })
-      console.log("tradeAmountArr" , tradeAmountArr)
+      // console.log("tradeAmountArr" , tradeAmountArr)
 
       const sumArrays = (arr1: number[], arr2: number[]): number[] => {
           return arr1.map((num, index) => num + (arr2[index] || 0));
@@ -97,7 +97,7 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
 
       const sumBeforeReverse = tradeAmountArr.slice(1).reduce((acc : number[], curr : number[]) => sumArrays(acc, curr), tradeAmountArr[0]);
       const finalSum = sumBeforeReverse.reverse()
-      console.log("finalSum🌴" , finalSum)
+      // console.log("finalSum🌴" , finalSum)
 
 
 
@@ -105,7 +105,7 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
     const tenDates = marketTradesDuringDays.flatMap((item : TradeData)=> {
         return Object.values(item)[0].ten_date;
     });
-    console.log("tenDates | 오늘 부터 10일전 까지의 거래 🤸‍♂️" , tenDates)
+    // console.log("tenDates | 오늘 부터 10일전 까지의 거래 🤸‍♂️" , tenDates)
         /*    tenDays = [
                 '2023-11-24', '2023-11-23',
                 '2023-11-22', '2023-11-21',
@@ -116,7 +116,7 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
         */
     
     const uniqueDates : string[] = Array.from(new Set(tenDates));     // 중복제거
-    console.log("uniqueDates" , uniqueDates)
+    // console.log("uniqueDates" , uniqueDates)
         /*
             '2023-11-24', '2023-11-23',
             '2023-11-22', '2023-11-21',
@@ -128,16 +128,16 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
     const yearArr = uniqueDates.map( (item: string) => {
         return item.split('-')[0]
     })
-    console.log("yearArr" , yearArr)
+    // console.log("yearArr" , yearArr)
 
 
     const tempMonthArr = uniqueDates.map((item:string) => {
         return item.split('-')[1]
     })
-    console.log("tempMonthArr" , tempMonthArr)
+    // console.log("tempMonthArr" , tempMonthArr)
 
     const monthArr = tempMonthArr.sort((a, b) => a.localeCompare(b));   // 오름차순 정렬
-    console.log(monthArr , "monthArr")
+    // console.log(monthArr , "monthArr")
 
         // const monthNames : { [key : string] : string } = {
         //     '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
@@ -152,7 +152,7 @@ const calcMonthTradeSum = (marketTradesDuringDays : TradeData[]) => {
         return monthArr[index]
     } )
 
-    console.log("finaldate🤟🤟" , finaldate)
+    // console.log("finaldate🤟🤟" , finaldate)
     /*
         finaldate🤟🤟 [
         'Nov 24', '23',

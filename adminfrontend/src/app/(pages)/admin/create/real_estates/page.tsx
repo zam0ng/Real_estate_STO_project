@@ -100,7 +100,14 @@ export default function AdminCreateRealEstate() {
         // console.log("result", result);
 
         router.refresh();
-        router.replace(`http://localhost:3000/admin/main`); // 방금 쓴 글을 확인하기 위한 리디렉션
+
+        const path = `/admin/main`;
+        const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+        const url = `${domain}${path}`
+        router.replace(`${url}`);
+
+        // router.replace(`http://localhost:3000/admin/main`); // keep
+      
       });
   };
 

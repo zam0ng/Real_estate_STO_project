@@ -1,10 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import VoteListItem from '../VoteListItem';
 import { VoteListContext } from '../../../pages/VoteList';
 
 const VoteListItemBox: React.FC = () => {
   const data = useContext(VoteListContext);
   // console.log(data);
+  const endedVote = [];
+  const [done,setDone] = useState<boolean>(false);
 
   const sortedData = data?.sort((a,b)=>{
     const dateA = new Date(a.vote_end_date);
@@ -20,8 +22,29 @@ const VoteListItemBox: React.FC = () => {
     return endDate < twoDaysAgo;
   };
 
+  useEffect(()=>{
+    if(data){
+      data.map((item,index)=>{
+        if(checkTwoDaysAgo(item.vote_end_date)){
+          endedVote.push(item);
+        }
+      });
+
+      if(data.length === endedVote.length){
+        setDone(true);
+      }
+    }
+  },[data]);
+
   return (
-    <div className='w-full h-fit'>
+    <div className='w-full h-full'>
+      {sortedData && sortedData.length == 0 && (
+        <div className='w-full h-auto flex justify-center items-center'>
+          <div className='w-[50%] h-[50%] flex justify-center items-center'>
+            현재 진행중이거나 예정된 투표가 없습니다.
+          </div>
+        </div>
+      )}
       {sortedData && sortedData.map((item,index)=>{
         if(checkTwoDaysAgo(item.vote_end_date)){
           return null;
@@ -31,6 +54,13 @@ const VoteListItemBox: React.FC = () => {
           vote_start_date={item.vote_start_date} vote_end_date={item.vote_end_date} />
         )
       })}
+      {sortedData && done === true && (
+        <div className='w-full h-full flex justify-center items-center'>
+          <div className='w-[50%] h-[50%] flex justify-center items-center text-center'>
+            현재 진행중이거나 <br/>예정된 투표가 없습니다.
+          </div>
+        </div>
+      )}
     </div>
   )
 }

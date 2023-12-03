@@ -40,8 +40,8 @@ export default function SubStatus({ detail }: SubStatusType) {
                   {Math.ceil(
                     (parseInt(detail.subscription_order_amount) /
                       parseInt(detail.subscription_totalsupply)) *
-                      100 *
-                      10
+                    100 *
+                    10
                   ) / 10}
                   %
                 </div>
@@ -53,8 +53,8 @@ export default function SubStatus({ detail }: SubStatusType) {
               </div>
               <span className="bg-gray-200 text-blue-400 rounded-sm px-2 py-1 font-bold">{`마감까지 ${formatCurrency(
                 parseInt(detail.subscription_offering_price) *
-                  (parseInt(detail.subscription_totalsupply) -
-                    parseInt(detail.subscription_order_amount))
+                (parseInt(detail.subscription_totalsupply) -
+                  parseInt(detail.subscription_order_amount))
               )}원 남음👏`}</span>
             </div>
           </div>
@@ -69,13 +69,11 @@ export default function SubStatus({ detail }: SubStatusType) {
           />
         </div>
       </div>
-      <div
-        className="w-5/6 h-72 m-auto rounded-xl  mt-3 border bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2"
-        data-aos="fade-up"
-      >
+      <div className="w-5/6 h-72 m-auto rounded-xl  mt-3 border bg-[#EDF0F4] rounded-lg shadow-neu1 shadow-neu2"data-aos="fade-up">
         <div className="w-full h-16 mt-1">
           {statusBox.map((i, index) => {
             return (
+              <>
               <div key={index} className="flex h-full mb-2">
                 <div className=" w-1/4 pt-1">
                   <div className="w-10 h-10 border-2 border-blue-500 m-auto mt-2 flex items-center justify-center rounded-full font-extrabold">
@@ -88,19 +86,18 @@ export default function SubStatus({ detail }: SubStatusType) {
                     {i.date} 오전 9 시{" "}
                   </div>
                 </div>
-              </div>
-            );
-          })}
+            </div>
+            </>
+          )
+          })
+          }
+            <div className="w-full h-20 rounded-xl m-auto mb-5 px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2 mb-20 flex items-center" >
+                <AiOutlineAlert className="text-red-600 " />
+                <div className="text-xs text-gray-700 text-left ml-2">모집률 100% 달성 시 조기에 마감이 될 수 있습니다.<br/>모집이 마감되면 청약 및 청약 취소를 할 수 없어요
+                </div>
+            </div>
         </div>
       </div>
-      <div className="w-5/6 h-20 rounded-xl m-auto mb-5 px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2">
-        <AiOutlineAlert className="text-red-600 " />
-        <span className="text-xs text-gray-700">
-          모집률 100% 달성 시 조기에 마감이 될 수 있습니다.
-          <br />
-          모집이 마감되면 청약 및 청약 취소를 할 수 없어요
-        </span>
-      </div>
     </>
-  );
+  )
 }

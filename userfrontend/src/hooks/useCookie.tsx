@@ -39,6 +39,7 @@ export default function useCookie(urlProps: string) {
         //     if (status == 200) setLoginCheck(true);
         //   })
         //   .catch(console.error);
+        return;
       } catch (error) {
         console.error(error);
       }
@@ -69,7 +70,7 @@ export default function useCookie(urlProps: string) {
           "//" +
           window.location.host +
           "/" +
-          urlProps;
+          'loading';
 
         const loginUrl = `https://bouns.io/_login/?client_id=${projectId}&redirect_uri=${redirectUri}`;
         setBounsURI(loginUrl);

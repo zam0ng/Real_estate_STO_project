@@ -8,6 +8,8 @@ import PropertyPrice from "./PropertyPrice";
 import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { useQuery } from "@tanstack/react-query";
+import AOS from 'aos'
+
 
 interface PropertyProps {
   start_price: number;
@@ -20,7 +22,7 @@ interface PropertyProps {
   navigator: (arg: string) => void;
 }
 
-interface TokenSymbolRequest {
+export interface TokenSymbolRequest {
   id: number;
   address: string;
   real_estate_name: string;
@@ -31,6 +33,10 @@ interface TokenSymbolRequest {
 }
 
 const fetchTokenSymbol = async (propertyName: string): Promise<TokenSymbolRequest[]> => {
+
+
+
+
   const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
     params: {
       real_estate_name: propertyName
@@ -57,7 +63,7 @@ const PropertyBox: React.FC<PropertyProps> = ({
   });
 
   useEffect(()=>{
-    console.log(data);
+    // console.log(data);
     if(data){
       if(data.length !== 0){
         setTokenSymbol(data[0].symbol);
@@ -65,12 +71,17 @@ const PropertyBox: React.FC<PropertyProps> = ({
         setTokenSymbol("TOK");
       }
     }
-  },[data])
+  },[data]);
+
+  useEffect(()=>{
+    AOS.init({duration : 1200})
+  },[])
 
   return (
     <div
       className="w-full h-32 mb-5 flex flex-row bg-[#EDF0F4] rounded-xl shadow-innerneu2"
       onClick={() => navigator(subscription_name)}
+      data-aos= 'fade-up'
     >
       <div className="w-1/2 h-full">
         <div className="w-full h-1/2">

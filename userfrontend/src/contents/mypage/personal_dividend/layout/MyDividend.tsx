@@ -5,6 +5,7 @@ import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { UserEmailProps } from "../../personal_info/layout/MyInfo";
 import { useQuery } from "@tanstack/react-query";
+import AOS from 'aos'
 
 interface MyTotalDividendsRequest {
   real_estate_name: string;
@@ -44,13 +45,13 @@ const MyDividend: React.FC<UserEmailProps> = ({ email }) => {
   });
 
   useEffect(() => {
-    // console.log("total dividends : ",data);
-  }, [data]);
+    AOS.init({duration : 1200})
+  }, []);
 
   return (
     <TotalDividendHistoryContext.Provider value={data}>
-      <div className="w-[90%] h-96 mt-5  pl-5 pr-5  bg-[#EDF0F4] rounded-xl shadow-innerneu2">
-        <div className="w-full h-[30%] flex justify-start items-center text-xl">
+      <div className="w-[90%] h-60 mt-5 pt-3 pl-5 pr-5  bg-[#EDF0F4] rounded-xl shadow-innerneu2" data-aos='fade-up'>
+        <div className="w-full h-[15%] flex justify-start items-end text-xl">
           배당금 상세
         </div>
         <MyTotalDividend />

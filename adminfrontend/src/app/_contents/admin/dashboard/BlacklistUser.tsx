@@ -1,4 +1,4 @@
-// import gravatar from 'gravatar';
+import gravatar from 'gravatar';
 /*
   /admin/blacklist 경로에서, 'user_email,' 키로 이메일 값이 들어옴
 */
@@ -11,11 +11,11 @@ interface BlacklistUserProps {
 
 const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
 
-  console.log("user_profile_img" , user_profile_img)
+  // console.log("user_profile_img" , user_profile_img)
 
   return (
     <>
-      <div className="relative rounded-full w-4.5rem h-4.5rem bg-lime-100 overflow-hidden flex items-end		">
+      <div className="relative rounded-full w-4.5rem h-4.5rem bg-lime-300 overflow-hidden flex items-end	grayscale-80	">
 
       <Image
         alt="매물 사진"
@@ -24,7 +24,7 @@ const BlacklistUser:React.FC<BlacklistUserProps> = ( {user_profile_img} ) => {
         style={{objectFit: "cover"}}	
         fill={true}
       />
-
+      
         {/* <img 
           src={gravatar.url( 
             user_profile_img,  // 사용자 이메일별로 다른 그림이 그려짐 

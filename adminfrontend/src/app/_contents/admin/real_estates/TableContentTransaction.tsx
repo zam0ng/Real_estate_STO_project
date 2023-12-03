@@ -8,13 +8,28 @@ import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import { getUserList } from "@/app/api/getUserList";
 import TableRowTransaction from "./TableRowTransaction";
+import { getTransactionHistory } from "@/app/api/getTransactionHistory";
 
 const TableContentTransaction = async () => {
 
-  // api 아직 안 열림 | 유저 테이블에서 전부 가져옴 | 가져오려면, 정현이꺼랑 합쳐야 함
-  // const transactionData = await getTransactionList()❓❓❓
+
+  // api 연결 완료 | 데이터가 없어서 빈 게 나옴 | 
+  // const transactionData = await getTransactionHistory()
+    // 25초? 가 맞다면, 25초 간격으로 신호 보내기 
+
+  /*
+  - 내부 전송 (in) 외부 -> 내부 
+    - 
   
+  - 외부 전송(out) 내부 -> 외부
+
+  - 내부 거래 (internal) (내부 → 내부)
   
+  -외부 거래 (external) (외부 → 외부)
+
+  */
+
+
   // 임시 데이터 
   const transactionData = [
     {
@@ -44,12 +59,30 @@ const TableContentTransaction = async () => {
       tx_value : 2,
       tx_symbol : 'MG',
       block_num : 2,
-      transmission : 'inside',
+      transmission : 'internal',
       createdAt : '2023-11-25 16:20:39.326913+09',
     },
-
+    {
+      id : 4,
+      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+      tx_value : 2,
+      tx_symbol : 'MG',
+      block_num : 2,
+      transmission : 'external',
+      createdAt : '2023-11-25 16:20:39.326913+09',
+    },
+    {
+      id : 5,
+      tx_from : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+      tx_to : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427',
+      tx_value : 2,
+      tx_symbol : 'MG',
+      block_num : 2,
+      transmission : 'internal',
+      createdAt : '2023-11-25 16:20:39.326913+09',
+    },
   ]
-
 
   return (
     <>    
@@ -67,7 +100,7 @@ const TableContentTransaction = async () => {
         <TableColumnName columnName={"To(buyer)"} />
         <TableColumnName columnName={"개수"} />
         <TableColumnName columnName={"블록 번호"} />
-        <TableColumnName columnName={"생성 시간"} />
+        <TableColumnName columnName={"생성 시기"} />
         {/* <TableColumnName columnName={"회원 정보수정"} /> */}
         {/* <TableColumnName columnName={"good/"} /> */}
         <TableColumnName columnName={"거래 유형"} />

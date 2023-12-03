@@ -21,7 +21,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname : 'www.gravatar.com'
-      }
+      }, 
+      
+      // https://i.imgur.com/NsFwt6P.png
+      {
+        protocol: 'https',
+        hostname : 'i.imgur.com'
+      }, 
+
     ] : [
       {
         protocol: 'https',
@@ -30,8 +37,14 @@ const nextConfig = {
     {
       protocol: 'https',
       hostname : 'www.gravatar.com'
-    }
-    ],
+    },
+    // https://i.imgur.com/NsFwt6P.png
+    {
+      protocol: 'https',
+      hostname : 'i.imgur.com'
+    }, 
+
+  ],
   },
 };
 

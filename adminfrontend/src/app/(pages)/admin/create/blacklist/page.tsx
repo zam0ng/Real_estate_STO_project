@@ -46,10 +46,13 @@ const handleBlacklist = async (e : FormEvent<HTMLFormElement>) => {
     .then((result) => {
         // console.log("처리한 데이터가 잘 들어왔는지 확인", result);
         
-        router.refresh();
-        
-        // 방금 쓴 글을 확인하기 위한 리디렉션 : 게시물 등록' 이 완료되면 -> 'admin/main 중 투표 관리' 에서 볼 수 있게
-        router.replace(`http://localhost:3000/admin/main`);
+        router.refresh();                
+        const path = `/admin/main`;
+        const domain = process.env.NEXT_PUBLIC_LOCAL_CLIENT || process.env.NEXT_PUBLIC_PRODDUCTION_CLIENT;
+        const url = `${domain}${path}`
+        router.replace(`${url}`);
+
+        // router.replace(`http://localhost:3000/admin/main`);  // keep🔵🔵🔵🔵🔵🔵
 
     });
 };

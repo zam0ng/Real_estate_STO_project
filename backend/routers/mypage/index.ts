@@ -13,6 +13,7 @@ import {
   dividendList,
   // voteList,
   subscriptionList,
+  transactionList,
 } from "../../controllers/mypage";
 
 import { isLogin } from "../../middleware/isLogin";
@@ -33,7 +34,7 @@ router.get("/total_deposit", totalDeposit);
 // 출금액 보여주기
 router.get("/total_drawal", totalDrawal);
 // 입출금 내역 보여주기
-// router.get("/transaction_list", transactionList);
+router.get("/transaction_list", transactionList);
 // 총 손익 보여주기
 router.get("/sum_profit_lost", sumProfitLost);
 // 종목별 자산 정보

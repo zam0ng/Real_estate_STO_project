@@ -8,72 +8,14 @@ import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import { getUserList } from "@/app/api/getUserList";
 
+
 const TableContentUser = async () => {
 
   // api 아직 안 열림 | 유저 테이블에서 전부 가져옴 | 가져오려면, 정현이꺼랑 합쳐야 함
-  // const userList = await getUserList()
+  const userList = await getUserList()
+  console.log("userList" )
+  console.log(userList)
   
-  // 임시 데이터 
-  const userList = [
-    {
-      id : 1 , 
-      user_profile_img : 'https://www.gravatar.com/avatar/13cd4093df097f164f967eaa40bb9161?s=68px&d=robohash', 
-      user_email : 'test@bouns.co.kr', 
-      wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
-      balance : 100, 
-      using_balance : 100, 
-      blacklist : true, 
-      createdAt : '2023-11-22 12:04:20.097+09',
-      updatedAt : '2023-11-22 12:04:20.097+09'
-    },
-    {
-      id : 2 , 
-      user_profile_img : 'https://www.gravatar.com/avatar/c20244fa99888302c7fc33bd795e3a60?s=68px&d=robohash', 
-      user_email : 'test_2@bouns.co.kr', 
-      wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
-      balance : 200, 
-      using_balance : 170, 
-      blacklist : true, 
-      createdAt : '2023-11-20 12:04:20.097+09',
-      updatedAt : '2023-11-22 12:04:20.097+09'
-    },
-    {
-      id : 3 , 
-      user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93888302c7fc33bd795e3a60?s=68px&d=robohash', 
-      user_email : 'test_2@bouns.co.kr', 
-      wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
-      balance : 200, 
-      using_balance : 170, 
-      blacklist : false, 
-      createdAt : '2023-11-20 12:04:20.097+09',
-      updatedAt : '2023-11-22 12:04:20.097+09'
-    },
-    {
-      id : 4 , 
-      user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93881302c7fc33bd795e3a60?s=68px&d=robohash', 
-      user_email : 'test_2@bouns.co.kr', 
-      wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
-      balance : 200, 
-      using_balance : 170, 
-      blacklist : false, 
-      createdAt : '2023-11-20 12:04:20.097+09',
-      updatedAt : '2023-11-22 12:04:20.097+09'
-    },
-    {
-      id : 5, 
-      user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93882302c7fc33bd795e3a60?s=68px&d=robohash', 
-      user_email : 'test_2@bouns.co.kr', 
-      wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
-      balance : 200, 
-      using_balance : 170, 
-      blacklist : true, 
-      createdAt : '2023-11-20 12:04:20.097+09',
-      updatedAt : '2023-11-22 12:04:20.097+09'
-    },
-
-  ]
-
-
   return (
     <>
       {/* <div className="grid gap-2 pb-12 pl-12 pr-12 text-base tracking-tight text-center bg-white border-b-2 w-4/4 rounded-b-3xl justify-items-center grid-cols-table mx-44 h-36.5rem  overflow-y-auto		"> */}
@@ -106,3 +48,62 @@ const TableContentUser = async () => {
 };
 
 export default TableContentUser;
+
+// 임시 데이터 
+// const userList = [
+//   {
+//     id : 1 , 
+//     user_profile_img : 'https://www.gravatar.com/avatar/13cd4093df097f164f967eaa40bb9161?s=68px&d=robohash', 
+//     user_email : 'test@bouns.co.kr', 
+//     wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
+//     balance : 100, 
+//     using_balance : 100, 
+//     blacklist : true, 
+//     createdAt : '2023-11-22 12:04:20.097+09',
+//     updatedAt : '2023-11-22 12:04:20.097+09'
+//   },
+//   {
+//     id : 2 , 
+//     user_profile_img : 'https://www.gravatar.com/avatar/c20244fa99888302c7fc33bd795e3a60?s=68px&d=robohash', 
+//     user_email : 'test_2@bouns.co.kr', 
+//     wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
+//     balance : 200, 
+//     using_balance : 170, 
+//     blacklist : true, 
+//     createdAt : '2023-11-20 12:04:20.097+09',
+//     updatedAt : '2023-11-22 12:04:20.097+09'
+//   },
+//   {
+//     id : 3 , 
+//     user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93888302c7fc33bd795e3a60?s=68px&d=robohash', 
+//     user_email : 'test_2@bouns.co.kr', 
+//     wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
+//     balance : 200, 
+//     using_balance : 170, 
+//     blacklist : false, 
+//     createdAt : '2023-11-20 12:04:20.097+09',
+//     updatedAt : '2023-11-22 12:04:20.097+09'
+//   },
+//   {
+//     id : 4 , 
+//     user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93881302c7fc33bd795e3a60?s=68px&d=robohash', 
+//     user_email : 'test_2@bouns.co.kr', 
+//     wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
+//     balance : 200, 
+//     using_balance : 170, 
+//     blacklist : false, 
+//     createdAt : '2023-11-20 12:04:20.097+09',
+//     updatedAt : '2023-11-22 12:04:20.097+09'
+//   },
+//   {
+//     id : 5, 
+//     user_profile_img : 'https://www.gravatar.com/avatar/c20244fa93882302c7fc33bd795e3a60?s=68px&d=robohash', 
+//     user_email : 'test_2@bouns.co.kr', 
+//     wallet : '0x2bBF33D5DDAC72Dfe7A42AFda9D4e7d60Ad8a427', 
+//     balance : 200, 
+//     using_balance : 170, 
+//     blacklist : true, 
+//     createdAt : '2023-11-20 12:04:20.097+09',
+//     updatedAt : '2023-11-22 12:04:20.097+09'
+//   },
+// ]

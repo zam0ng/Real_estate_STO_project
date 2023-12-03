@@ -113,7 +113,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
             const validNum = isNaN(num) ? 0 : num;
 
             if(validNum < 1){
-                setQuantity(1)
+                setQuantity(0)
             }
             else if(validNum > Math.floor( dataUserId / parseInt(detail.subscription_offering_price) )){
 
@@ -154,7 +154,7 @@ export default function SubscriptionBtn({props} : subdetailtype){
             <div className="w-5/6  m-auto text-right  h-6 mb-5 text-sm">
                 <span className="bg-gray-100 text-blue-400 rounded-sm px-2 py-1 font-bold">
                 잔고 : {formatCurrency(dataUserId)}
-                <span className="ml-1"></span>
+                {/* <span className="ml-1"></span> */}
                 </span>
             </div>
             <div className=" text-right h-14 w-5/6 m-auto flex justify-between mb-5">

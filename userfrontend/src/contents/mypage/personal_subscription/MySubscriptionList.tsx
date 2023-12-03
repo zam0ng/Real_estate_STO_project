@@ -4,12 +4,13 @@ import { SubscriptionContext } from './layout/MySubscription';
 
 const MySubscriptionList: React.FC = () => {
   const mySubscriptions = useContext(SubscriptionContext);
-  console.log(mySubscriptions);
+  // console.log(mySubscriptions);
 
   return (
     <div className='w-full h-full'>
       {mySubscriptions && mySubscriptions.map((item,index)=>(
         <MySubscriptionListItem key={index} 
+          id={item.id}
           subscription_name={item.subscription_name}
           subscription_img_1={item.subscription_img_1}
           subscription_end_date={item.subscription_end_date}

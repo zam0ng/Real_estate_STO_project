@@ -1,6 +1,6 @@
 import ImageName from "./ImageName";
 import CurrentResult from "./CurrentResult";
-import Status from "./Status";
+import Status from "./StatusSuccess";
 import Progress from "./Progress";
 import Totalprice from "./Totalprice";
 import Duration from "./Duration";
@@ -20,10 +20,15 @@ import Balance from "./Balance";
 import TransactionStatus from "./UserStatus_";
 import UserStatus from "./TransactionStatus_";
 import UserStatus_ from "./UserStatus_";
+import UnEnrollBlacklistButton from "./UnEnrollBlacklistButton";
 
 const TableRowUser = async ({ item }: UserTableRow) => {
   const slicedAddress = item.wallet.slice(0, 15) + "...";
-  const enrollBtnActive = item.blacklist === true ? true : false;
+
+  const slicedCreatedAt = item.createdAt.split("T")[0];
+  const slicedUpdatedAt = item.updatedAt.split("T")[0];
+
+  const userBlackStatus = item.blacklist;
 
   return (
     <>
@@ -40,7 +45,10 @@ const TableRowUser = async ({ item }: UserTableRow) => {
 
       <Description id={item.id} desc={slicedAddress} />
 
-      <Balance id={item.id} balance={item.balance} />
+      {/* <Balance id={item.id} balance={item.balance} /> */}
+
+      <UserStatus_ id={item.id} status={item.blacklist} />
+
       {/* <Progress 
         id={item.id}
     progress={item.balance} /> */}
@@ -49,12 +57,16 @@ const TableRowUser = async ({ item }: UserTableRow) => {
 
       <Balance id={item.id} balance={item.using_balance} />
 
-      <CreatedDate id={item.id} resultDate={item.createdAt} />
+      <CreatedDate id={item.id} resultDate={slicedCreatedAt} />
 
-      <CreatedDate id={item.id} resultDate={item.updatedAt} />
+      <CreatedDate id={item.id} resultDate={slicedUpdatedAt} />
 
-      <UserStatus_ id={item.id} status={item.blacklist}/>
-
+      {/* <UserStatus_ id={item.id} status={item.blacklist}/> */}
+      {userBlackStatus == true ? (
+        <UnEnrollBlacklistButton text={"해제"} user_email={item.user_email} />
+      ) : (
+        <EnrollBlacklistButton text={"등록"} user_email={item.user_email} />
+      )}
     </>
   );
 };

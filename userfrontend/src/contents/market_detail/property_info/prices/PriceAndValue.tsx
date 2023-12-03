@@ -11,9 +11,6 @@ const PriceAndValue: React.FC = () => {
         <PropertyPrice />
         <div className='h-[55%] border border-slate-300'></div>
         <PriceDifference />
-        {/* <PropertyNumbers title='건물가치' priceValueRate={0} numberOrString={0} />
-        <PropertyNumbers title='TOK 가격' priceValueRate={0} numberOrString={0} />
-        <PropertyNumbers title='건물가치 대비' priceValueRate={0} numberOrString={0} /> */}
     </div>
   )
 }

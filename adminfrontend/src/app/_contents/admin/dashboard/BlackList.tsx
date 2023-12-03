@@ -13,12 +13,12 @@ const BlackList = async () => {
                 user_email,
             }
         */
-  console.log("blackListUserData" , blackListUserData)
+  // console.log("blackListUserData" , blackListUserData)
 
 
   return (
     <>
-      <div className="flex justify-between x-full">
+      <div className="flex justify-between mt-4 x-full">
         {blackListUserData && blackListUserData
           .slice(0, 5)
           .map((item: IblackListUser, index: number) => {

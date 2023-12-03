@@ -23,6 +23,7 @@ interface ContractRealEstatesName {
 
 let contract_real_estate_name: ContractRealEstatesName;
 // CA 주소 가져오기
+
 async function contract_address() {
   try {
     const result = await db.Contract_address.findAll({
@@ -176,8 +177,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     });
 
     logData.forEach(async (item) => {
-      if (item.transmission === "external" || item.transmission === "internal")
-        return;
+      // if (item.transmission === "external" || item.transmission === "internal")
+      //   return;
 
       if (item.transmission === "in") {
         // 해당 유저가 토큰을 보유하고 있는지 확인

@@ -5,10 +5,9 @@
 @import "aos/dist/aos.css";
 
 @font-face {
-  font-family: "EASTARJET-Medium";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_231029@1.1/EASTARJET-Medium.woff2")
-    format("woff2");
-  font-weight: 500;
+  font-family: 'Pretendard-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
   font-style: normal;
 }
 
@@ -17,12 +16,6 @@
     color: rgb(0 0 0);
     background-color: rgb(203 213 225);
     opacity: 0.5;
-  }
-}
-
-@layer components {
-  .historyActive {
-    background-color: rgb(255 255 255);
   }
 }
 
@@ -65,9 +58,29 @@
   }
 }
 
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(1.25rem);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-1.25rem);
+  }
+}
+
 .indicator {
   transition: left 0.7s;
 }
+
+@import "~aos/dist/aos.css";
 
 .custom-transform {
   position: absolute;

@@ -3,8 +3,8 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["EASTARJET-Medium"],
+      fontFamily : {
+        sans : ['Pretendard-Regular',]
       },
       fontSize: {
         home: "62.5%",
@@ -55,23 +55,25 @@ module.exports = {
         },
       },
       animation: {
-        marquee: "marquee 14s linear infinite",
-        marquee2: "marquee2 14s linear infinite",
-        "slide-up": "slideUp 0.4s ease-out",
-        swipe: "swipe 0.4s ease-out",
-        fadeIn: "fadeIn 5s ease",
-        fade: "fade 5s ease",
+        marquee: 'marquee 14s linear infinite',
+        marquee2: 'marquee2 14s linear infinite',
+        'slide-up': 'slideUp 0.4s ease-out',
+        swipe : 'swipe 0.4s ease-out',
+        fadeIn : 'fadeIn 5s ease',
+        fade : 'fade 5s ease'
+      },boxShadow: {
+        neu1: '-5px -5px 15px 2px rgb(0 0 0 / 0.1)',
+        neu2: '-5px -5px 10px 2px rgb(0.9 0.9 0.9 / 0.1)',
+        innerneu1: 'inset -5px -5px 10px 2px rgb(0.9 0.9 0.9 / 1)',
+        innerneu2: 'inset -5px -5px 15px 2px rgb(0 0 0 / 0.1)'
       },
-      boxShadow: {
-        neu1: "-5px -5px 15px 2px rgb(0 0 0 / 0.1)",
-        neu2: "-5px -5px 10px 2px rgb(0.9 0.9 0.9 / 0.1)",
-        innerneu1: "inset -5px -5px 10px 2px rgb(0.9 0.9 0.9 / 1)",
-        innerneu2: "inset -5px -5px 15px 2px rgb(0 0 0 / 0.1)",
-      },
-      colors: {
-        state_loading_back: "rgba(0, 0, 0, 0.500)",
-      },
+      colors :{
+        state_loading_back : "rgba(0, 0, 0, 0.500)",
+      }
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
-};
+  darkMode: "class",
+  plugins: [
+    require("tailwind-scrollbar-hide"),
+  ],
+}

@@ -92,7 +92,7 @@ export const mainRealEstate = async (req: Request, res: Response) => {
 
 // 거래량
 export const tradingVolumeRN = async (req: Request, res: Response) => {
-  // // console.log("tradingVolumeRN 들어오니>");
+  // console.log("tradingVolumeRN 들어오니>");
   try {
     const result = await Trades.findAll({
       attributes: [
@@ -106,16 +106,9 @@ export const tradingVolumeRN = async (req: Request, res: Response) => {
       group: ["real_estate_name", "date"],
       raw: true,
       having: sequelize.where(
-        sequelize.fn(
-          "DATE_TRUNC",
-          sequelize.literal(`'day'`),
-          sequelize.col("createdAt")
-        ),
-        "=",
-        currentDate
-      ),
+        sequelize.fn("DATE_TRUNC",sequelize.literal(`'day'`),sequelize.col("createdAt")),"=",currentDate),
     });
-
+    // console.log(result);
     const estateNames = result.map((item) => item.real_estate_name);
 
     const findOneResults = await Promise.all(
@@ -146,7 +139,7 @@ export const tradingVolumeRN = async (req: Request, res: Response) => {
       ...el,
       ...findOneResults[idx],
     }));
-
+    // console.log(mergeobj);
     res.json(mergeobj);
   } catch (error) {
     console.log(error);
@@ -216,7 +209,7 @@ export const suddenDecrement = async (req: Request, res: Response) => {
 
 //이달의 배당
 export const rateOfReturn = async (req: Request, res: Response) => {
-  // // console.log("rateOfReturn 들어오니?");
+  // console.log("rateOfReturn 들어오니?");
   try {
     interface DividendResult {
       real_estate_name: string;
@@ -233,7 +226,7 @@ export const rateOfReturn = async (req: Request, res: Response) => {
       order: [["dividend_price", "DESC"]],
       raw: true,
     })) as [];
-
+    // console.log(result);
     const estateName = result.map((item) => item.real_estate_name);
 
     const findOneResult = await Promise.all(
@@ -242,18 +235,28 @@ export const rateOfReturn = async (req: Request, res: Response) => {
           where: {
             subscription_name: name,
           },
-          attributes: ["subscription_img_1"],
+          attributes: ['id',"subscription_img_1"],
           raw: true,
+
+          include :[
+            {
+              model : Real_estates,
+              attributes : ['current_price'],
+              where : {
+                real_estate_name : name,
+              }            
+            }
+          ]
         });
       })
     );
     // // console.log(result);
-    // // console.log(findOneResult);
+    // console.log(findOneResult);
     const mergeobj = result.map((el, idx) => ({
       ...el,
       ...findOneResult[idx],
     }));
-    // // console.log(mergeobj);
+    // console.log(mergeobj);
     res.json(mergeobj);
   } catch (error) {
     console.log(error);

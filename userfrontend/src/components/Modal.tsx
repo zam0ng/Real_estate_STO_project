@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { serverurl } from "./serverurl";
 import { Cookies } from "react-cookie";
+import LoadingComponent from "./LoadingComponent";
 
 interface ModalProps {
   userwallet: string;
@@ -58,9 +59,7 @@ const Modal: React.FC<ModalProps> = ({
         onClick={(e) => e.stopPropagation()}
       >
         {mutation.isPending ? (
-          <div className="bg-white rounded-lg shadow-lg w-11/12 md:w-3/4 lg:w-1/2">
-            hi
-          </div>
+          <LoadingComponent />
         ) : (
           <>
             <div className="p-4">

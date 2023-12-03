@@ -1,13 +1,22 @@
 export const getSubscriptionsList = async () => {
 
-    const res = await fetch(`http://localhost:8080/real_estates_submit`, {
-    cache: "no-store",
-    })
+    const path = `/vote/real_estates_submit`;
+    const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
+    const url = `${domain}${path}`
 
-    if(!res.ok) {
-        throw new Error('Failed to fetch data')
+    try {
+        const res = await fetch(`${url}`, {
+        cache: "no-store",
+        })
+    
+        if(!res.ok) {
+            throw new Error('Failed to fetch data')
+        }
+    
+        return res.json()
+        
+    } catch (error) {
+        console.log(error)
     }
-
-    return res.json()
 
 };

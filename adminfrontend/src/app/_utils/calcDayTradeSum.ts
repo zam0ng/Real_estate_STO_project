@@ -14,7 +14,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
     const tradeAmountArr = marketTradesDuringDays.map((item : TradeData) => {
         return Object.values(item)[0].ten_amount
     })
-    console.log("tradeAmountArr" , tradeAmountArr)
+    // console.log("tradeAmountArr" , tradeAmountArr)
 
     const sumArrays = (arr1: number[], arr2: number[]): number[] => {
         return arr1.map((num, index) => num + (arr2[index] || 0));
@@ -23,7 +23,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
     const sumBeforeReverse = tradeAmountArr.slice(1).reduce((acc : number[], curr : number[]) => sumArrays(acc, curr), tradeAmountArr[0]);
     const finalSum = sumBeforeReverse.reverse()
 
-    console.log("finalSum🌴" , finalSum)
+    // console.log("finalSum🌴" , finalSum)
 
 
 
@@ -32,7 +32,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
         return Object.values(item)[0].ten_date;
     });
     // const tenDates = marketTradesDuringDays[0]['문래공차']['ten_date']
-    console.log("tenDays | 오늘 부터 10일전 까지의 거래 🤸‍♂️" , tenDates)
+    // console.log("tenDays | 오늘 부터 10일전 까지의 거래 🤸‍♂️" , tenDates)
         /*    tenDays = [
                 '2023-11-24', '2023-11-23',
                 '2023-11-22', '2023-11-21',
@@ -43,7 +43,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
         */
     
     const uniqueDates : string[] = Array.from(new Set(tenDates));     // 중복제거
-    console.log("uniqueDates" , uniqueDates)
+    // console.log("uniqueDates" , uniqueDates)
         /*
             '2023-11-24', '2023-11-23',
             '2023-11-22', '2023-11-21',
@@ -61,7 +61,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
     })
 
     const dayArr = tempDayArr.sort((a, b) => a.localeCompare(b));   // 오름차순 정렬
-    console.log(dayArr , "dayArr")
+    // console.log(dayArr , "dayArr")
 
     const monthNames : { [key : string] : string } = {
         '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr',
@@ -76,7 +76,7 @@ const calcDayTradeSum = (marketTradesDuringDays : TradeData[]) => {
         return dayArr[index]
     } )
 
-    console.log("finaldate🤟🤟" , finaldate)
+    // console.log("finaldate🤟🤟" , finaldate)
     /*
         finaldate🤟🤟 [
         'Nov 24', '23',

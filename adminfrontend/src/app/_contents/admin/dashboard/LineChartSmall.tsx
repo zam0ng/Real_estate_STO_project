@@ -20,6 +20,7 @@
 
     import { LineChartSmallProps } from "@/app/_features/admin/dashboard";
 
+    
 
     const LineChartSmall:React.FC<LineChartSmallProps> = (  {_lineColor, _data, _label}  ) => {
     ChartJS.register(

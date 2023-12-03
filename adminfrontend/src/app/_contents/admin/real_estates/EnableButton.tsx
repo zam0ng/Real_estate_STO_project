@@ -4,12 +4,11 @@ import { EnableButtonParam } from "@/app/_features/admin/real_estates";
 import {Contract, InvalidNonceOrChainIdError, Web3} from "web3";
 import { useEffect, useState } from 'react';
 import useAccount from "../hooks/useAccount";
-import { getSubscriptionsList } from "@/app/api";
 import { getSubscriptionList } from "@/app/api/getSubscription_list";
 
 // 💪
 const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
-  const factory_abi = [
+  const factory_abi =  [
     {
       "anonymous": false,
       "inputs": [
@@ -112,13 +111,12 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
       "type": "function"
     }
   ] as const;
-  const factory_CA = "0x2D69100b20F30ef5A5D866d13E34dcb54dC3c2fa";
+  const factory_CA = "0x79c0563FBb2b04d9688b1AA989506Ec359E03561";
   
   const [web3, setWeb3] = useState<Web3 | null >(null);
   // const [CAList, setCAList] = useState<string[] | any>([]);
   const {account} = useAccount();
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
-
 
   useEffect(() => {
     // 클라이언트 환경에서만 실행
@@ -137,10 +135,6 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
     }
   }, []);
 
-  //  http://127.0.0.1:8545
-  // https://network.bouncecode.net/
-    // 0xd9145CCE52D386f254917e481eB44e9943F39138 가나쉬
-    // 0x4cAdAf68b3FE5F4e12B28616E0D74a5f86056937 세폴리아
     const factoryContract = web3 ? new web3.eth.Contract(factory_abi ,factory_CA,{data: ""}) : null;
     // console.log(factoryContract);
     const handleSTOBtn = async(id : number) => {
@@ -181,7 +175,9 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
           0,
           ).send({
             from : account,
+            // gas : "3000000",
             gas : "3000000",
+            gasPrice : web3?.utils.toWei(20, 'gwei'),
           }).then(async (data :any)=>{
           // // console.log(data.events?.EstateCreated.returnValues[0]); 매물 CA 주소
 
@@ -234,8 +230,7 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
               <path  d="M20.269 6.66309L9.26904 17.6631L4.26904 12.6631" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-
-
+          
         </div>
       </button>
       {/* <button>{id}</button> */}

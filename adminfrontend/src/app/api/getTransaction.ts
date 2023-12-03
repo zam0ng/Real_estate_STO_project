@@ -14,7 +14,7 @@ const getTransaction = async () => {
         const resp = await fetch(`${url}` ,{ 
             cache: "no-store"
         });
-        console.log("resp"  , resp)
+        // console.log("resp"  , resp)
 
         if(resp.status == 200){
             return resp.json();

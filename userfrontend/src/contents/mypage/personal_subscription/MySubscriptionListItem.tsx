@@ -6,6 +6,7 @@ import MySubscriptionListItemHeader from "./MySubscriptionListItemHeader";
 import MySubscriptionListitemInfo from "./MySubscriptionListitemInfo";
 
 const MySubscriptionListItem: React.FC<MySubscriptionListRequest> = ({
+  id,
   subscription_name,
   subscription_img_1,
   application_date,
@@ -20,6 +21,7 @@ const MySubscriptionListItem: React.FC<MySubscriptionListRequest> = ({
   return (
     <>
       <MySubscriptionListItemTitle 
+        id={id}
         subscription_end_date={subscription_end_date} 
         subscription_name={subscription_name} 
         subscription_order_amount={subscription_order_amount} 
