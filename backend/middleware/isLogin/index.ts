@@ -59,6 +59,7 @@ export const isLogin = async (
     const verify = await handleAccesstokenVerify(token);
     if (verify?.status != 200) return res.send("다시 로그인 하세요.");
     const user_email = verify.data.email;
+    console.log("user_email : +_+", user_email);
 
     // ✅ 추가
     // const gravatarUrl = gravatar.url(user_email, {s: '68', d: 'robohash'});
@@ -71,7 +72,7 @@ export const isLogin = async (
       where: { user_email: verify.data.email },
       raw: true,
     });
-
+    console.log("member_check : +_+",member_check)
     if (!member_check) {
       // const wallet = await handleWalletAddress(token);
 
