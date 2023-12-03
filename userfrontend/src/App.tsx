@@ -81,6 +81,7 @@ function App() {
           <Route path="/vote-test" element={<VotingTestPage />} />
           <Route path="/mypage/deposit" element ={<Deposit />} />
           <Route path="/mypage/withdraw" element ={<Withdraw />} />
+          <Route path="/dark-test" element={<DarkModeTest />} />
         </Routes>
         </div>
       </QueryClientProvider>
