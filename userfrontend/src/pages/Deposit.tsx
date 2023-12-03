@@ -47,7 +47,7 @@ const Deposit : React.FC= () => {
     // console.log(data);
 
     // db에 입금처리
-    const depositResult = await  axios.post(`${serverurl}/mypage/deposit_balance`,{
+    const depositResult = await axios.post(`${serverurl}/mypage/deposit_balance`,{
       price : depositValue,
       token : isCookie,
     })

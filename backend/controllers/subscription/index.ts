@@ -12,6 +12,7 @@ interface Subscription_rate {
 
 // 청약 리스트 보여주기
 export const allList = async (req: Request, res: Response) => {
+  console.log("alllist 들어오니?");
   try {
     const result = await db.Subscriptions.findAll({
       attributes: [
@@ -38,7 +39,8 @@ export const allList = async (req: Request, res: Response) => {
         ],
         "subscription_description",
         "subscription_status",
-        "current_price",
+        // 💪💪💪💪💪💪💪💪💪💪 이렇게 하면 참조하는 테이블의 이름이 안붙음 Real_estates.current_price 가 아닌 current_price
+        [db.sequelize.col("current_price"),"current_price"],
       ],
       include: {
         model: db.Real_estates,
@@ -46,7 +48,7 @@ export const allList = async (req: Request, res: Response) => {
       },
       raw: true,
     });
-
+    console.log("result",result);
     if (result) return res.status(200).json(result);
     else return res.status(404).send("empty");
   } catch (error) {

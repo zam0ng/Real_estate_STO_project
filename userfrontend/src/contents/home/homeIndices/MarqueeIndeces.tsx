@@ -119,7 +119,7 @@ export default function MarqueeIndeces (){
                 return(
                     <div className="w-36 h-40 rounded-2xl mx-2 bg-[#EDF0F4]  shadow-innerneu2 flex-shrink-0" key={index}>
                         <div className=" w-full h-8 font-bold text-center pt-1 text-sm">{item.real_estate_name}</div>
-                        <div className={` w-full h-5 text-center font-bold ${item. difference > 0 ? 'text-blue-500' : 'text-red-500'} `}>{item.difference}원<span className="text-sm pl-2">({item.fluctuation_rate})%</span></div>
+                        <div className={` w-full h-5 text-center font-bold ${item. difference > 0 ? 'text-red-500' : 'text-blue-500'} `}>{item.difference}원<span className="text-sm pl-2">({item.fluctuation_rate.toFixed(1)})%</span></div>
                         <div className=" w-full h-5 text-xs mt-2 text-center ">최근 10일간 거래량</div>
                         <div className=" w-3/4 m-auto h-16   ">
                             <LineChartSmall 
@@ -133,25 +133,6 @@ export default function MarqueeIndeces (){
                 )
             })}
 
-            </div>
-            <div className="absolute flex whitespace-nowrap flex-nowrap animate-marquee2 ">
-            {mergedData.map((item,index)=>{
-                return(
-                    <div className="w-36 h-40 rounded-2xl mx-2 flex-shrink-0  bg-[#EDF0F4]  shadow-innerneu2" key={index}>
-                        <div className=" w-full h-8 font-bold text-center pt-1 text-sm">{item.real_estate_name}</div>
-                        <div className={` w-full h-5 text-center font-bold ${item. difference > 0 ? 'text-blue-500' : 'text-red-500'} `}>{item.difference}원<span className="text-sm pl-2">({item.fluctuation_rate})%</span></div>
-                        <div className=" w-full h-5 text-xs text-center mt-2">최근 10일간 거래량</div>
-                        <div className=" w-3/4 m-auto h-16   ">
-                            <LineChartSmall 
-                                _lineColor = {'rgb(142, 153, 250)'}  
-                                _data = {item.ten_amount}  
-                                _label = {["Oct 10","17","Nov 3", "10", "17", "24", "Dec 3", "10", "17", "24", ]}
-                            
-                            />
-                        </div>
-                    </div>
-                )
-            })}
             </div>
             </>
             : 

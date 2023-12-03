@@ -21,7 +21,7 @@ export default function SubEndedList({ props }: SubAllListType) {
 
   if (error) return <>접속이 원활하지 않습니다..</>;
 
-  // console.log(data);
+  console.log(data);
 
   let newData = data;
 

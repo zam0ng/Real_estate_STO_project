@@ -87,15 +87,15 @@ export default function SubStatus({ detail }: SubStatusType) {
                   </div>
                 </div>
             </div>
-            <div className="w-5/6 h-20 rounded-xl m-auto mb-5 px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2 mb-20" >
-                <AiOutlineAlert className="text-red-600 " />
-                <span className="text-xs text-gray-700">모집률 100% 달성 시 조기에 마감이 될 수 있습니다.<br/>모집이 마감되면 청약 및 청약 취소를 할 수 없어요
-                </span>
-            </div>
             </>
           )
           })
-        }
+          }
+            <div className="w-full h-20 rounded-xl m-auto mb-5 px-2 mt-3 border rounded-2xl bg-[#EDF0F4] rounded-xl shadow-innerneu2 mb-20 flex items-center" >
+                <AiOutlineAlert className="text-red-600 " />
+                <div className="text-xs text-gray-700 text-left ml-2">모집률 100% 달성 시 조기에 마감이 될 수 있습니다.<br/>모집이 마감되면 청약 및 청약 취소를 할 수 없어요
+                </div>
+            </div>
         </div>
       </div>
     </>
