@@ -15,7 +15,7 @@ export default function DashboardLayout({
           {/* border-radius: 3rem 3rem 0rem 0rem; */}
             <Image
               // className="relative bg-green-500 -z-10" 
-              className="bg-green-200 -z-10 grayscale-80 " 
+              className="bg-green-300 -z-10 grayscale-80 " 
               alt="매물 사진"
               src={"https://i.imgur.com/zQQIuEw.png"}
               // src={"https://i.imgur.com/RpipolL.png"}

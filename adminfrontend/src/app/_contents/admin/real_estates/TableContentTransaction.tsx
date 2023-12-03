@@ -8,13 +8,13 @@ import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import { getUserList } from "@/app/api/getUserList";
 import TableRowTransaction from "./TableRowTransaction";
-import { getTransactionHistory } from "@/app/api/getTransactionHistory";
+import { getTransactionReceipt } from "@/app/api/getTransactionReceipt";
 
 const TableContentTransaction = async () => {
 
 
   // api 연결 완료 | 데이터가 없어서 빈 게 나옴 | 
-  // const transactionData = await getTransactionHistory()
+  // const transactionData = await getTransactionReceipt()
     // 25초? 가 맞다면, 25초 간격으로 신호 보내기 
 
   /*

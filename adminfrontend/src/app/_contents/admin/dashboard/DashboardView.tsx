@@ -25,7 +25,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
   
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center ">
       
       <div className="flex flex-col w-full h-full ">
         {/* 상단 제목 
@@ -36,7 +36,7 @@ export default async function DashboardView({searchParams} : SearchParamsProps) 
 
         {/* 중간 부분 */}
         {/* <div className="flex flex-row h-45.625rem bg-stone-100 justify-evenly"> */}
-        <div className="flex flex-row bg-admin_content_bg justify-evenly h-[80vh]">
+        <div className="flex flex-row bg-admin_content_bg justify-evenly h-[80vh]      ">
 
           {/* 왼쪽 영역 */}
           {/* <div className="flex flex-col h-full justify-evenly"> */}

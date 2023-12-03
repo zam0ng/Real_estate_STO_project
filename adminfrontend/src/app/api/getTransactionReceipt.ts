@@ -1,8 +1,8 @@
 
 
-export const getTransactionHistory = async () => {
+export const getTransactionReceipt = async () => {
 
-    const path = `/admin/transfer_in_out_list`;
+    const path = `/admin/txReceipt`;
     const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
     const url = `${domain}${path}`
 

@@ -7,12 +7,20 @@ import { EstateDataItem, UserDataItem } from "@/app/_features/admin/real_estates
 import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import { getUserList } from "@/app/api/getUserList";
+import { redirect } from 'next/navigation'
 
 
 const TableContentUser = async () => {
 
   // api 아직 안 열림 | 유저 테이블에서 전부 가져옴 | 가져오려면, 정현이꺼랑 합쳐야 함
   const userList = await getUserList()
+  if(userList) {
+    await redirect('admin/users')
+  }
+  
+  
+
+  
   console.log("userList" )
   console.log(userList)
   
