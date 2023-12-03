@@ -6,6 +6,7 @@ import voteContractInfo from '../abi/Voting.json';
 import axios from 'axios';
 import { serverurl } from '../components/serverurl';
 import { useQuery } from '@tanstack/react-query';
+import useScrollToTop from '../hooks/useScrollToTop';
 
 export interface VoteListRequest {
     real_estate_name: string;
@@ -19,6 +20,7 @@ export interface VoteListRequest {
 export const VoteListContext = createContext<VoteListRequest[]|undefined>(undefined);
 
 const VoteList: React.FC = () => {
+    useScrollToTop();
 
     const fetchVoteList = async (): Promise<VoteListRequest[]> => {
         const response = await axios.get(`${serverurl}/vote/vote_list`);
