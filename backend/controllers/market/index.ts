@@ -291,7 +291,7 @@ export const detailBoardInfo = async (req: Request, res: Response) => {
 export const dayQuote = async (req: Request, res: Response) => {
   try {
     const { name } = req.params;
-    // // console.log(name);
+    // console.log(name);
 
     // 등락가 를 위해 시작가 가져오기
     const startPrice: { start_price: number } | null =
@@ -303,10 +303,35 @@ export const dayQuote = async (req: Request, res: Response) => {
         raw: true,
       })) as { start_price: number } | null;
 
-    // // console.log(startPrice);
+    console.log(startPrice);
 
+    // const nowDate = new Date();
+    // // 오전 9시 장시작
+    // const startDate = new Date(
+    //   Date.UTC(
+    //     nowDate.getUTCFullYear(),
+    //     nowDate.getUTCMonth(),
+    //     nowDate.getUTCDate(),
+    //     0,
+    //     0,
+    //     0
+    //   )
+    // );
+    // // 오후 6시 장마감
+    // const endDate = new Date(
+    //   Date.UTC(
+    //     nowDate.getUTCFullYear(),
+    //     nowDate.getUTCMonth(),
+    //     nowDate.getUTCDate(),
+    //     9,
+    //     0,
+    //     0
+    //   )
+    // );
+    // 현재 한국 시간을 얻기 위해 UTC offset을 적용
     const nowDate = new Date();
-    // 오전 9시 장시작
+
+    // 현재 날짜의 자정 (UTC 기준)
     const startDate = new Date(
       Date.UTC(
         nowDate.getUTCFullYear(),
@@ -317,17 +342,25 @@ export const dayQuote = async (req: Request, res: Response) => {
         0
       )
     );
-    // 오후 6시 장마감
+    
+    // 현재 날짜의 오후 24시 (자정 다음날 00시, UTC 기준)
     const endDate = new Date(
       Date.UTC(
         nowDate.getUTCFullYear(),
         nowDate.getUTCMonth(),
-        nowDate.getUTCDate(),
-        9,
+        nowDate.getUTCDate() + 1, // 다음 날로 이동
+        0,
         0,
         0
       )
     );
+    
+    // endDate를 하루 전으로 설정하여 오후 24시로 조정
+    endDate.setUTCSeconds(endDate.getUTCSeconds() - 1);
+    
+    console.log(startDate.toISOString());
+    console.log(endDate.toISOString());
+
 
     const result = await Trades.findAll({
       where: {

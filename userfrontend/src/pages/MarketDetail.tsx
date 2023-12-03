@@ -6,6 +6,7 @@ import { PropertyInfo } from "../contents/market/on_sale_list/PropertyListBox";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../components/serverurl";
 import BackBtn from "../components/BackBtn";
+import LoadingComponent from "../components/LoadingComponent";
 
 interface MarketDetailRequest {
   current_price: number;
@@ -62,7 +63,9 @@ const MarketDetail: React.FC = () => {
   // console.log(data);
 
   if (isLoading) {
-    return <div>isLoading</div>;
+    return(
+      <LoadingComponent/>
+  );
   }
 
   if (isError) {
@@ -70,6 +73,7 @@ const MarketDetail: React.FC = () => {
   }
 
   return (
+
     <MarketDetailContext.Provider value={data}>
       <div className="w-screen h-screen overflow-x-hidden relative">
         <BackBtn />

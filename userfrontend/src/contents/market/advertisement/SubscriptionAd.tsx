@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../../../components/serverurl";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 interface AdvertisementInfoRequest {
   subscription_img_1: string;

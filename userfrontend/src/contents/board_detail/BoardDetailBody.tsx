@@ -5,10 +5,11 @@ export interface BoardDetailContentProps {
 }
 
 const BoardDetailBody: React.FC<BoardDetailContentProps> = ({notice_content}) => {
+  // console.log(notice_content);
   return (
-    <div className='w-full h-auto mt-5 pl-5 pr-5'>
+    <textarea className='w-full h-3/4 mt-5 pl-5 pr-5 bg-[#EDF0F4] '>
       {notice_content}
-    </div>
+    </textarea>
   )
 }
 

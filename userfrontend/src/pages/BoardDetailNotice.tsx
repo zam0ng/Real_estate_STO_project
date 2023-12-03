@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../components/serverurl";
-
+import LoadingComponent from "../components/LoadingComponent";
 export interface BoardDetailContentRequest {
   category: string;
   notice_title: string;
@@ -32,7 +32,9 @@ const BoardDetailNotice: React.FC = () => {
     });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return(
+      <LoadingComponent/>
+  );
   }
 
   if (isError) {

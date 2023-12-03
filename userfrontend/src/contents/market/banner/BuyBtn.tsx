@@ -24,7 +24,7 @@ const BuyBtn: React.FC<SubscriptionIdProps> = ({id,restdate}) => {
       {restdate && restdate >= 0 && (
         <div className='w-[85%] h-12  bg-blue-950 text-white rounded-lg mb-4  text-sm 
         flex justify-center items-center' onClick={toSubscriptionPage}>
-          바로 구매하기
+          바로 청약하기
         </div>
       )}
     </>

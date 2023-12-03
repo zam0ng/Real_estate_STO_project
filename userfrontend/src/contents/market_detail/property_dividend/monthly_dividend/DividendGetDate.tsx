@@ -8,7 +8,7 @@ const DividendGetDate: React.FC<GetDateProps> = ({getDate}) => {
 
   const getYear = getDate.getFullYear();
   const getMonth = getDate.getMonth() + 1;
-  const getDay = getDate.getDay();
+  const getDay = getDate.getDate();
 
   return (
     <div className='w-full h-[30%] flex flex-row justify-between'>

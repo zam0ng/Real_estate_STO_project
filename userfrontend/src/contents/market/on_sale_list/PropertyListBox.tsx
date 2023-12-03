@@ -75,7 +75,7 @@ const PropertyListBox: React.FC = () => {
             current_price={item.current_price}
             fluctuation_rate={item.fluctuation_rate}
             rating={item.rating}
-            subscription_img_1={item["Subscription.subscription_img_1"]}
+            subscription_img_1={(item["Subscription.subscription_img_1"]).split("\\")[2]}
             subscription_name={item["Subscription.subscription_name"]}
             subscription_description={
               item["Subscription.subscription_description"]
