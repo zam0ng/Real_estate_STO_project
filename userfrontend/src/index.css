@@ -57,6 +57,24 @@
   }
 }
 
+@keyframes slide-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(1.25rem);
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-1.25rem);
+  }
+}
+
 .indicator {
   transition: left 0.7s;
 }
