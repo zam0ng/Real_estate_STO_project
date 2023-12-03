@@ -26,7 +26,7 @@ const DividendAmount: React.FC = () => {
   });
 
   useEffect(()=>{
-    // console.log(tokenData);
+    console.log(tokenData);
     if(tokenData){
       if(tokenData.length !== 0){
         setTokenSymbol(tokenData[0].symbol);
@@ -36,14 +36,26 @@ const DividendAmount: React.FC = () => {
     }
   },[tokenData]);
 
+  useEffect(()=>{
+    console.log(data);
+    console.log(data?.dividend_price);
+  },[data]);
+
   return (
     <div className='w-full h-[45%] flex justify-center items-center border-t border-dashed'>
       <div className='w-[70%] h-[75%] flex flex-col justify-center items-center  bg-[#EDF0F4] rounded-xl shadow-innerneu2'>
-        <div className='w-full flex justify-center items-center'>
-          {data?.dividend_price}원
-        </div>
+        {data && data.dividend_price === undefined && (
+          <div className='w-full flex justify-center items-center'>
+            0 원
+          </div>
+        )}
+        {data && data.dividend_price !== undefined && (
+          <div className='w-full flex justify-center items-center'>
+            {data.dividend_price} 원
+          </div>
+        )}
         <div className='w-full flex justify-center items-center text-xs-sm'>
-          1{tokenSymbol}당 배당금(세전)
+          1 {tokenSymbol}당 배당금(세전)
         </div>
       </div>
     </div>
