@@ -15,19 +15,19 @@ import StatusOutOut from "@/app/_components/_ui/StatusOutOut";
 
     
     switch (status) {
-      case 'in': // 내부 전송 (in) 외부 -> 내부 
+      case 'in': // 내부 전송 (in) : 외부 -> 내부 
         statusComponent = <StatusOutIn />
         break;
         
-      case 'out' : // 외부 전송(out) 내부 -> 외부
+      case 'out' : // 외부 전송(out) : 내부 -> 외부
         statusComponent = <StatusInOut />
         break
         
-      case 'internal' : // 내부 거래 (internal) (내부 → 내부)
+      case 'internal' : // 내부 거래 (internal) (내부 <-> 내부)
         statusComponent = <StatusInIn />
         break
 
-      case 'external' :   // 외부 거래 (external)
+      case 'external' :   // 외부 거래 (external) (외부 <-> 외부)
         statusComponent = <StatusOutOut />
 
       default:
