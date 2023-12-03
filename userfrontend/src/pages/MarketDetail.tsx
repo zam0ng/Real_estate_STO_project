@@ -59,7 +59,10 @@ const MarketDetail: React.FC = () => {
     queryFn: queryMarketDetail,
     enabled: !!propertyName,
   });
-  // console.log(data);
+  
+  useEffect(()=>{
+    console.log(data);
+  },[data]);
 
   if (isLoading) {
     return <div>isLoading</div>;

@@ -5,9 +5,10 @@ interface SetDateProps {
 }
 
 const DividendSetDate: React.FC<SetDateProps> = ({setDate}) => {
+  // console.log(setDate);
   const setYear = setDate.getFullYear();
   const setMonth = setDate.getMonth() + 1;
-  const setDay = setDate.getDay();
+  const setDay = setDate.getDate();
 
   return (
     <div className='w-full h-[30%] flex flex-row justify-between'>
