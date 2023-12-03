@@ -862,7 +862,7 @@ export const realEstateNameList = async (req: Request, res: Response) => {
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request, res: Response) => {
-  // console.log("realEstateSubmit 들어오니?");
+  console.log("realEstateSubmit 들어오니?");
   // // console.log("test",req.body);
   // // console.log(req.files);
 

@@ -7,7 +7,7 @@ import AOS from "aos";
 import useScrollToTop from "../hooks/useScrollToTop";
 
 export default function Home() {
-  useScrollToTop();
+  // useScrollToTop();
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {

@@ -43,6 +43,7 @@ const GetInputData = () => {
 
                 {/* 건물 정보 */}
                 <InputFormItem _title={"공모자산 이름"} _type={"text"} _name = {"name"}  _placeholder={"문래공차"} />
+                <InputFormItem _title={"매물 설명"} _type={"text"} _name = {"description"}  _placeholder={"매출의 15% 이상 월 배당"} />
                 <InputFormItem _title={"공모자산 주소"} _type={"text"} _name = {"address"}  _placeholder={"서울 영등포구 선유로 76"} />
                 <InputFormItem _title={"층수"} _type={"text"} _name = {"floors"}  _placeholder={"4층"} />
                 <InputFormItem _title={"용도 지역"} _type={"text"} _name = {"purpose"}  _placeholder={"준공업지역"} />
@@ -74,11 +75,10 @@ const GetInputData = () => {
                 <InputFormItem _title={"총 발행량"} _type={"number"} _name = {"totalsupply"}  _placeholder={"500,000주"} />
                 <InputFormItem _title={"청약 시작일"} _type={"text"} _name = {"start_date"}  _placeholder={"2023-11-01"} />
                 <InputFormItem _title={"청약 종료일"} _type={"text"} _name = {"end_date"}  _placeholder={"2023-11-11"} />
+                <InputFormItem _title={"청약 발표일"} _type={"text"} _name = {"result_date"}  _placeholder={"2023-11-12"} />
+
                 {/* 청약 입고일 = 청약 했을 때 배당 받는날 👇👇*/}
                 <InputFormItem _title={"청약 입고일"} _type={"text"} _name = {"building_date"}  _placeholder={"2023-11-13"} />
-                <InputFormItem _title={"매물 설명"} _type={"text"} _name = {"description"}  _placeholder={"매출의 15% 이상 월 배당"} />
-
-                <InputFormItem _title={"청약 발표일"} _type={"text"} _name = {"result_date"}  _placeholder={"2023-11-12"} />
                 <InputFormItem _title={"거래 시작날"} _type={"text"} _name = {"trading_start_date"}  _placeholder={"2023-11-13"} />
 
                 {/* status 는 매물 등록 시점에 기본 'pending' 으로 입력  */}

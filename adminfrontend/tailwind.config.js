@@ -106,7 +106,10 @@ module.exports = {
 
       gridTemplateColumns: {
         layout: "22rem auto",
-        table: "repeat(9, minmax(5rem, auto))",
+        // table: "repeat(9, minmax(6rem, auto))",
+        table: "5rem 5rem 5rem 5rem 8rem 8rem 7rem 7rem 5rem",
+
+
         userTable: "repeat(8, minmax(5rem, auto))",
         // transactionTable: "repeat(8, minmax(5rem, auto))",
         transactionTable: "2rem 3rem 21rem 21rem 2rem 5rem 5rem ",

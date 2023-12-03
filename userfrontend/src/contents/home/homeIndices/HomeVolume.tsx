@@ -42,7 +42,6 @@ export default function HomeVolume(){
     }
     
 
-    console.log("volume",(volume[0]['Subscription.subscription_img_1']).split('\\')[2]);
     //const fileName = path.split('/')[2]
     return(
     <div>

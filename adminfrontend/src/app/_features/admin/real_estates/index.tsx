@@ -29,6 +29,7 @@ export interface TableRowNotice {
 // DB 에서 받은 데이터 ROW 하나 당 타입
 export interface EstateDataItem {
   id: number;
+  contest_totalprice : string;
   subscription_img_1: string;
   subscription_name: string;
   subscription_description: string;
@@ -155,7 +156,7 @@ export interface TotalpriceProps {
 
 // 테이블 ROW > CurrentResultPrpos
 export interface CurrentResultProps {
-  current: number;
+  current: string;
   id : number;
 }
 
