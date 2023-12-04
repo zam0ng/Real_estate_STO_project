@@ -8,6 +8,19 @@ import VoteCount from '../VoteCount';
 import { useLocation } from 'react-router-dom';
 import useWeb3 from '../../../hooks/web3.hook';
 import voteContractInfo from '../../../abi/Voting.json';
+import axios from 'axios';
+import { TokenSymbolRequest } from '../../market/on_sale_list/property/PropertyBox';
+import { serverurl } from '../../../components/serverurl';
+import { useQuery } from '@tanstack/react-query';
+
+const fetchTokenSymbol = async (propertyName: string): Promise<TokenSymbolRequest[]> => {
+  const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
+    params: {
+      real_estate_name: propertyName
+    }
+  });
+  return response.data;
+}
 
 const VoteDetailBody: React.FC = () => {
   const {user,web3} = useWeb3();
@@ -29,6 +42,24 @@ const VoteDetailBody: React.FC = () => {
   const [usedVotes,setUsedVotes] = useState<number>(0);
   const [agreeVotes,setAgreeVotes] = useState<number>(0);
   const [disagreeVotes,setDisagreeVotes] = useState<number>(0);
+
+  const [tokenSymbol,setTokenSymbol] = useState<string>("");
+
+  const {data:tokenData,error,isLoading,isError} = useQuery<TokenSymbolRequest[]>({
+    queryKey: ["fetchTokenSymbol",currentPage.state.real_estate_name],
+    queryFn: ()=>fetchTokenSymbol(currentPage.state.real_estate_name)
+  });
+
+  useEffect(()=>{
+    // console.log(tokenData);
+    if(tokenData){
+      if(tokenData.length !== 0){
+        setTokenSymbol(tokenData[0].symbol);
+      }else{
+        setTokenSymbol("TOK");
+      }
+    }
+  },[tokenData]);
 
   useEffect(()=>{
     // console.log(user);
@@ -97,9 +128,9 @@ const VoteDetailBody: React.FC = () => {
         <VoteTitle real_estate_name={realEstateName} vote_title={voteTitle} />
         <VotePeriod startDate={startDate} endDate={endDate} />
         <VotePropertyImg img={currentPage.state.img} />
-        <VoteStatus totalVotes={totalVotes} usedVotes={usedVotes} />
+        <VoteStatus totalVotes={totalVotes} usedVotes={usedVotes} tokenSymbol={tokenSymbol} />
         <VoteBtns tokenOwners={tokenOwners} votedOwners={votedOwners} voteCA={currentPage.state.vote_ca} startDate={startDate} endDate={endDate} />
-        <VoteCount tokenOwners={tokenOwners} votedOwners={votedOwners} agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} startDate={startDate} endDate={endDate} />
+        <VoteCount tokenOwners={tokenOwners} votedOwners={votedOwners} agreeVotes={agreeVotes} disagreeVotes={disagreeVotes} totalVotes={totalVotes} startDate={startDate} endDate={endDate} tokenSymbol={tokenSymbol} />
     </div>
   )
 }

@@ -3,9 +3,10 @@ import React, { useEffect, useState } from 'react';
 interface AgreeVoteCountProps {
     agreeVotes: number;
     totalVotes: number;
+    tokenSymbol: string;
 }
 
-const VoteAgreeNumber: React.FC<AgreeVoteCountProps> = ({agreeVotes,totalVotes}) => {
+const VoteAgreeNumber: React.FC<AgreeVoteCountProps> = ({agreeVotes,totalVotes,tokenSymbol}) => {
     const [agreeRate,setAgreeRate] = useState<number>(0);
 
     useEffect(()=>{
@@ -18,7 +19,7 @@ const VoteAgreeNumber: React.FC<AgreeVoteCountProps> = ({agreeVotes,totalVotes})
                 찬성 투표권 {agreeRate}%
             </div>
             <div className='w-1/2 h-full flex justify-end items-center'>
-                {agreeVotes} TOK
+                {agreeVotes} {tokenSymbol}
             </div>
         </div>
     )
