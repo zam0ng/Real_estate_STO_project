@@ -27,7 +27,7 @@ const GetInputData = () => {
               
               {/* 설명 */}
                 <div className="flex items-center justify-start h-12 -mt-1 text-admin_modal_input font-semiSemibold w-40rem">
-                    <p className="" >건물 정보 : 0000000000000000000  </p>
+                    <p className="" >건물 정보 : 청약 등록시 필요한 건물정보  </p>
                 </div>
 
                 {/* 제목 */}
@@ -62,7 +62,8 @@ const GetInputData = () => {
               
               {/* 설명 */}
                 <div className="flex items-center justify-start h-12 -mt-1 text-admin_modal_input font-semiSemibold w-40rem">
-                    <p className="" >발행정보 : 00000000000000000000000  </p>
+                    <p className="" >발행정보 : 청약 등록시 필요한 발행정보
+                      </p>
                 </div>
               
                 {/* 발행 정보 */}
