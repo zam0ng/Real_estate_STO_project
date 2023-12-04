@@ -5,8 +5,11 @@ import Link from "next/link";
 const ImageName = ({ imageURL, name, id }: ImageNameProps) => {
   const slicedName = name.length > 7 ? name.slice(0, 7) + "..." : name;
 
+  console.log("imageURL+_+_+",imageURL);
   const path = imageURL.replace(/\\/g, "/"); // 정규표현식활용, 백슬래시를 슬래시로 교체
-  const fileName = path;
+  // const fileName = path;
+  const fileName = imageURL.split('\\')[2];
+  // console.log(fileName);
   const finalDomain = `${
     process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL
   }`;
