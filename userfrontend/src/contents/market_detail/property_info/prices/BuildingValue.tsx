@@ -1,8 +1,12 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { MarketDetailContext } from '../../../../pages/MarketDetail';
 
 const BuildingValue: React.FC = () => {
   const data = useContext(MarketDetailContext);
+
+  const [digitMonth,setDigitMonth] = useState<string>("");
+  const [digitDay,setDigitDay] = useState<string>("");
+
   const todayDate = new Date();
 
   const currentYear = todayDate.getFullYear().toString();
@@ -11,7 +15,22 @@ const BuildingValue: React.FC = () => {
   const currentMonth = todayDate.getMonth() + 1;
 
   const currentDay = todayDate.getDate();
-  
+
+  useEffect(()=>{
+    if(currentMonth < 10){
+      setDigitMonth(`0${currentMonth}`);
+    }else{
+      setDigitMonth(`${currentMonth}`);
+    }
+  },[data]);
+
+  useEffect(()=>{
+    if(currentDay < 10){
+      setDigitDay(`0${currentDay}`);
+    }else{
+      setDigitDay(`${currentDay}`);
+    }
+  },[data]);
 
   return (
     <div className='w-[20%] h-[80%]'>
