@@ -45,7 +45,7 @@ const MySubscriptionListItemTitle: React.FC<SubscriptionTitleProps> = ({id,subsc
 
   return (
     <div className="w-full h-8 flex flex-row">
-      <div className="w-1/2 h-full flex justify-start items-center text-lg" onClick={()=>toSubscriptionDetail(id!)}>
+      <div className="w-1/2 h-full flex justify-start items-center text-base" onClick={()=>toSubscriptionDetail(id!)}>
         {subscription_name}
         <svg className="ml-3" xmlns="http://www.w3.org/2000/svg" width="9" height="15" viewBox="0 0 9 15" fill="none">
           <path d="M1.80554 13.244L7.80554 7.24399L1.80554 1.24399" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

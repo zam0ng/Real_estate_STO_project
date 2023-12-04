@@ -107,6 +107,12 @@ const walletCheck = async (
   symbol: string
 ) => {
   try {
+    console.log("user_wallets");
+    console.log(user_wallets);
+    console.log("tx_from");
+    console.log(tx_from);
+    console.log("tx_to");
+    console.log(tx_to);
     const from_check = user_wallets.some(
       (userWallet) => userWallet.wallet === tx_from
     );
@@ -199,7 +205,8 @@ export const logLatestBlockEvents = async () => {
               log.data,
               log.topics.slice(1)
             );
-            // console.log("decodedLog : ", decodedLog);
+            // console.log("decodedLog");
+            // console.log(decodedLog);
 
             // 우리꺼 symbol을 보통 두글자 이기떄문에 그것보다 긴 symbol이 들어 올 경우 걸러냄
             if (decodedLog.symbol.length > 5) continue;

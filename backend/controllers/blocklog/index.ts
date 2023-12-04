@@ -176,6 +176,9 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
       transaction,
     });
 
+    console.log("logData");
+    console.log(logData);
+
     logData.forEach(async (item) => {
       // if (item.transmission === "external" || item.transmission === "internal")
       //   return;
@@ -205,7 +208,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
                 wallet: item.tx_to,
                 real_estate_name: contract_real_estate_name[item.ca],
               },
-              transaction,
+              // transaction,
             }
           );
         } else {
@@ -235,7 +238,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               amount: item.tx_value,
               possible_quantity: item.tx_value,
             },
-            { transaction }
+            // { transaction }
           );
         }
       }
@@ -254,7 +257,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               wallet: item.tx_from,
               real_estate_name: contract_real_estate_name[item.ca],
             },
-            transaction,
+            // transaction,
           }
         );
       }

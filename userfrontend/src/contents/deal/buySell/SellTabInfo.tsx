@@ -560,6 +560,8 @@ const sellPost = async (
   if (getCa_mysellorders.data.possible_quantity == undefined || getCa_mysellorders.data.possible_quantity == 0) {
     // alert("보유 수량 없음");
     setisOpen(true);
+    setisLoading(false);
+
     setIsTitle("매도 주문 오류");
     setContent("보유 수량 없음");
     return;
@@ -568,6 +570,8 @@ const sellPost = async (
   {
     // alert("보유 수량 부족");
     setisOpen(true);
+    setisLoading(false);
+
     setIsTitle("매도 주문 오류");
     setContent("보유 수량 부족");
     return;
@@ -689,6 +693,8 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
       if (data.data == "매도 주문 완료" || data.data.mesaage == "매도 완료") {
         setisOpen(true);
+        setisLoading(false);
+
         setIsTitle("매도 주문 접수");
         setContent("매도주문 정상 접수되었습니다.");
       }
@@ -773,8 +779,11 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
       console.log(error);
       if(error.message.includes("User denied transaction signature")){
         setisOpen(true);
+        setisLoading(false);
+
         setIsTitle("매도 주문 오류");
         setContent("서명 처리 거부");
+
       }
       // alert("매도 주문 오류 : 서명 처리 거부")
     },

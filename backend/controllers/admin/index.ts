@@ -1065,7 +1065,7 @@ export const caRegister = async (req: Request, res: Response) => {
       symbol: symbol,
       ca_type: "token",
     });
-    myEmitter.emit("contractsCheckEvent");
+    myEmitter.emit("contractsChecx`kEvent");
 
     res.sendStatus(201);
   } catch (error) {
