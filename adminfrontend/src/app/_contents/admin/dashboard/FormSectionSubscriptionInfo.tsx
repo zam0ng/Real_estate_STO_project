@@ -39,12 +39,13 @@ const FormSectionSubscriptionInfo : React.FC<FormSectionProps> = ( {title, desc}
                 <InputFormItem _title={"청약 시작일"} _type={"date"} _name = {"start_date"}  _placeholder={"2023-11-01"} />
                 
                 <InputFormItem _title={"청약 종료일"} _type={"date"} _name = {"end_date"}  _placeholder={"2023-11-11"} />
+                <InputFormItem _title={"청약 발표일"} _type={"date"} _name = {"result_date"}  _placeholder={"2023-11-12"} />
+
                 {/* 청약 입고일 = 청약 했을 때 배당 받는날 👇👇*/}
                 <InputFormItem _title={"청약 입고일"} _type={"date"} _name = {"building_date"}  _placeholder={"2023-11-13"} />
-                <InputFormItem _title={"매물 설명"} _type={"text"} _name = {"description"}  _placeholder={"매출의 15% 이상 월 배당"} />
-
-                <InputFormItem _title={"청약 발표일"} _type={"date"} _name = {"result_date"}  _placeholder={"2023-11-12"} />
                 <InputFormItem _title={"거래 시작일"} _type={"date"} _name = {"trading_start_date"}  _placeholder={"2023-11-13"} />
+
+                <InputFormItem _title={"매물 설명"} _type={"text"} _name = {"description"}  _placeholder={"매출의 15% 이상 월 배당"} />
 
                 {/* status 는 매물 등록 시점에 기본 'pending' 으로 입력  */}
                 <InputFormItem _title={"청약 상태"} _type={"text"} _name = {"status"}  _placeholder={"pending"} />

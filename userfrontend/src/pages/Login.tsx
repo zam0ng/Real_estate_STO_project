@@ -12,21 +12,23 @@ export default function Login() {
   
   const Navigate = useNavigate();
   
+  useEffect(()=>{
+    setTimeout(()=>{
+
+      Navigate('/home')
+    },3000)
+  },[])
 
 
-  function handleSurfing(){
-    Navigate('/home')
-  }
 
-  function handleLogin(){
-    Navigate('/bounslogin', {state : "/home"})
-
-  }
 
   return (
-    <div className="animate-slide-up border-8 border-black w-full h-screen">
-      <button className="border border-black" onClick={handleLogin}>로그인하러가기</button>
-      <button className="border border-black" onClick={handleSurfing}>둘러보기</button>
+    <div className="animate-slide-up  w-full h-screen flex justify-center items-center flex-col ">
+      <img src="/images/threeD/walking.png" className="h-3/4 animate-fadeIn"></img>
+      <div className="text-center text-gray-800 text-bold  w-52 h-16 animate-fadeIn">
+        한걸음씩 , 건물주
+      </div>
+      <div className=" text-3xl animate-fadeIn mt-2 font-extrabold  ">BounSTO</div>
     </div>
   );
 }

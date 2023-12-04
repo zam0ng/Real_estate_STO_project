@@ -1,10 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { SubscriptionContext } from './layout/MySubscription';
+import React, { useEffect, useState } from 'react';
 
-const MySubscriptionListitemInfo: React.FC = () => {
-    const mySubscriptions = useContext(SubscriptionContext);
+interface SubscriptionItemInfoProps {
+    application_date: string;
+    subscription_end_date: string;
+    subscription_my_amount: number;
+    subscription_offering_price: string;
+}
 
-    const [textColor,setTextColor] = useState<string>("");
+const MySubscriptionListitemInfo: React.FC<SubscriptionItemInfoProps> = ({application_date,subscription_offering_price,subscription_end_date,subscription_my_amount}) => {
 
     const [applyDate,setApplyDate] = useState<string>("");
     const [endDate,setEndDate] = useState<string>("");
@@ -14,23 +17,19 @@ const MySubscriptionListitemInfo: React.FC = () => {
     const [refundPrice,setRefundPrice] = useState<number>(0);
 
     useEffect(()=>{
-        if(mySubscriptions !== undefined){
-            const applyDateParts = mySubscriptions[0]?.application_date.split("-");
-            if(applyDateParts !== undefined){
-                setApplyDate(`${applyDateParts[1]}.${applyDateParts[2]}`);
-            }
-            const endDateParts = mySubscriptions[0]?.subscription_end_date.split("-");
-            if(endDateParts !== undefined){
-                setEndDate(`${endDateParts[1]}.${endDateParts[2]}`);
-            }
-
-            setApplyAmount(mySubscriptions[0]?.subscription_my_amount);
-            setGetAmount(mySubscriptions[0]?.subscription_my_amount);
-
-            setOfferPrice(mySubscriptions[0]?.subscription_offering_price);
-            setRefundPrice(offerPrice*applyAmount - offerPrice*getAmount);
+        const applyDateParts = application_date.split("-");
+        if(applyDateParts !== undefined){
+            setApplyDate(`${applyDateParts[1]}.${applyDateParts[2]}`);
         }
-    },[mySubscriptions]);
+        const endDateParts = subscription_end_date.split("-");
+        if(endDateParts !== undefined){
+            setEndDate(`${endDateParts[1]}.${endDateParts[2]}`);
+        }
+        setApplyAmount(subscription_my_amount);
+        setGetAmount(subscription_my_amount);
+        setOfferPrice(Number(subscription_offering_price));
+        setRefundPrice(offerPrice*applyAmount - offerPrice*getAmount);
+    },[]);
     
     return (
         <>

@@ -39,6 +39,7 @@ export default function useCookie(urlProps: string) {
         //     if (status == 200) setLoginCheck(true);
         //   })
         //   .catch(console.error);
+        return;
       } catch (error) {
         console.error(error);
       }
@@ -69,7 +70,7 @@ export default function useCookie(urlProps: string) {
           "//" +
           window.location.host +
           "/" +
-          urlProps;
+          'loading';
 
         const loginUrl = `https://bouns.io/_login/?client_id=${projectId}&redirect_uri=${redirectUri}`;
         setBounsURI(loginUrl);
@@ -87,14 +88,14 @@ export default function useCookie(urlProps: string) {
     return null;
   } else {
     return (
-      <div className="h-screen overflow-y-hidden">
-        <div className=" overflow-hidden mb-5">
-          <div className=" animate-bounce mt-2">
+      <div className="h-screen overflow-y-hidden bg-white pt-10">
+        {/* <div className=" overflow-hidden mb-5 bg-white">
+          <div className=" animate-bounce mt-2 bg-white">
             <div className=" bg-gray-700 text-white text-center "> 서비스 이용을 위해서 Bouns Wallet이 필요합니다</div>
           </div>
-        </div> 
+        </div>  */}
         <iframe
-          className="h-screen w-full"
+          className="h-screen w-full "
           src={bounsURI}
           scrolling = "no"
           title="Bouns Login"

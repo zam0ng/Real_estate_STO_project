@@ -10,7 +10,6 @@ interface real_estates_ownAttribute {
   price: number;
   amount: number;
   possible_quantity: number;
-  token_name?: string;
 }
 
 class Real_estates_own extends Model<real_estates_ownAttribute> {
@@ -22,7 +21,6 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
   declare price: number;
   declare amount: number;
   declare possible_quantity: number;
-  declare token_name?: string;
   static initModel(sequelize: Sequelize): typeof Real_estates_own {
     Real_estates_own.init(
       {
@@ -52,10 +50,6 @@ class Real_estates_own extends Model<real_estates_ownAttribute> {
         },
         possible_quantity: {
           type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        token_name: {
-          type: DataTypes.STRING,
           allowNull: false,
         },
       },

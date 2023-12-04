@@ -24,11 +24,11 @@ const TransactionItem:React.FC<TransactionItemProps> = ( {imageURL , estateName 
     const fileName = path.split('/')[2];
     const finalDomain = `${process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL}`
     
-    const finalImageURL = `${finalDomain}/estate_img/${fileName}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
+    const finalImageURL = `${finalDomain}/estate_img/${imageURL}`;    // 이 경로로 요청하면 -> 백엔드에서 미들웨어 처리로, mapping 되어서, 사진이 저장된 곳으로 연결된다. 
 
     const yearMonthDay = createdAt.split('T')[0]
     const hour = createdAt.split('T')[1].split('Z')
-
+    console.log("💪💪💪",finalImageURL );
 return (
 <>
     <div className="flex items-center justify-between h-14 w-30rem ">

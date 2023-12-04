@@ -9,21 +9,20 @@ export default function DashboardLayout({
   return (
     <section>
       <div className="relative z-10 grid h-screen overflow-hidden bg-admin_content_bg grid-cols-layout">
-        
         {/* 상단 header */}
         <div className="relative z-20 w-auto h-20 col-span-2 overflow-hidden bg-blue-100 rounded-adminLayout_header">
           {/* border-radius: 3rem 3rem 0rem 0rem; */}
-            <Image
-              // className="relative bg-green-500 -z-10" 
-              className="bg-green-300 -z-10 grayscale-80 " 
-              alt="매물 사진"
-              src={"https://i.imgur.com/zQQIuEw.png"}
-              // src={"https://i.imgur.com/RpipolL.png"}
-              // src={"https://i.imgur.com/AWiI1kD.png"}
-              sizes="100vw"
-              style={{objectFit: "cover"}}	
-              fill={true}
-            />
+          <Image
+            // className="relative bg-green-500 -z-10"
+            className="bg-green-300 -z-10 grayscale-80 "
+            alt="매물 사진"
+            src={"https://i.imgur.com/zQQIuEw.png"}
+            // src={"https://i.imgur.com/RpipolL.png"}
+            // src={"https://i.imgur.com/AWiI1kD.png"}
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
+            fill={true}
+          />
         </div>
 
         {/* 메뉴바 가이드 라인 */}
@@ -35,8 +34,6 @@ export default function DashboardLayout({
 
         {/* 테이블  */}
         <div className="bg-admin_content_bg"> {children} </div>
-        
-        
       </div>
     </section>
   );

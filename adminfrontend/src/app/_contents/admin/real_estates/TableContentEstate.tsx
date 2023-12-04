@@ -1,18 +1,19 @@
 import TableRow from "./TableRowEstate";
 import TableColumnName from "./TableColumnName";
-
 import { getEstateList } from "@/app/api/getEstateList";
 
 import { EstateDataItem } from "@/app/_features/admin/real_estates";
 import Link from "next/link";
 import TableRowUser from "./TableRowUser";
 import TableRowEstate from "./TableRowEstate";
-
+// import mygif from "../../../../../public";
+// import {useState} from "react";
 const TableContentEstate = async () => {
-  const estateList = await getEstateList();
-  
-  console.log("estateList" , estateList)
 
+  // const [loading,setLoading] = useState(true);
+  
+  const estateList = await getEstateList();
+  console.log("💪💪💪💪💪",estateList);
   return (
     <>
       {/* <div className="grid gap-2 pb-12 pl-12 pr-12 text-base tracking-tight text-center bg-white border-b-2 w-4/4 rounded-b-3xl justify-items-center grid-cols-table mx-44 h-36.5rem  overflow-y-auto		"> */}
@@ -26,7 +27,7 @@ const TableContentEstate = async () => {
         <TableColumnName columnName={"매물"} />
         <TableColumnName columnName={"설명"} />
         <TableColumnName columnName={"진행 상태"} />
-        <TableColumnName columnName={"청약률"} />
+        <TableColumnName columnName={""} />
         <TableColumnName columnName={"목표 공모"} />
         <TableColumnName columnName={"달성 공모"} />
         <TableColumnName columnName={"청약 기간"} />
@@ -34,7 +35,7 @@ const TableContentEstate = async () => {
         <TableColumnName columnName={"STO 발행"} />
 
         {estateList?.map((item: EstateDataItem) => {
-          return <TableRowEstate key={item.id} item={item} />;
+          return <TableRowEstate key={item.id} item={item}  />;
         })}
 
 

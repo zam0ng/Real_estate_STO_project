@@ -60,9 +60,9 @@ function getDayInfo(info: string) {
 }
 
 function setRealEstateAmount(result: TradeDate[], info: string) {
+  const today = new Date();
   let ten_date: string[] = [];
   let all_result: RealEstateAmount[] = [];
-  let today = new Date();
 
   if (info === "day") {
     for (let i = 0; i < 10; i++) {
@@ -547,6 +547,9 @@ export const realEstateManagement = async (req: Request, res: Response) => {
           "subscription_result_date",
         ],
       ],
+      order :[
+        ['id','ASC']
+      ],
       raw: true,
     });
 
@@ -862,7 +865,7 @@ export const realEstateNameList = async (req: Request, res: Response) => {
 // 재영 어드민 부분
 const imgPathArr = new Array(5).fill("");
 export const realEstateSubmit = async (req: Request, res: Response) => {
-  // console.log("realEstateSubmit 들어오니?");
+  console.log("realEstateSubmit 들어오니?");
   // // console.log("test",req.body);
   // // console.log(req.files);
 
@@ -987,8 +990,24 @@ export const noticeSubmit = async (req: Request, res: Response) => {
   }
 };
 
+
+// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
+export const noticesList = async (req : Request , res : Response) => {
+  try {
+    const noticeList = await Notices.findAll({
+      order :[
+        ['id','ASC']
+      ]
+    })
+    res.status(200).json(noticeList);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500)
+  }
+}
+
 export const dividendSubmit = async (req: Request, res: Response) => {
-  // console.log(req.body);
+  // console.log("dividendSubmit+_+_+_+_",req.body);
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
   const month = paymentdate.slice(5, 7);
   try {
@@ -997,6 +1016,7 @@ export const dividendSubmit = async (req: Request, res: Response) => {
       dividend_price: dividend_price,
       dividend_basedate: basedate,
       dividend_paymentdate: paymentdate,
+      dividend_status : "예정",
     });
 
     await Notices.create({
@@ -1036,6 +1056,7 @@ export const subscriptionDetail = async (req: Request, res: Response) => {
 
 export const caRegister = async (req: Request, res: Response) => {
   // console.log(req.body);
+  console.log("caRegister 들어ㅗㅇㅁ>");
   const { address, real_estate_name, symbol } = req.body;
   try {
     await Contract_address.create({
@@ -1044,9 +1065,8 @@ export const caRegister = async (req: Request, res: Response) => {
       symbol: symbol,
       ca_type: "token",
     });
-
-    myEmitter.emit("contractAddressCheck");
     myEmitter.emit("contractsCheckEvent");
+
     res.sendStatus(201);
   } catch (error) {
     res.sendStatus(400);
@@ -1057,12 +1077,13 @@ export const caRegister = async (req: Request, res: Response) => {
 // 청약자 리스트
 export const subscriptionList = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log("id+_+_+_+_+",id);
   try {
     const result = await Subscriptions_own.findAll({
       where: {
         subscription_id: id,
       },
-      attributes: ["user_email", "amount"],
+      attributes: ["wallet", "amount"],
       order: [["id", "ASC"]],
 
       include: [
@@ -1078,6 +1099,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
       ],
       raw: true,
     });
+    console.log("result+_+_",result);
 
     const estateInfo = result.slice(0, 1).map((el: any) => ({
       "Subscription.subscription_name": el["Subscription.subscription_name"],
@@ -1089,27 +1111,27 @@ export const subscriptionList = async (req: Request, res: Response) => {
         el["Subscription.subscription_building_date"],
     }));
 
-    const wallet_list = result.map((el: any) => el.user_email);
+    const wallet_list = result.map((el: any) => el.wallet);
     const amount_list = result.map((el: any) => el.amount);
 
-    // console.log(wallet_list);
-    const emails = await Users.findAll({
-      where: {
-        wallet: wallet_list,
-      },
-      attributes: ["user_email"],
-      raw: true,
-    });
-    // .then(users => {
-    //   const emails = users.map(user => user.user_email);
-    //   // console.log("이메일 배열:", emails);
-    // })
-    // .catch(error => {
-    //   console.error("에러 발생:", error);
-    // });
-    // // console.log(emails); // [{ user_email: 'ijy1995@naver.com' },{ user_email: 'andybyungjoopark@gmail.com' }]
-    const email_list = emails.map((el) => el.user_email);
-    // // console.log(email_list);
+    console.log(wallet_list);
+    console.log(amount_list);
+
+    const email_list: any = [];
+
+    for (const element of wallet_list) {
+      const emails = await Users.findOne({
+        where: {
+          wallet: element,
+        },
+        attributes: ["user_email"],
+        raw: true,
+      });
+      email_list.push(emails?.user_email);
+    }
+
+    console.log("---------", email_list);
+    // const email_list = emails.map(el=>el.user_email);
 
     const data = await Subscriptions.findOne({
       where: {
@@ -1123,10 +1145,10 @@ export const subscriptionList = async (req: Request, res: Response) => {
       ],
       raw: true,
     });
-    // // console.log(data?.id);
-    // // console.log(data?.subscription_name);
-    // // console.log(data?.subscription_symbol);
-    // // console.log(data?.subscription_offering_price);
+    // console.log(data?.id);
+    // console.log(data?.subscription_name);
+    // console.log(data?.subscription_symbol);
+    // console.log(data?.subscription_offering_price);
 
     // real_estates 생성
     await Real_estates.create({
@@ -1149,9 +1171,10 @@ export const subscriptionList = async (req: Request, res: Response) => {
     // // console.log(estateId);
 
     // real_estates_own 에 넣어주기.
-    email_list.forEach(async (element, index) => {
+    email_list.forEach(async (element: any, index: number) => {
       await Real_estates_own.create({
         user_email: element,
+        wallet: wallet_list[index],
         real_estate_id: estateId!.id as number,
         real_estate_name: data!.subscription_name,
         price: data!.subscription_offering_price,
@@ -1159,9 +1182,12 @@ export const subscriptionList = async (req: Request, res: Response) => {
         possible_quantity: amount_list[index],
       });
     });
+    console.log("_+_+_+_+_+_")
+    console.log(estateInfo);
+    console.log(wallet_list);
+    console.log(amount_list);
+    console.log("_+_+_+_+_+_")
 
-    // // console.log(wallet_list);
-    // // console.log(amount_list);
     res.json({ estateInfo, wallet_list, amount_list });
   } catch (error) {
     res.sendStatus(400);
@@ -1169,16 +1195,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
   }
 };
 
-// 게시글(공지/공시) 받아오기 by ✅DJ.테스트
-export const noticesList = async (req: Request, res: Response) => {
-  try {
-    const noticeList = await Notices.findAll();
-    res.status(200).json(noticeList);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-};
+
 
 // users 테이블에서 모든 속성 받아오기 by DJ 임시 (1202)
 export const allUsers = async (req: Request, res: Response) => {
@@ -1195,4 +1212,19 @@ export const allUsers = async (req: Request, res: Response) => {
 };
 
 
-
+export const statusUpdate = async(req : Request, res : Response)=>{
+  console.log(req.params);
+  const {name} = req.params;
+  try {
+    await Subscriptions.update({
+      subscription_status : 'success'
+    },{
+      where :{
+        subscription_name : name,
+      }
+    })
+    res.send();
+  } catch (error) {
+    console.log("statusUpdate에서 오류남",error);
+  }
+}

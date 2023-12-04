@@ -35,7 +35,7 @@ const ToDocuments: React.FC<DocumentTypeProps> = ({type}) => {
     };
 
     return (
-        <div className='w-[90%] h-14 border border-black flex flex-row items-center text-sm' onClick={toAdditionalDetails}>
+        <div className='w-5/6 h-14  flex flex-row items-center text-sm' onClick={toAdditionalDetails}>
             <div className='w-[50%] h-full flex justify-start items-center pl-3'>
                 {type}
             </div>

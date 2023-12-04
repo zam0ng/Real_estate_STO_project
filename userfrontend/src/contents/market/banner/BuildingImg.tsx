@@ -1,4 +1,5 @@
 import React from "react";
+import { serverurl } from "../../../components/serverurl";
 
 interface ImageProps {
   img: string;
@@ -23,7 +24,7 @@ const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
       priceKr = `총 ${uk}억 ${man}만원 모집`;
     }
   }
-
+  console.log(img);
   return (
     <div className="w-[85%] h-80 rounded-lg mt-4 relative">
       <div
@@ -34,8 +35,7 @@ const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
       </div>
       <img
         className="w-full h-full rounded-lg"
-        src={process.env.PUBLIC_URL + img}
-        alt="building image"
+        src={`${serverurl}/estate_img/${img}`}
       />
     </div>
   );

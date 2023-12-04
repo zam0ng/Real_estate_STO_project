@@ -14,7 +14,6 @@ const getTokenCA = async (selectedValue : string) => {
     // axios.get(`${serverurl}/vote/token_contract_address
     
     const path = `/vote/token_contract_address`;
-    // const path = `/vote/vote_contract_address`;
     const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
     const url = `${domain}${path}`
     // console.log("getOwnerList🔥🔥" , url)

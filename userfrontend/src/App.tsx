@@ -18,10 +18,16 @@ import BoardDetailNotice from "./pages/BoardDetailNotice";
 import Login from "./pages/Login";
 import BounsLogin from "./pages/BounsLogin";
 import SubscriptionDetail from "./pages/SubscriptionDetail";
-import VoteDetail from "./pages/VoteDetail";
-import VoteList from "./pages/VoteList";
 import Web3 from "web3";
 import abi from "./abi/ERC20subscription.json";
+import VotingTestPage from "./pages/VotingTestPage";
+import VoteDetail from "./pages/VoteDetail";
+import VoteList from "./pages/VoteList";
+import Deposit from "./pages/Deposit";
+import Withdraw from "./pages/Withdraw";
+import ScrollTest from "./pages/ScrollTest";
+import DarkModeTest from "./pages/DarkModeTest";
+import IframePage from "./pages/IframePage";
 
 function App() {
   let queryClient = new QueryClient();
@@ -29,6 +35,7 @@ function App() {
   return (
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
+        <div className="">
         <Routes>
           {/* <Route path="/" element={<Navigate replace to ="/home" />} /> */}
           <Route path="/home" element={<Home />} />
@@ -71,7 +78,16 @@ function App() {
           />
           <Route path="/vote-detail/:name/:title" element={<VoteDetail />} />
           <Route path="/vote-list" element={<VoteList />} />
+
+          <Route path="/vote-test" element={<VotingTestPage />} />
+          <Route path="/mypage/deposit" element ={<Deposit />} />
+          <Route path="/mypage/withdraw" element ={<Withdraw />} />
+          <Route path="/dark-test" element={<DarkModeTest />} />
+          {/* <Route path="/scroll-test" element={<ScrollTest />} />
+          <Route path="/darkmode-test" element={<DarkModeTest />} /> */}
+          <Route path='/loading' element={<IframePage /> }/>
         </Routes>
+        </div>
       </QueryClientProvider>
     </BrowserRouter>
   );

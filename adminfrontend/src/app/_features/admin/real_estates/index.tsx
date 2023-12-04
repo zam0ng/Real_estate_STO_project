@@ -1,3 +1,5 @@
+import {Dispatch,SetStateAction} from 'react';
+
 // DB 에서 받은 데이터 ROW 당 타입
 export interface TableRow {
   item: EstateDataItem;
@@ -16,6 +18,7 @@ export interface TransactionTableRow {
 // DB 에서 받은 데이터 ROW 당 타입
 export interface TableRowEstate {
   item: EstateDataItem;
+  // setLoading : Dispatch<SetStateAction<boolean>>;
 }
 
 // DB 에서 받은 데이터 ROW 당 타입
@@ -26,6 +29,7 @@ export interface TableRowNotice {
 // DB 에서 받은 데이터 ROW 하나 당 타입
 export interface EstateDataItem {
   id: number;
+  contest_totalprice : string;
   subscription_img_1: string;
   subscription_name: string;
   subscription_description: string;
@@ -152,7 +156,7 @@ export interface TotalpriceProps {
 
 // 테이블 ROW > CurrentResultPrpos
 export interface CurrentResultProps {
-  current: number;
+  current: string;
   id : number;
 }
 
@@ -165,7 +169,7 @@ export interface DurationProps {
 
 // 테이블 ROW > ResultDateProps
 export interface ResultDateProps { 
-  resultDate : string
+  resultDate : string;
   id : number;
 }
 
@@ -177,6 +181,8 @@ export interface ActionButton {
 export interface EnableButtonParam {
     text : string
     id : number;
+    setLoading : Dispatch<SetStateAction<boolean>>;
+
   }
   
   export interface EnrollBlacklistButtonParams {

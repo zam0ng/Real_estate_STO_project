@@ -8,7 +8,7 @@ interface PriceChangeProps {
 const PropertyPriceChange: React.FC<PriceChangeProps> = ({priceChange,priceChangeRate}) => {
   let textColor;
   let plusMinus;
-  let twoDecimalChangeRate = (Math.round(priceChangeRate * 100) / 100).toFixed(2);
+  let twoDecimalChangeRate = (Math.round(priceChangeRate * 100) / 100).toFixed(1) + '%';
   if(priceChange > 0){
     plusMinus = "+";
     textColor = "text-red-500";

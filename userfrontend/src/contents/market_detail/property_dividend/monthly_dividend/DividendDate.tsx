@@ -8,7 +8,7 @@ const DividendDate = () => {
   const [payDate, setPayDate] = useState<Date>(new Date());
 
   const data = useContext(MarketDetailContext);
-  // console.log(data);
+  console.log("data_+_+_+_+_",data);
 
   useEffect(() => {
     if (data?.dividend_basedate !== undefined) {
@@ -21,7 +21,7 @@ const DividendDate = () => {
   }, [data]);
 
   const basedateYear = baseDate.getFullYear();
-  const basedateMonth = baseDate.getMonth();
+  const basedateMonth = baseDate.getMonth()+1;
 
   return (
     <div className="w-full h-[55%]">

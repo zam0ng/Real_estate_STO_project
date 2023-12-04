@@ -68,7 +68,8 @@ module.exports = {
         "30rem": "30rem",
         "150rem": "150rem",
         "40rem": "40rem",
-
+        "76rem": "76rem",
+        
         "5.6rem": "5.6rem",
         "37.9rem": "37.9rem",
         backdrop_calc: "calc(100% - 4rem)",
@@ -105,7 +106,10 @@ module.exports = {
 
       gridTemplateColumns: {
         layout: "22rem auto",
-        table: "repeat(9, minmax(5rem, auto))",
+        table: "repeat(9, minmax(6rem, auto))",
+        // table: "5rem 5rem 5rem 5rem 8rem 8rem 7rem 7rem 5rem",
+
+
         userTable: "repeat(8, minmax(5rem, auto))",
         // transactionTable: "repeat(8, minmax(5rem, auto))",
         transactionTable: "2rem 3rem 21rem 21rem 2rem 5rem 5rem ",
@@ -201,6 +205,12 @@ module.exports = {
         // 상태 버튼
         state_pending_back: "#FFF0E2", // 주황 or
         state_pending_text: "#E7AB74",
+        state_black_opacity_4 : "rgba(0, 0, 0, 0.400)",
+        
+        blacklist_status_bgColor : "#4a4747",
+        blacklist_status_textColor : "#febebe",
+        
+        
 
         state_green_back: "#E6F6F6",
         state_green_text: "#4FA0A1",

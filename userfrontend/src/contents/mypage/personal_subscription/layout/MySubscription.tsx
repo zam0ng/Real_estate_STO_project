@@ -4,15 +4,17 @@ import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { UserEmailProps } from "../../personal_info/layout/MyInfo";
 import { useQuery } from "@tanstack/react-query";
+import AOS from 'aos'
 
-interface MySubscriptionListRequest {
+export interface MySubscriptionListRequest {
+  id?: number;
   subscription_name: string;
-  subscription_img: string;
+  subscription_img_1: string;
   application_date: string;
   subscription_end_date: string;
   subscription_my_amount: number;
-  subscription_offering_price: number;
-  refund_price: number;
+  subscription_offering_price: string;
+  refund_price: string;
   subscription_order_amount: number;
   subscription_totalsupply: number;
 }
@@ -43,16 +45,16 @@ const MySubscription: React.FC<UserEmailProps> = ({ email }) => {
   });
 
   useEffect(() => {
-    // console.log("subscription : ",data);
-  }, [data]);
+    AOS.init({duration : 1200})
+  }, []);
 
   return (
     <SubscriptionContext.Provider value={data}>
-      <div className="w-[90%] h-96 mt-5 border border-slate-200 rounded-lg shadow-lg pr-5 pl-5">
-        <div className="w-full h-[20%] flex justify-start items-center text-xl">
+      <div className="w-[90%] h-96 mt-5 mb-16 pt-5 pr-5 pl-5 bg-[#EDF0F4] rounded-xl shadow-innerneu2" data-aos='fade-up'>
+        <div className="w-full h-[10%] flex justify-start items-start text-xl">
           내 청약 목록
         </div>
-        <div className="w-full h-[75%] overflow-y-scroll">
+        <div className="w-full h-[80%] overflow-y-scroll">
           <MySubscriptionList />
         </div>
       </div>

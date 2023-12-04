@@ -1,3 +1,5 @@
+"use client"
+
 import ImageName from "./ImageName";
 import CurrentResult from "./CurrentResult";
 import Status from "./StatusSuccess";
@@ -12,22 +14,23 @@ import { TableRowEstate } from "@/app/_features/admin/real_estates";
 import Link from "next/link";
 import EnableButton from "./EnableButton";
 import DisableButton from "./DisableButton";
+import Loading from "./Loading";
+import {useState} from 'react';
 import StatusSuccess from "./StatusSuccess";
 import StatusPending from "./StatusPending";
 
-const TableRowEstate = async ({ item }: TableRowEstate) => {
+const TableRowEstate =({ item }: TableRowEstate) => {
 
+    // const subscriptionProgress = item.achievement_rate // ⭐⭐ api 에 따르면 진행률은 achievement_rate 
+    // const subscriptionProgress = 0.8 // api 에 따르면 진행률은 achievement_rate 
+     
+    // console.log( "진행률👏" , subscriptionProgress)
+    const [loading,setLoading] = useState(false);
     const subscriptionProgress = item.achievement_rate; // ⭐⭐ api 에 따르면 진행률은 achievement_rate | 현재 아직 안 들어옴 
     // const subscriptionProgress_ver2 = (item.subscription_order_amount / item.subscription_totalsupply)
-
-    console.log("진행률👏", subscriptionProgress);
-
     const status = item.subscription_status;
-
-    console.log("subscription_order_amount" , item.subscription_order_amount * 5000)
-
     const localScale = Number(item.subscription_totalprice).toLocaleString()
-    console.log("localScale" , localScale)
+    // console.log(item);
 
 
   return (
@@ -36,7 +39,7 @@ const TableRowEstate = async ({ item }: TableRowEstate) => {
       <div className="w-full col-span-9 border-t-2 border-collapse border-neutral-100 ">
         {" "}
       </div>
-
+    {loading && <Loading/>}
       <ImageName
         id={item.id}
         imageURL={item.subscription_img_1}
@@ -44,9 +47,7 @@ const TableRowEstate = async ({ item }: TableRowEstate) => {
       />
       <Description id={item.id} desc={item.subscription_description} />
 
-        {status == 'pending'
-        ? <StatusPending />
-        : <StatusSuccess />
+        {<StatusPending status = {status} />
         }
       {/* <Status id={item.id} status={item.subscription_status} /> */}
 
@@ -54,21 +55,23 @@ const TableRowEstate = async ({ item }: TableRowEstate) => {
 
       <Totalprice id={item.id} totalPrice={localScale} />
 
-      <CurrentResult id={item.id} current={item.subscription_order_amount * 5000} />
+      <CurrentResult id={item.id} current={item.contest_totalprice} />
 
       <Duration
         id={item.id}
         startDate={item.subscription_start_date}
         endDate={item.subscription_end_date}
-      />
-
-      <ResultDate id={item.id} resultDate={item.subscription_result_date} />
-
-      {subscriptionProgress >= 0.8 ? (
-        <EnableButton text="Enable" id={item.id} /> // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐
-      ) : (
-        <DisableButton text="Disable" />
-      )}
+    />
+    
+    <ResultDate 
+        id={item.id}
+        resultDate={item.subscription_result_date} />
+        
+    {subscriptionProgress >= 0.8
+    // setLoading = {setLoading}
+        ? <EnableButton  text="Enable"  id={item.id} setLoading = {setLoading}  />   // ⭐⭐ STO 토큰 발행 버튼 설치하는 곳 ⭐⭐ 
+        : <DisableButton  text="Disable" /> 
+    }
     </>
   );
 };

@@ -1,8 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { SubscriptionContext } from './layout/MySubscription';
+import React from 'react';
 
 const MySubscriptionListItemHeader: React.FC = () => {
-    const mySubscriptions = useContext(SubscriptionContext);
 
     return (
         <>

@@ -9,13 +9,13 @@ import { sequelize } from "./models";
 
 import adminRouter from "./routers/admin";
 import marketRouter from "./routers/market";
-// import orderRouter from "./routers/order";
+import orderRouter from "./routers/order";
 import mainRouter from "./routers/main";
 import subscriptionRouter from "./routers/subscription";
 import mypageRouter from "./routers/mypage";
 import voteRouter from "./routers/vote";
 
-import { logLatestBlockEvents } from "./middleware/blockLog";
+// import { logLatestBlockEvents } from "./middleware/blockLog";
 
 import http from "http";
 
@@ -63,7 +63,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:3000", "https://bouncesto.site", "https://bs.admin.bouncesto.site"],
     credentials: true,
   })
 );
@@ -86,16 +86,18 @@ sequelize
     // console.log("err", err);
   });
 
+//htt localhost:8080/estate_img/ACB01-min_1701256146291
 app.use("/estate_img", express.static(path.join(__dirname, "/imgs/estate")));
 
 app.use("/admin", adminRouter);
 app.use("/market", marketRouter);
-// app.use("/order", orderRouter);
+app.use("/order", orderRouter);
 app.use("/main", mainRouter);
 app.use("/subscription", subscriptionRouter);
 app.use("/mypage", mypageRouter);
 app.use("/vote", voteRouter);
 
+import { logLatestBlockEvents } from "./middleware/blockLog";
 setInterval(logLatestBlockEvents, 4500);
 
 server.listen(8080, () => {

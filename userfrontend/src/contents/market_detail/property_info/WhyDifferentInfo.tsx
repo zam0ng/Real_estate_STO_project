@@ -9,9 +9,9 @@ const WhyDifferentInfo: React.FC = () => {
   };
 
   return (
-    <div className='w-[90%] h-7 rounded-lg bg-black text-white flex justify-center items-center' 
+    <div className='w-[90%] h-7 font-bold flex justify-center items-center bg-[#EDF0F4] rounded-lg shadow-neu2' 
     onClick={goToWhyDifferent}>
-      TOK 가격과 건물 가치가 다른 이유는 ?
+      토큰당 가격과 건물 가치가 다른 이유는 ?
     </div>
   )
 }

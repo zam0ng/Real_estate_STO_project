@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../../../components/serverurl";
+import LoadingComponent from "../../../components/LoadingComponent";
 
 interface AdvertisementInfoRequest {
   subscription_img_1: string;
@@ -18,17 +19,22 @@ const SubscriptionAd: React.FC = () => {
 
   const { data, error, isLoading, isError } = useQuery<
     AdvertisementInfoRequest[]
-  >({ queryKey: ["fetchAdData"], queryFn: fetchAdData });
+  >({
+    queryKey: ["fetchAdData"],
+    queryFn: fetchAdData,
+  });
 
-  // console.log(data);
+  useEffect(() => {
+    // console.log(data);
+  }, [data]);
 
   return (
-    <div className="w-[80%] h-20 rounded-lg flex flex-col justify-center bg-sky-700 mt-5">
-      <div className="w-full h-1/2 flex justify-center items-center text-white">
+    <div className="w-[80%] h-20  flex flex-col justify-center  mt-5 bg-[#EDF0F4] rounded-lg shadow-neu2">
+      <div className="w-full h-1/2 flex justify-center items-center font-bold ">
         {data && data[0].subscription_name}
       </div>
-      <div className="w-full h-1/2 flex justify-center items-center text-xs text-white">
-        {"시작 예정일"}
+      <div className="w-full h-1/2 flex justify-center items-center text-xs text-gray-400">
+        지금 구매하세요!!
       </div>
     </div>
   );

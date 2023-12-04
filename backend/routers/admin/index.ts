@@ -36,6 +36,7 @@ import {
   dividendSubmit,
   caRegister,
   subscriptionList,
+  statusUpdate,
 } from "../../controllers/admin";
 
 import { Upload } from "../../middleware/imgUpload";
@@ -75,6 +76,7 @@ router.get("/management/real_estates_detail/:id", realEstateDetail);
 router.get("/transfer_in_out_list", transferInOutList);
 // CA 가져오기
 router.get("/contract_address_list", contractAddressList);
+
 // 10일치 유저 가입 정보 가져오기
 router.get("/ten_date_join_list", tenDateJoinList);
 // 10일치 거래 금액 가져오기
@@ -112,6 +114,7 @@ router.post("/notice_submit", noticeSubmit);
 router.post("/dividend_submit", dividendSubmit);
 router.post("/ca_register", caRegister);
 router.get("/subscription_list/:id", subscriptionList);
+router.get("/status_update/:name",statusUpdate);
 
 // DJ 임시 테스트 ✅✅✅✅✅✅
 // router.get('/subscription' , subscription) => [정현이가 추가한 버전] router.get("/management/real_estates_list", realEstateManagement); 로 변경

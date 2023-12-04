@@ -3,7 +3,7 @@ interface postFetchEstateFormProps {}
 
 
 const postFetchEstateForm = async (formData : FormData) => {
-
+  console.log("실행됨?");
   const path = `/admin/subscription_submit`;
   const domain = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL;
   const url = `${domain}${path}`

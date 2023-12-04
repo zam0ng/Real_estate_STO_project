@@ -6,6 +6,7 @@ import { PropertyInfo } from "../contents/market/on_sale_list/PropertyListBox";
 import { useQuery } from "@tanstack/react-query";
 import { serverurl } from "../components/serverurl";
 import BackBtn from "../components/BackBtn";
+import LoadingComponent from "../components/LoadingComponent";
 
 interface MarketDetailRequest {
   current_price: number;
@@ -13,6 +14,10 @@ interface MarketDetailRequest {
   fluctuation_rate: number;
   rating: number;
   "Subscription.subscription_img_1": string;
+  "Subscription.subscription_img_2": string;
+  "Subscription.subscription_img_3": string;
+  "Subscription.subscription_img_4": string;
+  "Subscription.subscription_img_5": string;
   "Subscription.subscription_description": string;
   "Subscription.subscription_name": string;
   "Subscription.subscription_address": string;
@@ -55,10 +60,13 @@ const MarketDetail: React.FC = () => {
     queryFn: queryMarketDetail,
     enabled: !!propertyName,
   });
-  // console.log(data);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
 
   if (isLoading) {
-    return <div>isLoading</div>;
+    return <LoadingComponent />;
   }
 
   if (isError) {

@@ -23,6 +23,7 @@ interface ContractRealEstatesName {
 
 let contract_real_estate_name: ContractRealEstatesName;
 // CA 주소 가져오기
+
 async function contract_address() {
   try {
     const result = await db.Contract_address.findAll({
@@ -43,7 +44,6 @@ async function contract_address() {
     console.error(error);
   }
 }
-
 contract_address();
 myEmitter.on("contractAddressCheck", contract_address);
 
@@ -75,11 +75,26 @@ export const blockNumberCheck = async () => {
 //       attributes: ["real_estate_name"],
 //       raw: true,
 //     });
+// export const symbolCheck = async () => {
+//   try {
+//     const result = await db.Contract_address.findAll({
+//       attributes: ["real_estate_name"],
+//       raw: true,
+//     });
 
+//     let symbols = [];
 //     let symbols = [];
 
 //     symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
+//     symbols = result.map((item, idx) => (symbols[idx] = item.real_estate_name));
 
+//     if (symbols) return symbols;
+//     else return [];
+//   } catch (error) {
+//     console.error(error);
+//     return [];
+//   }
+// };
 //     if (symbols) return symbols;
 //     else return [];
 //   } catch (error) {
@@ -162,8 +177,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     });
 
     logData.forEach(async (item) => {
-      if (item.transmission === "external" || item.transmission === "internal")
-        return;
+      // if (item.transmission === "external" || item.transmission === "internal")
+      //   return;
 
       if (item.transmission === "in") {
         // 해당 유저가 토큰을 보유하고 있는지 확인
@@ -190,6 +205,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
                 wallet: item.tx_to,
                 real_estate_name: contract_real_estate_name[item.ca],
               },
+              transaction,
             }
           );
         } else {
@@ -218,7 +234,6 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               price: real_estates.current_price,
               amount: item.tx_value,
               possible_quantity: item.tx_value,
-              token_name: item.tx_symbol,
             },
             { transaction }
           );
@@ -239,6 +254,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               wallet: item.tx_from,
               real_estate_name: contract_real_estate_name[item.ca],
             },
+            transaction,
           }
         );
       }

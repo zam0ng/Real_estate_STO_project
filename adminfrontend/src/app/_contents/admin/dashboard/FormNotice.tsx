@@ -22,11 +22,9 @@ interface NoticableEstate {
 }
 
 
-export default function FormNotice({
-  voteableEstateData,
-}: {
-  voteableEstateData: string[];
+export default function FormNotice({voteableEstateData}: {voteableEstateData: string[];
 }) {
+
   const router = useRouter();
 
   const [selectedValue, setSelectedValue] = useState<string>("");

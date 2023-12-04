@@ -8,6 +8,9 @@ interface subscription_appAttribute {
 }
 
 class Subscription_application extends Model<subscription_appAttribute> {
+  declare subscription_id: number;
+  declare subscription_user_email: string;
+  declare subscription_my_amount: number;
   static initModel(sequelize: Sequelize): typeof Subscription_application {
     Subscription_application.init(
       {

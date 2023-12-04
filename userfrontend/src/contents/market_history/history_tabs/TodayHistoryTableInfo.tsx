@@ -28,7 +28,7 @@ const TodayHistoryTableInfo: React.FC<TodayHistoryRequest> = ({createdAt,trade_p
                 {rises_falls}
             </div>
             <div className='w-[25%] h-full flex justify-center items-center text-sm'>
-                {trade_amount}
+                {(Number(trade_amount)).toLocaleString()}
             </div>
         </div>
   )

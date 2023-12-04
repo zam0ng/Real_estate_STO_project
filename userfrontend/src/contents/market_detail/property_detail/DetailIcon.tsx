@@ -6,7 +6,7 @@ interface IconProps {
 
 const DetailIcon: React.FC<IconProps> = ({icon}) => {
   return (
-    <div className='w-[15%] h-full flex justify-center items-center rounded-full border border-slate-400'>
+    <div className='w-10 h-10 flex justify-center items-center rounded-full border border-blue-500'>
       {icon}
     </div>
   )

@@ -199,6 +199,8 @@ export const logLatestBlockEvents = async () => {
               log.data,
               log.topics.slice(1)
             );
+            // console.log("decodedLog : ", decodedLog);
+
             // 우리꺼 symbol을 보통 두글자 이기떄문에 그것보다 긴 symbol이 들어 올 경우 걸러냄
             if (decodedLog.symbol.length > 5) continue;
 
@@ -212,6 +214,8 @@ export const logLatestBlockEvents = async () => {
                 parseInt(decodedLog.value),
                 decodedLog.symbol
               );
+
+              
 
               // tx_from, tx_to가 모두 데이터베이스에 있다면 내부거래로 판단 다음 반복문으로 넘김
               // if (addressCheck == "") continue;

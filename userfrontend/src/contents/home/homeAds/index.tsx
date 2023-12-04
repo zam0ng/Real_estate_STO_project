@@ -4,12 +4,13 @@ import LineTypeTabComponent from "../../../components/tabUI/LineTypeTabComponent
 import HomeIndices from "../homeIndices";
 
 
+
 export default function HomeAds(){
 
 
     
     return(
-        <div className="">
+        <div className="" >
             <WalletConnect />
             <SubscriptionAd />
         </div>

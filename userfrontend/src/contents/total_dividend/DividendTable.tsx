@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import DividendPayInfo from "./DividendPayInfo";
 import { serverurl } from "../../components/serverurl";
+import LoadingComponent from "../../components/LoadingComponent";
 
 export interface TotalDividendRequest {
   dividend_basedate: any;
@@ -34,11 +35,6 @@ const DividendTable: React.FC = () => {
     queryFn: totalDividendFetch,
   });
 
-  // console.log(data);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   if (isError) {
     return <div>Error : {error.message}</div>;

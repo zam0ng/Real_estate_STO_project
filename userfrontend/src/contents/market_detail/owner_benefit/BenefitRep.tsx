@@ -2,7 +2,7 @@ import React from 'react'
 
 const BenefitRep: React.FC = () => {
   return (
-    <div className='w-[90%] h-24 border border-black rounded-lg flex'>
+    <div className='w-[90%] h-24  flex bg-[#EDF0F4] rounded-lg shadow-neu2 '>
       <div className='w-[30%] h-full flex justify-center items-center'>
         <svg xmlns="http://www.w3.org/2000/svg" width="66" height="64" viewBox="0 0 66 64" fill="none">
           <mask id="path-1-inside-1_134_2094" fill="white">
