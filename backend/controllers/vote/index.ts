@@ -14,6 +14,8 @@ export const voteContractAddress = async (req: Request, res: Response) => {
       raw: true,
     });
 
+    console.log("result🔥🔥" , result)
+
     if (result) return res.status(200).json(result);
     else return res.status(407).send("empty");
   } catch (error) {

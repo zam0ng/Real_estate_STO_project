@@ -26,7 +26,6 @@ const TableContentTransaction = async () => {
   - 내부 거래 (internal) (내부 → 내부)
   
   -외부 거래 (external) (외부 → 외부)
-
   */
 
 

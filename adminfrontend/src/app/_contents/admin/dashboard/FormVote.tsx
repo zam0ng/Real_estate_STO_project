@@ -147,8 +147,11 @@ export default function FormVote({
 
     formData.append("voteStartDate", finalStartDate); // 타임스탬프 추가 | form 데이터로 전송시, toString 필요
     formData.append("voteEndDate", finalEndDate);
-      
+    
+    console.log("selectedValue" , selectedValue)
     const tempCA = await getTokenCA(selectedValue); // vote_contract_address
+    console.log("tempCA" , tempCA)
+    
     const tokenCA = tempCA[0].address
     
     const ownerList = await getVotableUsers(selectedValue); // vote_wallets

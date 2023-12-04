@@ -650,19 +650,30 @@ export const realEstateDetail = async (req: Request, res: Response) => {
 // 토큰 내/외부 전송
 export const transferInOutList = async (req: Request, res: Response) => {
   try {
-    const query = `
-    select 
-      CASE 
-        WHEN u.wallet = tr.tx_from THEN tr.tx_from 
-        WHEN u.wallet = tr.tx_to THEN tr.tx_to 
-      END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
-    from  tx_receipt tr
-      join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
-      group by tx_wallet, tr.tx_symbol, tr.transmission
-      having tr.transmission = 'in' or tr.transmission = 'out';`;
+    // const query = `
+    // select
+    //   CASE
+    //     WHEN u.wallet = tr.tx_from THEN tr.tx_from
+    //     WHEN u.wallet = tr.tx_to THEN tr.tx_to
+    //   END as tx_wallet, tr.tx_symbol, tr.transmission, count(tr.transmission) as cnt
+    // from  tx_receipt tr
+    //   join users u ON u.wallet = tr.tx_from OR u.wallet = tr.tx_to
+    //   group by tx_wallet, tr.tx_symbol, tr.transmission;`;
 
-    const result = await db.sequelize.query(query, {
-      type: QueryTypes.SELECT,
+    // const result = await db.sequelize.query(query, {
+    //   type: QueryTypes.SELECT,
+    // });
+    const result = await db.Tx_receipt.findAll({
+      attributes: [
+        "tx_from",
+        "tx_to",
+        "tx_value",
+        "tx_symbol",
+        "block_num",
+        "transmission",
+        "createdAt",
+      ],
+      raw: true,
     });
 
     if (result) return res.status(200).json(result);
