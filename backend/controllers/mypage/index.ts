@@ -14,7 +14,7 @@ export const depositBalance = async (req: Request, res: Response) => {
   try {
     console.log(req.body);
     const { user_email } = req.body as AddRequest;
-    const {price} = req.body;
+    const { price } = req.body;
 
     const user = await db.Users.findOne({
       where: { user_email: user_email },
@@ -60,7 +60,7 @@ export const withDrawal = async (req: Request, res: Response) => {
   try {
     const { user_email } = req.body as AddRequest;
 
-    const {price}= req.body;
+    const { price } = req.body;
 
     const user = await db.Users.findOne({
       where: { user_email: user_email },
@@ -220,14 +220,9 @@ export const transactionList = async (req: Request, res: Response) => {
     const user_email = req.query.user_email as string;
 
     const result = await db.Deposit_drawal.findAll({
-      attributes: [
-        "status",
-        "price",
-        "balance",
-        "createdAt"
-      ],
-      where: { user_email: user_email},
-      raw: true
+      attributes: ["status", "price", "balance", "createdAt"],
+      where: { user_email: user_email },
+      raw: true,
     });
 
     if (result) return res.status(200).json(result);
@@ -259,10 +254,13 @@ export const sumProfitLost = async (req: Request, res: Response) => {
 
     const total_buy: any = await db.Real_estates_own.findAll({
       attributes: [
-        [db.sequelize.fn("sum", db.sequelize.literal("price * amount")), "total_buy"],
+        [
+          db.sequelize.fn("sum", db.sequelize.literal("price * amount")),
+          "total_buy",
+        ],
       ],
-      where: {user_email: user_email},
-      raw: true
+      where: { user_email: user_email },
+      raw: true,
     });
 
     const profit_loss_amount = (await db.Real_estates_own.findAll({
@@ -291,17 +289,20 @@ export const sumProfitLost = async (req: Request, res: Response) => {
     const result = profit_loss_amount.map((item) => {
       const profit_loss_float = parseFloat(
         (
-          ((Number(total_buy[0].total_buy) + item.total_profit_loss) / Number(total_buy[0].total_buy)) * 100 -
+          ((Number(total_buy[0].total_buy) + item.total_profit_loss) /
+            Number(total_buy[0].total_buy)) *
+            100 -
           100
         ).toFixed(2)
       );
 
       return {
         total_profit_loss: item.total_profit_loss,
-        appraise_balance: Number(total_buy[0].total_buy) + item.total_profit_loss,
+        appraise_balance:
+          Number(total_buy[0].total_buy) + item.total_profit_loss,
         profit_loss_ratio: profit_loss_float,
         balance: user.balance,
-        total_buy: total_buy[0]
+        total_buy: total_buy[0],
       };
     });
 
@@ -394,7 +395,7 @@ export const dividendList = async (req: Request, res: Response) => {
         SUM(a.dividend_price * b.amount) as total_anticipation_dividend
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${user_email}' and a.dividend_status = '지급완료'
+      where b.user_email = '${user_email}' and a.dividend_status = '지급 완료'
       ) as d on true;`;
 
     const result = await db.sequelize.query(query, {

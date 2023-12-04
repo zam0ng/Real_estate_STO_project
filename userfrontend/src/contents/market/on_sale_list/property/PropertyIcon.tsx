@@ -6,6 +6,8 @@ interface ImageProps {
 }
 
 const PropertyIcon: React.FC<ImageProps> = ({ img }) => {
+  console.log("img");
+  console.log(img);
   return (
     <div className="w-full h-full flex justify-start items-center pl-3">
       <img

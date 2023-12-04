@@ -4,9 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { serverurl } from "../../../components/serverurl";
 import LoadingComponent from "../../../components/LoadingComponent";
-import AOS from 'aos'
-
-
+import AOS from "aos";
 
 export interface PropertyInfo {
   start_price: number;
@@ -27,10 +25,9 @@ const queryPropertyList = async (): Promise<PropertyInfo[]> => {
 };
 
 const PropertyListBox: React.FC = () => {
-
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-  },[])
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   const navigation = useNavigate();
 
@@ -56,13 +53,13 @@ const PropertyListBox: React.FC = () => {
     return <div>Error : {error.message}</div>;
   }
 
-
-
   return (
     <div className="w-[80%] h-auto mt-10 pb-16 flex flex-col">
       <div className="w-[80%] h-20 flex flex-col justify-center items-start mb-5">
         <div className="text-2xl font-bold">거래중인 건물</div>
-        <div className="text-sm text-gray-400">지금 바로 소유주가 되어보세요</div>
+        <div className="text-sm text-gray-400">
+          지금 바로 소유주가 되어보세요
+        </div>
       </div>
       {isLoading ? (
         <LoadingComponent />
@@ -75,7 +72,7 @@ const PropertyListBox: React.FC = () => {
             current_price={item.current_price}
             fluctuation_rate={item.fluctuation_rate}
             rating={item.rating}
-            subscription_img_1={(item["Subscription.subscription_img_1"]).split("\\")[2]}
+            subscription_img_1={item["Subscription.subscription_img_1"]}
             subscription_name={item["Subscription.subscription_name"]}
             subscription_description={
               item["Subscription.subscription_description"]

@@ -8,7 +8,8 @@ const MyTotalDividendHistoryTableBody: React.FC = () => {
   const myDividendHistory = useContext(TotalDividendHistoryContext);
 
   useEffect(() => {
-    // console.log(myDividendHistory);
+    console.log("myDividendHistory");
+    console.log(myDividendHistory);
     if (myDividendHistory !== undefined) {
       const baseDateParts = myDividendHistory[0]?.dividend_basedate.split("-");
       if (baseDateParts !== undefined) {
