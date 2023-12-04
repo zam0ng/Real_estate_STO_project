@@ -16,6 +16,8 @@ const PriceDifference: React.FC = () => {
     }else if(currentPriceToValue && currentPriceToValue >= 1 && currentPriceToValue <= -1){
       const priceValue = (Math.round(currentPriceToValue));
       setPriceValueRate(priceValue);
+    }else if(currentPriceToValue === undefined){
+      setPriceValueRate(0);
     };
     
     if(data && data.rating < -10){

@@ -4,6 +4,7 @@ import VoteAgreeStatus from './vote_status/agree_disagree/VoteAgreeStatus';
 import VoteDisagreeNumber from './vote_status/agree_disagree/VoteDisagreeNumber';
 import VoteDisagreeStatus from './vote_status/agree_disagree/VoteDisagreeStatus';
 import useWeb3 from '../../hooks/web3.hook';
+import { useLocation } from 'react-router-dom';
 
 interface AgreeDisagreeProps {
   tokenOwners: string[];
@@ -13,9 +14,13 @@ interface AgreeDisagreeProps {
   totalVotes: number;
   startDate: number;
   endDate: number;
+  tokenSymbol: string;
 }
 
-const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeVotes,disagreeVotes,totalVotes,startDate,endDate}) => {
+const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeVotes,disagreeVotes,totalVotes,startDate,endDate,tokenSymbol}) => {
+  const currentPage = useLocation();
+  // console.log(currentPage.state);
+
   const currentTime = new Date().getTime() / 1000;
   
   const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
@@ -76,25 +81,25 @@ const VoteCount: React.FC<AgreeDisagreeProps> = ({tokenOwners,votedOwners,agreeV
     <>
       {currentTime > endDate && (
         <div className='w-full h-32 border-t border-slate-200'>
-          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
           <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
-          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
           <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
         </div>
       )}
       {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && whoVoted.includes(currentAccount) && (
-          <div className='w-full h-32 border-t border-slate-200'>
-            <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
-            <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
-            <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
-            <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
-          </div>
+        <div className='w-full h-32 border-t border-slate-200'>
+          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
+          <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
+          <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+        </div>
       )}
       {currentTime > startDate && currentTime < endDate && !newTokenOwners.includes(currentAccount) && (
         <div className='w-full h-32 border-t border-slate-200'>
-          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} />
+          <VoteAgreeNumber agreeVotes={agreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
           <VoteAgreeStatus agreeVotes={agreeNumber} totalVotes={totalNumber} />
-          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
+          <VoteDisagreeNumber disagreeVotes={disagreeNumber} totalVotes={totalNumber} tokenSymbol={tokenSymbol} />
           <VoteDisagreeStatus disagreeVotes={disagreeNumber} totalVotes={totalNumber} />
         </div>
       )}

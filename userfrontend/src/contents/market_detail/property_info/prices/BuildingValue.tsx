@@ -35,9 +35,16 @@ const BuildingValue: React.FC = () => {
   return (
     <div className='w-[20%] h-[80%]'>
       <div className='w-full h-[30%] flex justify-center items-end text-xxs'>건물가치</div>
-      <div className='w-full h-[40%] flex justify-center items-center'>
-        {data?.value+"원"}
-      </div>
+      {data !== undefined && (
+        <div className='w-full h-[40%] flex justify-center items-center'>
+          {data?.value+"원"}
+        </div>
+      )}
+      {data === undefined && (
+        <div className='w-full h-[40%] flex justify-center items-center'>
+          {"0 원"}
+        </div>
+      )}
       <div className='w-full h-[30%] flex justify-center items-center text-xxs'>
         {`${currentYearTwo}.${currentMonth}.${currentDay}`}
       </div>

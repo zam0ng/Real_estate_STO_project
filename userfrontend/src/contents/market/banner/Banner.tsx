@@ -34,10 +34,8 @@ const Banner: React.FC = () => {
   >({ queryKey: ["subscriptionData"], queryFn: querySubscriptionInfo });
   // console.log("subscription info : ", data);
   const dataRep = data && data[0];
-  const completionRate =
-    data &&
-    (data[0].subscription_order_amount * 5000) /
-      data[0].subscription_totalprice;
+  const completionRate = data && ((data[0].subscription_order_amount * 5000) / data[0].subscription_totalprice) * 100;
+  // console.log(completionRate);
 
   if (isError) {
     return <ErrorComponent />
