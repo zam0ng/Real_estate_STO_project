@@ -86,10 +86,17 @@ export const marketTradelist = async (req: Request, res: Response) => {
 
         // ⭐⭐ 값들이 int 로 선언되어 소수점 계산이 안되서 계산식 순서를 바꿈
         [
-          sequelize.literal("((current_price*100)/start_price)-100"),
+          sequelize.literal(
+            "CASE WHEN start_price = 0 THEN 0 ELSE ((current_price * 100) / start_price) - 100 END"
+          ),
           "fluctuation_rate",
         ],
-        [sequelize.literal("((current_price*100)/value)-100"), "rating"],
+        [
+          sequelize.literal(
+            "CASE WHEN value = 0 THEN 0 ELSE ((current_price * 100) / value) - 100 END"
+          ),
+          "rating",
+        ],
       ],
       include: [
         {
@@ -104,7 +111,7 @@ export const marketTradelist = async (req: Request, res: Response) => {
       raw: true,
     });
 
-    // // console.log(result);
+    // console.log(result);
     res.json(result);
   } catch (error) {
     console.log(error);
@@ -123,12 +130,18 @@ export const marketDetail = async (req: Request, res: Response) => {
         "current_price",
         // "start_price",
         "value",
-
         [
-          sequelize.literal("((current_price*100)/start_price)-100"),
+          sequelize.literal(
+            "CASE WHEN start_price = 0 THEN 0 ELSE ((current_price * 100) / start_price) - 100 END"
+          ),
           "fluctuation_rate",
         ],
-        [sequelize.literal("((current_price*100)/value)-100"), "rating"],
+        [
+          sequelize.literal(
+            "CASE WHEN value = 0 THEN 0 ELSE ((current_price * 100) / value) - 100 END"
+          ),
+          "rating",
+        ],
       ],
       include: [
         {
@@ -342,7 +355,7 @@ export const dayQuote = async (req: Request, res: Response) => {
         0
       )
     );
-    
+
     // 현재 날짜의 오후 24시 (자정 다음날 00시, UTC 기준)
     const endDate = new Date(
       Date.UTC(
@@ -354,13 +367,12 @@ export const dayQuote = async (req: Request, res: Response) => {
         0
       )
     );
-    
+
     // endDate를 하루 전으로 설정하여 오후 24시로 조정
     endDate.setUTCSeconds(endDate.getUTCSeconds() - 1);
-    
+
     console.log(startDate.toISOString());
     console.log(endDate.toISOString());
-
 
     const result = await Trades.findAll({
       where: {

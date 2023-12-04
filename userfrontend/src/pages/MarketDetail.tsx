@@ -60,15 +60,13 @@ const MarketDetail: React.FC = () => {
     queryFn: queryMarketDetail,
     enabled: !!propertyName,
   });
-  
-  useEffect(()=>{
+
+  useEffect(() => {
     console.log(data);
-  },[data]);
+  }, [data]);
 
   if (isLoading) {
-    return(
-      <LoadingComponent/>
-  );
+    return <LoadingComponent />;
   }
 
   if (isError) {
@@ -76,7 +74,6 @@ const MarketDetail: React.FC = () => {
   }
 
   return (
-
     <MarketDetailContext.Provider value={data}>
       <div className="w-screen h-screen overflow-x-hidden relative">
         <BackBtn />

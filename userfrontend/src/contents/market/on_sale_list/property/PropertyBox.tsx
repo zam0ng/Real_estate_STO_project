@@ -8,8 +8,7 @@ import PropertyPrice from "./PropertyPrice";
 import axios from "axios";
 import { serverurl } from "../../../../components/serverurl";
 import { useQuery } from "@tanstack/react-query";
-import AOS from 'aos'
-
+import AOS from "aos";
 
 interface PropertyProps {
   start_price: number;
@@ -32,18 +31,16 @@ export interface TokenSymbolRequest {
   updatedAt: string;
 }
 
-const fetchTokenSymbol = async (propertyName: string): Promise<TokenSymbolRequest[]> => {
-
-
-
-
-  const response = await axios.get(`${serverurl}/vote/token_contract_address`,{
+const fetchTokenSymbol = async (
+  propertyName: string
+): Promise<TokenSymbolRequest[]> => {
+  const response = await axios.get(`${serverurl}/vote/token_contract_address`, {
     params: {
-      real_estate_name: propertyName
-    }
+      real_estate_name: propertyName,
+    },
   });
   return response.data;
-}
+};
 
 const PropertyBox: React.FC<PropertyProps> = ({
   start_price,
@@ -55,33 +52,33 @@ const PropertyBox: React.FC<PropertyProps> = ({
   subscription_description,
   navigator,
 }) => {
-  const [tokenSymbol,setTokenSymbol] = useState<string>("");
+  const [tokenSymbol, setTokenSymbol] = useState<string>("");
 
-  const {data,error,isLoading,isError} = useQuery<TokenSymbolRequest[]>({
-    queryKey: ["fetchTokenSymbol",subscription_name],
-    queryFn: ()=>fetchTokenSymbol(subscription_name)
+  const { data, error, isLoading, isError } = useQuery<TokenSymbolRequest[]>({
+    queryKey: ["fetchTokenSymbol", subscription_name],
+    queryFn: () => fetchTokenSymbol(subscription_name),
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(data);
-    if(data){
-      if(data.length !== 0){
+    if (data) {
+      if (data.length !== 0) {
         setTokenSymbol(data[0].symbol);
-      }else{
+      } else {
         setTokenSymbol("TOK");
       }
     }
-  },[data]);
+  }, [data]);
 
-  useEffect(()=>{
-    AOS.init({duration : 1200})
-  },[])
+  useEffect(() => {
+    AOS.init({ duration: 1200 });
+  }, []);
 
   return (
     <div
       className="w-full h-32 mb-5 flex flex-row bg-[#EDF0F4] rounded-xl shadow-innerneu2"
       onClick={() => navigator(subscription_name)}
-      data-aos= 'fade-up'
+      data-aos="fade-up"
     >
       <div className="w-1/2 h-full">
         <div className="w-full h-1/2">
