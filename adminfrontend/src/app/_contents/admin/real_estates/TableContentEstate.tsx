@@ -27,7 +27,7 @@ const TableContentEstate = async () => {
         <TableColumnName columnName={"매물"} />
         <TableColumnName columnName={"설명"} />
         <TableColumnName columnName={"진행 상태"} />
-        <TableColumnName columnName={""} />
+        <TableColumnName columnName={"달성률"} />
         <TableColumnName columnName={"목표 공모"} />
         <TableColumnName columnName={"달성 공모"} />
         <TableColumnName columnName={"청약 기간"} />

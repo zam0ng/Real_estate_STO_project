@@ -2,12 +2,15 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface subscriptions_ownAttribute {
-  wallet: string;
+  wallet: string | undefined;
   subscription_id: number;
   amount: number;
 }
 
 class Subscriptions_own extends Model<subscriptions_ownAttribute> {
+  declare wallet: string | undefined;
+  declare subscription_id: number;
+  declare amount: number;
   static initModel(sequelize: Sequelize): typeof Subscriptions_own {
     Subscriptions_own.init(
       {

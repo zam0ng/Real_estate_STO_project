@@ -19,7 +19,7 @@ const ImageName = ({ imageURL, name, id }: ImageNameProps) => {
     <>
       <Link
         href={`/admin/real_estates/detail/${id}?estateDetailModal=true`}
-        className="flex items-center w-40 col-span-1 -mr-8 cursor-pointer h-14 justify-self-start "
+        className="flex items-center w-40 col-span-1 -mr-8 cursor-pointer h-18 justify-self-start "
       >
         {/* 사진 */}
         <div className="relative w-10 h-10 my-auto rounded-md bg-slate-500 ">
