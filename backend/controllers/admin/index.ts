@@ -547,6 +547,9 @@ export const realEstateManagement = async (req: Request, res: Response) => {
           "subscription_result_date",
         ],
       ],
+      order :[
+        ['id','ASC']
+      ],
       raw: true,
     });
 
@@ -1206,7 +1209,7 @@ export const allUsers = async (req: Request, res: Response) => {
 
 
 export const statusUpdate = async(req : Request, res : Response)=>{
-  // console.log(req.params);
+  console.log(req.params);
   const {name} = req.params;
   try {
     await Subscriptions.update({
@@ -1216,6 +1219,7 @@ export const statusUpdate = async(req : Request, res : Response)=>{
         subscription_name : name,
       }
     })
+    res.send();
   } catch (error) {
     console.log("statusUpdate에서 오류남",error);
   }
