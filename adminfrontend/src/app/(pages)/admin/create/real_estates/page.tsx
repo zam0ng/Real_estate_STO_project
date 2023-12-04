@@ -128,6 +128,7 @@ export default function AdminCreateRealEstate() {
             name="upload"
             placeholder="ex) img"
             onChange={handleUploadFile}
+            multiple
           />
         </p>
 
