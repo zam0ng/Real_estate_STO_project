@@ -44,7 +44,7 @@ const TableContentTransaction = async () => {
     //   createdAt : '2023-11-25 16:20:39.326913+09',
     // },
 
-
+  // console.log("+_+_+_+_+",transactionData);
   return (
     <>    
       {/* <div className="grid gap-2 pb-12 pl-12 pr-12 text-base tracking-tight text-center bg-white border-b-2 w-4/4 rounded-b-3xl justify-items-center grid-cols-table mx-44 h-36.5rem  overflow-y-auto		"> */}

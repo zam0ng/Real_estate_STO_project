@@ -22,29 +22,30 @@ const DividendPayInfo: React.FC<TotalDividendRequest> = ({
     setBaseYear(baseDate.getFullYear().toString().slice(-2));
     setPayYear(payDate.getFullYear().toString().slice(-2));
 
-    if ((baseDate.getMonth() + 1).toString().length === 1) {
-      setBaseMonth(`0${baseDate.getMonth() + 1}`);
-    } else {
-      setBaseMonth((baseDate.getMonth() + 1).toString());
-    }
-    if ((baseDate.getMonth() + 1).toString.length === 1) {
-      setBaseMonth(`0${baseDate.getMonth()}`);
-    } else {
-      setBaseMonth((baseDate.getMonth() + 1).toString());
-    }
+        if((baseDate.getMonth() + 1).toString.length === 1){
+            setBaseMonth(`0${baseDate.getMonth()}`);
+        }else{
+            setBaseMonth((baseDate.getMonth() + 1).toString());
+        };
 
-    if (baseDate.getDay().toString().length === 1) {
-      setBaseDay(`0${baseDate.getDay()}`);
-    } else {
-      setBaseDay(baseDate.getDay().toString());
-    }
-
-    if (payDate.getDay().toString().length === 1) {
-      setPayDay(`0${payDate.getDay()}`);
-    } else {
-      setPayDay(payDate.getDay().toString());
-    }
-  }, []);
+        if((baseDate.getMonth() + 1).toString.length === 1){
+            setPayMonth(`0${payDate.getMonth()}`);
+        }else{
+            setPayMonth((payDate.getMonth() + 1).toString());
+        };
+        
+        if(baseDate.getDay().toString().length === 1){
+            setBaseDay(`${((baseDate.getDate()).toString()).padStart(2,'0')}`);
+        }else{
+            setBaseDay(baseDate.getDate().toString());
+        };
+    
+        if(payDate.getDay().toString().length === 1){
+            setPayDay(`${((payDate.getDate()).toString()).padStart(2,'0')}`);
+        }else{
+            setPayDay(payDate.getDate().toString());
+        };
+    },[]);
 
   return (
     <div className="w-full h-[8%] flex flex-row">

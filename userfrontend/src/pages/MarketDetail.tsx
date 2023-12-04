@@ -60,10 +60,10 @@ const MarketDetail: React.FC = () => {
     queryFn: queryMarketDetail,
     enabled: !!propertyName,
   });
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  
+  useEffect(()=>{
+    // console.log(data);
+  },[data]);
 
   if (isLoading) {
     return <LoadingComponent />;

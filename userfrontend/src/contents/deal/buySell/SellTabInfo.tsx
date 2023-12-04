@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { Cookies } from "react-cookie";
 import useWeb3 from "../../../hooks/web3.hook";
 import { adminWallet, adminPrimarykey } from "./adminInfo";
+import LoadingComponent from "../../../components/LoadingComponent";
 // import estateAbi from '../../../abi/estate.json';
 interface SellPost {
   price: number;
@@ -197,6 +198,19 @@ const estate_abi = [
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_tokenSymbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
       }
     ],
     "stateMutability": "view",
@@ -506,6 +520,19 @@ const estate_abi = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "whatTokenSymbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   }
 ] as const;
 
@@ -517,9 +544,10 @@ const sellPost = async (
   token: string,
   user: any,
   web3: any,
-  setisOpen : any, setContent :any,setIsTitle :any
+  setisOpen : any, setContent :any,setIsTitle :any,
+  setisLoading : any,
 ): Promise<any> => {
-
+  setisLoading(true);
   // ca, 내가 걸어 놓은 매도 주문, 내 판매가능 수량 3개 가져오기.
   const getCa_mysellorders: any = await axios.post<string>(
     `${serverurl}/order/getca_mysellorders/${propertyName}`,
@@ -604,6 +632,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
   const [isOpen, setisOpen] = useState(false);
   const [isContent, setContent] = useState("");
   const [isTitle, setIsTitle] = useState("");
+  const [isLoading,setisLoading] =useState(false);
 
   const priceInputRef = useRef<HTMLInputElement>(null);
   const amountInputRef = useRef<HTMLInputElement>(null);
@@ -652,7 +681,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
     { propertyName: string; sellData: SellPost; user: any; web3: any ; setisOpen :any; setContent : any ; setIsTitle :any;}
   >({
     mutationFn: ({ propertyName, sellData }) =>
-      sellPost(propertyName, sellData, isCookie, user, web3, setisOpen, setContent,setIsTitle),
+      sellPost(propertyName, sellData, isCookie, user, web3, setisOpen, setContent,setIsTitle,setisLoading),
     onSuccess: async (data: any) => {
       // console.log(data);
       // console.log(data.real_estate_CA); //CA 주소
@@ -738,6 +767,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
       queryClient.refetchQueries({ queryKey: ["headerInfo"] });
 
       isSocket.emit("sale_completed");
+      setisLoading(false);
     },
     onError: (error) => {
       console.log(error);
@@ -765,6 +795,7 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
   return (
     <>
+      {isLoading && <LoadingComponent/>}
       {/* 알림창 */}
       {isOpen && (
         <>

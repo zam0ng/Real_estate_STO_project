@@ -5,10 +5,9 @@ import { Request } from "express";
 type FileNameCallback = (error: Error | null, filename: string) => void
 
 export const Upload = multer({
-
+    
     storage : multer.diskStorage({
-        destination : "imgs/estate/",
-
+        // destination : "imgs/estate/",
         filename :(req : Request,file : Express.Multer.File, done : FileNameCallback) =>{
 
             const ext = path.extname(file.originalname);

@@ -547,6 +547,9 @@ export const realEstateManagement = async (req: Request, res: Response) => {
           "subscription_result_date",
         ],
       ],
+      order :[
+        ['id','ASC']
+      ],
       raw: true,
     });
 
@@ -991,7 +994,11 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 // 게시글(공지/공시) 받아오기 by ✅DJ.테스트
 export const noticesList = async (req : Request , res : Response) => {
   try {
-    const noticeList = await Notices.findAll()
+    const noticeList = await Notices.findAll({
+      order :[
+        ['id','ASC']
+      ]
+    })
     res.status(200).json(noticeList);
   } catch (error) {
     console.log(error);
@@ -1000,7 +1007,7 @@ export const noticesList = async (req : Request , res : Response) => {
 }
 
 export const dividendSubmit = async (req: Request, res: Response) => {
-  // console.log(req.body);
+  // console.log("dividendSubmit+_+_+_+_",req.body);
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
   const month = paymentdate.slice(5, 7);
   try {
@@ -1009,6 +1016,7 @@ export const dividendSubmit = async (req: Request, res: Response) => {
       dividend_price: dividend_price,
       dividend_basedate: basedate,
       dividend_paymentdate: paymentdate,
+      dividend_status : "예정",
     });
 
     await Notices.create({
@@ -1069,13 +1077,13 @@ export const caRegister = async (req: Request, res: Response) => {
 // 청약자 리스트
 export const subscriptionList = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
+  console.log("id+_+_+_+_+",id);
   try {
     const result = await Subscriptions_own.findAll({
       where: {
         subscription_id: id,
       },
-      attributes: ["user_email", "amount"],
+      attributes: ["wallet", "amount"],
       order: [["id", "ASC"]],
 
       include: [
@@ -1091,6 +1099,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
       ],
       raw: true,
     });
+    console.log("result+_+_",result);
 
     const estateInfo = result.slice(0, 1).map((el: any) => ({
       "Subscription.subscription_name": el["Subscription.subscription_name"],
@@ -1102,11 +1111,11 @@ export const subscriptionList = async (req: Request, res: Response) => {
         el["Subscription.subscription_building_date"],
     }));
 
-    const wallet_list = result.map((el: any) => el.user_email);
+    const wallet_list = result.map((el: any) => el.wallet);
     const amount_list = result.map((el: any) => el.amount);
 
-    // console.log(wallet_list);
-    // console.log(amount_list);
+    console.log(wallet_list);
+    console.log(amount_list);
 
     const email_list: any = [];
 
@@ -1173,9 +1182,12 @@ export const subscriptionList = async (req: Request, res: Response) => {
         possible_quantity: amount_list[index],
       });
     });
+    console.log("_+_+_+_+_+_")
+    console.log(estateInfo);
+    console.log(wallet_list);
+    console.log(amount_list);
+    console.log("_+_+_+_+_+_")
 
-    // // console.log(wallet_list);
-    // // console.log(amount_list);
     res.json({ estateInfo, wallet_list, amount_list });
   } catch (error) {
     res.sendStatus(400);
@@ -1200,4 +1212,19 @@ export const allUsers = async (req: Request, res: Response) => {
 };
 
 
-
+export const statusUpdate = async(req : Request, res : Response)=>{
+  console.log(req.params);
+  const {name} = req.params;
+  try {
+    await Subscriptions.update({
+      subscription_status : 'success'
+    },{
+      where :{
+        subscription_name : name,
+      }
+    })
+    res.send();
+  } catch (error) {
+    console.log("statusUpdate에서 오류남",error);
+  }
+}

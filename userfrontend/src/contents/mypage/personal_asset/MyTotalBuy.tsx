@@ -15,7 +15,7 @@ const MyTotalBuy: React.FC<MyBalanceProps> = ({total_buy}) => {
         총 매입
       </div>
       <div className='w-[65%] h-full flex justify-end items-center pr-2 text-xs-sm'>
-        {total_buy ? Number(total_buy?.total_buy).toLocaleString() : "0"} 원
+        {total_buy ? Number(total_buy?.total_buy).toLocaleString() : "0"}
       </div>
     </div>
   )

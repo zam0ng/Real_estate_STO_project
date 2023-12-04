@@ -47,9 +47,7 @@ const TableRowEstate =({ item }: TableRowEstate) => {
       />
       <Description id={item.id} desc={item.subscription_description} />
 
-        {status == 'pending'
-        ? <StatusPending />
-        : <StatusSuccess />
+        {<StatusPending status = {status} />
         }
       {/* <Status id={item.id} status={item.subscription_status} /> */}
 

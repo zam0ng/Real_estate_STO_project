@@ -164,7 +164,17 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     const { id, amount, user_email } = req.body;
     const application_amount = 5000 * amount;
 
-
+    const wallet = await db.Users.findOne({
+      where :{
+        user_email : user_email,
+      },
+      attributes : [
+        'wallet'
+      ],
+      raw : true,
+    })
+    console.log(wallet?.wallet);
+    
     const subscription_rate_check =
       (await db.Subscriptions.findOne({
         attributes: [
@@ -199,34 +209,35 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     if (get_user_info.balance < application_amount)
       return res.send("금액이 모자랍니다.");
 
-    const application_check = await db.Subscription_application.findOne({
+    const application_check = await db.Subscriptions_own.findOne({
       where: {
-        subscription_user_email : get_user_info.user_email , subscription_id: id
+        wallet : wallet?.wallet , 
+        subscription_id: id
       },raw: true
     });
 
     if(application_check) {
-      if(application_check.subscription_my_amount > subscription_rate_check.subscription_rate) {
+      if(application_check.amount > subscription_rate_check.subscription_rate) {
         return res.send("전체 공급량의 20% 이상 구매 할 수 없습니다.");
       };
       
     const update_subscription_application =
-    await db.Subscription_application.update(
+    await db.Subscriptions_own.update(
       {
-        subscription_my_amount: application_check.subscription_my_amount + amount,
+        amount: application_check.amount + amount,
       },
       { where :{
-        subscription_id: id, subscription_user_email: user_email
+        subscription_id: id, wallet: wallet?.wallet,
       },transaction }
     );
       
     } else {
       const insert_subscription_application =
-      await db.Subscription_application.create(
+      await db.Subscriptions_own.create(
         {
           subscription_id: id,
-          subscription_user_email: user_email,
-          subscription_my_amount: amount,
+          wallet: wallet?.wallet,
+          amount: amount,
         },
         { transaction }
       );

@@ -103,6 +103,10 @@ module.exports = {
         "36.5rem": "36.5rem",
         "32rem": "32rem",
       },
+      // gridTemplateColumns: {
+      //   layout: "10rem auto",
+      //   table: "10rem 10rem repeat(7, minmax(8rem, auto))",
+      // table: "5rem 5rem 5rem 5rem 8rem 8rem 7rem 7rem 5rem",
 
       gridTemplateColumns: {
         layout: "10rem auto",

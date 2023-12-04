@@ -46,7 +46,7 @@ export default function RenderEstateDetailModal() {
 
   return (
     // <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full /absolute ">
-    <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full ">
+    <div className="fixed top-0 left-0 flex items-center justify-center w-full h-full z-50">
       {/* <form encType="multipart/form-data" onSubmit={postEstateForm} > */}
       <div>
         {/* 여기부터 디자인 👇👇👇 */}

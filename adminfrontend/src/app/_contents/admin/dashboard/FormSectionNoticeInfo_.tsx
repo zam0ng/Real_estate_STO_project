@@ -1,9 +1,9 @@
 "use client";
 
-import InputFormDateItem from "./InputFormDateItem";
-import InputFormItem from "./InputFormItem";
-
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import InputFormDateItem from './InputFormDateItem'
+import InputFormItem from './InputFormItem'
+import InputFormItemTitle from './InputFormItemTitle'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 
 interface NoticeFormSectionProps {
   title: string;
@@ -127,23 +127,20 @@ const FormSectionNoticeInfo_: React.FC<NoticeFormSectionProps> = ({
                   </div> */}
       </div>
 
-      {/* 공지 정보 */}
-      <InputFormItem
-        _title={"제목"}
-        _type={"text"}
-        _name={"title"}
-        _placeholder={"대체공휴일 지정에 따라 아래와 같이 휴장 안내"}
-      />
+                {/* 공지 정보 */}
+                <InputFormItemTitle 
+                    _title={"제목"} 
+                    _type={"text"} 
+                    _name = {"title"}  
+                    _placeholder={"대체공휴일 지정에 따라 아래와 같이 휴장 안내"} />
+                
+                {/* 공지 정보 */}
+                <InputFormItem 
+                    _title={"상세 내용"} 
+                    _type={"text"} 
+                    _name = {"content"}  
+                    _placeholder={"정부의 대체공휴일 지정에 따라 아래와 같이 휴장 안내 드립니다."} />
 
-      {/* 공지 정보 */}
-      <InputFormItem
-        _title={"상세 내용"}
-        _type={"text"}
-        _name={"content"}
-        _placeholder={
-          "정부의 대체공휴일 지정에 따라 아래와 같이 휴장 안내 드립니다."
-        }
-      />
 
       {/* 공지 정보 */}
       {/* <InputFormItem 

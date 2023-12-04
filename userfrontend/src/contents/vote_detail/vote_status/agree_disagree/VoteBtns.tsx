@@ -13,20 +13,24 @@ interface OwnerVoterProps {
 
 const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,startDate,endDate}) => {
   const currentTime = new Date().getTime() / 1000;
-  // console.log(currentTime);
+  
   const currentPage = useLocation();
-  // console.log(tokenOwners);
-  // console.log(votedOwners);
+  
   const newTokenOwners = tokenOwners.map(item=>item.toLowerCase());
   const newVotedOwners = votedOwners.map(item=>item.toLowerCase());
+  // console.log(newTokenOwners);
+  // console.log(newVotedOwners);
+
   const [whoVoted,setWhoVoted] = useState<string[]>([]);
   useEffect(()=>{
     setWhoVoted(newVotedOwners);
-  },[votedOwners]);
+    console.log(whoVoted);
+  },[]);
   
   const {user,web3} = useWeb3();
 
   const [currentAccount,setCurrentAccount] = useState<string>(currentPage.state.wallet);
+  // console.log(currentAccount);
   const [contract,setContract] = useState<any>(undefined);
 
   useEffect(()=>{
@@ -55,6 +59,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
           const currentAccount = accounts[0];
           setCurrentAccount(currentAccount);
           // console.log("current account : ",currentAccount);
+          // console.log(user);
         }
       })
     }else{
@@ -82,6 +87,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
         from:currentAccount,
         gasPrice: web3?.utils.toWei('1','gwei')
       });
+      alert("투표가 완료되었습니다.");
     } catch (error) {
       console.error(error);
     }
@@ -93,6 +99,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
         from:currentAccount,
         gasPrice: web3?.utils.toWei('1','gwei')
       });
+      alert("투표가 완료되었습니다.");
     } catch (error) {
       console.error(error);
     }
@@ -115,7 +122,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
           </div>
         </>
       )}
-      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && !whoVoted.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && !newVotedOwners.includes(currentAccount) && (
         <>
           <button className='w-24 h-10 rounded-lg text-white bg-blue-500' onClick={agree}>
             찬성
@@ -125,7 +132,7 @@ const VoteBtns: React.FC<OwnerVoterProps> = ({tokenOwners,votedOwners,voteCA,sta
           </button>
         </>
       )}
-      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && whoVoted.includes(currentAccount) && (
+      {currentTime > startDate && currentTime < endDate && newTokenOwners.includes(currentAccount) && newVotedOwners.includes(currentAccount) && (
         <>
           <div className='w-[70%] h-10 border border-slate-200 rounded-lg text-slate-500 bg-slate-200 flex justify-center items-center'>
             투표 완료

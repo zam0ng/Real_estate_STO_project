@@ -1,6 +1,7 @@
 import React from "react"
 import { SubAllList } from "../../../features/SubAllList"
 import { useNavigate } from "react-router-dom"
+import { serverurl } from "../../../components/serverurl";
 
 type DropdownProps = {
     props : SubAllList[] | string;
@@ -47,7 +48,7 @@ export default function Dropdown({props} : DropdownProps){
 
        const content = props.map((building : SubAllList,index : number)=>
         <div className="bg-[#EDF0F4] rounded-xl shadow-innerneu2 mt-3  h-16 text-center pt-1 flex  px-5 justify-between" key={index} onClick={()=>Navigate(`detail/${building.id}`)}>
-            <div className={` mr-2 w-14 h-14 rounded-2xl `} style={{background : `url('http://localhost:8080/estate_img/${building.subscription_img_1}')`, backgroundSize : 'cover'}}> </div>
+            <div className={` mr-2 w-14 h-14 rounded-2xl `} style={{background : `url('${serverurl}/estate_img/${building.subscription_img_1}')`, backgroundSize : 'cover'}}> </div>
             <div className=" h-14 w-40 flex flex-col text-left pt-2">
                 <span className="">{building.subscription_name}</span>
                 <span className="text-xs pt-1 overflow-hidden">{building.subscription_address}</span>
