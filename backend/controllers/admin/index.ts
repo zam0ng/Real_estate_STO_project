@@ -1092,6 +1092,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
       ],
       raw: true,
     });
+    console.log("result+_+_",result);
 
     const estateInfo = result.slice(0, 1).map((el: any) => ({
       "Subscription.subscription_name": el["Subscription.subscription_name"],
@@ -1106,8 +1107,8 @@ export const subscriptionList = async (req: Request, res: Response) => {
     const wallet_list = result.map((el: any) => el.user_email);
     const amount_list = result.map((el: any) => el.amount);
 
-    // console.log(wallet_list);
-    // console.log(amount_list);
+    console.log(wallet_list);
+    console.log(amount_list);
 
     const email_list: any = [];
 
