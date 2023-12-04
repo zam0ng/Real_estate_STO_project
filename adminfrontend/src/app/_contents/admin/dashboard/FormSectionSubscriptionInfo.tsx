@@ -18,7 +18,9 @@ const FormSectionSubscriptionInfo : React.FC<FormSectionProps> = ( {title, desc}
               
               {/* 설명 */}
                 <div className="flex items-center justify-start h-12 -mt-1 text-admin_modal_input font-semiSemibold w-40rem">
-                    <p className="" >발행정보 : 00000000000000000000000  </p>
+                    <p className="" >발행정보 : 어떤 건물이 STO 토큰으로 발행되는지에 대한 정보 제공
+
+</p>
                 </div>
 
                 {/* 발행 정보 */}

@@ -62,7 +62,7 @@ const GetInputData = () => {
               
               {/* 설명 */}
                 <div className="flex items-center justify-start h-12 -mt-1 text-admin_modal_input font-semiSemibold w-40rem">
-                    <p className="" >발행정보 : 청약 등록시 필요한 발행정보
+                    <p className="" >발행정보 : 어떤 건물이 STO 토큰으로 발행되는지에 대한 정보 제공
                       </p>
                 </div>
               
