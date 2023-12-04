@@ -5,9 +5,12 @@ import {Contract, InvalidNonceOrChainIdError, Web3} from "web3";
 import { useEffect, useState } from 'react';
 import useAccount from "../hooks/useAccount";
 import { getSubscriptionList } from "@/app/api/getSubscription_list";
+import { useRouter } from "next/navigation";
 
 // 💪
 const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
+  const router = useRouter();
+
   const factory_abi =  [
     {
       "anonymous": false,
@@ -196,7 +199,7 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
             method : "GET",
           })
           setLoading(false);
-
+          router.refresh();                
           })
         } catch (error) {
           console.log(error);
