@@ -1,8 +1,7 @@
-import React, { useEffect, useState, createContext } from "react";
+import React, { useEffect, useState } from "react";
 import DealHeader from "../contents/deal/layout/DealHeader";
 import DealMain from "../contents/deal/layout/DealMain";
 import { io, Socket } from "socket.io-client";
-import { useLocation } from "react-router-dom";
 import { serverurl } from "../components/serverurl";
 
 const Deal: React.FC = () => {
