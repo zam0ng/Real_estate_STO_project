@@ -292,8 +292,8 @@ const VotingTestPage: React.FC = () => {
             .then((newInstance: any)=>{
                 console.log(`CA : ${newInstance.options.address}`);
                 setVoteCA(newInstance.options.address);
-                mutationVoteTable.mutate(newInstance.options.address);
                 mutationCAtable.mutate(newInstance.options.address);
+                mutationVoteTable.mutate(newInstance.options.address);
             })
             .catch((error: string)=>{
                 console.error("Error while deploying : ",error);

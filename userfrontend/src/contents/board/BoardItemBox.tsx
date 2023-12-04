@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "react-router-dom";
 import BoardItem from "./BoardItem";
 import axios from "axios";
+import LoadingComponent from "../../components/LoadingComponent";
 
 interface boardRequest {
   id: number;
@@ -30,15 +31,13 @@ const BoardItemBox: React.FC = () => {
   });
 
   useEffect(() => {
-    // console.log(data);
-  }, []);
+    console.log(data);
+  },[data]);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error: cannot fetch data</div>;
+  if(isLoading){
+    return (
+      <LoadingComponent />
+    )
   }
 
   return (
