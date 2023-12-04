@@ -12,7 +12,7 @@ const PropertyIcon: React.FC<ImageProps> = ({ img }) => {
     <div className="w-full h-full flex justify-start items-center pl-3">
       <img
         className="w-12 h-12 rounded-lg"
-        src={`${serverurl}/estate_img/${img}`}
+        src={`${serverurl}/estate_img/${(img).split("\\")[2]}`}
       />
     </div>
   );

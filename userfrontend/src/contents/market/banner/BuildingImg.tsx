@@ -35,7 +35,7 @@ const BuildingImg: React.FC<ImageProps> = ({ img, totalPrice }) => {
       </div>
       <img
         className="w-full h-full rounded-lg"
-        src={`${serverurl}/estate_img/${img}`}
+        src={`${serverurl}/estate_img/${(img).split("\\")[2]}`}
       />
     </div>
   );
