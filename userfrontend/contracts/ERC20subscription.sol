@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -33,7 +33,7 @@ contract ERC20subscription is ERC20, Ownable {
         address[] memory subscribers,
         uint256[] memory amounts,
         uint256 __lockTime
-    ) ERC20(_name, _symbol) Ownable(_owner) {
+    ) ERC20(_name, _symbol) Ownable() {
         require(
             subscribers.length == amounts.length,
             "subscribers and their amounts do not match"

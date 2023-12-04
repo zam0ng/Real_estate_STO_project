@@ -25,14 +25,14 @@ module.exports = {
   theme: {
     extend: {
       grayscale: {
-        10: '10%',
-        20: '20%',
-        80: '80%'
+        10: "10%",
+        20: "20%",
+        80: "80%",
       },
 
       fontFamily: {
         sans: ["Pretendard-Regular-400"],
-        "Pretendard-800": ["Pretendard-800"]
+        "Pretendard-800": ["Pretendard-800"],
       },
 
       transitionDuration: {
@@ -69,7 +69,7 @@ module.exports = {
         "150rem": "150rem",
         "40rem": "40rem",
         "76rem": "76rem",
-        
+
         "5.6rem": "5.6rem",
         "37.9rem": "37.9rem",
         backdrop_calc: "calc(100% - 4rem)",
@@ -78,7 +78,7 @@ module.exports = {
         "9.875rem": "9.875rem",
 
         "116rem": "116rem",
-        "80rem": "80rem"
+        "80rem": "80rem",
       },
 
       padding: {
@@ -105,10 +105,9 @@ module.exports = {
       },
 
       gridTemplateColumns: {
-        layout: "22rem auto",
-        // table: "repeat(9, minmax(6rem, auto))",
-        table: "5rem 5rem 5rem 5rem 8rem 8rem 7rem 7rem 5rem",
-
+        layout: "10rem auto",
+        table: "10rem 9rem repeat(7, minmax(8rem, auto))",
+        // table: "5rem 5rem 5rem 5rem 8rem 8rem 7rem 7rem 5rem",
 
         userTable: "repeat(8, minmax(5rem, auto))",
         // transactionTable: "repeat(8, minmax(5rem, auto))",
@@ -137,7 +136,7 @@ module.exports = {
       borderRadius: {
         adminLayout_header: "3rem 3rem 0 0",
         "0.625rem": "0.625rem",
-    
+
         "1.25rem": "1.25rem",
         "0.87rem": "0.87rem",
       },
@@ -169,7 +168,7 @@ module.exports = {
         adminLayout_menubar_welcome: "#77767B",
         adminLayout_menubar_name: "#252526",
 
-        admin_modal_mainBG: "#FCFCFC",  // ⭐ 대시보드 큰 모달
+        admin_modal_mainBG: "#FCFCFC", // ⭐ 대시보드 큰 모달
         admin_modal_bg: "#3D3D3D",
         admin_modal_line: "#D9D9D9",
         admin_modal_info: "#E3E1ED",
@@ -205,12 +204,10 @@ module.exports = {
         // 상태 버튼
         state_pending_back: "#FFF0E2", // 주황 or
         state_pending_text: "#E7AB74",
-        state_black_opacity_4 : "rgba(0, 0, 0, 0.400)",
-        
-        blacklist_status_bgColor : "#4a4747",
-        blacklist_status_textColor : "#febebe",
-        
-        
+        state_black_opacity_4: "rgba(0, 0, 0, 0.400)",
+
+        blacklist_status_bgColor: "#4a4747",
+        blacklist_status_textColor: "#febebe",
 
         state_green_back: "#E6F6F6",
         state_green_text: "#4FA0A1",

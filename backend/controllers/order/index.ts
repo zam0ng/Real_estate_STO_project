@@ -13,14 +13,14 @@ interface AddRequest extends Request {
   wallet?: string;
 }
 
-async function mysellorders(_user_email : string,_name : string){
+async function mysellorders(_user_email: string, _name: string) {
   // 현재 내가 주문한 매도 주문들
   const data = await Orders.findAll({
     where: {
       user_email: _user_email,
       real_estate_name: _name,
-      order_type: 'sell',
-      order_status: '0',
+      order_type: "sell",
+      order_status: "0",
     },
 
     attributes: [
@@ -30,64 +30,59 @@ async function mysellorders(_user_email : string,_name : string){
       ],
     ],
     raw: true,
-  })
+  });
   const data2 = await Contract_address.findOne({
-    where : {
-      real_estate_name : _name,
+    where: {
+      real_estate_name: _name,
     },
-    attributes :[
-      'address',
-    ],
-    raw : true,
-  })
+    attributes: ["address"],
+    raw: true,
+  });
 
   // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
   const data3: any = await Real_estates_own.findOne({
-    where: { 
-      user_email: _user_email, 
-      real_estate_name: _name 
+    where: {
+      user_email: _user_email,
+      real_estate_name: _name,
     },
-    attributes: [
-      "possible_quantity"
-    ],
+    attributes: ["possible_quantity"],
     raw: true,
   });
   console.log(data3);
-  const newObj = {...data[0],...data2,...data3};
+  const newObj = { ...data[0], ...data2, ...data3 };
   console.log(newObj);
   return newObj;
 }
 
-async function getSellerWallet(user_email:string) {
+async function getSellerWallet(user_email: string) {
   // 판매자 지갑 주소 가져오기
   console.log("getSellerWallet 실행됨?");
-  const {wallet} :any = await Users.findOne({
-    where : {
-      user_email : user_email,
+  const userInfo: any = await Users.findOne({
+    where: {
+      user_email: user_email,
     },
-    attributes :[
-      'wallet'
-    ],
-    raw : true,
-  })
-  return wallet;
+    attributes: ["wallet"],
+    raw: true,
+  });
+  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
+
+  return userInfo.wallet;
 }
 
-async function getBuyerWallet(user_email:string) {
+async function getBuyerWallet(user_email: string) {
   // 구매자 지갑 주소 가져오기
   console.log("getBuyerWallet 실행됨?");
-  const {wallet} :any = await Users.findOne({
-    where : {
-      user_email : user_email,
+  const userInfo: any = await Users.findOne({
+    where: {
+      user_email: user_email,
     },
-    attributes :[
-      'wallet'
-    ],
-    raw : true,
-  })
-  return wallet;
-}
+    attributes: ["wallet"],
+    raw: true,
+  });
+  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
 
+  return userInfo.wallet;
+}
 
 // 매도 주문
 export const orderSell = async (req: Request, res: Response) => {
@@ -96,19 +91,18 @@ export const orderSell = async (req: Request, res: Response) => {
   const { name } = req.params;
   let restamount = amount;
 
-  const tradeArr : any = [];
-  
+  const tradeArr: any = [];
+
   // 유저 임시
   // const islogin = "test@naver.com"
   try {
-
     const sellerWallet = await getSellerWallet(user_email);
 
     // // 유저가 해당 매물에 amount 이상의 양을 보유하고 있는지 확인
     // const holdings: any = await Real_estates_own.findAll({
-    //   where: { 
-    //     user_email: user_email, 
-    //     real_estate_name: name 
+    //   where: {
+    //     user_email: user_email,
+    //     real_estate_name: name
     //   },
     //   attributes: [
     //     "possible_quantity"
@@ -122,92 +116,174 @@ export const orderSell = async (req: Request, res: Response) => {
     // }
     // 물량은 있지만 주문수량 이상으로 있는지 확인
     // else {
-      // if (holdings[0].possible_quantity >= amount) {
+    // if (holdings[0].possible_quantity >= amount) {
 
-        // 매물의 현재가 가져오기
-        const currentPrice: { current_price: number } | null =
+    // 매물의 현재가 가져오기
+    const currentPrice: { current_price: number } | null =
+      (await Real_estates.findOne({
+        where: {
+          real_estate_name: name,
+        },
+        attributes: ["current_price"],
+        raw: true,
+      })) as { current_price: number } | null;
+
+    // 현재가 보다 매도 주문금액이 높으면 order 테이블 단순 등록(체결이 안됨)
+    // real_estates_own 테이블에서 possible_quantity 컬럼 -amount 해주기
+    if (currentPrice!.current_price < price) {
+      await Orders.create({
+        user_email: user_email,
+        real_estate_name: name,
+        order_type: "sell",
+        order_status: "0",
+        order_price: price,
+        order_amount: amount,
+        possible_amount: amount,
+      });
+
+      await Real_estates_own.update(
+        {
+          possible_quantity: sequelize.literal(`possible_quantity - ${amount}`),
+        },
+        {
+          where: {
+            user_email: user_email,
+            real_estate_name: name,
+          },
+        }
+      );
+      console.log("ㄷㅈㄱㄷㅈㄱㄷㅈ");
+      // const _mysellorders = await mysellorders(user_email,name);
+      // console.log(_mysellorders);
+
+      // res.send({ message: "매도 주문 완료", data : _mysellorders });
+      res.send("매도 주문 완료");
+    } else {
+      // 현재가보다 매도 주문금액이 낮거나 같을 때
+      // 먼저, 현재가로 buy 가 있는지 판단
+
+      const buyOrdes = await Orders.findAll({
+        where: {
+          real_estate_name: name,
+          order_type: "buy",
+          order_status: "0",
+
+          order_price: {
+            [Op.gte]: price, // price 보다 크거가 같아
+          },
+
+          possible_amount: {
+            [Op.gt]: 0, // 0 보다 큰거 -> 물량이 있음.
+          },
+        },
+        order: [
+          ["order_price", "DESC"],
+          ["createdAt", "DESC"],
+        ],
+        raw: true,
+      });
+
+      // 현재가가 위에 호가에 있어서 구매 수량이 없으면 단순 등록
+      if (buyOrdes.length <= 0) {
+        await Orders.create({
+          user_email: user_email,
+          real_estate_name: name,
+          order_type: "sell",
+          order_status: "0",
+          order_price: price,
+          order_amount: amount,
+          possible_amount: amount,
+        });
+
+        await Real_estates_own.update(
+          {
+            possible_quantity: sequelize.literal(
+              `possible_quantity - ${amount}`
+            ),
+          },
+          {
+            where: {
+              user_email: user_email,
+              real_estate_name: name,
+            },
+          }
+        );
+        // const _mysellorders = await mysellorders(user_email,name);
+        // console.log(_mysellorders);
+        // res.send({ message: "매도 주문 완료", data: _mysellorders });
+        res.send("매도 주문 완료");
+      } else {
+        // // console.log("buyOrders---", buyOrdes);
+
+        const result = buyOrdes.map(
+          ({ id, possible_amount, user_email, order_price }) => ({
+            id,
+            possible_amount,
+            user_email,
+            order_price,
+          })
+        );
+
+        const real_estate_id: { id: number } | null =
           (await Real_estates.findOne({
             where: {
               real_estate_name: name,
             },
-            attributes: ["current_price"],
+            attributes: ["id"],
             raw: true,
-          })) as { current_price: number } | null;
+          })) as { id: number } | null;
+        // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
 
-        // 현재가 보다 매도 주문금액이 높으면 order 테이블 단순 등록(체결이 안됨)
-        // real_estates_own 테이블에서 possible_quantity 컬럼 -amount 해주기
-        if (currentPrice!.current_price < price) {
-          await Orders.create({
-            user_email: user_email,
-            real_estate_name: name,
-            order_type: "sell",
-            order_status: "0",
-            order_price: price,
-            order_amount: amount,
-            possible_amount: amount,
-          });
+        for (const el of result) {
+          console.log(el);
 
-          await Real_estates_own.update(
-            {
-              possible_quantity: sequelize.literal(
-                `possible_quantity - ${amount}`
-              ),
-            },
-            {
-              where: {
-                user_email: user_email,
-                real_estate_name: name,
-              },
-            }
-          );
-          console.log("ㄷㅈㄱㄷㅈㄱㄷㅈ");
-          // const _mysellorders = await mysellorders(user_email,name);
-          // console.log(_mysellorders);
+          const buyerWallet = await getBuyerWallet(el.user_email);
+          console.log(buyerWallet);
+          restamount = restamount - el.possible_amount;
 
-          // res.send({ message: "매도 주문 완료", data : _mysellorders });
-          res.send("매도 주문 완료");
-
-        } else {
-          // 현재가보다 매도 주문금액이 낮거나 같을 때
-          // 먼저, 현재가로 buy 가 있는지 판단
-
-          const buyOrdes = await Orders.findAll({
-            where: {
-              real_estate_name: name,
-              order_type: "buy",
-              order_status: "0",
-
-              order_price: {
-                [Op.gte]: price, // price 보다 크거가 같아
-              },
-
-              possible_amount: {
-                [Op.gt]: 0, // 0 보다 큰거 -> 물량이 있음.
-              },
-            },
-            order: [
-              ["order_price", "DESC"],
-              ["createdAt", "DESC"],
-            ],
-            raw: true,
-          });
-
-          // 현재가가 위에 호가에 있어서 구매 수량이 없으면 단순 등록
-          if (buyOrdes.length <= 0) {
+          if (restamount < 0) {
+            console.log("restamount 0아래임", restamount);
+            const conclusionAmount = el.possible_amount + restamount;
+            // order 체결된 테이블생성
             await Orders.create({
               user_email: user_email,
               real_estate_name: name,
               order_type: "sell",
-              order_status: "0",
-              order_price: price,
-              order_amount: amount,
-              possible_amount: amount,
+              order_status: "1",
+              order_price: el.order_price,
+              order_amount: el.possible_amount + restamount,
+              possible_amount: 0,
+            });
+            // trade 테이블생성
+            await Trades.create({
+              real_estate_name: name,
+              trade_price: el.order_price,
+              trade_amount: el.possible_amount + restamount,
+              buyer_order_email: el.user_email,
+              seller_order_email: user_email,
             });
 
+            // 다 팔린게 아니기때문에 해당 id 의 possible_amount 변경해주기,
+            await Orders.update(
+              {
+                possible_amount: sequelize.literal(
+                  `possible_amount-${el.possible_amount + restamount}`
+                ),
+              },
+              {
+                where: {
+                  id: el.id,
+                },
+              }
+            );
+            // 판매자의 real_estates_own 테이블에서 possible_quantitiy, amount 체결량만큼 빼기,
             await Real_estates_own.update(
               {
                 possible_quantity: sequelize.literal(
-                  `possible_quantity - ${amount}`
+                  `possible_quantity-${el.possible_amount + restamount}`
+                ),
+                amount: sequelize.literal(
+                  `amount-${el.possible_amount + restamount}`
                 ),
               },
               {
@@ -217,512 +293,423 @@ export const orderSell = async (req: Request, res: Response) => {
                 },
               }
             );
-            // const _mysellorders = await mysellorders(user_email,name);
-            // console.log(_mysellorders);
-            // res.send({ message: "매도 주문 완료", data: _mysellorders });
-            res.send("매도 주문 완료");
-
-          } else {
-            // // console.log("buyOrders---", buyOrdes);
-
-            const result = buyOrdes.map(
-              ({ id, possible_amount, user_email, order_price }) => ({
-                id,
-                possible_amount,
-                user_email,
-                order_price,
-              })
-            );
-
-            const real_estate_id: { id: number } | null =
-              (await Real_estates.findOne({
-                where: {
-                  real_estate_name: name,
-                },
-                attributes: ["id"],
-                raw: true,
-              })) as { id: number } | null;
-            // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
-
-            for (const el of result) {
-              console.log(el);
-              
-              const buyerWallet = await getBuyerWallet(el.user_email);
-              console.log(buyerWallet);
-              restamount = restamount - el.possible_amount;
-              
-              if (restamount < 0) {
-                console.log("restamount 0아래임", restamount);
-                const conclusionAmount = el.possible_amount+ restamount;
-                // order 체결된 테이블생성
-                await Orders.create({
-                  user_email: user_email,
-                  real_estate_name: name,
-                  order_type: "sell",
-                  order_status: "1",
-                  order_price: el.order_price,
-                  order_amount: el.possible_amount + restamount,
-                  possible_amount: 0,
-                });
-                // trade 테이블생성
-                await Trades.create({
-                  real_estate_name: name,
-                  trade_price: el.order_price,
-                  trade_amount: el.possible_amount + restamount,
-                  buyer_order_email: el.user_email,
-                  seller_order_email: user_email,
-                });
-
-                // 다 팔린게 아니기때문에 해당 id 의 possible_amount 변경해주기,
-                await Orders.update(
-                  {
-                    possible_amount: sequelize.literal(
-                      `possible_amount-${el.possible_amount + restamount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      id: el.id,
-                    },
-                  }
-                );
-                // 판매자의 real_estates_own 테이블에서 possible_quantitiy, amount 체결량만큼 빼기,
-                await Real_estates_own.update(
-                  {
-                    possible_quantity: sequelize.literal(
-                      `possible_quantity-${el.possible_amount + restamount}`
-                    ),
-                    amount: sequelize.literal(
-                      `amount-${el.possible_amount + restamount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                      real_estate_name: name,
-                    },
-                  }
-                );
-                // 구매자의 using_balance 에서 체결 금액만큼 빼기,
-                await Users.update(
-                  {
-                    using_balance: sequelize.literal(
-                      `using_balance-${
-                        el.order_price * (el.possible_amount + restamount)
-                      }`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: el.user_email,
-                    },
-                  }
-                );
-
-                // 매도가 완료되었으니 판매자한테 돈 넣어주기
-                await Users.update(
-                  {
-                    balance: sequelize.literal(
-                      `balance + ${
-                        el.order_price * (el.possible_amount + restamount)
-                      }`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                    },
-                  }
-                );
-
-                // 구매자의 real_estates_own에 구매한 만큼 추가하기
-                // 먼저 구매자가 가지고 있는 매물인지 체크
-
-                const isHave = await Real_estates_own.findOne({
-                  where: {
-                    user_email: el.user_email,
-                    real_estate_name: name,
-                  },
-                });
-                // 매물이 없으면 create ,
-                if (!isHave) {
-                  await Real_estates_own.create({
-                    user_email: el.user_email,
-                    wallet : buyerWallet,
-                    real_estate_id: real_estate_id!.id,
-                    real_estate_name: name,
-                    price:
-                      (el.order_price * (el.possible_amount + restamount)) /
-                        el.possible_amount +
-                      restamount, // 🔥
-                    amount: el.possible_amount + restamount,
-                    possible_quantity: el.possible_amount + restamount,
-                  });
-                }
-                // 있으면 update
-                else {
-                  await Real_estates_own.update(
-                    {
-                      // price : sequelize.literal(`price+${el.order_price * (el.possible_amount + restamount)}`),
-                      price: sequelize.literal(
-                        `((price * amount)+(${
-                          el.order_price * (el.possible_amount + restamount)
-                        })) / (amount + ${el.possible_amount + restamount})`
-                      ), // 🔥
-                      amount: sequelize.literal(
-                        `amount+${el.possible_amount + restamount}`
-                      ),
-                      possible_quantity: sequelize.literal(
-                        `possible_quantity+${el.possible_amount + restamount}`
-                      ),
-                    },
-                    {
-                      where: {
-                        user_email: el.user_email,
-                        real_estate_name: name,
-                      },
-                    }
-                  );
-                }
-                // [판매자 지갑 , 구매자 지갑, 양]
-                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
-
-
-                break;
-              } else if (restamount == 0) {
-                console.log("restamount 0임", restamount);
-                const conclusionAmount = el.possible_amount;
-                // order 체결된 테이블생성
-                await Orders.create({
-                  user_email: user_email,
-                  real_estate_name: name,
-                  order_type: "sell",
-                  order_status: "1",
-                  order_price: el.order_price,
-                  order_amount: el.possible_amount,
-                  possible_amount: 0,
-                });
-                // trade 테이블생성
-                await Trades.create({
-                  real_estate_name: name,
-                  trade_price: el.order_price,
-                  trade_amount: el.possible_amount,
-                  buyer_order_email: el.user_email,
-                  seller_order_email: user_email,
-                });
-
-                //
-                await Orders.update(
-                  {
-                    possible_amount: 0,
-                    order_status: "1",
-                  },
-                  {
-                    where: {
-                      id: el.id,
-                    },
-                  }
-                );
-                // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
-                await Real_estates_own.update(
-                  {
-                    possible_quantity: sequelize.literal(
-                      `possible_quantity-${el.possible_amount}`
-                    ),
-                    amount: sequelize.literal(`amount-${el.possible_amount}`),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                      real_estate_name: name,
-                    },
-                  }
-                );
-                // 구매자의 using_balance 에서 체결 금액만큼 빼기,
-                await Users.update(
-                  {
-                    using_balance: sequelize.literal(
-                      `using_balance-${el.order_price * el.possible_amount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: el.user_email,
-                    },
-                  }
-                );
-
-                // 매도가 완료되었으니 판매자한테 돈 넣어주기
-                await Users.update(
-                  {
-                    balance: sequelize.literal(
-                      `balance + ${el.order_price * el.possible_amount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                    },
-                  }
-                );
-
-                // 구매자의 real_estates_own에 구매한 만큼 추가하기
-                // 먼저 구매자가 가지고 있는 매물인지 체크
-                const isHave = await Real_estates_own.findOne({
-                  where: {
-                    user_email: el.user_email,
-                    real_estate_name: name,
-                  },
-                });
-                // 매물이 없으면 create ,
-                if (!isHave) {
-                  await Real_estates_own.create({
-                    user_email: el.user_email,
-                    wallet : buyerWallet,
-                    real_estate_id: real_estate_id!.id,
-                    real_estate_name: name,
-                    price:
-                      (el.order_price * el.possible_amount) /
-                      el.possible_amount, // 🔥
-                    amount: el.possible_amount,
-                    possible_quantity: el.possible_amount,
-                  });
-                }
-                // 있으면 update
-                else {
-                  await Real_estates_own.update(
-                    {
-                      // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
-                      price: sequelize.literal(
-                        `((price * amount) + (${
-                          el.order_price * el.possible_amount
-                        })) / (amount + ${el.possible_amount})`
-                      ), // 🔥
-                      amount: sequelize.literal(`amount+${el.possible_amount}`),
-                      possible_quantity: sequelize.literal(
-                        `possible_quantity+${el.possible_amount}`
-                      ),
-                    },
-                    {
-                      where: {
-                        user_email: el.user_email,
-                        real_estate_name: name,
-                      },
-                    }
-                  );
-                }
-                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
-
-                break;
-              } else {
-                console.log("restamount 0이상임", restamount);
-                const conclusionAmount = el.possible_amount;
-                // order 체결된 테이블생성
-                await Orders.create({
-                  user_email: user_email,
-                  real_estate_name: name,
-                  order_type: "sell",
-                  order_status: "1",
-                  order_price: el.order_price,
-                  order_amount: el.possible_amount,
-                  possible_amount: 0,
-                });
-                // trade 테이블생성
-                await Trades.create({
-                  real_estate_name: name,
-                  trade_price: el.order_price,
-                  trade_amount: el.possible_amount,
-                  buyer_order_email: el.user_email,
-                  seller_order_email: user_email,
-                });
-
-                //
-                await Orders.update(
-                  {
-                    possible_amount: 0,
-                    order_status: "1",
-                  },
-                  {
-                    where: {
-                      id: el.id,
-                    },
-                  }
-                );
-                // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
-                await Real_estates_own.update(
-                  {
-                    possible_quantity: sequelize.literal(
-                      `possible_quantity-${el.possible_amount}`
-                    ),
-                    amount: sequelize.literal(`amount-${el.possible_amount}`),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                      real_estate_name: name,
-                    },
-                  }
-                );
-                // 구매자의 using_balance 에서 체결 금액만큼 빼기,
-                await Users.update(
-                  {
-                    using_balance: sequelize.literal(
-                      `using_balance-${el.order_price * el.possible_amount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: el.user_email,
-                    },
-                  }
-                );
-
-                // 매도가 완료되었으니 판매자한테 돈 넣어주기
-                await Users.update(
-                  {
-                    balance: sequelize.literal(
-                      `balance + ${el.order_price * el.possible_amount}`
-                    ),
-                  },
-                  {
-                    where: {
-                      user_email: user_email,
-                    },
-                  }
-                );
-
-                // 구매자의 real_estates_own에 구매한 만큼 추가하기
-                // 먼저 구매자가 가지고 있는 매물인지 체크
-                const isHave = await Real_estates_own.findOne({
-                  where: {
-                    user_email: el.user_email,
-                    real_estate_name: name,
-                  },
-                });
-                // 매물이 없으면 create ,
-                if (!isHave) {
-                  await Real_estates_own.create({
-                    user_email: el.user_email,
-                    wallet : buyerWallet,
-                    real_estate_id: real_estate_id!.id,
-                    real_estate_name: name,
-                    price:
-                      (el.order_price * el.possible_amount) /
-                      el.possible_amount, // 🔥
-                    amount: el.possible_amount,
-                    possible_quantity: el.possible_amount,
-                  });
-                }
-                // 있으면 update
-                else {
-                  await Real_estates_own.update(
-                    {
-                      // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
-                      price: sequelize.literal(
-                        `((price * amount) + (${
-                          el.order_price * el.possible_amount
-                        })) / (amount + ${el.possible_amount})`
-                      ), // 🔥
-                      amount: sequelize.literal(`amount+${el.possible_amount}`),
-                      possible_quantity: sequelize.literal(
-                        `possible_quantity+${el.possible_amount}`
-                      ),
-                    },
-                    {
-                      where: {
-                        user_email: el.user_email,
-                        real_estate_name: name,
-                      },
-                    }
-                  );
-                }
-                tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
-              }
-            }
-            console.log("최종 amount", restamount);
-            console.log(tradeArr);
-            // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
-            // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
-            const lastTradePrice: { trade_price: number }[] | null =
-              (await Trades.findAll({
-                where: {
-                  real_estate_name: name,
-                },
-
-                attributes: ["trade_price"],
-
-                order: [["createdAt", "DESC"]],
-
-                limit: 1,
-                raw: true,
-              })) as { trade_price: number }[] | null;
-
-            // // console.log(lastTradePrice?.[0].trade_price);
-
-            await Real_estates.update(
+            // 구매자의 using_balance 에서 체결 금액만큼 빼기,
+            await Users.update(
               {
-                current_price: lastTradePrice?.[0]?.trade_price,
+                using_balance: sequelize.literal(
+                  `using_balance-${
+                    el.order_price * (el.possible_amount + restamount)
+                  }`
+                ),
               },
               {
                 where: {
-                  real_estate_name: name,
+                  user_email: el.user_email,
                 },
               }
             );
 
-            if (restamount > 0) {
-              // 현재가 보다 낮은가격에 매도 한다면 현재가에 매도
-              // lastTradePrice?.[0]?.trade_price 가 undefined 인지 먼저 판별 하고 true 면 lastTradePrice[0].trade_price  과 && 연산
-              // lastTradePrice[0].trade_price 값이 존재한다면 price 랑 그때 비교
-              if (
-                lastTradePrice?.[0]?.trade_price !== undefined &&
-                lastTradePrice[0].trade_price > price
-              ) {
-                // 남은 물량 order 테이블에 추가해주고,
-                await Orders.create({
+            // 매도가 완료되었으니 판매자한테 돈 넣어주기
+            await Users.update(
+              {
+                balance: sequelize.literal(
+                  `balance + ${
+                    el.order_price * (el.possible_amount + restamount)
+                  }`
+                ),
+              },
+              {
+                where: {
                   user_email: user_email,
-                  real_estate_name: name,
-                  order_type: "sell",
-                  order_status: "0",
-                  order_price: lastTradePrice?.[0]?.trade_price,
-                  order_amount: restamount,
-                  possible_amount: restamount,
-                });
-              } else {
-                // 남은 물량 order 테이블에 추가해주고,
-                await Orders.create({
-                  user_email: user_email,
-                  real_estate_name: name,
-                  order_type: "sell",
-                  order_status: "0",
-                  order_price: price,
-                  order_amount: restamount,
-                  possible_amount: restamount,
-                });
+                },
               }
+            );
 
-              // 가능 수량에서 빼주고,
+            // 구매자의 real_estates_own에 구매한 만큼 추가하기
+            // 먼저 구매자가 가지고 있는 매물인지 체크
+
+            const isHave = await Real_estates_own.findOne({
+              where: {
+                user_email: el.user_email,
+                real_estate_name: name,
+              },
+            });
+            // 매물이 없으면 create ,
+            if (!isHave) {
+              await Real_estates_own.create({
+                user_email: el.user_email,
+                wallet: buyerWallet,
+                real_estate_id: real_estate_id!.id,
+                real_estate_name: name,
+                price:
+                  (el.order_price * (el.possible_amount + restamount)) /
+                    el.possible_amount +
+                  restamount, // 🔥
+                amount: el.possible_amount + restamount,
+                possible_quantity: el.possible_amount + restamount,
+              });
+            }
+            // 있으면 update
+            else {
               await Real_estates_own.update(
                 {
+                  // price : sequelize.literal(`price+${el.order_price * (el.possible_amount + restamount)}`),
+                  price: sequelize.literal(
+                    `((price * amount)+(${
+                      el.order_price * (el.possible_amount + restamount)
+                    })) / (amount + ${el.possible_amount + restamount})`
+                  ), // 🔥
+                  amount: sequelize.literal(
+                    `amount+${el.possible_amount + restamount}`
+                  ),
                   possible_quantity: sequelize.literal(
-                    `possible_quantity-${restamount}`
+                    `possible_quantity+${el.possible_amount + restamount}`
                   ),
                 },
                 {
                   where: {
-                    user_email: user_email,
+                    user_email: el.user_email,
                     real_estate_name: name,
                   },
                 }
               );
             }
+            // [판매자 지갑 , 구매자 지갑, 양]
+            tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
 
-            res.send({message:"매도 완료",data : tradeArr});
+            break;
+          } else if (restamount == 0) {
+            console.log("restamount 0임", restamount);
+            const conclusionAmount = el.possible_amount;
+            // order 체결된 테이블생성
+            await Orders.create({
+              user_email: user_email,
+              real_estate_name: name,
+              order_type: "sell",
+              order_status: "1",
+              order_price: el.order_price,
+              order_amount: el.possible_amount,
+              possible_amount: 0,
+            });
+            // trade 테이블생성
+            await Trades.create({
+              real_estate_name: name,
+              trade_price: el.order_price,
+              trade_amount: el.possible_amount,
+              buyer_order_email: el.user_email,
+              seller_order_email: user_email,
+            });
+
+            //
+            await Orders.update(
+              {
+                possible_amount: 0,
+                order_status: "1",
+              },
+              {
+                where: {
+                  id: el.id,
+                },
+              }
+            );
+            // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
+            await Real_estates_own.update(
+              {
+                possible_quantity: sequelize.literal(
+                  `possible_quantity-${el.possible_amount}`
+                ),
+                amount: sequelize.literal(`amount-${el.possible_amount}`),
+              },
+              {
+                where: {
+                  user_email: user_email,
+                  real_estate_name: name,
+                },
+              }
+            );
+            // 구매자의 using_balance 에서 체결 금액만큼 빼기,
+            await Users.update(
+              {
+                using_balance: sequelize.literal(
+                  `using_balance-${el.order_price * el.possible_amount}`
+                ),
+              },
+              {
+                where: {
+                  user_email: el.user_email,
+                },
+              }
+            );
+
+            // 매도가 완료되었으니 판매자한테 돈 넣어주기
+            await Users.update(
+              {
+                balance: sequelize.literal(
+                  `balance + ${el.order_price * el.possible_amount}`
+                ),
+              },
+              {
+                where: {
+                  user_email: user_email,
+                },
+              }
+            );
+
+            // 구매자의 real_estates_own에 구매한 만큼 추가하기
+            // 먼저 구매자가 가지고 있는 매물인지 체크
+            const isHave = await Real_estates_own.findOne({
+              where: {
+                user_email: el.user_email,
+                real_estate_name: name,
+              },
+            });
+            // 매물이 없으면 create ,
+            if (!isHave) {
+              await Real_estates_own.create({
+                user_email: el.user_email,
+                wallet: buyerWallet,
+                real_estate_id: real_estate_id!.id,
+                real_estate_name: name,
+                price:
+                  (el.order_price * el.possible_amount) / el.possible_amount, // 🔥
+                amount: el.possible_amount,
+                possible_quantity: el.possible_amount,
+              });
+            }
+            // 있으면 update
+            else {
+              await Real_estates_own.update(
+                {
+                  // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
+                  price: sequelize.literal(
+                    `((price * amount) + (${
+                      el.order_price * el.possible_amount
+                    })) / (amount + ${el.possible_amount})`
+                  ), // 🔥
+                  amount: sequelize.literal(`amount+${el.possible_amount}`),
+                  possible_quantity: sequelize.literal(
+                    `possible_quantity+${el.possible_amount}`
+                  ),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
+                }
+              );
+            }
+            tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
+
+            break;
+          } else {
+            console.log("restamount 0이상임", restamount);
+            const conclusionAmount = el.possible_amount;
+            // order 체결된 테이블생성
+            await Orders.create({
+              user_email: user_email,
+              real_estate_name: name,
+              order_type: "sell",
+              order_status: "1",
+              order_price: el.order_price,
+              order_amount: el.possible_amount,
+              possible_amount: 0,
+            });
+            // trade 테이블생성
+            await Trades.create({
+              real_estate_name: name,
+              trade_price: el.order_price,
+              trade_amount: el.possible_amount,
+              buyer_order_email: el.user_email,
+              seller_order_email: user_email,
+            });
+
+            //
+            await Orders.update(
+              {
+                possible_amount: 0,
+                order_status: "1",
+              },
+              {
+                where: {
+                  id: el.id,
+                },
+              }
+            );
+            // 판매자의 real_estates_own 테이블에서 possible_quantitiy 체결량만큼 빼기,
+            await Real_estates_own.update(
+              {
+                possible_quantity: sequelize.literal(
+                  `possible_quantity-${el.possible_amount}`
+                ),
+                amount: sequelize.literal(`amount-${el.possible_amount}`),
+              },
+              {
+                where: {
+                  user_email: user_email,
+                  real_estate_name: name,
+                },
+              }
+            );
+            // 구매자의 using_balance 에서 체결 금액만큼 빼기,
+            await Users.update(
+              {
+                using_balance: sequelize.literal(
+                  `using_balance-${el.order_price * el.possible_amount}`
+                ),
+              },
+              {
+                where: {
+                  user_email: el.user_email,
+                },
+              }
+            );
+
+            // 매도가 완료되었으니 판매자한테 돈 넣어주기
+            await Users.update(
+              {
+                balance: sequelize.literal(
+                  `balance + ${el.order_price * el.possible_amount}`
+                ),
+              },
+              {
+                where: {
+                  user_email: user_email,
+                },
+              }
+            );
+
+            // 구매자의 real_estates_own에 구매한 만큼 추가하기
+            // 먼저 구매자가 가지고 있는 매물인지 체크
+            const isHave = await Real_estates_own.findOne({
+              where: {
+                user_email: el.user_email,
+                real_estate_name: name,
+              },
+            });
+            // 매물이 없으면 create ,
+            if (!isHave) {
+              await Real_estates_own.create({
+                user_email: el.user_email,
+                wallet: buyerWallet,
+                real_estate_id: real_estate_id!.id,
+                real_estate_name: name,
+                price:
+                  (el.order_price * el.possible_amount) / el.possible_amount, // 🔥
+                amount: el.possible_amount,
+                possible_quantity: el.possible_amount,
+              });
+            }
+            // 있으면 update
+            else {
+              await Real_estates_own.update(
+                {
+                  // price : sequelize.literal(`price+${el.order_price * el.possible_amount}`),
+                  price: sequelize.literal(
+                    `((price * amount) + (${
+                      el.order_price * el.possible_amount
+                    })) / (amount + ${el.possible_amount})`
+                  ), // 🔥
+                  amount: sequelize.literal(`amount+${el.possible_amount}`),
+                  possible_quantity: sequelize.literal(
+                    `possible_quantity+${el.possible_amount}`
+                  ),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
+                }
+              );
+            }
+            tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
           }
         }
-      // } else {
-      //   res.send("보유 수량 부족");
-      // }
+        console.log("최종 amount", restamount);
+        console.log(tradeArr);
+        // 해당 매물의 마지막 체결 테이블의 trade_price 를 가져와서
+        // 매물의 현재가로 변경해주기. => 체결의 마지막이 현재가
+        const lastTradePrice: { trade_price: number }[] | null =
+          (await Trades.findAll({
+            where: {
+              real_estate_name: name,
+            },
+
+            attributes: ["trade_price"],
+
+            order: [["createdAt", "DESC"]],
+
+            limit: 1,
+            raw: true,
+          })) as { trade_price: number }[] | null;
+
+        // // console.log(lastTradePrice?.[0].trade_price);
+
+        await Real_estates.update(
+          {
+            current_price: lastTradePrice?.[0]?.trade_price,
+          },
+          {
+            where: {
+              real_estate_name: name,
+            },
+          }
+        );
+
+        if (restamount > 0) {
+          // 현재가 보다 낮은가격에 매도 한다면 현재가에 매도
+          // lastTradePrice?.[0]?.trade_price 가 undefined 인지 먼저 판별 하고 true 면 lastTradePrice[0].trade_price  과 && 연산
+          // lastTradePrice[0].trade_price 값이 존재한다면 price 랑 그때 비교
+          if (
+            lastTradePrice?.[0]?.trade_price !== undefined &&
+            lastTradePrice[0].trade_price > price
+          ) {
+            // 남은 물량 order 테이블에 추가해주고,
+            await Orders.create({
+              user_email: user_email,
+              real_estate_name: name,
+              order_type: "sell",
+              order_status: "0",
+              order_price: lastTradePrice?.[0]?.trade_price,
+              order_amount: restamount,
+              possible_amount: restamount,
+            });
+          } else {
+            // 남은 물량 order 테이블에 추가해주고,
+            await Orders.create({
+              user_email: user_email,
+              real_estate_name: name,
+              order_type: "sell",
+              order_status: "0",
+              order_price: price,
+              order_amount: restamount,
+              possible_amount: restamount,
+            });
+          }
+
+          // 가능 수량에서 빼주고,
+          await Real_estates_own.update(
+            {
+              possible_quantity: sequelize.literal(
+                `possible_quantity-${restamount}`
+              ),
+            },
+            {
+              where: {
+                user_email: user_email,
+                real_estate_name: name,
+              },
+            }
+          );
+        }
+
+        res.send({ message: "매도 완료", data: tradeArr });
+      }
+    }
+    // } else {
+    //   res.send("보유 수량 부족");
+    // }
     // }
   } catch (error) {
     console.log(error);
@@ -739,9 +726,8 @@ export const orderBuy = async (req: Request, res: Response) => {
 
   // 유저 임시
   // const islogin = "test2@naver.com"
-  const tradeArr : any = [];
+  const tradeArr: any = [];
   try {
-
     const buyerWallet = await getBuyerWallet(user_email);
     // 구매했을 때 유저의 잔고가 주문금액 * 수량 보다 많은지 확인
     // 유저테이블의 balance 가져오기
@@ -880,7 +866,7 @@ export const orderBuy = async (req: Request, res: Response) => {
             if (restamount < 0) {
               // console.log("0볻 ㅏ작아음");
               // console.log(restamount); // -2
-              const conclusionAmount =   el.possible_amount + restamount ; 
+              const conclusionAmount = el.possible_amount + restamount;
               // 오더 테이블에 체결 상태로 넣기
               await Orders.create({
                 user_email: user_email,
@@ -897,11 +883,16 @@ export const orderBuy = async (req: Request, res: Response) => {
               // 해당 id 컬럼에서 possible_amount -amount를 해주고,
               // 물량이 남아있으니 미체결 0 으로 두기
 
-              await Orders.update({
-                  possible_amount : sequelize.literal(`possible_amount-${el.possible_amount + restamount}`)
-              },{
-                  where : { id : el.id },
-              })
+              await Orders.update(
+                {
+                  possible_amount: sequelize.literal(
+                    `possible_amount-${el.possible_amount + restamount}`
+                  ),
+                },
+                {
+                  where: { id: el.id },
+                }
+              );
 
               // 체결 테이블 생성
               await Trades.create({
@@ -927,14 +918,19 @@ export const orderBuy = async (req: Request, res: Response) => {
               );
 
               // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-              await Real_estates_own.update({
-                  amount : sequelize.literal(`amount-${el.possible_amount + restamount}`)
-              },{
-                  where :{
-                      user_email : el.user_email,
-                      real_estate_name : name,
-                  }
-              })
+              await Real_estates_own.update(
+                {
+                  amount: sequelize.literal(
+                    `amount-${el.possible_amount + restamount}`
+                  ),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
+                }
+              );
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -962,7 +958,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
-                  wallet : buyerWallet,
+                  wallet: buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:
@@ -998,7 +994,7 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
-              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount})
+              tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
               break;
             } else if (restamount == 0) {
               // // console.log("0임");
@@ -1083,7 +1079,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
-                  wallet : buyerWallet,
+                  wallet: buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:
@@ -1116,7 +1112,7 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
-              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount});
+              tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
               break;
             } else {
               // console.log("0보다 큼");
@@ -1165,14 +1161,17 @@ export const orderBuy = async (req: Request, res: Response) => {
                 }
               );
               // 판매자의 real_estates_own 의 amount 를 체결 수량만큼 빼기 🔥
-              await Real_estates_own.update({
-                amount : sequelize.literal(`amount-${el.possible_amount}`)
-              },{
-                  where :{
-                      user_email : el.user_email,
-                      real_estate_name : name,
-                  }
-              })
+              await Real_estates_own.update(
+                {
+                  amount: sequelize.literal(`amount-${el.possible_amount}`),
+                },
+                {
+                  where: {
+                    user_email: el.user_email,
+                    real_estate_name: name,
+                  },
+                }
+              );
 
               // 구매자 balance 에 차감
               await Users.update(
@@ -1198,7 +1197,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               if (!isHave) {
                 await Real_estates_own.create({
                   user_email: user_email,
-                  wallet : buyerWallet,
+                  wallet: buyerWallet,
                   real_estate_id: real_estate_id!.id,
                   real_estate_name: name,
                   price:
@@ -1231,7 +1230,7 @@ export const orderBuy = async (req: Request, res: Response) => {
                   }
                 );
               }
-              tradeArr.push({sellerWallet,buyerWallet,conclusionAmount});
+              tradeArr.push({ sellerWallet, buyerWallet, conclusionAmount });
             }
           }
           // console.log("최종 amount", restamount);
@@ -1305,7 +1304,7 @@ export const orderBuy = async (req: Request, res: Response) => {
               }
             );
           }
-          res.send({message:"매수 완료",data : tradeArr});
+          res.send({ message: "매수 완료", data: tradeArr });
         }
       }
     } else {
@@ -1491,8 +1490,8 @@ export const cancelOrder = async (req: Request, res: Response) => {
     if (!req.body?.user_email) return res.send("비로그인 유저");
     // console.log(req.body);
     // console.log(req.params);
-    const {user_email} =req.body;
-    const {name, id} =req.params;
+    const { user_email } = req.body;
+    const { name, id } = req.params;
     // 임시 로그인
     // const islogin = "test@naver.com";
     // 해당 id로 orders 테이블의 order_type 을 가져와서,
@@ -1596,17 +1595,17 @@ export const headerInfo = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-export const getCaMysellorders = async (req: Request, res : Response)=>{
-  const {user_email} = req.body;
-  const {name} = req.params;
-  console.log("+_+_+_+_",user_email,name);
+export const getCaMysellorders = async (req: Request, res: Response) => {
+  const { user_email } = req.body;
+  const { name } = req.params;
+  console.log("+_+_+_+_", user_email, name);
   try {
-    const _mysellorders = await mysellorders(user_email,name);
+    const _mysellorders = await mysellorders(user_email, name);
     // console.log(_mysellorders);
     res.json(_mysellorders);
   } catch (error) {
-    console.log("getCaMysellorders에서 오류남",getCaMysellorders);
+    console.log("getCaMysellorders에서 오류남", getCaMysellorders);
   }
-}
+};
