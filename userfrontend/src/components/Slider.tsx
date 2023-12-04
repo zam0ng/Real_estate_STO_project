@@ -13,7 +13,7 @@ interface WidthProps {
 
 const Slider: React.FC<WidthProps> = ({width,slides})=>{
     // console.log(width);
-    console.log(slides);
+    // console.log(slides);
 
     const [currentIndex,setCurrentIndex] = useState<number>(0)
 
