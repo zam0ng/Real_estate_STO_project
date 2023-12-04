@@ -1104,7 +1104,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
         el["Subscription.subscription_building_date"],
     }));
 
-    const wallet_list = result.map((el: any) => el.user_email);
+    const wallet_list = result.map((el: any) => el.wallet);
     const amount_list = result.map((el: any) => el.amount);
 
     console.log(wallet_list);
