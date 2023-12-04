@@ -41,7 +41,7 @@ export default function SubEndedList({ props }: SubAllListType) {
         {newData.map((building :SubAllList, index : number) => (
 
         <div key={index} className='border-b-2 mx-2 h-16 m-auto mt-1 flex justify-between'>
-        <div className=" w-16 h-9 mr-2 mt-3 rounded-full" style={{background : `url('${serverurl}/estate_img/${building.subscription_img_1}')`, backgroundSize : 'cover'}}> </div>
+        <div className=" w-16 h-9 mr-2 mt-3 rounded-full" style={{background : `url('${serverurl}/estate_img/${(building.subscription_img_1).split('\\')[2]}')`, backgroundSize : 'cover'}}> </div>
         <div className=" h-14 w-48 flex flex-col text-left pt-3 mx-3  ">
             <span className="text-xs">{building.subscription_name}</span>
             <span className="text-xs pt-1">
