@@ -58,34 +58,34 @@ async function mysellorders(_user_email : string,_name : string){
   return newObj;
 }
 
-async function getSellerWallet(user_email:string) {
+async function getSellerWallet(user_email: string) {
   // 판매자 지갑 주소 가져오기
   console.log("getSellerWallet 실행됨?");
-  const {wallet} :any = await Users.findOne({
-    where : {
-      user_email : user_email,
+  const userInfo: any = await Users.findOne({
+    where: {
+      user_email: user_email,
     },
-    attributes :[
-      'wallet'
-    ],
-    raw : true,
-  })
-  return wallet;
+    attributes: ["wallet"],
+    raw: true,
+  });
+  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
+
+  return userInfo.wallet;
 }
 
-async function getBuyerWallet(user_email:string) {
+async function getBuyerWallet(user_email: string) {
   // 구매자 지갑 주소 가져오기
   console.log("getBuyerWallet 실행됨?");
-  const {wallet} :any = await Users.findOne({
-    where : {
-      user_email : user_email,
+  const userInfo: any = await Users.findOne({
+    where: {
+      user_email: user_email,
     },
-    attributes :[
-      'wallet'
-    ],
-    raw : true,
-  })
-  return wallet;
+    attributes: ["wallet"],
+    raw: true,
+  });
+  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
+
+  return userInfo.wallet;
 }
 
 
