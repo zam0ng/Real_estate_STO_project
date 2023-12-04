@@ -27,23 +27,22 @@ const DividendPayInfo: React.FC<TotalDividendRequest> = ({
     } else {
       setBaseMonth((baseDate.getMonth() + 1).toString());
     }
-
-    if ((payDate.getMonth() + 1).toString().length === 1) {
-      setPayMonth(`0${payDate.getMonth() + 1}`);
+    if ((baseDate.getMonth() + 1).toString.length === 1) {
+      setBaseMonth(`0${baseDate.getMonth()}`);
     } else {
-      setPayMonth((payDate.getMonth() + 1).toString());
+      setBaseMonth((baseDate.getMonth() + 1).toString());
     }
 
     if (baseDate.getDay().toString().length === 1) {
-      setBaseDay(`${baseDate.getDate().toString().padStart(2, "0")}`);
+      setBaseDay(`0${baseDate.getDay()}`);
     } else {
-      setBaseDay(baseDate.getDate().toString());
+      setBaseDay(baseDate.getDay().toString());
     }
 
     if (payDate.getDay().toString().length === 1) {
-      setPayDay(`${payDate.getDate().toString().padStart(2, "0")}`);
+      setPayDay(`0${payDate.getDay()}`);
     } else {
-      setPayDay(payDate.getDate().toString());
+      setPayDay(payDate.getDay().toString());
     }
   }, []);
 
