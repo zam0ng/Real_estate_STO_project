@@ -128,14 +128,14 @@ const FormSectionNoticeInfo_: React.FC<NoticeFormSectionProps> = ({
       </div>
 
                 {/* 공지 정보 */}
-                <InputFormItemTitle 
+                <InputFormItem 
                     _title={"제목"} 
                     _type={"text"} 
                     _name = {"title"}  
                     _placeholder={"대체공휴일 지정에 따라 아래와 같이 휴장 안내"} />
                 
                 {/* 공지 정보 */}
-                <InputFormItem 
+                <InputFormItemTitle 
                     _title={"상세 내용"} 
                     _type={"text"} 
                     _name = {"content"}  

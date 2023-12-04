@@ -440,6 +440,15 @@ export const dividendList = async (req: Request, res: Response) => {
 export const subscriptionList = async (req: Request, res: Response) => {
   try {
     const user_email = req.query.user_email as string;
+    const wallet = await db.Users.findOne({
+      where : {
+        user_email : user_email,
+      },
+      attributes :[
+        'wallet'
+      ],
+      raw : true,
+    })
 
     const query = `
       select a.id,
@@ -449,17 +458,18 @@ export const subscriptionList = async (req: Request, res: Response) => {
         a.subscription_order_amount,
         DATE(b."createdAt") as application_date , 
         DATE(a.subscription_end_date AT TIME ZONE 'Asia/Seoul') as subscription_end_date, 
-        b.subscription_my_amount, 
+        b.amount, 
         a.subscription_offering_price,
-        (a.subscription_offering_price * b.subscription_my_amount) as refund_price
-      from subscriptions a join subscription_application b 
+        (a.subscription_offering_price * b.amount) as refund_price
+      from subscriptions a join subscriptions_own b 
           on a.id = b.subscription_id
-      where b.subscription_user_email = '${user_email}'`;
+      where b.wallet = '${wallet?.wallet}'`;
 
-    const result = await db.sequelize.query(query, {
-      replacements: { user_email: user_email },
-      type: QueryTypes.SELECT,
-    });
+      const result = await db.sequelize.query(query, {
+        replacements: { user_email: user_email },
+        type: QueryTypes.SELECT,
+      });
+      console.log("result+_+_+_+_",result);
 
     if (result) return res.status(200).json(result);
     else return res.status(404).send("empty");

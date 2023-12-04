@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 interface SubscriptionItemInfoProps {
     application_date: string;
     subscription_end_date: string;
-    subscription_my_amount: number;
+    amount: number;
     subscription_offering_price: string;
 }
 
-const MySubscriptionListitemInfo: React.FC<SubscriptionItemInfoProps> = ({application_date,subscription_offering_price,subscription_end_date,subscription_my_amount}) => {
+const MySubscriptionListitemInfo: React.FC<SubscriptionItemInfoProps> = ({application_date,subscription_offering_price,subscription_end_date,
+    amount}) => {
 
     const [applyDate,setApplyDate] = useState<string>("");
     const [endDate,setEndDate] = useState<string>("");
@@ -25,8 +26,8 @@ const MySubscriptionListitemInfo: React.FC<SubscriptionItemInfoProps> = ({applic
         if(endDateParts !== undefined){
             setEndDate(`${endDateParts[1]}.${endDateParts[2]}`);
         }
-        setApplyAmount(subscription_my_amount);
-        setGetAmount(subscription_my_amount);
+        setApplyAmount(amount);
+        setGetAmount(amount);
         setOfferPrice(Number(subscription_offering_price));
         setRefundPrice(offerPrice*applyAmount - offerPrice*getAmount);
     },[]);

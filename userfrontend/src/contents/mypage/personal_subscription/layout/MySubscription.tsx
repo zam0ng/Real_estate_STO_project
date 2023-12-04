@@ -12,7 +12,7 @@ export interface MySubscriptionListRequest {
   subscription_img_1: string;
   application_date: string;
   subscription_end_date: string;
-  subscription_my_amount: number;
+  amount: number;
   subscription_offering_price: string;
   refund_price: string;
   subscription_order_amount: number;
@@ -47,6 +47,7 @@ const MySubscription: React.FC<UserEmailProps> = ({ email }) => {
   useEffect(() => {
     AOS.init({duration : 1200})
   }, []);
+  console.log("data+_+_+_+_+_",data);
 
   return (
     <SubscriptionContext.Provider value={data}>

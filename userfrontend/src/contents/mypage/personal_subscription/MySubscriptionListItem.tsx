@@ -11,7 +11,7 @@ const MySubscriptionListItem: React.FC<MySubscriptionListRequest> = ({
   subscription_img_1,
   application_date,
   subscription_end_date,
-  subscription_my_amount,
+  amount,
   subscription_offering_price,
   refund_price,
   subscription_order_amount,
@@ -34,7 +34,7 @@ const MySubscriptionListItem: React.FC<MySubscriptionListRequest> = ({
           <MySubscriptionListitemInfo 
             application_date={application_date} 
             subscription_end_date={subscription_end_date} 
-            subscription_my_amount={subscription_my_amount} 
+            amount={amount} 
             subscription_offering_price={subscription_offering_price} 
           />
         </div>

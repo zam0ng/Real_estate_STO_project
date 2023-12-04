@@ -1022,7 +1022,7 @@ export const dividendSubmit = async (req: Request, res: Response) => {
     await Notices.create({
       category: "공시",
       notice_title: `${month}월 배당금 지급 안내`,
-      notice_content: `안녕하세요. 카사입니다. \n 아래와 같이 ${real_estate_name} ${month} 월 배당금 지급 관련하여 안내해 드립니다. \n 1. 건물명 : ${real_estate_name} \n 2. 예상 배당금 : ${dividend_price}원 \n 3. 배당기준일 : ${basedate} \n 4. 지급예정일 : ${paymentdate} \n 5. 배당종류 : 현금배당`,
+      notice_content: `안녕하세요. bounceSto입니다.. \n 아래와 같이 ${real_estate_name} ${month} 월 배당금 지급 관련하여 안내해 드립니다. \n 1. 건물명 : ${real_estate_name} \n 2. 예상 배당금 : ${dividend_price}원 \n 3. 배당기준일 : ${basedate} \n 4. 지급예정일 : ${paymentdate} \n 5. 배당종류 : 현금배당`,
       notice_writer: "admin",
       real_estate_name: real_estate_name,
     });

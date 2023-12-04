@@ -14,7 +14,7 @@ const MySubscriptionList: React.FC = () => {
           subscription_name={item.subscription_name}
           subscription_img_1={item.subscription_img_1}
           subscription_end_date={item.subscription_end_date}
-          subscription_my_amount={item.subscription_my_amount}
+          amount={item.amount}
           subscription_offering_price={item.subscription_offering_price}
           subscription_order_amount={item.subscription_order_amount}
           subscription_totalsupply={item.subscription_totalsupply}

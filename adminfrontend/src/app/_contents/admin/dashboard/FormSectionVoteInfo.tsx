@@ -91,7 +91,7 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
                     
                   </div>
 
-                <InputFormItemTitle
+                <InputFormItem
                     _title={"투표 주제"} 
                     _type={"text"} 
                     _name = {"notice_title"}  
