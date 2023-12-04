@@ -994,7 +994,11 @@ export const noticeSubmit = async (req: Request, res: Response) => {
 // 게시글(공지/공시) 받아오기 by ✅DJ.테스트
 export const noticesList = async (req : Request , res : Response) => {
   try {
-    const noticeList = await Notices.findAll()
+    const noticeList = await Notices.findAll({
+      order :[
+        ['id','ASC']
+      ]
+    })
     res.status(200).json(noticeList);
   } catch (error) {
     console.log(error);

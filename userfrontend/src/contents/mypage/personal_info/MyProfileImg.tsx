@@ -11,7 +11,7 @@ const MyProfileImg: React.FC<UserProfileImgProps> = ({ img }) => {
       <div className="w-28 h-28  rounded-full bg-[#EDF0F4]  shadow-innerneu2">
         <img
           className="w-full h-full rounded-full"
-          src={`${serverurl}/estate_img/${img}`}
+          src={`${img}`}
         />
       </div>
     </div>
