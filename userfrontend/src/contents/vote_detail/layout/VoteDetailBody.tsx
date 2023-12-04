@@ -50,9 +50,11 @@ const VoteDetailBody: React.FC = () => {
       .on("data", (event)=>{
         console.log(event.returnValues);
         console.log(typeof event.returnValues.voters);
+        let votedVoters = event.returnValues.voters as string[];
         setAgreeVotes(Number(event.returnValues.agreeVotes));
         setDisagreeVotes(Number(event.returnValues.disagreeVotes));
         setUsedVotes(Number(event.returnValues.usedTokens));
+        setVotedOwners(votedVoters);
       })
     };
   },[web3]);
