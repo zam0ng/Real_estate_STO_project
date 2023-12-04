@@ -56,9 +56,16 @@ const PropertyPrice: React.FC = () => {
   return (
     <div className='w-[20%] h-[80%]'>
       <div className='w-full h-[30%] flex justify-center items-end text-xxs'>1 {tokenSymbol} 가격</div>
-      <div className='w-full h-[40%] flex justify-center items-center'>
-        {data?.current_price + "원"}
-      </div>
+      {data !== undefined && (
+        <div className='w-full h-[40%] flex justify-center items-center'>
+          {data?.current_price + "원"}
+        </div>
+      )}
+      {data === undefined && (
+        <div className='w-full h-[40%] flex justify-center items-center'>
+          {"0 원"}
+        </div>
+      )}
       <div className={`w-full h-[30%] flex justify-center items-center ${textColor} text-xxs`}>
         {priceChangeRate}
       </div>
