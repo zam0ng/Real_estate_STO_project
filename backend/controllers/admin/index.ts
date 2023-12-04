@@ -1000,7 +1000,7 @@ export const noticesList = async (req : Request , res : Response) => {
 }
 
 export const dividendSubmit = async (req: Request, res: Response) => {
-  // console.log(req.body);
+  // console.log("dividendSubmit+_+_+_+_",req.body);
   const { real_estate_name, dividend_price, basedate, paymentdate } = req.body;
   const month = paymentdate.slice(5, 7);
   try {
@@ -1009,6 +1009,7 @@ export const dividendSubmit = async (req: Request, res: Response) => {
       dividend_price: dividend_price,
       dividend_basedate: basedate,
       dividend_paymentdate: paymentdate,
+      dividend_status : "예정",
     });
 
     await Notices.create({
@@ -1200,4 +1201,18 @@ export const allUsers = async (req: Request, res: Response) => {
 };
 
 
-
+export const statusUpdate = async(req : Request, res : Response)=>{
+  // console.log(req.params);
+  const {name} = req.params;
+  try {
+    await Subscriptions.update({
+      subscription_status : 'success'
+    },{
+      where :{
+        subscription_name : name,
+      }
+    })
+  } catch (error) {
+    console.log("statusUpdate에서 오류남",error);
+  }
+}

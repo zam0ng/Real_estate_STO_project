@@ -29,6 +29,7 @@ import TransactionStatus_ from "./TransactionStatus_";
 import TransactionCreatedDate from "./TransactionCreatedDate";
 
 const TableRowTransaction = async ({ item }: TransactionTableRow) => {
+  // console.log(item);
   return (
     <>
       {/* 구분선 */}

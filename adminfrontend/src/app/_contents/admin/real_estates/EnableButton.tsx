@@ -192,7 +192,9 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
               symbol : symbol,
             }),
           })
-
+          await fetch(`${domain}/admin/status_update/${estateName}`,{
+            method : "GET",
+          })
           setLoading(false);
 
           })

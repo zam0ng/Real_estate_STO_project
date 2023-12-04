@@ -14,7 +14,7 @@ class Dividends extends Model<dividendAttribute> {
   declare dividend_price: number;
   declare dividend_basedate: Date;
   declare dividend_paymentdate: Date;
-  declare dividend_status: string;
+  declare dividend_status?: string;
 
   static initModel(sequelize: Sequelize): typeof Dividends {
     Dividends.init(

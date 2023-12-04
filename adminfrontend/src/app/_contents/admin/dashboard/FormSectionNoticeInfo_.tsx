@@ -2,7 +2,7 @@
 
 import InputFormDateItem from './InputFormDateItem'
 import InputFormItem from './InputFormItem'
-
+import InputFormItemTitle from './InputFormItemTitle'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 
 interface NoticeFormSectionProps {
@@ -141,7 +141,7 @@ const FormSectionNoticeInfo_ : React.FC<NoticeFormSectionProps> = ( {
                 </div>
 
                 {/* 공지 정보 */}
-                <InputFormItem 
+                <InputFormItemTitle 
                     _title={"제목"} 
                     _type={"text"} 
                     _name = {"title"}  

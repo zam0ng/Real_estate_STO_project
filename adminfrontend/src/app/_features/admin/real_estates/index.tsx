@@ -169,7 +169,7 @@ export interface DurationProps {
 
 // 테이블 ROW > ResultDateProps
 export interface ResultDateProps { 
-  resultDate : string
+  resultDate : string;
   id : number;
 }
 

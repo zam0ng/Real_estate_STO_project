@@ -38,8 +38,8 @@ export default function FormVote({
 
   const { user, web3 } = useWeb3();
 
-  const [startDate, setStartDate] = useState<number>(0);
-  const [endDate, setEndDate] = useState<number>(0);
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>("");
 
   const [contract, setContract] = useState<any>(null);
@@ -118,17 +118,16 @@ export default function FormVote({
           console.log("Transaction Hash : ", hash);
         })
         .on("confirmation", (confirmationNumber: number, receipt: string) => {
-          console.log("Confimation Number : ", confirmationNumber);
-          console.log("Receipt : ", receipt);
+          // console.log("Confimation Number : ", confirmationNumber);
+          // console.log("Receipt : ", receipt);
         })
         .on("receipt", (receipt: string) => {
           console.log("Receipt : ", receipt);
         })
-        .then((newInstance: any) => {
+        .then(async (newInstance: any) => {
           console.log(`CA : ${newInstance.options.address}`);
-          // setVoteCA(newInstance.options.address);
-          // mutationVoteTable.mutate(newInstance.options.address);
-          // mutationCAtable.mutate(newInstance.options.address);
+          await postFetchVoteInfoCATable( newInstance.options.address ,selectedProperty); // CA 테이블 저장 🟠 
+          await postFetchVoteInfoVoteTable(selectedProperty , voteDescription , startDate, endDate , newInstance.options.address ); // 투표 테이블 저장 🔵 
         })
         .catch((error: string) => {
           console.error("Error while deploying : ", error);
@@ -149,7 +148,9 @@ export default function FormVote({
     formData.append("voteEndDate", finalEndDate);
       
     const tempCA = await getTokenCA(selectedValue); // vote_contract_address
+    console.log(tempCA);
     const tokenCA = tempCA[0].address
+    console.log(tokenCA);
     
     const ownerList = await getVotableUsers(selectedValue); // vote_wallets
     const amountList = await getAmountList(selectedValue); // vote_amounts
@@ -181,8 +182,7 @@ export default function FormVote({
         const voteStartDate = formData.get('voteStartDate') as string;
         const voteEndDate = formData.get('voteEndDate') as string;
 
-        await postFetchVoteInfoVoteTable(realEstateName , voteTitle , voteStartDate, voteEndDate , tokenCA ); // 투표 테이블 저장 🔵 
-        await postFetchVoteInfoCATable(tokenCA , realEstateName); // CA 테이블 저장 🟠 
+        
         
         router.refresh();
 

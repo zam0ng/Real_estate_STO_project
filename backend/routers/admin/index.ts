@@ -36,6 +36,7 @@ import {
   dividendSubmit,
   caRegister,
   subscriptionList,
+  statusUpdate,
 } from "../../controllers/admin";
 
 import { Upload } from "../../middleware/imgUpload";
@@ -113,6 +114,7 @@ router.post("/notice_submit", noticeSubmit);
 router.post("/dividend_submit", dividendSubmit);
 router.post("/ca_register", caRegister);
 router.get("/subscription_list/:id", subscriptionList);
+router.get("/status_update/:name",statusUpdate);
 
 // DJ 임시 테스트 ✅✅✅✅✅✅
 // router.get('/subscription' , subscription) => [정현이가 추가한 버전] router.get("/management/real_estates_list", realEstateManagement); 로 변경

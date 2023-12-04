@@ -4,6 +4,7 @@ import InputFormDateItem from './InputFormDateItem'
 import InputFormItem from './InputFormItem'
 
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import InputFormItemTitle from './InputFormItemTitle';
 
 interface VoteableEstate {
   id: number;
@@ -90,7 +91,7 @@ const FormSectionVoteInfo : React.FC<VoteFormSectionProps> = ( {
                     
                   </div>
 
-                <InputFormItem 
+                <InputFormItemTitle
                     _title={"투표 주제"} 
                     _type={"text"} 
                     _name = {"notice_title"}  
