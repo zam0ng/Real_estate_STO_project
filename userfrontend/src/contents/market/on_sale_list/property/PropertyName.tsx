@@ -6,7 +6,7 @@ interface NameProps {
 
 const PropertyName: React.FC<NameProps> = ({name}) => {
   return (
-    <div className='w-full h-2/3 flex justify-start items-center text-xl pl-3'>
+    <div className='w-full h-2/3 flex justify-start items-center text-base pl-3'>
       {name}
     </div>
   )

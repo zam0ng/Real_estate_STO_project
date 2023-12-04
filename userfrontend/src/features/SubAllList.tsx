@@ -8,4 +8,5 @@ export type SubAllList = {
   subscription_description: string;
   subscription_status: string;
   start_price: number;
+  current_price : number;
 };
