@@ -245,7 +245,7 @@ export const orderSell = async (req: Request, res: Response) => {
             // // console.log("+_+_+_+_+_+_+_+", real_estate_id?.id);
 
             for (const el of result) {
-              console.log(el);
+              console.log("el+_+_",el);
               
               const buyerWallet = await getBuyerWallet(el.user_email);
               console.log(buyerWallet);
