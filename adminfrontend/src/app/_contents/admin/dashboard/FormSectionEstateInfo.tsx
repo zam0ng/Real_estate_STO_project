@@ -28,7 +28,7 @@ const FormSectionEstateInfo : React.FC<FormSectionProps> = ( {title, desc} ) => 
                 
                 {/* Input 컴포넌트 */}
                 <div className="flex items-center justify-start h-12 mt-2 border-2 rounded-xl text-admin_modal_input font-semiSemibold border-admin_modal_border w-40rem">
-                  <input type="file" name="upload" placeholder= "ex) img"  multiple />
+                  <input type="file" name="upload" placeholder= "ex) img" multiple />
                 </div>
 
                 {/* 건물 정보 */}

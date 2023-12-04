@@ -22,7 +22,7 @@ export default function FormEstate() {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget); // e.currentTarget = form 태그 | FormData 객체 : form 태그의 '모든 자식 input 태그' 갖고 있는 데이터를 가져옴
-
+    console.log("formData+_+_",formData);
     const response = await postFetchEstateForm(formData)
     console.log("response+_+_+_",response);
 
