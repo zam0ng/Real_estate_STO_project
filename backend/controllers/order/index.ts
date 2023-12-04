@@ -68,7 +68,7 @@ async function getSellerWallet(user_email: string) {
     attributes: ["wallet"],
     raw: true,
   });
-  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
+  if (userInfo.blacklist) return "관리자에게 문의 하세요";
 
   return userInfo.wallet;
 }
@@ -83,7 +83,7 @@ async function getBuyerWallet(user_email: string) {
     attributes: ["wallet"],
     raw: true,
   });
-  if (!userInfo.blacklist) return "관리자에게 문의 하세요";
+  if (userInfo.blacklist) return "관리자에게 문의 하세요";
 
   return userInfo.wallet;
 }
