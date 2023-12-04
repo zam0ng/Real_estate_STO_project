@@ -1174,9 +1174,12 @@ export const subscriptionList = async (req: Request, res: Response) => {
         possible_quantity: amount_list[index],
       });
     });
+    console.log("_+_+_+_+_+_")
+    console.log(estateInfo);
+    console.log(wallet_list);
+    console.log(amount_list);
+    console.log("_+_+_+_+_+_")
 
-    // // console.log(wallet_list);
-    // // console.log(amount_list);
     res.json({ estateInfo, wallet_list, amount_list });
   } catch (error) {
     res.sendStatus(400);
