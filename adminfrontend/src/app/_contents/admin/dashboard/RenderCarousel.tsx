@@ -62,8 +62,9 @@ const RenderCarousel: React.FC<CurrentSituationDataProps> = ({
   const finalDomain = `${
     process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL
   }`;
+  console.log("fileNameArr+_+_+_+",fileNameArr);
   const finalImageURLArr = fileNameArr.map(
-    (item: string) => `${finalDomain}/estate_img/${item}`
+    (item: string) => `${finalDomain}/estate_img/${(item).split('/')[2]}`
   );
   console.log("finalImageURLArr");
   console.log(finalImageURLArr);
