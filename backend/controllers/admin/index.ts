@@ -1076,7 +1076,7 @@ export const subscriptionList = async (req: Request, res: Response) => {
       where: {
         subscription_id: id,
       },
-      attributes: ["user_email", "amount"],
+      attributes: ["wallet", "amount"],
       order: [["id", "ASC"]],
 
       include: [
