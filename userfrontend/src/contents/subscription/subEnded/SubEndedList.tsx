@@ -45,8 +45,8 @@ export default function SubEndedList({ props }: SubAllListType) {
         <div className=" h-14 w-48 flex flex-col text-left pt-3 mx-3  ">
             <span className="text-xs">{building.subscription_name}</span>
             <span className="text-xs pt-1">
-            {building.subscription_status === 'pending'
-            ? "청약 시작 전"
+            {building.subscription_status === 'pending' || building.subscription_status === 'start'
+            ? "청약 종료 전"
             : (building.subscription_status !== 'failure'
               ? `현재가 ${building.current_price}`
               : '청약 미달')}
