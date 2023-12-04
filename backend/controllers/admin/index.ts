@@ -1070,7 +1070,7 @@ export const caRegister = async (req: Request, res: Response) => {
 // 청약자 리스트
 export const subscriptionList = async (req: Request, res: Response) => {
   const { id } = req.params;
-  console.log(id);
+  console.log("id+_+_+_+_+",id);
   try {
     const result = await Subscriptions_own.findAll({
       where: {
