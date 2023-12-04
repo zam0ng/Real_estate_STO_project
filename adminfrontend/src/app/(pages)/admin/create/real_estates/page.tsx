@@ -125,7 +125,7 @@ export default function AdminCreateRealEstate() {
           <label> img </label>
           <input
             type="file"
-            name="img"
+            name="upload"
             placeholder="ex) img"
             onChange={handleUploadFile}
           />
