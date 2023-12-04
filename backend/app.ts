@@ -63,7 +63,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bouncesto.site"],
+    origin: ["http://localhost:3000", "https://bouncesto.site", "https://bs.admin.bouncesto.site"],
     credentials: true,
   })
 );
