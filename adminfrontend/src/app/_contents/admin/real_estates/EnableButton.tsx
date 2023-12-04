@@ -111,7 +111,7 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
       "type": "function"
     }
   ] as const;
-  const factory_CA = "0x79c0563FBb2b04d9688b1AA989506Ec359E03561";
+  const factory_CA = "0x4Dd099b8f749a2E50852e5e51dF0865123A3f888";
   
   const [web3, setWeb3] = useState<Web3 | null >(null);
   // const [CAList, setCAList] = useState<string[] | any>([]);
