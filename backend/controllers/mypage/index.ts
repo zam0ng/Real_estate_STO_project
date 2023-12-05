@@ -395,7 +395,7 @@ export const dividendList = async (req: Request, res: Response) => {
         SUM(a.dividend_price * b.amount) as total_anticipation_dividend
       from dividends a 
         inner join real_estates_own_history b ON a.id = b.dividend_id
-      where b.user_email = '${user_email}' and a.dividend_status = '지급 완료'
+      where b.user_email = '${user_email}' and a.dividend_status = '지급완료'
       ) as d on true;`;
 
     const result = await db.sequelize.query(query, {
