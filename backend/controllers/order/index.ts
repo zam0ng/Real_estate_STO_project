@@ -217,6 +217,14 @@ export const orderSell = async (req: Request, res: Response) => {
                 },
               }
             );
+
+            await Real_estates.update({
+              current_price : price,
+            },{
+              where : {
+                real_estate_name : name,
+              },
+            })
             // const _mysellorders = await mysellorders(user_email,name);
             // console.log(_mysellorders);
             // res.send({ message: "매도 주문 완료", data: _mysellorders });
@@ -797,12 +805,13 @@ export const orderBuy = async (req: Request, res: Response) => {
             where: { user_email: user_email },
           }
         );
-
+        
         res.send("매수 주문 완료");
       }
 
       // 현재가 보다 높게 매수 신청 했을 때
       else {
+
         const sellOrders = await Orders.findAll({
           where: {
             real_estate_name: name,
@@ -849,6 +858,15 @@ export const orderBuy = async (req: Request, res: Response) => {
               where: { user_email: user_email },
             }
           );
+
+          //💪💪💪💪
+          await Real_estates.update({
+            current_price : price,
+          },{
+            where :{
+              real_estate_name : name,
+            }
+          })
           res.send("매수 주문 완료");
         } else {
           // // console.log("sellOrder+++++++++++++", sellOrders);
