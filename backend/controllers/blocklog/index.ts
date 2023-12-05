@@ -174,6 +174,9 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
   try {
     await db.Tx_receipt.bulkCreate(logData, { transaction });
 
+
+    console.log("logData");
+    console.log(logData);
     for (const item of logData) {
       if (item.transmission === "in") {
         const own_check = await db.Real_estates_own.findOne({
