@@ -33,7 +33,7 @@ const Slider: React.FC<WidthProps> = ({width,slides})=>{
     <div className={`${width} h-96 m-auto py-2 px-4 relative group`}>
       <div
         style={{
-          backgroundImage: `url(${serverurl}/estate_img/${(slides[currentIndex]?.url).split("\\")[2]})`,
+          backgroundImage: `url(${serverurl}/estate_img/${(slides[currentIndex]?.url).split("/")[2]})`,
         }}
         className="w-full h-80 rounded-2xl bg-center bg-cover duration-500"
       ></div>

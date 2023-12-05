@@ -8,7 +8,7 @@ const ImageName = ({ imageURL, name, id }: ImageNameProps) => {
   console.log("imageURL+_+_+",imageURL);
   const path = imageURL.replace(/\\/g, "/"); // 정규표현식활용, 백슬래시를 슬래시로 교체
   // const fileName = path;
-  const fileName = imageURL.split('\\')[2];
+  const fileName = imageURL.split("/")[2];
   // console.log(fileName);
   const finalDomain = `${
     process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_PROD_URL

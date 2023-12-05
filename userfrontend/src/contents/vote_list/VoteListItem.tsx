@@ -29,7 +29,7 @@ const VoteListItem: React.FC<VoteListRequest> = ({real_estate_name,vote_id,subsc
     });
 
     useEffect(()=>{
-        // console.log(data);
+        console.log(data);
         if(data){
             setVoteCA(data[0].address);
         }
