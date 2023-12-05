@@ -905,7 +905,10 @@ export const realEstateSubmit = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
+    const id = await Subscriptions.findAll({})
+    
     const result = await Subscriptions.create({
+      id:id.length+1,
       subscription_img_1: imgPathArr[0],
       subscription_img_2: imgPathArr[1],
       subscription_img_3: imgPathArr[2],
