@@ -177,6 +177,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
 
     console.log("logData");
     console.log(logData);
+    console.log("contract_real_estate_name");
+    console.log(contract_real_estate_name);
     for (const item of logData) {
       if (item.transmission === "in") {
         const own_check = await db.Real_estates_own.findOne({
