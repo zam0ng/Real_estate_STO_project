@@ -6,7 +6,7 @@ const TodayHistoryTableInfo: React.FC<TodayHistoryRequest> = ({createdAt,trade_p
 
     const tradeDate = new Date(createdAt);
     const tradeHour = tradeDate.getHours();
-    const tradeMinute = tradeDate.getMinutes();
+    const tradeMinute = ((tradeDate.getMinutes()).toString()).padStart(2,'0');
 
     useEffect(()=>{
         if(rises_falls < 0){

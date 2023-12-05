@@ -6,6 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Cookies } from "react-cookie";
 import useWeb3 from '../../../hooks/web3.hook';
 import { adminWallet , adminPrimarykey } from './adminInfo';
+import LoadingComponent from "../../../components/LoadingComponent";
 
 interface BuyPost {
   price: number;
@@ -573,9 +574,10 @@ const estate_abi = [
     }
 ] as const; 
 
-const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:any, web3:any): Promise<any> => {
+const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:any, web3:any, setisLoading: any): Promise<any> => {
     
     // console.log(buyData); // {price: 1000, amount: 5} 
+    setisLoading(true);
     const getCa : any = await axios.post<string>(`${serverurl}/order/getca_mysellorders/${propertyName}`,{
         token : token
     })
@@ -590,6 +592,7 @@ const buyPost = async (propertyName: string,buyData:BuyPost,token:string, user:a
     // console.log(Number(howBuyAmount));
 
     if(buyData.amount > Number(howBuyAmount)){
+        setisLoading(false);
         alert(`매수 주문 오류 : 전체 물량의 20% 초과 보유 불가 ${Number(howBuyAmount)} 개만 주문 가능 `);
         return;
     }
@@ -620,6 +623,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
     const [isOpen, setisOpen] =useState(false);
     const [isContent, setContent] = useState("");
     const [isTitle, setIsTitle] = useState("");
+    const [isLoading, setisLoading] = useState(false);
 
   const priceInputRef = useRef<HTMLInputElement>(null);
   const amountInputRef = useRef<HTMLInputElement>(null);
@@ -664,7 +668,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
     const mutation = useMutation<string,Error,{propertyName: string; buyData: BuyPost; user : any; web3 : any;}>(
         {
-            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie,user,web3),
+            mutationFn:({propertyName,buyData})=>buyPost(propertyName,buyData,isCookie,user,web3,setisLoading),
             onSuccess: async (data: any) => {
                 // console.log(data);
                 // console.log(data.data.data);
@@ -672,12 +676,16 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
                 if(data.data =='매수 주문 완료' || data.data.message =='매수 완료'){
                     setisOpen(true);
+                    setisLoading(false);
+
                     setIsTitle('매수 주문 접수')
                     setContent('매수주문 정상 접수되었습니다.');
                 }
 
                 if(data.data == '보유 금액 부족'){
+                    setisLoading(false);
                     setisOpen(true);
+
                     setIsTitle('매수 주문 오류')
                     setContent('보유 금액 부족');
                 }
@@ -686,7 +694,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
                     for (const el of data.data.data) {
                         
-                        // console.log(el);
+                        console.log(el);
                         // console.log(el.sellerWalelt)
                         // console.log(el.buyerWallet)
                         // console.log(el.conclusionAmount)
@@ -736,6 +744,9 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                             const receipt = await web3?.eth.sendSignedTransaction(signedTransaction!.rawTransaction);
                             console.log("TransferFrom Transaction Hash:", receipt?.transactionHash);
                             console.log("TransferFrom Transaction Receipt:", receipt);
+                            if(receipt) {
+                                setisLoading(false);
+                            } 
                         } catch (error) {
                             console.error("TransferFrom Transaction Error:", error);
                         }
@@ -747,6 +758,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
                 queryClient.refetchQueries({queryKey:["incompleteDeals"]});
                 queryClient.refetchQueries({queryKey:["headerInfo"]});
                 isSocket.emit("purchase_completed")
+
             },
             onError: (error) => {
                 console.log(error);
@@ -765,6 +777,7 @@ const BuyTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
     return (
         <>
+        {isLoading && <LoadingComponent/>}
         {/* 알림창 */}
         {isOpen && 
             <>

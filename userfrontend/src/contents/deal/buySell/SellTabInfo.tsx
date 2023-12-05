@@ -774,6 +774,10 @@ const SellTabInfo: React.FC<socketProps> = ({ isSocket }) => {
 
       isSocket.emit("sale_completed");
       setisLoading(false);
+      setisOpen(true);
+      setIsTitle("매도 주문 접수");
+      setContent("매도주문 정상 접수되었습니다.");
+
     },
     onError: (error) => {
       console.log(error);
