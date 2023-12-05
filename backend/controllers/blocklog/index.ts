@@ -180,8 +180,12 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     console.log("contract_real_estate_name");
     console.log(contract_real_estate_name);
     for (const item of logData) {
+      console.log("item");
+      console.log(item);
       const caKey = item.ca.toLowerCase(); // 넘어오는 CA 값을 소문자로 변환
       const realEstateName = contract_real_estate_name[caKey];
+      console.log("realEstateName");
+      console.log(realEstateName);
       if (item.transmission === "in") {
         const own_check = await db.Real_estates_own.findOne({
           where: {
@@ -191,6 +195,8 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
           raw: true,
         });
 
+        console.log("own_check");
+        console.log(own_check);
         if (own_check) {
           await db.Real_estates_own.update(
             {
