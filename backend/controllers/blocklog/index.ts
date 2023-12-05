@@ -183,7 +183,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
       console.log("item");
       console.log(item);
       const caKey = item.ca.toLowerCase(); // 넘어오는 CA 값을 소문자로 변환
-      const realEstateName = contract_real_estate_name[caKey];
+      const realEstateName = contract_real_estate_name[caKey].toLowerCase();
       console.log("realEstateName");
       console.log(realEstateName);
       if (item.transmission === "in") {
