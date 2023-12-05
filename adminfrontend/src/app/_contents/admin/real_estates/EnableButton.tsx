@@ -175,7 +175,7 @@ const EnableButton = ({ text,id,setLoading}: EnableButtonParam) => {
           totalsupply,
           list.wallet_list,
           list.amount_list,
-          0,
+          seconds,
           ).send({
             from : account,
             // gas : "3000000",
