@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import BoardItem from "./BoardItem";
 import axios from "axios";
 import LoadingComponent from "../../components/LoadingComponent";
+import { serverurl } from "../../components/serverurl";
 
 interface boardRequest {
   id: number;
@@ -19,7 +20,7 @@ const BoardItemBox: React.FC = () => {
 
   const boardFetch = async (): Promise<boardRequest[]> => {
     const { data } = await axios.get(
-      `http://127.0.0.1:8080/market/detail/board/${propertyName}`
+      `${serverurl}/market/detail/board/${propertyName}`
     );
     // // console.log(data);
     return data;

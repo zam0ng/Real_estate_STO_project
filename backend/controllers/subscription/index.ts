@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../../models";
+import Subscriptions_own from "../../models/subscriptions_own";
 
 interface AddRequest extends Request {
   userEmail?: string;
@@ -232,9 +233,11 @@ export const subscriptionApplication = async (req: Request, res: Response) => {
     );
       
     } else {
+      const idx = await db.Subscriptions_own.count();
       const insert_subscription_application =
       await db.Subscriptions_own.create(
         {
+          id : idx+1,
           subscription_id: id,
           wallet: wallet?.wallet,
           amount: amount,

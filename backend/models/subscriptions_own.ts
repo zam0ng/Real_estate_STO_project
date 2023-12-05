@@ -2,12 +2,14 @@ import { Sequelize, DataTypes, Model } from "sequelize";
 import { DB } from "../models";
 
 interface subscriptions_ownAttribute {
+  id? : number | undefined;
   wallet: string | undefined;
   subscription_id: number;
   amount: number;
 }
 
 class Subscriptions_own extends Model<subscriptions_ownAttribute> {
+  declare id? : number | undefined;
   declare wallet: string | undefined;
   declare subscription_id: number;
   declare amount: number;
