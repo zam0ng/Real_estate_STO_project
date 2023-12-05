@@ -180,11 +180,13 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     console.log("contract_real_estate_name");
     console.log(contract_real_estate_name);
     for (const item of logData) {
+      const caKey = item.ca.toLowerCase(); // 넘어오는 CA 값을 소문자로 변환
+      const realEstateName = contract_real_estate_name[caKey];
       if (item.transmission === "in") {
         const own_check = await db.Real_estates_own.findOne({
           where: {
             wallet: item.tx_to,
-            real_estate_name: contract_real_estate_name[item.ca],
+            real_estate_name: realEstateName,
           },
           raw: true,
         });
@@ -200,7 +202,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
             {
               where: {
                 wallet: item.tx_to,
-                real_estate_name: contract_real_estate_name[item.ca],
+                real_estate_name: realEstateName,
               },
               transaction,
             }
@@ -214,7 +216,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
 
           const real_estates = await db.Real_estates.findOne({
             attributes: ["id", "current_price"],
-            where: { real_estate_name: contract_real_estate_name[item.ca] },
+            where: { real_estate_name: realEstateName },
             raw: true,
           });
 
@@ -225,7 +227,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               user_email: users.user_email,
               wallet: item.tx_to,
               real_estate_id: real_estates.id as number,
-              real_estate_name: contract_real_estate_name[item.ca],
+              real_estate_name: realEstateName,
               price: real_estates.current_price,
               amount: item.tx_value,
               possible_quantity: item.tx_value,
@@ -246,7 +248,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
           {
             where: {
               wallet: item.tx_from,
-              real_estate_name: contract_real_estate_name[item.ca],
+              real_estate_name: realEstateName,
             },
             transaction,
           }
