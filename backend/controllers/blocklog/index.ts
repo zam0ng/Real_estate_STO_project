@@ -172,20 +172,10 @@ export const userWalletAddress = async (): Promise<UserWallet[]> => {
 export const txReceipt = async (logData: logDataAttribute[]) => {
   const transaction = await db.sequelize.transaction();
   try {
-    const save_receipt = await db.Tx_receipt.bulkCreate(logData, {
-      transaction,
-    });
+    await db.Tx_receipt.bulkCreate(logData, { transaction });
 
-    console.log("logData");
-    console.log(logData);
-
-    logData.forEach(async (item) => {
-      // if (item.transmission === "external" || item.transmission === "internal")
-      //   return;
-
+    for (const item of logData) {
       if (item.transmission === "in") {
-        // 해당 유저가 토큰을 보유하고 있는지 확인
-        // 토큰이 하나도 없는 상태에서 외부에서 받아올 경우 데이터를 업데이트 시켜주기 위함
         const own_check = await db.Real_estates_own.findOne({
           where: {
             wallet: item.tx_to,
@@ -195,8 +185,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
         });
 
         if (own_check) {
-          // 보유하고 있는 토큰에 넘어온 토큰 수량을 더함
-          const userRealEstatesOwn = await db.Real_estates_own.update(
+          await db.Real_estates_own.update(
             {
               amount: db.sequelize.literal(`amount + ${item.tx_value}`),
               possible_quantity: db.sequelize.literal(
@@ -208,27 +197,25 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
                 wallet: item.tx_to,
                 real_estate_name: contract_real_estate_name[item.ca],
               },
-              // transaction,
+              transaction,
             }
           );
         } else {
-          // 유저 이메일을 가져옴
           const users = await db.Users.findOne({
             where: { wallet: item.tx_to },
             raw: true,
           });
-          if (!users) return;
+          if (!users) continue;
 
-          // 등록된 매물의 현재가격을 가져옴
           const real_estates = await db.Real_estates.findOne({
             attributes: ["id", "current_price"],
             where: { real_estate_name: contract_real_estate_name[item.ca] },
             raw: true,
           });
 
-          if (!real_estates) return;
-          // 토큰을 하나도 가지고 있지 않은 상태에서 외부에서 토큰을 받아올 경우 추가
-          const real_estates_own = await db.Real_estates_own.create(
+          if (!real_estates) continue;
+
+          await db.Real_estates_own.create(
             {
               user_email: users.user_email,
               wallet: item.tx_to,
@@ -238,12 +225,11 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               amount: item.tx_value,
               possible_quantity: item.tx_value,
             },
-            // { transaction }
+            { transaction }
           );
         }
       }
 
-      // 내부에서 외부로 나간 토큰이기 때문에 from을 주시
       if (item.transmission === "out") {
         await db.Real_estates_own.update(
           {
@@ -257,11 +243,11 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               wallet: item.tx_from,
               real_estate_name: contract_real_estate_name[item.ca],
             },
-            // transaction,
+            transaction,
           }
         );
       }
-    });
+    }
 
     await transaction.commit();
     return true;
