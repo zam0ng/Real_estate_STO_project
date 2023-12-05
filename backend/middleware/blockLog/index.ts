@@ -212,6 +212,10 @@ export const logLatestBlockEvents = async () => {
             if (decodedLog.symbol.length > 5) continue;
 
             // 데이터베이스에 있는 symbol들과 들어온 symbol을 비교 포함되어 있으면 통과
+            console.log("contracts");
+            console.log(contracts);
+            console.log("address");
+            console.log(address);
             if (contracts.includes(address.toLowerCase())) {
               // 내부 전송인지 외부 전송인지 판단
               const addressCheck = await walletCheck(
