@@ -34,7 +34,7 @@ async function contract_address() {
 
     contract_real_estate_name = result.reduce(
       (acc: ContractRealEstatesName, item) => {
-        acc[item.address] = item.real_estate_name;
+        acc[item.address.toLowerCase()] = item.real_estate_name;
         return acc;
       },
       {}
@@ -180,19 +180,12 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
     console.log("contract_real_estate_name");
     console.log(contract_real_estate_name);
     for (const item of logData) {
-      console.log("item");
-      console.log(item);
-      const caKey = item.ca.toLowerCase();
-      console.log("caKey");
-      console.log(caKey);
-      const realEstateName = contract_real_estate_name[caKey].toLowerCase();
-      console.log("realEstateName");
-      console.log(realEstateName);
+
       if (item.transmission === "in") {
         const own_check = await db.Real_estates_own.findOne({
           where: {
             wallet: item.tx_to,
-            real_estate_name: realEstateName,
+            real_estate_name: contract_real_estate_name[item.ca],
           },
           raw: true,
         });
@@ -210,7 +203,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
             {
               where: {
                 wallet: item.tx_to,
-                real_estate_name: realEstateName,
+                real_estate_name: contract_real_estate_name[item.ca],
               },
               transaction,
             }
@@ -224,7 +217,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
 
           const real_estates = await db.Real_estates.findOne({
             attributes: ["id", "current_price"],
-            where: { real_estate_name: realEstateName },
+            where: { real_estate_name: contract_real_estate_name[item.ca] },
             raw: true,
           });
 
@@ -235,7 +228,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
               user_email: users.user_email,
               wallet: item.tx_to,
               real_estate_id: real_estates.id as number,
-              real_estate_name: realEstateName,
+              real_estate_name: contract_real_estate_name[item.ca],
               price: real_estates.current_price,
               amount: item.tx_value,
               possible_quantity: item.tx_value,
@@ -256,7 +249,7 @@ export const txReceipt = async (logData: logDataAttribute[]) => {
           {
             where: {
               wallet: item.tx_from,
-              real_estate_name: realEstateName,
+              real_estate_name: contract_real_estate_name[item.ca],
             },
             transaction,
           }
