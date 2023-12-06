@@ -12,7 +12,7 @@ const ParticipationRate: React.FC<CompletionProps> = ({ completionRate }) => {
     if (completionRate === 0) {
       setRate("0");
     } else {
-      setRate((completionRate * 100)!.toFixed(1));
+      setRate((completionRate)!.toFixed(1));
     }
   }, [completionRate]);
 
